@@ -189,6 +189,18 @@
   }
   @keyframes spin { to { transform: rotate(360deg); } }
 </style>
+<style>
+  .scope-nav { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px; }
+  .scope-nav button { background:var(--bg-3); border:1px solid var(--border); border-radius:20px; color:var(--fg); padding:9px 12px; cursor:pointer; font:inherit; font-size:12px; }
+  .scope-nav button.active { background:var(--orange); color:var(--bg); }
+  .memberships { display:flex; flex-wrap:wrap; gap:10px; margin-top:10px; font-size:12px; color:var(--fg-dim); }
+  .memberships label, .tracking-toggle { display:flex; gap:5px; align-items:center; cursor:pointer; }
+  .creator-row { align-items:flex-start; }
+  .tracking-toggle { font-size:12px; margin-top:12px; color:var(--fg); }
+  .vetting-note { color:var(--fg-dim); font-size:12px; line-height:1.6; margin-top:8px; }
+  #research-notes article { border-top:1px solid var(--border); padding:12px 0; font-size:13px; line-height:1.6; }
+  #research-notes a { color:var(--orange); }
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -204,6 +216,14 @@
     <span id="conn-badge" class="conn-badge no">No token</span>
   </header>
 
+  <section>
+    <div class="label">Niche lists</div>
+    <h2>Choose your focus</h2>
+    <p class="help">Creators can belong to several lists. A shared account is scraped once per refresh. Choose a list to manage membership and refresh only its tracked creators.</p>
+    <nav id="scope-nav" class="scope-nav" aria-label="Niche lists"></nav>
+    <div id="scope-summary" class="help"></div>
+  </section>
+
   <!-- 1. APIFY TOKEN -->
   <section>
     <div class="label">Step 1</div>
@@ -217,7 +237,7 @@
   </section>
 
   <!-- 2. SEARCH + ADD CREATORS -->
-  <section>
+  <section id="add-creators">
     <div class="label">Step 2</div>
     <h2>Add creators</h2>
     <p class="help">Type a name or handle. We'll search Instagram via Apify and show matching profiles. Click "Add" to start tracking.</p>
@@ -231,9 +251,16 @@
   <!-- 3. CURRENTLY TRACKING -->
   <section>
     <div class="label">Tracking</div>
-    <h2>Currently tracked creators <span id="creators-count" style="color:var(--fg-faint);font-weight:400;font-size:14px"></span></h2>
-    <p class="help">These will be scraped on every refresh. Remove any you no longer want.</p>
+    <h2>Creators in this list <span id="creators-count" style="color:var(--fg-faint);font-weight:400;font-size:14px"></span></h2>
+    <p class="help">Use the checkboxes to change membership. Paused creators keep their cached data without adding refresh costs. Rebuild the dashboard after changing lists; this uses no Apify credits.</p>
     <div id="creators-list" class="creators-list"></div>
+  </section>
+
+  <section>
+    <div class="label">Vetted candidates</div>
+    <h2>Research notes</h2>
+    <p class="help">Topic fit and useful advice are assessed separately from recent Instagram Reel activity.</p>
+    <div id="research-notes"></div>
   </section>
 
   <!-- 4. SCHEDULE -->
@@ -277,6 +304,7 @@
     <p class="help">Run the pipeline now to generate <code>index.html</code> from your current creator list. Takes ~5-10 minutes on first run depending on creator count.</p>
     <div class="actions">
       <button id="run-refresh" class="btn">Run refresh now</button>
+      <button id="rebuild-dashboard" class="btn ghost">Rebuild dashboard · free</button>
       <button id="open-dashboard" class="btn ghost">Open dashboard ↗</button>
     </div>
     <div id="run-status" class="status"></div>
@@ -290,7 +318,9 @@
 const $ = (s) => document.querySelector(s);
 const $$ = (s) => document.querySelectorAll(s);
 
-let STATE = { tokenSet: false, creators: [] };
+let STATE = { tokenSet: false, creators: [], scopes: [], research: {} };
+let activeScope = new URLSearchParams(location.search).get("scope") || localStorage.getItem("outlier-admin-list") || "ai-dtc";
+let searchProfiles = new Map();
 
 // ───── toast ─────
 function toast(msg, kind = "info", dur = 2200) {
@@ -306,7 +336,10 @@ async function loadState() {
   const r = await fetch("/api/state");
   STATE = await r.json();
   renderHeader();
+  if (activeScope !== "__all__" && !(STATE.scopes || []).some(s => s.id === activeScope)) activeScope = STATE.scopes?.[0]?.id || "__all__";
+  renderScopes();
   renderCreators();
+  renderResearch();
   if (STATE.tokenSet) {
     $("#token-input").placeholder = STATE.tokenPrefix || "apify_api_… (saved)";
   }
@@ -326,22 +359,77 @@ function renderHeader() {
 function renderCreators() {
   const list = $("#creators-list");
   const count = $("#creators-count");
-  count.textContent = STATE.creators.length ? `· ${STATE.creators.length}` : "";
-  if (!STATE.creators.length) {
+  const visible = STATE.creators.filter(c => activeScope === "__all__" || (c.scopes || []).includes(activeScope));
+  count.textContent = `· ${visible.length} saved · ${visible.filter(c => c.trackingEnabled !== false).length} tracking`;
+  if (!visible.length) {
     list.innerHTML = `<div class="empty-state">No creators yet — search above and add some.</div>`;
     return;
   }
-  list.innerHTML = STATE.creators.map(c => `
+  list.innerHTML = visible.map(c => `
     <div class="creator-row" data-handle="${escapeHtml(c.handle)}">
       ${c.profilePic ? `<img src="${escapeHtml(c.profilePic)}" alt="" referrerpolicy="no-referrer" onerror="this.style.opacity=.2">` : `<div style="width:40px;height:40px;border-radius:50%;background:var(--bg)"></div>`}
       <div class="info">
         <div class="name">${escapeHtml(c.name || c.handle)}${c.verified ? '<span class="verified">✓</span>' : ''}</div>
         <div class="handle">@${escapeHtml(c.handle)} · ${fmtNum(c.followers)} followers · ${c.posts || 0} posts</div>
+        <div class="memberships">${(STATE.scopes || []).map(s => `<label><input type="checkbox" data-membership="${escapeHtml(c.handle)}" value="${escapeHtml(s.id)}" ${(c.scopes || []).includes(s.id) ? 'checked' : ''}>${escapeHtml(s.name)}</label>`).join("")}</div>
+        <label class="tracking-toggle"><input type="checkbox" data-tracking="${escapeHtml(c.handle)}" ${c.trackingEnabled !== false ? 'checked' : ''}> Include in refreshes</label>
       </div>
       <button class="remove" data-action="remove" data-handle="${escapeHtml(c.handle)}" title="Stop tracking">×</button>
     </div>
   `).join("");
 }
+
+function renderScopes() {
+  $("#scope-nav").innerHTML = [...(STATE.scopes || []), {id:"__all__",name:"All creators / demo"}].map(s => `<button type="button" data-scope="${escapeHtml(s.id)}" aria-pressed="${s.id === activeScope}" class="${s.id === activeScope ? 'active' : ''}">${escapeHtml(s.name)}</button>`).join("");
+  const scope = (STATE.scopes || []).find(s => s.id === activeScope);
+  $("#scope-summary").textContent = scope?.description || "All saved accounts, including the original demo creators.";
+  if (STATE.research?.checkedAt) $("#scope-summary").textContent += ` Research used $${Number(STATE.research.spendUsd).toFixed(2)} of $${Number(STATE.research.budgetUsd).toFixed(2)}. Refresh scheduling remains manual.`;
+}
+
+function renderResearch() {
+  const candidates = (STATE.research?.candidates || []).filter(c => {
+    const saved = STATE.creators.find(p => p.handle === c.handle);
+    return activeScope === "__all__" || (saved?.scopes || c.scopes || []).includes(activeScope);
+  });
+  $("#research-notes").innerHTML = candidates.map(c => `<article><strong>${escapeHtml(c.name)} — ${escapeHtml(c.recommendation)}</strong><div>${escapeHtml(c.contentAssessment)}</div><div>${escapeHtml(c.activityLabel)}</div><div>${escapeHtml(c.identityNote || '')}</div>${(c.sources || []).filter(s => /^https:\/\//.test(s.url)).map(s => `<a target="_blank" rel="noopener noreferrer" href="${escapeHtml(s.url)}">${escapeHtml(s.title)}</a>`).join(' · ')}</article>`).join("") || "No research notes for this list yet.";
+}
+
+$("#scope-nav").addEventListener("click", e => {
+  const button = e.target.closest("[data-scope]");
+  if (!button) return;
+  activeScope = button.dataset.scope;
+  localStorage.setItem("outlier-admin-list", activeScope);
+  renderScopes(); renderCreators(); renderResearch();
+  if (searchProfiles.size) renderResults([...searchProfiles.values()]);
+});
+
+document.addEventListener("change", async e => {
+  const handle = e.target.dataset.membership || e.target.dataset.tracking;
+  if (!handle) return;
+  const row = e.target.closest(".creator-row");
+  const payload = e.target.dataset.membership
+    ? {scopes: [...row.querySelectorAll("[data-membership]:checked")].map(input => input.value)}
+    : {trackingEnabled: e.target.checked};
+  try {
+    const response = await fetch(`/api/creators/${encodeURIComponent(handle)}`, {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(payload)});
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.message || "Update failed");
+    STATE.creators = result.creators;
+    renderCreators(); renderResearch();
+    toast("Saved. Rebuild dashboard to apply the view.", "ok");
+  } catch (error) { toast(error.message, "bad"); await loadState(); }
+});
+
+$("#rebuild-dashboard").addEventListener("click", async e => {
+  e.target.disabled = true;
+  try {
+    const response = await fetch("/api/build", {method:"POST", headers:{"Content-Type":"application/json"}, body:"{}"});
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.message || "Build failed");
+    toast("Dashboard rebuilt. No Apify credits used.", "ok");
+  } catch (error) { toast(error.message, "bad"); }
+  finally { e.target.disabled = false; }
+});
 
 function fmtNum(n) {
   if (!n) return "0";
@@ -408,9 +496,10 @@ async function doSearch() {
 }
 
 function renderResults(results) {
-  const trackedHandles = new Set(STATE.creators.map(c => c.handle));
+  searchProfiles = new Map(results.map(r => [r.handle, r]));
   $("#results").innerHTML = results.map(r => {
-    const added = trackedHandles.has(r.handle);
+    const saved = STATE.creators.find(c => c.handle === r.handle);
+    const added = saved && (activeScope === "__all__" || (saved.scopes || []).includes(activeScope));
     return `
       <div class="result ${added ? 'added' : ''}" data-handle="${escapeHtml(r.handle)}">
         ${r.profilePic ? `<img class="avatar" src="${escapeHtml(r.profilePic)}" alt="" referrerpolicy="no-referrer" onerror="this.style.opacity=.2">` : `<div class="avatar"></div>`}
@@ -419,7 +508,7 @@ function renderResults(results) {
           <div class="handle">@${escapeHtml(r.handle)}</div>
           <div class="stats">${fmtNum(r.followers)} followers · ${r.posts || 0} posts${r.private ? ' · 🔒 private' : ''}</div>
         </div>
-        <button class="btn add" data-action="add" data-handle="${escapeHtml(r.handle)}" ${added || r.private ? 'disabled' : ''}>${added ? 'Added' : 'Add'}</button>
+        <button class="btn add" data-action="add" data-handle="${escapeHtml(r.handle)}" ${added || r.private ? 'disabled' : ''}>${added ? 'Added' : saved ? 'Add to list' : 'Add'}</button>
       </div>
     `;
   }).join("");
@@ -435,25 +524,24 @@ document.addEventListener("click", async (e) => {
   if (action === "add") {
     e.target.disabled = true;
     e.target.textContent = "…";
-    const profile = await lookupProfile(handle);
-    if (!profile) { e.target.disabled = false; e.target.textContent = "Add"; return; }
-    const r = await fetch("/api/creators", {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({profile}),
-    });
-    if (r.ok) {
+    try {
+      const saved = STATE.creators.find(c => c.handle === handle);
+      const profile = searchProfiles.get(handle);
+      if (!saved && !profile) throw new Error("Search again to load this profile.");
+      const payload = saved
+        ? {scopes: [...new Set([...(saved.scopes || []), ...(activeScope === "__all__" ? [] : [activeScope])])]}
+        : {profile, scopes: activeScope === "__all__" ? [] : [activeScope]};
+      const r = await fetch(saved ? `/api/creators/${encodeURIComponent(handle)}` : "/api/creators", {
+        method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(payload),
+      });
       const j = await r.json();
+      if (!r.ok) throw new Error(j.message || j.error || "Failed to add");
       STATE.creators = j.creators;
-      renderCreators();
-      e.target.closest(".result").classList.add("added");
-      e.target.textContent = "Added";
-      toast(`@${handle} added ✓`, "ok");
-    } else {
-      const j = await r.json();
-      toast(j.error === "already_added" ? "Already tracking" : (j.message || "Failed to add"), "bad");
-      e.target.disabled = false;
-      e.target.textContent = "Add";
+      renderCreators(); renderResearch(); renderResults([...searchProfiles.values()]);
+      toast(`@${handle} added to this list ✓`, "ok");
+    } catch (error) {
+      toast(error.message || "Failed to add", "bad");
+      e.target.disabled = false; e.target.textContent = "Try again";
     }
   }
 
@@ -528,14 +616,15 @@ document.querySelectorAll(".schedule-opt").forEach(btn => {
 // ───── run refresh ─────
 $("#run-refresh").addEventListener("click", async () => {
   if (!STATE.tokenSet) { toast("Save your Apify token first", "bad"); return; }
-  if (!STATE.creators.length) { toast("Add at least one creator first", "bad"); return; }
-  if (!confirm(`Run a refresh now for ${STATE.creators.length} creator${STATE.creators.length === 1 ? '' : 's'}? Takes ~5–10 min.`)) return;
+  const selected = STATE.creators.filter(c => c.trackingEnabled !== false && (activeScope === "__all__" || (c.scopes || []).includes(activeScope)));
+  if (!selected.length) { toast("Enable tracking for a creator in this list first", "bad"); return; }
+  if (!confirm(`Refresh ${selected.length} tracked creators in this list? Uses Apify credits within the configured run caps.`)) return;
   $("#run-refresh").disabled = true;
   $("#run-refresh").innerHTML = '<span class="spinner"></span> Running…';
   $("#run-status").innerHTML = 'Refresh started — see <code>refresh.log</code> for progress. This window won\'t auto-refresh; reload manually when done.';
   $("#run-status").className = "status";
   try {
-    const r = await fetch("/api/refresh", {method: "POST", headers: {"Content-Type": "application/json"}, body: "{}"});
+    const r = await fetch("/api/refresh", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({scope: activeScope})});
     const j = await r.json();
     if (r.ok) {
       toast(`Refresh started (PID ${j.pid})`, "ok");
@@ -552,7 +641,7 @@ $("#run-refresh").addEventListener("click", async () => {
 });
 
 $("#open-dashboard").addEventListener("click", () => {
-  window.open("/", "_blank");
+  window.open(`/?scope=${encodeURIComponent(activeScope)}`, "_blank");
 });
 
 // ───── init ─────

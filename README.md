@@ -96,6 +96,22 @@ Vercel runs `export_site.py` to publish only `index.html`, `thumbs/`, and `clips
 
 ## Managing your creator list
 
+### Saved niche lists
+
+The admin and dashboard offer four lists: **AI × DTC ecommerce**, **DTC agencies / creative**, **DTC ecommerce**, and **AI broadly**. Choose a list in the admin before adding a creator; use the membership checkboxes to include the same creator in additional lists. Shared creators remain a single account in `config.json` and are scraped once per refresh.
+
+Each list has its own dashboard view, creator chips, metrics, and research notes. Share a view with `?scope=ai-dtc`, `?scope=dtc-agencies`, `?scope=dtc-ecommerce`, or `?scope=ai`. The original sample creators remain in **All creators / demo**.
+
+Turn off **Include in refreshes** to pause spending on an account while preserving its cached data. **Rebuild dashboard · free** applies membership changes without running an Apify actor. A local rebuild does not publish to Vercel; commit and push to publish it, as with other local changes.
+
+**Run refresh now** refreshes only tracked creators in the selected list. The GitHub Actions manual workflow has the same list picker. From the terminal:
+
+```bash
+OUTLIER_SCOPE=ai-dtc .venv/bin/python refresh.py
+```
+
+The creator review separates topical fit and useful content from Instagram identity and recent Reel activity. The initial check used a maximum of five Reels per account in a 28-day window; zero results are inconclusive. Collaboration posts owned by another account are linked as evidence but excluded from personal outlier baselines. See [CREATOR-REVIEW.md](CREATOR-REVIEW.md) for the dated review and sources.
+
 Run `python3 serve.py` anytime. The admin remembers everything — search and add new ones, remove old ones, change the schedule. Then `git add config.json && git commit && git push` to propagate the changes to GitHub Actions.
 
 If you prefer the terminal, `python3 configure.py` also works.

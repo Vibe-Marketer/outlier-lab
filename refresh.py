@@ -28,12 +28,10 @@ DATA = ROOT / "data"
 CLIPS = ROOT / "clips"
 THUMBS = ROOT / "thumbs"
 
-# Load CREATORS list straight from build.py (single source of truth)
-import importlib.util
-spec = importlib.util.spec_from_file_location("build_module", ROOT / "build.py")
-build_module = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(build_module)
-CREATORS = build_module.CREATORS
+from catalog import ALL, select_creators
+CONFIG = json.loads((ROOT / "config.json").read_text())
+SCOPE = os.environ.get("OUTLIER_SCOPE", ALL)
+CREATORS = [c["handle"] for c in select_creators(CONFIG, SCOPE)]
 
 from serve import load_env_token
 APIFY_TOKEN = os.environ.get("APIFY_TOKEN") or load_env_token()
@@ -46,7 +44,7 @@ WINDOW_DAYS = 28
 CLIP_SECONDS = 3
 REEL_SCRAPER = "apify~instagram-reel-scraper"
 PROFILE_SCRAPER = "apify~instagram-scraper"
-SETTINGS = json.loads((ROOT / "config.json").read_text()).get("refresh", {})
+SETTINGS = CONFIG.get("refresh", {})
 
 
 def apify_post(path, body, **params):
@@ -373,7 +371,9 @@ def extract_all_clips():
 def prune_old_assets():
     """Delete thumbs/clips for reels no longer in our 28-day window."""
     keep = set()
-    for handle in CREATORS:
+    # A scoped refresh must preserve cached assets belonging to other lists.
+    for creator in select_creators(CONFIG, tracked_only=False):
+        handle = creator["handle"]
         for p in load_existing_posts(handle):
             sc = p.get("shortCode")
             if sc:
@@ -401,8 +401,11 @@ def build_dashboard():
 
 
 def main():
+    if not CREATORS:
+        print("No tracked creators in this list; no Apify calls made.")
+        return
     print(f"=== refresh started · {datetime.now().isoformat()} ===")
-    print(f"creators: {CREATORS}\n")
+    print(f"list: {SCOPE}; creators (deduplicated): {CREATORS}\n")
 
     # Pass 1: cheap stats refresh (no transcripts)
     scraped = pass1_stats_refresh()

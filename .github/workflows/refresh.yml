@@ -7,6 +7,17 @@ on:
   # schedule:
 #     - cron: "0 11 * * 0"
   workflow_dispatch:  # manual "run now" button in the Actions tab
+    inputs:
+      scope:
+        description: Niche list to refresh (shared creators are scraped once)
+        type: choice
+        default: ai-dtc
+        options:
+          - ai-dtc
+          - dtc-agencies
+          - dtc-ecommerce
+          - ai
+          - __all__
 
 permissions:
   contents: write  # required to commit refreshed data back to the repo
@@ -35,6 +46,7 @@ jobs:
       - name: Run refresh pipeline
         env:
           APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}
+          OUTLIER_SCOPE: ${{ inputs.scope || '__all__' }}
         run: python3 refresh.py
 
       - name: Commit refreshed data + dashboard

@@ -12,6 +12,7 @@ from unittest.mock import patch
 
 import serve
 import export_site
+from catalog import ALL, DEFAULT_SCOPES, select_creators, validate_memberships
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -100,10 +101,94 @@ class SetupTests(unittest.TestCase):
 
     def test_empty_feed_builds_successfully(self):
         shutil.copy2(ROOT / 'build.py', self.root / 'build.py')
+        shutil.copy2(ROOT / 'catalog.py', self.root / 'catalog.py')
         (self.root / 'config.json').write_text('{"creators":[{"handle":"empty_creator"}]}')
         result = subprocess.run([sys.executable, str(self.root / 'build.py')], capture_output=True, text=True)
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn('No reels yet', (self.root / 'index.html').read_text())
+
+    def seed_lists(self):
+        config = {'scopes': DEFAULT_SCOPES, 'creators': [
+            {'handle': 'shared', 'scopes': ['ai-dtc', 'dtc-agencies'], 'trackingEnabled': True},
+            {'handle': 'paused', 'scopes': ['ai-dtc'], 'trackingEnabled': False},
+            {'handle': 'other', 'scopes': ['ai'], 'trackingEnabled': True}]}
+        serve.save_config(config)
+        return config
+
+    def test_four_lists_and_membership_changes_persist(self):
+        self.seed_lists()
+        self.assertEqual(len(json.load(self.request('/api/state'))['scopes']), 4)
+        result = json.load(self.request('/api/creators/shared', {'scopes': ['ai', 'ai'], 'trackingEnabled': False}))
+        saved = next(c for c in result['creators'] if c['handle'] == 'shared')
+        self.assertEqual(saved['scopes'], ['ai'])
+        self.assertFalse(saved['trackingEnabled'])
+        self.assertEqual(serve.load_config()['creators'][0], saved)
+
+    def test_add_new_creator_saves_selected_list_and_prevents_case_duplicates(self):
+        self.seed_lists()
+        added = json.load(self.request('/api/creators', {'profile': {'handle': 'NewCreator', 'name': 'New creator'}, 'scopes': ['ai-dtc']}))
+        creator = next(c for c in added['creators'] if c['handle'] == 'newcreator')
+        self.assertEqual(creator['scopes'], ['ai-dtc'])
+        self.assertTrue(creator['trackingEnabled'])
+        with self.assertRaises(urllib.error.HTTPError) as exc:
+            self.request('/api/creators', {'profile': {'handle': 'NEWCREATOR'}, 'scopes': ['ai']})
+        self.assertEqual(exc.exception.code, 409)
+        self.assertEqual(len(serve.load_config()['creators']), 4)
+
+    def test_invalid_membership_does_not_modify_file(self):
+        self.seed_lists()
+        before = serve.CONFIG_FILE.read_text()
+        with self.assertRaises(urllib.error.HTTPError) as exc:
+            self.request('/api/creators/shared', {'scopes': ['missing']})
+        self.assertEqual(exc.exception.code, 400)
+        self.assertEqual(serve.CONFIG_FILE.read_text(), before)
+
+    def test_scoped_refresh_excludes_other_lists_and_paused_creators(self):
+        self.seed_lists()
+        with patch.object(serve.subprocess, 'Popen') as popen:
+            popen.return_value.pid = 123
+            response = json.load(self.request('/api/refresh', {'scope': 'ai-dtc'}))
+            self.assertEqual(response['creatorCount'], 1)
+            self.assertEqual(popen.call_args.kwargs['env']['OUTLIER_SCOPE'], 'ai-dtc')
+
+    def test_empty_list_refresh_and_unknown_scope_make_no_subprocess(self):
+        self.seed_lists()
+        with patch.object(serve.subprocess, 'Popen') as popen:
+            for scope in ['dtc-ecommerce', 'not-a-list', []]:
+                with self.subTest(scope=scope), self.assertRaises(urllib.error.HTTPError) as exc:
+                    self.request('/api/refresh', {'scope': scope})
+                self.assertEqual(exc.exception.code, 400)
+            popen.assert_not_called()
+
+    def test_dashboard_rebuild_does_not_start_a_refresh(self):
+        with patch.object(serve.subprocess, 'run') as run, patch.object(serve.subprocess, 'Popen') as popen:
+            run.return_value.returncode = 0
+            self.assertTrue(json.load(self.request('/api/build', {}))['ok'])
+            self.assertEqual(Path(run.call_args.args[0][-1]).name, 'build.py')
+            popen.assert_not_called()
+
+
+class CatalogTests(unittest.TestCase):
+    def test_shared_membership_costs_one_scrape(self):
+        config = {'creators': [{'handle': 'SHARED', 'scopes': ['ai-dtc', 'dtc-agencies']},
+                               {'handle': 'shared', 'scopes': ['ai-dtc', 'dtc-agencies']},
+                               {'handle': 'paused', 'scopes': ['ai-dtc'], 'trackingEnabled': False}]}
+        self.assertEqual([c['handle'] for c in select_creators(config)], ['shared'])
+        self.assertEqual(len(select_creators(config, 'dtc-agencies')), 1)
+        self.assertEqual(len(select_creators(config, 'ai-dtc', tracked_only=False)), 2)
+
+    def test_paused_data_is_available_to_dashboard(self):
+        config = {'creators': [{'handle': 'paused', 'trackingEnabled': False}]}
+        self.assertEqual(select_creators(config), [])
+        self.assertEqual(select_creators(config, tracked_only=False)[0]['handle'], 'paused')
+
+    def test_invalid_scope_and_handle_rejected(self):
+        config = {'creators': [{'handle': '../secrets'}, {'handle': 'valid'}]}
+        self.assertEqual([c['handle'] for c in select_creators(config)], ['valid'])
+        with self.assertRaises(ValueError):
+            select_creators(config, 'unknown')
+        with self.assertRaises(ValueError):
+            validate_memberships(config, 'ai-dtc')
 
 
 if __name__ == '__main__':

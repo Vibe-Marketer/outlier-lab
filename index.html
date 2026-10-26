@@ -5,6 +5,19 @@
 <title>Outlier Lab — Monday October 26, 2026</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <style>
+  .niche-nav { display:flex; flex-wrap:wrap; gap:8px; margin:22px 0 12px; }
+  .niche-nav button { background:var(--bg-2); color:var(--fg-dim); border:1px solid var(--border); border-radius:999px; padding:10px 15px; font:inherit; cursor:pointer; }
+  .niche-nav button.active { background:var(--orange); color:#0a0a0c; border-color:var(--orange); font-weight:700; }
+  .niche-summary { color:var(--fg-dim); font-size:13px; margin-bottom:24px; line-height:1.6; }
+  .research-section { margin:28px 0; }
+  .research-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,310px),1fr)); gap:12px; }
+  .research-card { padding:18px; border:1px solid var(--border); background:var(--bg-2); border-radius:12px; }
+  .research-card h3 { margin:0 0 8px; font-size:16px; }
+  .research-card p { font-size:13px; line-height:1.6; color:var(--fg-dim); margin:8px 0; }
+  .research-card a { color:var(--orange); font-size:12px; }
+  .research-tag { display:inline-block; padding:4px 8px; border-radius:6px; background:rgba(255,138,61,.12); color:var(--orange); font-size:11px; }
+  .research-meta { color:var(--fg-faint); font-size:12px; margin:8px 0 16px; line-height:1.6; }
+  .creator-add { color:var(--orange); text-decoration:none; border-style:dashed !important; justify-content:center; min-width:145px; }
   :root {
     --bg: #0a0a0c;
     --bg-2: #14141a;
@@ -218,18 +231,21 @@
     </div>
     <div class="header-meta">
       <div class="date">Monday October 26, 2026</div>
-      <div>2 creators · 20 reels tracked</div>
-      <div>Next refresh: <b>tomorrow 07:00</b></div>
+      <div>8 saved accounts · 35 cached reels</div>
+      <div>Refresh: <b>manual · choose a list in Admin</b></div>
     </div>
   </header>
 
-  <h3 class="section-title">Creators tracked</h3>
+  <nav class="niche-nav" id="niche-nav" aria-label="Niche lists"></nav>
+  <div class="niche-summary" id="niche-summary"></div>
+
+  <h3 class="section-title">Creators in this list</h3>
   <div class="creators-row">
     <button class="creator-chip all active" data-creator="__all__" type="button">
-      <div class="avatar-fallback" style="display:flex;align-items:center;justify-content:center;font-size:18px">⊕</div>
+      <div class="avatar-fallback" style="display:flex;align-items:center;justify-content:center;font-size:18px" aria-hidden="true">◎</div>
       <div class="chip-info">
-        <div class="chip-name">All creators</div>
-        <div class="chip-stats">20 reels · 5 outliers</div>
+        <div class="chip-name">Everyone in this list</div>
+        <div class="chip-stats">35 reels · 8 outliers</div>
       </div>
     </button>
 
@@ -250,20 +266,81 @@
           </div>
         </button>
 
+
+        <button class="creator-chip" data-creator="daradenney" type="button">
+          <img src="thumbs/_profile_daradenney.jpg" alt="">
+          <div class="chip-info">
+            <div class="chip-name">@daradenney<span class="verified">✓</span></div>
+            <div class="chip-stats">145K followers · median 9.9K · 5 reels</div>
+          </div>
+        </button>
+
+
+        <button class="creator-chip" data-creator="sharma" type="button">
+          <img src="thumbs/_profile_sharma.jpg" alt="">
+          <div class="chip-info">
+            <div class="chip-name">@sharma<span class="verified">✓</span></div>
+            <div class="chip-stats">842 followers · median 0 · 0 reels · paused</div>
+          </div>
+        </button>
+
+
+        <button class="creator-chip" data-creator="taylorholiday" type="button">
+          <img src="thumbs/_profile_taylorholiday.jpg" alt="">
+          <div class="chip-info">
+            <div class="chip-name">@taylorholiday</div>
+            <div class="chip-stats">2.7K followers · median 0 · 0 reels · paused</div>
+          </div>
+        </button>
+
+
+        <button class="creator-chip" data-creator="codyplof" type="button">
+          <img src="thumbs/_profile_codyplof.jpg" alt="">
+          <div class="chip-info">
+            <div class="chip-name">@codyplof</div>
+            <div class="chip-stats">2.9K followers · median 0 · 0 reels · paused</div>
+          </div>
+        </button>
+
+
+        <button class="creator-chip" data-creator="mr.eflow" type="button">
+          <img src="thumbs/_profile_mr.eflow.jpg" alt="">
+          <div class="chip-info">
+            <div class="chip-name">@mr.eflow</div>
+            <div class="chip-stats">53K followers · median 27K · 5 reels</div>
+          </div>
+        </button>
+
+
+        <button class="creator-chip" data-creator="rowancheung" type="button">
+          <img src="thumbs/_profile_rowancheung.jpg" alt="">
+          <div class="chip-info">
+            <div class="chip-name">@rowancheung<span class="verified">✓</span></div>
+            <div class="chip-stats">530K followers · median 51K · 5 reels</div>
+          </div>
+        </button>
+
+    <a id="add-creator" class="creator-chip creator-add" href="/admin#add-creators"><span aria-hidden="true">＋</span> Add creator</a>
   </div>
 
-  <div class="kpis">
-    <div class="kpi"><div class="lab">Median plays</div><div class="val">14K</div><div class="delta">Across all tracked</div></div>
+  <div class="kpis" id="scope-kpis">
+    <div class="kpi"><div class="lab">Median plays</div><div class="val">11K</div><div class="delta">Across all tracked</div></div>
     <div class="kpi"><div class="lab">Top reel</div><div class="val accent">185K</div><div class="delta">Breakout · 21.3× median</div></div>
-    <div class="kpi"><div class="lab">Total plays · 30d</div><div class="val">2.7M</div><div class="delta">All reels combined</div></div>
-    <div class="kpi"><div class="lab">Engagements · 30d</div><div class="val">55K</div><div class="delta">Likes + comments</div></div>
-    <div class="kpi"><div class="lab">Outliers (≥2×)</div><div class="val">5</div><div class="delta">25% of feed</div></div>
+    <div class="kpi"><div class="lab">Sample plays · 28d</div><div class="val">3.5M</div><div class="delta">All reels combined</div></div>
+    <div class="kpi"><div class="lab">Sample engagements · 28d</div><div class="val">82K</div><div class="delta">Likes + comments</div></div>
+    <div class="kpi"><div class="lab">Outliers (≥2×)</div><div class="val">8</div><div class="delta">23% of feed</div></div>
   </div>
+
+  <section class="research-section" aria-labelledby="research-heading">
+    <h2 id="research-heading">Creator research</h2>
+    <p class="research-meta" id="research-meta"></p>
+    <div class="research-grid" id="research-grid"></div>
+  </section>
 
   <div class="view-bar">
     <div class="left">
       <h2>Reels</h2>
-      <span class="count" id="row-count">20 of 20</span>
+      <span class="count" id="row-count">35 of 35</span>
       <span class="filter-status" id="filter-status"></span>
     </div>
     <div style="display:flex;align-items:center;gap:8px">
@@ -299,7 +376,7 @@
             <th></th>
             <th data-sort="ratio">Outlier<span class="arrow">▼</span></th>
             <th data-sort="creator_username" class="creator-col">Creator<span class="arrow">▼</span></th>
-            <th>Hook (spoken)</th>
+            <th>Hook / caption</th>
             <th data-sort="plays" class="num">Plays<span class="arrow">▼</span></th>
             <th data-sort="likes" class="num">Likes<span class="arrow">▼</span></th>
             <th data-sort="comments" class="num">Comments<span class="arrow">▼</span></th>
@@ -368,6 +445,29 @@
         </article>
 
 
+        <article class="card band-strong" data-shortcode="De21H_ZOhfN" data-creator="mr.eflow">
+          <button class="thumb" type="button">
+            <img src="thumbs/De21H_ZOhfN.jpg" alt="" loading="lazy">
+            <span class="play-overlay">▶</span>
+            <span class="play-badge">376K</span>
+            <span class="band-badge" style="background:#FF8A3D">14.2× · Replicable</span>
+          </button>
+          <div class="meta">
+            <div class="creator-row">
+              <img src="thumbs/_profile_mr.eflow.jpg" class="creator-avatar-sm" alt="">
+              <span>@mr.eflow</span>
+            </div>
+            <div class="hook">Your smartphone can be the brain of your next robot.</div>
+            <div class="stats">
+              <span><b>376K</b> plays</span>
+              <span>♥ 17K</span>
+              <span>💬 201</span>
+              <span>⏱ 1:03</span>
+            </div>
+          </div>
+        </article>
+
+
         <article class="card band-good" data-shortcode="De1lH-hxr89" data-creator="garyvee">
           <button class="thumb" type="button">
             <img src="thumbs/De1lH-hxr89.jpg" alt="" loading="lazy">
@@ -414,6 +514,54 @@
         </article>
 
 
+        <article class="card band-good" data-shortcode="DeHojO3RYAF" data-creator="daradenney">
+          <button class="thumb" type="button">
+            <img src="thumbs/DeHojO3RYAF.jpg" alt="" loading="lazy">
+            <span class="play-overlay">▶</span>
+            <span class="play-badge">23K</span>
+            <span class="band-badge" style="background:#FFD43D">2.3× · Working</span>
+          </button>
+          <div class="meta">
+            <div class="creator-row">
+              <img src="thumbs/_profile_daradenney.jpg" class="creator-avatar-sm" alt="">
+              <span>@daradenney</span>
+            </div>
+            <div class="hook">Comment UNIVERSAL and I’ll send you $1000 in matched ad credits for TV 🤯
+
+Here’s the thing: being a “data driven performance marketer” can sometimes lead you astray… if you subscri…</div>
+            <div class="stats">
+              <span><b>23K</b> plays</span>
+              <span>♥ 310</span>
+              <span>💬 63</span>
+              <span>⏱ 2:11</span>
+            </div>
+          </div>
+        </article>
+
+
+        <article class="card band-good" data-shortcode="DezsldAOgn8" data-creator="rowancheung">
+          <button class="thumb" type="button">
+            <img src="thumbs/DezsldAOgn8.jpg" alt="" loading="lazy">
+            <span class="play-overlay">▶</span>
+            <span class="play-badge">106K</span>
+            <span class="band-badge" style="background:#FFD43D">2.1× · Working</span>
+          </button>
+          <div class="meta">
+            <div class="creator-row">
+              <img src="thumbs/_profile_rowancheung.jpg" class="creator-avatar-sm" alt="">
+              <span>@rowancheung</span>
+            </div>
+            <div class="hook">🧠 An AI system called Brain-IT can reconstruct recognizable images from brain scans of people looking at pictures.</div>
+            <div class="stats">
+              <span><b>106K</b> plays</span>
+              <span>♥ 3.7K</span>
+              <span>💬 89</span>
+              <span>⏱ 1:13</span>
+            </div>
+          </div>
+        </article>
+
+
         <article class="card band-good" data-shortcode="De7Mvvykz8G" data-creator="hormozi">
           <button class="thumb" type="button">
             <img src="thumbs/De7Mvvykz8G.jpg" alt="" loading="lazy">
@@ -455,6 +603,29 @@
               <span>♥ 4.5K</span>
               <span>💬 113</span>
               <span>⏱ 33s</span>
+            </div>
+          </div>
+        </article>
+
+
+        <article class="card band-normal" data-shortcode="Dew1EolOlt3" data-creator="rowancheung">
+          <button class="thumb" type="button">
+            <img src="thumbs/Dew1EolOlt3.jpg" alt="" loading="lazy">
+            <span class="play-overlay">▶</span>
+            <span class="play-badge">92K</span>
+            <span class="band-badge" style="background:rgba(255,255,255,.4)">1.8× · Normal</span>
+          </button>
+          <div class="meta">
+            <div class="creator-row">
+              <img src="thumbs/_profile_rowancheung.jpg" class="creator-avatar-sm" alt="">
+              <span>@rowancheung</span>
+            </div>
+            <div class="hook">🥊 This robot cage fight just got hit with a cease-and-desist letter.</div>
+            <div class="stats">
+              <span><b>92K</b> plays</span>
+              <span>♥ 1.5K</span>
+              <span>💬 25</span>
+              <span>⏱ 59s</span>
             </div>
           </div>
         </article>
@@ -507,6 +678,29 @@ Fanatics live, district live shopping and more … learn the space ..</div>
         </article>
 
 
+        <article class="card band-normal" data-shortcode="De4zMX6OP_1" data-creator="mr.eflow">
+          <button class="thumb" type="button">
+            <img src="thumbs/De4zMX6OP_1.jpg" alt="" loading="lazy">
+            <span class="play-overlay">▶</span>
+            <span class="play-badge">36K</span>
+            <span class="band-badge" style="background:rgba(255,255,255,.4)">1.3× · Normal</span>
+          </button>
+          <div class="meta">
+            <div class="creator-row">
+              <img src="thumbs/_profile_mr.eflow.jpg" class="creator-avatar-sm" alt="">
+              <span>@mr.eflow</span>
+            </div>
+            <div class="hook">Kimi K3.1 Pro appears to be nearly as good as the big lab state of the art models...</div>
+            <div class="stats">
+              <span><b>36K</b> plays</span>
+              <span>♥ 999</span>
+              <span>💬 22</span>
+              <span>⏱ 1:20</span>
+            </div>
+          </div>
+        </article>
+
+
         <article class="card band-normal" data-shortcode="De6Sz_WD2O3" data-creator="hormozi">
           <button class="thumb" type="button">
             <img src="thumbs/De6Sz_WD2O3.jpg" alt="" loading="lazy">
@@ -525,6 +719,29 @@ Fanatics live, district live shopping and more … learn the space ..</div>
               <span>♥ 54</span>
               <span>💬 3</span>
               <span>⏱ 24s</span>
+            </div>
+          </div>
+        </article>
+
+
+        <article class="card band-normal" data-shortcode="DehjhGgRtsV" data-creator="daradenney">
+          <button class="thumb" type="button">
+            <img src="thumbs/DehjhGgRtsV.jpg" alt="" loading="lazy">
+            <span class="play-overlay">▶</span>
+            <span class="play-badge">11K</span>
+            <span class="band-badge" style="background:rgba(255,255,255,.4)">1.1× · Normal</span>
+          </button>
+          <div class="meta">
+            <div class="creator-row">
+              <img src="thumbs/_profile_daradenney.jpg" class="creator-avatar-sm" alt="">
+              <span>@daradenney</span>
+            </div>
+            <div class="hook">My customers just told me what my brand actually is… so I rebuilt the whole thing in one day.</div>
+            <div class="stats">
+              <span><b>11K</b> plays</span>
+              <span>♥ 376</span>
+              <span>💬 33</span>
+              <span>⏱ 2:06</span>
             </div>
           </div>
         </article>
@@ -553,6 +770,75 @@ Fanatics live, district live shopping and more … learn the space ..</div>
         </article>
 
 
+        <article class="card band-normal" data-shortcode="De2UIwTu1ZX" data-creator="rowancheung">
+          <button class="thumb" type="button">
+            <img src="thumbs/De2UIwTu1ZX.jpg" alt="" loading="lazy">
+            <span class="play-overlay">▶</span>
+            <span class="play-badge">51K</span>
+            <span class="band-badge" style="background:rgba(255,255,255,.4)">1.0× · Normal</span>
+          </button>
+          <div class="meta">
+            <div class="creator-row">
+              <img src="thumbs/_profile_rowancheung.jpg" class="creator-avatar-sm" alt="">
+              <span>@rowancheung</span>
+            </div>
+            <div class="hook">🦂 Claude just helped design a potential scorpion antivenom.</div>
+            <div class="stats">
+              <span><b>51K</b> plays</span>
+              <span>♥ 957</span>
+              <span>💬 12</span>
+              <span>⏱ 1:10</span>
+            </div>
+          </div>
+        </article>
+
+
+        <article class="card band-normal" data-shortcode="DezW5woRVXJ" data-creator="daradenney">
+          <button class="thumb" type="button">
+            <img src="thumbs/DezW5woRVXJ.jpg" alt="" loading="lazy">
+            <span class="play-overlay">▶</span>
+            <span class="play-badge">9.9K</span>
+            <span class="band-badge" style="background:rgba(255,255,255,.4)">1.0× · Normal</span>
+          </button>
+          <div class="meta">
+            <div class="creator-row">
+              <img src="thumbs/_profile_daradenney.jpg" class="creator-avatar-sm" alt="">
+              <span>@daradenney</span>
+            </div>
+            <div class="hook">I own 3 businesses… so I am juggling A LOT.</div>
+            <div class="stats">
+              <span><b>9.9K</b> plays</span>
+              <span>♥ 305</span>
+              <span>💬 16</span>
+              <span>⏱ 1:08</span>
+            </div>
+          </div>
+        </article>
+
+
+        <article class="card band-normal" data-shortcode="Dex2AoPOz3o" data-creator="mr.eflow">
+          <button class="thumb" type="button">
+            <img src="thumbs/Dex2AoPOz3o.jpg" alt="" loading="lazy">
+            <span class="play-overlay">▶</span>
+            <span class="play-badge">27K</span>
+            <span class="band-badge" style="background:rgba(255,255,255,.4)">1.0× · Normal</span>
+          </button>
+          <div class="meta">
+            <div class="creator-row">
+              <img src="thumbs/_profile_mr.eflow.jpg" class="creator-avatar-sm" alt="">
+              <span>@mr.eflow</span>
+            </div>
+            <div class="hook">The Unitree Kung-Fu Legend Robot Looks Insane!</div>
+            <div class="stats">
+              <span><b>27K</b> plays</span>
+              <span>♥ 770</span>
+              <span>💬 85</span>
+              <span>⏱ 1:05</span>
+            </div>
+          </div>
+        </article>
+
+
         <article class="card band-normal" data-shortcode="De6zul8CH6V" data-creator="hormozi">
           <button class="thumb" type="button">
             <img src="thumbs/De6zul8CH6V.jpg" alt="" loading="lazy">
@@ -576,6 +862,29 @@ Fanatics live, district live shopping and more … learn the space ..</div>
         </article>
 
 
+        <article class="card band-normal" data-shortcode="DeuC41_RmWG" data-creator="daradenney">
+          <button class="thumb" type="button">
+            <img src="thumbs/DeuC41_RmWG.jpg" alt="" loading="lazy">
+            <span class="play-overlay">▶</span>
+            <span class="play-badge">6.7K</span>
+            <span class="band-badge" style="background:rgba(255,255,255,.4)">0.7× · Normal</span>
+          </button>
+          <div class="meta">
+            <div class="creator-row">
+              <img src="thumbs/_profile_daradenney.jpg" class="creator-avatar-sm" alt="">
+              <span>@daradenney</span>
+            </div>
+            <div class="hook">Localization is one of my favorite use cases for AI.</div>
+            <div class="stats">
+              <span><b>6.7K</b> plays</span>
+              <span>♥ 191</span>
+              <span>💬 11</span>
+              <span>⏱ 1:02</span>
+            </div>
+          </div>
+        </article>
+
+
         <article class="card band-normal" data-shortcode="De6Ke78D8Q0" data-creator="hormozi">
           <button class="thumb" type="button">
             <img src="thumbs/De6Ke78D8Q0.jpg" alt="" loading="lazy">
@@ -594,6 +903,33 @@ Fanatics live, district live shopping and more … learn the space ..</div>
               <span>♥ 56</span>
               <span>💬 0</span>
               <span>⏱ 37s</span>
+            </div>
+          </div>
+        </article>
+
+
+        <article class="card band-normal" data-shortcode="Deb_IaLxvfW" data-creator="daradenney">
+          <button class="thumb" type="button">
+            <img src="thumbs/Deb_IaLxvfW.jpg" alt="" loading="lazy">
+            <span class="play-overlay">▶</span>
+            <span class="play-badge">3.8K</span>
+            <span class="band-badge" style="background:rgba(255,255,255,.4)">0.4× · Normal</span>
+          </button>
+          <div class="meta">
+            <div class="creator-row">
+              <img src="thumbs/_profile_daradenney.jpg" class="creator-avatar-sm" alt="">
+              <span>@daradenney</span>
+            </div>
+            <div class="hook">How AI should be used in marketing:
+
+More content &lt; Better experience
+
+Huge thanks to the @braze team for having me at #Forge2026 this year!!</div>
+            <div class="stats">
+              <span><b>3.8K</b> plays</span>
+              <span>♥ 122</span>
+              <span>💬 7</span>
+              <span>⏱ 2:11</span>
             </div>
           </div>
         </article>
@@ -645,6 +981,29 @@ Fanatics live, district live shopping and more … learn the space ..</div>
         </article>
 
 
+        <article class="card band-normal" data-shortcode="DexbkXZRozg" data-creator="rowancheung">
+          <button class="thumb" type="button">
+            <img src="thumbs/DexbkXZRozg.jpg" alt="" loading="lazy">
+            <span class="play-overlay">▶</span>
+            <span class="play-badge">7.4K</span>
+            <span class="band-badge" style="background:rgba(255,255,255,.4)">0.1× · Normal</span>
+          </button>
+          <div class="meta">
+            <div class="creator-row">
+              <img src="thumbs/_profile_rowancheung.jpg" class="creator-avatar-sm" alt="">
+              <span>@rowancheung</span>
+            </div>
+            <div class="hook">🐄 Halter, a New Zealand agtech startup, has developed AI-powered smart collars that create virtual fences for cattle, allowing farmers to manage herds remotely through a phone app.</div>
+            <div class="stats">
+              <span><b>7.4K</b> plays</span>
+              <span>♥ 189</span>
+              <span>💬 3</span>
+              <span>⏱ 1:21</span>
+            </div>
+          </div>
+        </article>
+
+
         <article class="card band-normal" data-shortcode="De1naj2CDkH" data-creator="garyvee">
           <button class="thumb" type="button">
             <img src="thumbs/De1naj2CDkH.jpg" alt="" loading="lazy">
@@ -663,6 +1022,79 @@ Fanatics live, district live shopping and more … learn the space ..</div>
               <span>♥ 709</span>
               <span>💬 0</span>
               <span>⏱ 1:05</span>
+            </div>
+          </div>
+        </article>
+
+
+        <article class="card band-normal" data-shortcode="De8glGguaPi" data-creator="mr.eflow">
+          <button class="thumb" type="button">
+            <img src="thumbs/De8glGguaPi.jpg" alt="" loading="lazy">
+            <span class="play-overlay">▶</span>
+            <span class="play-badge">3.0K</span>
+            <span class="band-badge" style="background:rgba(255,255,255,.4)">0.1× · Normal</span>
+          </button>
+          <div class="meta">
+            <div class="creator-row">
+              <img src="thumbs/_profile_mr.eflow.jpg" class="creator-avatar-sm" alt="">
+              <span>@mr.eflow</span>
+            </div>
+            <div class="hook">Check out the Voxel Butler robot...</div>
+            <div class="stats">
+              <span><b>3.0K</b> plays</span>
+              <span>♥ 59</span>
+              <span>💬 0</span>
+              <span>⏱ 1:19</span>
+            </div>
+          </div>
+        </article>
+
+
+        <article class="card band-normal" data-shortcode="De2gCacAPBH" data-creator="mr.eflow">
+          <button class="thumb" type="button">
+            <img src="thumbs/De2gCacAPBH.jpg" alt="" loading="lazy">
+            <span class="play-overlay">▶</span>
+            <span class="play-badge">2.3K</span>
+            <span class="band-badge" style="background:rgba(255,255,255,.4)">0.1× · Normal</span>
+          </button>
+          <div class="meta">
+            <div class="creator-row">
+              <img src="thumbs/_profile_mr.eflow.jpg" class="creator-avatar-sm" alt="">
+              <span>@mr.eflow</span>
+            </div>
+            <div class="hook">Comment “DOTS” and I’ll DM you each prompt and the link to try it yourself!⁠
+⁠
+@chatgpt can now do things for you even when you&#x27;re not using it.⁠
+
+Dots are their new always-on AI a…</div>
+            <div class="stats">
+              <span><b>2.3K</b> plays</span>
+              <span>♥ 25</span>
+              <span>💬 4</span>
+              <span>⏱ 51s</span>
+            </div>
+          </div>
+        </article>
+
+
+        <article class="card band-normal" data-shortcode="De4MKCpRKiX" data-creator="rowancheung">
+          <button class="thumb" type="button">
+            <img src="thumbs/De4MKCpRKiX.jpg" alt="" loading="lazy">
+            <span class="play-overlay">▶</span>
+            <span class="play-badge">1.7K</span>
+            <span class="band-badge" style="background:rgba(255,255,255,.4)">0.0× · Normal</span>
+          </button>
+          <div class="meta">
+            <div class="creator-row">
+              <img src="thumbs/_profile_rowancheung.jpg" class="creator-avatar-sm" alt="">
+              <span>@rowancheung</span>
+            </div>
+            <div class="hook">Microsoft has been working on Project Silica for nearly a decade, and this month marked its biggest leap yet.</div>
+            <div class="stats">
+              <span><b>1.7K</b> plays</span>
+              <span>♥ 38</span>
+              <span>💬 1</span>
+              <span>⏱ 1:15</span>
             </div>
           </div>
         </article>
@@ -790,8 +1222,8 @@ Fanatics live, district live shopping and more … learn the space ..</div>
   </div>
 
   <footer>
-    <div>Outlier Lab · v1.2 · 2 creators tracked — multi-account list comes next</div>
-    <div>Data: Apify · Built 2026-10-26 08:30</div>
+    <div>Outlier Lab · four niche lists · shared creators scraped once</div>
+    <div>Data: Apify · Built 2026-10-26 10:00</div>
   </footer>
 
 </div>
@@ -824,8 +1256,12 @@ Fanatics live, district live shopping and more … learn the space ..</div>
 </div>
 
 <script>
-const REELS = [{"shortCode": "De7izHVE7U_", "url": "https://www.instagram.com/p/De7izHVE7U_/", "thumb": "De7izHVE7U_.jpg", "hook": "There's three things that have to happen in order for you to be obligated to enforce a standard, which is that number one, someone has to know the standard you have.", "transcript": "There's three things that have to happen in order for you to be obligated to enforce a standard, which is that number one, someone has to know the standard you have. Number two is that they have to have the ability to adhere to that standard. And then three, choose not to. The consequence for crossing you needs to be consistent, which means that every time someone crosses you, there needs to be a consequence. If there isn't, then you teach people to gamble with you because it's a variable reinforcer. And so it has to be consistent. It has to be immediate. It has to be escalating, which means if the first time I tell you, I say, don't worry, you're with us. Be here tomorrow. Do better. Fine. If you do it again, then it's like you're off for the night. Because what happens is at some moment, it stops being about punishing the behavior and it should be about punishing the pattern of behavior. And so at that point, you have to respect the standard for everyone. And out of owing it to everyone, we have to let this person go, even if they're a perceived high performer.", "caption": "A lot of management just comes down to:\n\nTell them what you want\nShow them how to do it\nCheck in to make sure they did\nGive feedback on the outcome\n\nAnd just doing that until you die.", "plays": 185182, "likes": 3407, "comments": 57, "engagements": 3464, "duration": 51.279999, "posted_human": "Oct 25", "posted_ts": 1792959477, "ratio": 21.286510719006838, "band_class": "breakout", "band_label": "Breakout", "band_color": "#FF3D6E", "creator_handle": "hormozi", "creator_username": "hormozi", "creator_avatar": "thumbs/_profile_hormozi.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De7SITIjTj8", "url": "https://www.instagram.com/p/De7SITIjTj8/", "thumb": "De7SITIjTj8.jpg", "hook": "I sell communication skills to senior leaders.", "transcript": "I sell communication skills to senior leaders. Last 10 months, 300K.\nThe outcome that you're promising is what?\nPosition them for career growth. Promotion.\nI mean, you gotta still get promoted in 90 days.\nI don't know if I can deliver on that.\nRight. You want to start with making an exceptional offer and then ask yourself, what would it take to make this true?\nSo it's not promise the world and then don't deliver. It's promise the country and then give them the world.\nYou can call that, you know, get promoted in 90 days. I can't guarantee that, obviously.\nBut then you'd share averages, right? So you can say, listen, the average person, you know, gets a raise, not necessarily a promotion in title.\nAnd it takes them on average 120 days. Again, we can figure that out.\nAnd the average person gets a 10% raise. All right. So you're making $150,000 a year. If you get $15,000 per year for life that permanently elevates you, that sounds like a pretty good deal. Just state the facts and tell the truth. We're going to try and go for this. Half of people get it. The other half don't. One in three. One in three get it. And this is where it gets important. Of the one in three, or rather of the two that didn't hit it, did they follow the checkpoints that you told them to do? No. Right. And so again, stating the facts and telling the truth is like, of the people who follow my system to a T, 80% of them hit it. But I want to be clear, overall, one out of three do it. Because it's work. You said you're the type of person who really, this means a lot to you. Okay. So then I'm not worried about it.", "caption": "If you want to stand out in a crowded marketplace\u2014tell the truth. \n\nComment \"WIN\" to get a free scaling roadmap.", "plays": 156616, "likes": 2411, "comments": 71, "engagements": 2482, "duration": 81.706703, "posted_human": "Oct 25", "posted_ts": 1792950656, "ratio": 18.002873728375192, "band_class": "breakout", "band_label": "Breakout", "band_color": "#FF3D6E", "creator_handle": "hormozi", "creator_username": "hormozi", "creator_avatar": "thumbs/_profile_hormozi.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De1lH-hxr89", "url": "https://www.instagram.com/p/De1lH-hxr89/", "thumb": "De1lH-hxr89.jpg", "hook": "There\u2019s no way out of fear \ud83d\ude30 Besides attacking it head on \u2026 fall in love with rejection \u2026 have sympathy for those who judge you \u2026 relaxed you only have 1 life \u2026 and go get yours to\u2026", "transcript": "", "caption": "There\u2019s no way out of fear \ud83d\ude30 Besides attacking it head on \u2026 fall in love with rejection \u2026 have sympathy for those who judge you \u2026 relaxed you only have 1 life \u2026 and go get yours today \ud83d\ude0d\u203c\ufe0f", "plays": 817659, "likes": 21421, "comments": 350, "engagements": 21771, "duration": 37.495831, "posted_human": "Oct 23", "posted_ts": 1792759473, "ratio": 4.539712679575265, "band_class": "good", "band_label": "Working", "band_color": "#FFD43D", "creator_handle": "garyvee", "creator_username": "garyvee", "creator_avatar": "thumbs/_profile_garyvee.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De2rOjvvabL", "url": "https://www.instagram.com/p/De2rOjvvabL/", "thumb": "De2rOjvvabL.jpg", "hook": "", "transcript": "", "caption": "", "plays": 438706, "likes": 8286, "comments": 237, "engagements": 8523, "duration": 7.733333, "posted_human": "Oct 23", "posted_ts": 1792796060, "ratio": 2.4357332222916233, "band_class": "good", "band_label": "Working", "band_color": "#FFD43D", "creator_handle": "garyvee", "creator_username": "garyvee", "creator_avatar": "thumbs/_profile_garyvee.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De7Mvvykz8G", "url": "https://www.instagram.com/p/De7Mvvykz8G/", "thumb": "De7Mvvykz8G.jpg", "hook": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "transcript": "", "caption": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "plays": 17583, "likes": 131, "comments": 11, "engagements": 142, "duration": 56.703129, "posted_human": "Oct 25", "posted_ts": 1792947847, "ratio": 2.0211506408414275, "band_class": "good", "band_label": "Working", "band_color": "#FFD43D", "creator_handle": "hormozi", "creator_username": "hormozi", "creator_avatar": "thumbs/_profile_hormozi.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De5VdK3OJEj", "url": "https://www.instagram.com/p/De5VdK3OJEj/", "thumb": "De5VdK3OJEj.jpg", "hook": "The world doesn\u2019t revolve around you \u2026.", "transcript": "", "caption": "The world doesn\u2019t revolve around you \u2026. And the second you realize it .. life gets better\n\n#garyvee #inspiration #mindset", "plays": 359112, "likes": 4467, "comments": 113, "engagements": 4580, "duration": 32.657658, "posted_human": "Oct 24", "posted_ts": 1792885339, "ratio": 1.9938205288361441, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "garyvee", "creator_username": "garyvee", "creator_avatar": "thumbs/_profile_garyvee.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De4PtL5MvzC", "url": "https://www.instagram.com/p/De4PtL5MvzC/", "thumb": "De4PtL5MvzC.jpg", "hook": "Wake up this morning \ud83c\udf1e and do your 15 hours of homework - eBay live, TikTok shop, whatnot,\nFanatics live, district live shopping and more \u2026 learn the space ..", "transcript": "", "caption": "Wake up this morning \ud83c\udf1e and do your 15 hours of homework - eBay live, TikTok shop, whatnot,\nFanatics live, district live shopping and more \u2026 learn the space .. and do your first show \u2026 \n\nShit \u2026 sell stuff from around the house \u2026 \ud83c\udfe0 \n\nStart now", "plays": 321177, "likes": 5413, "comments": 207, "engagements": 5620, "duration": 39.789791, "posted_human": "Oct 24", "posted_ts": 1792848746, "ratio": 1.7832021653133459, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "garyvee", "creator_username": "garyvee", "creator_avatar": "thumbs/_profile_garyvee.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De7g88Pgapm", "url": "https://www.instagram.com/p/De7g88Pgapm/", "thumb": "De7g88Pgapm.jpg", "hook": "Congrats dolphins fans", "transcript": "", "caption": "Congrats dolphins fans", "plays": 314003, "likes": 6257, "comments": 557, "engagements": 6814, "duration": 12.066667, "posted_human": "Oct 25", "posted_ts": 1792958463, "ratio": 1.7433715039211604, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "garyvee", "creator_username": "garyvee", "creator_avatar": "thumbs/_profile_garyvee.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De6Sz_WD2O3", "url": "https://www.instagram.com/p/De6Sz_WD2O3/", "thumb": "De6Sz_WD2O3.jpg", "hook": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "transcript": "", "caption": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "plays": 10156, "likes": 54, "comments": 3, "engagements": 57, "duration": 23.799999, "posted_human": "Oct 25", "posted_ts": 1792917533, "ratio": 1.167423415138801, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "hormozi", "creator_username": "hormozi", "creator_avatar": "thumbs/_profile_hormozi.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De6rcd9EUf6", "url": "https://www.instagram.com/p/De6rcd9EUf6/", "thumb": "De6rcd9EUf6.jpg", "hook": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "transcript": "", "caption": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "plays": 8703, "likes": 19, "comments": 2, "engagements": 21, "duration": 93.125, "posted_human": "Oct 25", "posted_ts": 1792930374, "ratio": 1.000402321972527, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "hormozi", "creator_username": "hormozi", "creator_avatar": "thumbs/_profile_hormozi.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De6zul8CH6V", "url": "https://www.instagram.com/p/De6zul8CH6V/", "thumb": "De6zul8CH6V.jpg", "hook": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "transcript": "", "caption": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "plays": 8696, "likes": 45, "comments": 0, "engagements": 45, "duration": 28.76, "posted_human": "Oct 25", "posted_ts": 1792934818, "ratio": 0.9995976780274728, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "hormozi", "creator_username": "hormozi", "creator_avatar": "thumbs/_profile_hormozi.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De6Ke78D8Q0", "url": "https://www.instagram.com/p/De6Ke78D8Q0/", "thumb": "De6Ke78D8Q0.jpg", "hook": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "transcript": "", "caption": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "plays": 3426, "likes": 56, "comments": 0, "engagements": 56, "duration": 36.911911, "posted_human": "Oct 25", "posted_ts": 1792913093, "ratio": 0.3938157365365826, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "hormozi", "creator_username": "hormozi", "creator_avatar": "thumbs/_profile_hormozi.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De7m8cRgrux", "url": "https://www.instagram.com/p/De7m8cRgrux/", "thumb": "De7m8cRgrux.jpg", "hook": "I grew up selling lemonade...", "transcript": "", "caption": "I grew up selling lemonade... everytime I see a kid slinging... I\u2019ll always stop and support. \n\n#lemonadestand #support #respect", "plays": 46222, "likes": 873, "comments": 1, "engagements": 874, "duration": 36.700001, "posted_human": "Oct 25", "posted_ts": 1792961609, "ratio": 0.25662849607883964, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "garyvee", "creator_username": "garyvee", "creator_avatar": "thumbs/_profile_garyvee.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De7UpNMgq0Y", "url": "https://www.instagram.com/p/De7UpNMgq0Y/", "thumb": "De7UpNMgq0Y.jpg", "hook": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "transcript": "", "caption": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "plays": 2138, "likes": 22, "comments": 0, "engagements": 22, "duration": 31, "posted_human": "Oct 25", "posted_ts": 1792951973, "ratio": 0.24576125064658888, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "hormozi", "creator_username": "hormozi", "creator_avatar": "thumbs/_profile_hormozi.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De1naj2CDkH", "url": "https://www.instagram.com/p/De1naj2CDkH/", "thumb": "De1naj2CDkH.jpg", "hook": "I need you to listen this morning \u2026 like really listen \ud83d\udc42 \u2026 please share this with someone\u2019s who\u2019s scared to share \u2026 please \ud83d\ude4f", "transcript": "", "caption": "I need you to listen this morning \u2026 like really listen \ud83d\udc42 \u2026 please share this with someone\u2019s who\u2019s scared to share \u2026 please \ud83d\ude4f", "plays": 25169, "likes": 709, "comments": 0, "engagements": 709, "duration": 64.866669, "posted_human": "Oct 23", "posted_ts": 1792760493, "ratio": 0.13974044000277605, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "garyvee", "creator_username": "garyvee", "creator_avatar": "thumbs/_profile_garyvee.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De11ONFn3Xk", "url": "https://www.instagram.com/p/De11ONFn3Xk/", "thumb": "De11ONFn3Xk.jpg", "hook": "I have something important to ask you \u2026.", "transcript": "", "caption": "I have something important to ask you \u2026.\n\nPlease try to \u201ccatch' the flower :)", "plays": 3324, "likes": 26, "comments": 2, "engagements": 28, "duration": 7.010975, "posted_human": "Oct 23", "posted_ts": 1792767729, "ratio": 0.01845513220903602, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "garyvee", "creator_username": "garyvee", "creator_avatar": "thumbs/_profile_garyvee.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De678_WjJDy", "url": "https://www.instagram.com/p/De678_WjJDy/", "thumb": "De678_WjJDy.jpg", "hook": "My name is Zach.", "transcript": "My name is Zach. I run a solar sales company, do about two and a half million dollars. I guess I'd like to be at ten million dollars in revenue. I feel like this whole last day and a half has kind of opened me up, and I don't know what I want anymore, I guess. Great. What's stopping me, I guess I would really say, is recruiting and hiring new people. We have 80 people. We're in New York State. We have three different main offices, about 15, 20 salespeople apiece, and then some appointment setters for each one. And I kind of feel like, one, the market's kind of getting a little tapped out, and two, I just don't know how to go from 80 people to 150 or 200 people in a door-to-door sales space. You probably lack a leadership development program and process, is my guess. We have really great leaders. I have three main managers. What's the issue limiting you then? Because if you have good leaders, then you're... I think recruiting, bringing in new people. It took us eight years to get to about 80 people. Eight years to get to 80 people. Okay. Yeah. Then, yeah. Then you probably have a manpower constraint. So what's your recruiting process look like right now? It's been all organic. Okay. Yeah. So... I kind of knew the answer with what you were going to say was more people. And so... Well, you're in the business of people selling shit to people, and so more people who sell shit to people, the more money you make. That makes sense. I'll say this. The biggest solar sales businesses are not solar sales businesses. They are recruiting businesses. Correct. I mean, I figured that out literally here when we first got here. Within the first five minutes, I turned to the guy next to me, I'm like, I could leave now. I'm like, this blew my mind, you know? That's the business you're really in. I figured that out. That's the business you're really in. And so what you need to have is basically CAT to LTGP. Okay. Cost of acquiring talent to lifetime gross profit per employee. Got it. So per sales rep. It's also just like a customer. Because functionally, they are your customer. Yeah. I figured that out. They are the recurring customer that you have, and so they become a revenue generating node for you. Every sales guy becomes activated. You have their big drop off in week one or two, then you have day 30, then if you get them past 30, you'll have a little bit more luck, and then day 90 is kind of like the rest. And it's like, if you get them past day 90, they're in. They're going to be lifers. It's going to be awesome. And so all of the work that you'll have to do is, number one, you probably need way more people on the front end. Yes. You need to kiss more toads. Right? And then the actual onboarding and training process, you have to focus purely on behaviors. And what sales guys tend to suck at is actually training sales. Because sales guys, more than any other profession, use so much mysticism and make-believe. They're like, bro, you got to give them the curiosity. And you're like, what does that mean? The thing is that they say it so convicted because they're sales guys that they believe it and the other guy believes it and they just run. They have no idea what they're doing. So it's like, we just have to boil it down to like, what do you do with your arms? What do you do with your mouth? What do you do with your head? And so when you're doing the role plays, I'm sure you guys have doors that they knock on and do this. Of course. And so we have to simulate the environment as much as possible, but you probably need to onboard way more people at a time. How many new reps are you onboarding a week? Five. Yeah, so it's probably got to be like 25 to get to where you want to go. Now, I guess my second question to this is why I feel like I was asking that before and he kind of cracked me open. Cracked you open? Told me what I need to know. Guess the whole thing before I even said anything to him. I don't feel like this opportunity anymore is going to get me to where I want to, you know? You're hitting the whole cycle, dude. And your market might not be that big, right? So I don't know. My real goal, if I did $10 million in revenue, I don't know if it would be like the thing for me anyway. You will feel nothing either way. It doesn't matter. It's fair. It's not going to happen. It's fair. Well, you're still eating chicken rice, so it's still eating chicken rice. It is what it is. Okay, so what else would you do? He kind of called it. I haven't, you know, let me give full context. I've been doing it for eight years. I said that by the time I hit 30, I'm 27. If I have X amount of dollars in my bank account, you'll be happy. No, I'm just going to give up the business and move on. I'm already happy. I'm going to give up the business and move on and go do something else. But this was like kind of my stepping stone, you know? And so eventually I'd like to open up some kind of a wellness slash farm fitness facility in another state, and that's kind of my goal. So I guess my real question is, do I wait until I'm 30 and I have X amount of dollars in my bank account? Do I just do it now? Do you have the money to do the thing now? Probably not. Okay, how much do you need to do the thing? I guess I don't know the exact number. I guess 10 million. You need 10 to do it? Yeah. Okay, I mean, can you do that in the next three years? Most likely. Sounds like a good plan. That is the goal. That was the plan. So I guess thanks for telling me that's the plan. Thanks. So you just saw a compressed version of me going back and forth with the business owner to help them find the constraint and then ideally give one to two steps on what to do next to help deconstraint it. That being said, if you would like to have the exact same process applied to your business but based on 10,000 businesses with a perfect memory, then we made this free tool that actually aggregates all of that data for different businesses and industries that we've actually had walk through the door, and it's yours. It's new, it's free, and it's fast. So go grab it, and on the thank you page, if you want to be in the room, you can book a call, but either way, the tool is free, and so are the solutions. Enjoy.", "caption": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "plays": 152, "likes": 1, "comments": 0, "engagements": 1, "duration": 328.106659, "posted_human": "Oct 25", "posted_ts": 1792939137, "ratio": 0.017472268521179377, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "hormozi", "creator_username": "hormozi", "creator_avatar": "thumbs/_profile_hormozi.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De6a91ZDuYk", "url": "https://www.instagram.com/p/De6a91ZDuYk/", "thumb": "De6a91ZDuYk.jpg", "hook": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "transcript": "", "caption": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "plays": 145, "likes": 1, "comments": 0, "engagements": 1, "duration": 369.066681, "posted_human": "Oct 25", "posted_ts": 1792921853, "ratio": 0.016667624576125063, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "hormozi", "creator_username": "hormozi", "creator_avatar": "thumbs/_profile_hormozi.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "DezQVtriRI4", "url": "https://www.instagram.com/p/DezQVtriRI4/", "thumb": "DezQVtriRI4.jpg", "hook": "You must understand this for all of you building a business\u2026 TikTok live is a monster and all of you should be testing with it, trying it ., to me twitch and TikTok live are monste\u2026", "transcript": "", "caption": "You must understand this for all of you building a business\u2026 TikTok live is a monster and all of you should be testing with it, trying it ., to me twitch and TikTok live are monsters but meta is huge too both FB and insta .. I believe live shopping for anyone selling anything is massive and in general those who can build live into their routine will do very very well \u2764\ufe0f\u2763\ufe0f\ud83e\udde1\ud83d\udc9b", "plays": 151, "likes": 4, "comments": 0, "engagements": 4, "duration": 27.200001, "posted_human": "Oct 22", "posted_ts": 1792681261, "ratio": 0.0008383649108196266, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "garyvee", "creator_username": "garyvee", "creator_avatar": "thumbs/_profile_garyvee.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "DezCm83kzHF", "url": "https://www.instagram.com/p/DezCm83kzHF/", "thumb": "DezCm83kzHF.jpg", "hook": "Hope this brings value to someone \u2665\ufe0f", "transcript": "", "caption": "Hope this brings value to someone \u2665\ufe0f", "plays": 87, "likes": 2, "comments": 0, "engagements": 2, "duration": 96.810669, "posted_human": "Oct 22", "posted_ts": 1792674089, "ratio": 0.0004830314386841557, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "garyvee", "creator_username": "garyvee", "creator_avatar": "thumbs/_profile_garyvee.jpg", "creator_verified": true, "hasClip": true}];
-const CREATORS = [{"handle": "hormozi", "username": "hormozi", "fullName": "Alex Hormozi", "followers": 5133617, "posts": 0, "verified": true, "profile_pic": "thumbs/_profile_hormozi.jpg", "median_plays": 8699.5, "reels_in_window": 10}, {"handle": "garyvee", "username": "garyvee", "fullName": "Gary Vay-Ner-Chuk", "followers": 12176805, "posts": 11013, "verified": true, "profile_pic": "thumbs/_profile_garyvee.jpg", "median_plays": 180112.5, "reels_in_window": 10}];
+const REELS = [{"shortCode": "De7izHVE7U_", "url": "https://www.instagram.com/p/De7izHVE7U_/", "thumb": "De7izHVE7U_.jpg", "hook": "There's three things that have to happen in order for you to be obligated to enforce a standard, which is that number one, someone has to know the standard you have.", "transcript": "There's three things that have to happen in order for you to be obligated to enforce a standard, which is that number one, someone has to know the standard you have. Number two is that they have to have the ability to adhere to that standard. And then three, choose not to. The consequence for crossing you needs to be consistent, which means that every time someone crosses you, there needs to be a consequence. If there isn't, then you teach people to gamble with you because it's a variable reinforcer. And so it has to be consistent. It has to be immediate. It has to be escalating, which means if the first time I tell you, I say, don't worry, you're with us. Be here tomorrow. Do better. Fine. If you do it again, then it's like you're off for the night. Because what happens is at some moment, it stops being about punishing the behavior and it should be about punishing the pattern of behavior. And so at that point, you have to respect the standard for everyone. And out of owing it to everyone, we have to let this person go, even if they're a perceived high performer.", "caption": "A lot of management just comes down to:\n\nTell them what you want\nShow them how to do it\nCheck in to make sure they did\nGive feedback on the outcome\n\nAnd just doing that until you die.", "plays": 185182, "likes": 3407, "comments": 57, "engagements": 3464, "duration": 51.279999, "posted_human": "Oct 25", "posted_ts": 1792959477, "ratio": 21.286510719006838, "band_class": "breakout", "band_label": "Breakout", "band_color": "#FF3D6E", "creator_handle": "hormozi", "creator_username": "hormozi", "creator_avatar": "thumbs/_profile_hormozi.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De7SITIjTj8", "url": "https://www.instagram.com/p/De7SITIjTj8/", "thumb": "De7SITIjTj8.jpg", "hook": "I sell communication skills to senior leaders.", "transcript": "I sell communication skills to senior leaders. Last 10 months, 300K.\nThe outcome that you're promising is what?\nPosition them for career growth. Promotion.\nI mean, you gotta still get promoted in 90 days.\nI don't know if I can deliver on that.\nRight. You want to start with making an exceptional offer and then ask yourself, what would it take to make this true?\nSo it's not promise the world and then don't deliver. It's promise the country and then give them the world.\nYou can call that, you know, get promoted in 90 days. I can't guarantee that, obviously.\nBut then you'd share averages, right? So you can say, listen, the average person, you know, gets a raise, not necessarily a promotion in title.\nAnd it takes them on average 120 days. Again, we can figure that out.\nAnd the average person gets a 10% raise. All right. So you're making $150,000 a year. If you get $15,000 per year for life that permanently elevates you, that sounds like a pretty good deal. Just state the facts and tell the truth. We're going to try and go for this. Half of people get it. The other half don't. One in three. One in three get it. And this is where it gets important. Of the one in three, or rather of the two that didn't hit it, did they follow the checkpoints that you told them to do? No. Right. And so again, stating the facts and telling the truth is like, of the people who follow my system to a T, 80% of them hit it. But I want to be clear, overall, one out of three do it. Because it's work. You said you're the type of person who really, this means a lot to you. Okay. So then I'm not worried about it.", "caption": "If you want to stand out in a crowded marketplace\u2014tell the truth. \n\nComment \"WIN\" to get a free scaling roadmap.", "plays": 156616, "likes": 2411, "comments": 71, "engagements": 2482, "duration": 81.706703, "posted_human": "Oct 25", "posted_ts": 1792950656, "ratio": 18.002873728375192, "band_class": "breakout", "band_label": "Breakout", "band_color": "#FF3D6E", "creator_handle": "hormozi", "creator_username": "hormozi", "creator_avatar": "thumbs/_profile_hormozi.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De21H_ZOhfN", "url": "https://www.instagram.com/p/De21H_ZOhfN/", "thumb": "De21H_ZOhfN.jpg", "hook": "Your smartphone can be the brain of your next robot.", "transcript": "", "caption": "Your smartphone can be the brain of your next robot.\n\nFun fact: this was the first video where I let AI do the entire edit for me. I just recorded me talking and Claude found the b-roll, edited the footage, added the subtitles, and everything in-between. How did Claude do?", "plays": 376001, "likes": 16702, "comments": 201, "engagements": 16903, "duration": 63.018665, "posted_human": "Oct 24", "posted_ts": 1792801299, "ratio": 14.176412924631451, "band_class": "strong", "band_label": "Replicable", "band_color": "#FF8A3D", "creator_handle": "mr.eflow", "creator_username": "mr.eflow", "creator_avatar": "thumbs/_profile_mr.eflow.jpg", "creator_verified": false, "hasClip": true}, {"shortCode": "De1lH-hxr89", "url": "https://www.instagram.com/p/De1lH-hxr89/", "thumb": "De1lH-hxr89.jpg", "hook": "There\u2019s no way out of fear \ud83d\ude30 Besides attacking it head on \u2026 fall in love with rejection \u2026 have sympathy for those who judge you \u2026 relaxed you only have 1 life \u2026 and go get yours to\u2026", "transcript": "", "caption": "There\u2019s no way out of fear \ud83d\ude30 Besides attacking it head on \u2026 fall in love with rejection \u2026 have sympathy for those who judge you \u2026 relaxed you only have 1 life \u2026 and go get yours today \ud83d\ude0d\u203c\ufe0f", "plays": 817659, "likes": 21421, "comments": 350, "engagements": 21771, "duration": 37.495831, "posted_human": "Oct 23", "posted_ts": 1792759473, "ratio": 4.539712679575265, "band_class": "good", "band_label": "Working", "band_color": "#FFD43D", "creator_handle": "garyvee", "creator_username": "garyvee", "creator_avatar": "thumbs/_profile_garyvee.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De2rOjvvabL", "url": "https://www.instagram.com/p/De2rOjvvabL/", "thumb": "De2rOjvvabL.jpg", "hook": "", "transcript": "", "caption": "", "plays": 438706, "likes": 8286, "comments": 237, "engagements": 8523, "duration": 7.733333, "posted_human": "Oct 23", "posted_ts": 1792796060, "ratio": 2.4357332222916233, "band_class": "good", "band_label": "Working", "band_color": "#FFD43D", "creator_handle": "garyvee", "creator_username": "garyvee", "creator_avatar": "thumbs/_profile_garyvee.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "DeHojO3RYAF", "url": "https://www.instagram.com/p/DeHojO3RYAF/", "thumb": "DeHojO3RYAF.jpg", "hook": "Comment UNIVERSAL and I\u2019ll send you $1000 in matched ad credits for TV \ud83e\udd2f\n\nHere\u2019s the thing: being a \u201cdata driven performance marketer\u201d can sometimes lead you astray\u2026 if you subscri\u2026", "transcript": "", "caption": "Comment UNIVERSAL and I\u2019ll send you $1000 in matched ad credits for TV \ud83e\udd2f\n\nHere\u2019s the thing: being a \u201cdata driven performance marketer\u201d can sometimes lead you astray\u2026 if you subscribe to just doing more of what worked before. \n\nI recently onboarded a client that was in what I like to call the \u201cMoFu Death Spiral\u201d. \n\nAll of their top performing ad creative was solution or offer driven, so when they would have a sale (which was often) they would flush their entire ecosystem. \n\nAnd they would be in the red for weeks after. \n\nInstead of just doing more top of funnel ads, I actually suggested that they give television a try since they had such a big TAM and excellent HiFi assets that were formatted well for tv.\n\n@universal.ads are by far the easiest way to test this. \n\nIt\u2019s self serve, you can track conversions just like you would on other platforms, anddddd I also have $1000 in matched credits so you can give it a try :) \n\nYou can also use code UDARA :)\n\n#UniversalAdsPartner", "plays": 22876, "likes": 310, "comments": 63, "engagements": 373, "duration": 130.96666, "posted_human": "Oct 5", "posted_ts": 1791217670, "ratio": 2.322200791797787, "band_class": "good", "band_label": "Working", "band_color": "#FFD43D", "creator_handle": "daradenney", "creator_username": "daradenney", "creator_avatar": "thumbs/_profile_daradenney.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "DezsldAOgn8", "url": "https://www.instagram.com/p/DezsldAOgn8/", "thumb": "DezsldAOgn8.jpg", "hook": "\ud83e\udde0 An AI system called Brain-IT can reconstruct recognizable images from brain scans of people looking at pictures.", "transcript": "", "caption": "\ud83e\udde0 An AI system called Brain-IT can reconstruct recognizable images from brain scans of people looking at pictures.\n\nDeveloped at the Weizmann Institute, it predicts both image content and layout, then uses a diffusion model to generate the reconstruction. \n\nResearchers expanded its training data with simulated brain activity. With one hour of scans from a new person, it achieved results comparable to earlier systems trained on 40 hours. \n\nBut it still makes mistakes: one reconstruction turned a dog into a goat. \n\nReconstructing dreams is a future ambition. For now, the system reconstructs viewed pictures, with impressive results that remain imperfect predictions.\n\nStudy: \u201cBrain-IT: Image Reconstruction from fMRI via Brain-Interaction Transformer\u201d\n\nDOI: 10.48550/arXiv.2510.25976", "plays": 106094, "likes": 3721, "comments": 89, "engagements": 3810, "duration": 72.866669, "posted_human": "Oct 22", "posted_ts": 1792696132, "ratio": 2.08657514848759, "band_class": "good", "band_label": "Working", "band_color": "#FFD43D", "creator_handle": "rowancheung", "creator_username": "rowancheung", "creator_avatar": "thumbs/_profile_rowancheung.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De7Mvvykz8G", "url": "https://www.instagram.com/p/De7Mvvykz8G/", "thumb": "De7Mvvykz8G.jpg", "hook": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "transcript": "", "caption": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "plays": 17583, "likes": 131, "comments": 11, "engagements": 142, "duration": 56.703129, "posted_human": "Oct 25", "posted_ts": 1792947847, "ratio": 2.0211506408414275, "band_class": "good", "band_label": "Working", "band_color": "#FFD43D", "creator_handle": "hormozi", "creator_username": "hormozi", "creator_avatar": "thumbs/_profile_hormozi.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De5VdK3OJEj", "url": "https://www.instagram.com/p/De5VdK3OJEj/", "thumb": "De5VdK3OJEj.jpg", "hook": "The world doesn\u2019t revolve around you \u2026.", "transcript": "", "caption": "The world doesn\u2019t revolve around you \u2026. And the second you realize it .. life gets better\n\n#garyvee #inspiration #mindset", "plays": 359112, "likes": 4467, "comments": 113, "engagements": 4580, "duration": 32.657658, "posted_human": "Oct 24", "posted_ts": 1792885339, "ratio": 1.9938205288361441, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "garyvee", "creator_username": "garyvee", "creator_avatar": "thumbs/_profile_garyvee.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "Dew1EolOlt3", "url": "https://www.instagram.com/p/Dew1EolOlt3/", "thumb": "Dew1EolOlt3.jpg", "hook": "\ud83e\udd4a This robot cage fight just got hit with a cease-and-desist letter.", "transcript": "", "caption": "\ud83e\udd4a This robot cage fight just got hit with a cease-and-desist letter.\n\n@frankielap faced three humanoid robots, getting knocked down repeatedly and injuring his hand despite wearing boxing gloves.\n\nHuman pilots controlled each robot remotely through VR, throwing punches without stepping into the cage.\n\nCalifornia\u2019s athletic commission says the event needed its approval. \n\nThe company argues the law defines a match as a contest between two people.\n\nSo if someone fights you through a robot, does that count as two people fighting?", "plays": 91841, "likes": 1518, "comments": 25, "engagements": 1543, "duration": 59.466667, "posted_human": "Oct 21", "posted_ts": 1792599942, "ratio": 1.806258112732565, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "rowancheung", "creator_username": "rowancheung", "creator_avatar": "thumbs/_profile_rowancheung.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De4PtL5MvzC", "url": "https://www.instagram.com/p/De4PtL5MvzC/", "thumb": "De4PtL5MvzC.jpg", "hook": "Wake up this morning \ud83c\udf1e and do your 15 hours of homework - eBay live, TikTok shop, whatnot,\nFanatics live, district live shopping and more \u2026 learn the space ..", "transcript": "", "caption": "Wake up this morning \ud83c\udf1e and do your 15 hours of homework - eBay live, TikTok shop, whatnot,\nFanatics live, district live shopping and more \u2026 learn the space .. and do your first show \u2026 \n\nShit \u2026 sell stuff from around the house \u2026 \ud83c\udfe0 \n\nStart now", "plays": 321177, "likes": 5413, "comments": 207, "engagements": 5620, "duration": 39.789791, "posted_human": "Oct 24", "posted_ts": 1792848746, "ratio": 1.7832021653133459, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "garyvee", "creator_username": "garyvee", "creator_avatar": "thumbs/_profile_garyvee.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De7g88Pgapm", "url": "https://www.instagram.com/p/De7g88Pgapm/", "thumb": "De7g88Pgapm.jpg", "hook": "Congrats dolphins fans", "transcript": "", "caption": "Congrats dolphins fans", "plays": 314003, "likes": 6257, "comments": 557, "engagements": 6814, "duration": 12.066667, "posted_human": "Oct 25", "posted_ts": 1792958463, "ratio": 1.7433715039211604, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "garyvee", "creator_username": "garyvee", "creator_avatar": "thumbs/_profile_garyvee.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De4zMX6OP_1", "url": "https://www.instagram.com/p/De4zMX6OP_1/", "thumb": "De4zMX6OP_1.jpg", "hook": "Kimi K3.1 Pro appears to be nearly as good as the big lab state of the art models...", "transcript": "", "caption": "Kimi K3.1 Pro appears to be nearly as good as the big lab state of the art models... And it's open-weight! So wild!\n\n#kimi #openweight #aimodels", "plays": 35704, "likes": 999, "comments": 22, "engagements": 1021, "duration": 80, "posted_human": "Oct 24", "posted_ts": 1792867344, "ratio": 1.3461523960336312, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "mr.eflow", "creator_username": "mr.eflow", "creator_avatar": "thumbs/_profile_mr.eflow.jpg", "creator_verified": false, "hasClip": true}, {"shortCode": "De6Sz_WD2O3", "url": "https://www.instagram.com/p/De6Sz_WD2O3/", "thumb": "De6Sz_WD2O3.jpg", "hook": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "transcript": "", "caption": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "plays": 10156, "likes": 54, "comments": 3, "engagements": 57, "duration": 23.799999, "posted_human": "Oct 25", "posted_ts": 1792917533, "ratio": 1.167423415138801, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "hormozi", "creator_username": "hormozi", "creator_avatar": "thumbs/_profile_hormozi.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "DehjhGgRtsV", "url": "https://www.instagram.com/p/DehjhGgRtsV/", "thumb": "DehjhGgRtsV.jpg", "hook": "My customers just told me what my brand actually is\u2026 so I rebuilt the whole thing in one day.", "transcript": "", "caption": "My customers just told me what my brand actually is\u2026 so I rebuilt the whole thing in one day.\n\nI took the entire day (and night) to re-do the creative strategy research, make new ads, and relaunch the site on @lovable.dev (and finally moved to Shopify \ud83d\ude42).\n\nThe plan:\n- Spend $1000\n- Lower CPMs & CPA\n- More email signups, ATCs, purchases\n\nIf this works, ONE MORE TEST and then I'm off to China to make the product.\n\nReal question: would you buy sunglasses marketed for migraines, or does that sound weird? Be honest \ud83d\udc47\n\n#LovablePartner", "plays": 10868, "likes": 376, "comments": 33, "engagements": 409, "duration": 125.833336, "posted_human": "Oct 15", "posted_ts": 1792087382, "ratio": 1.1032382499238655, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "daradenney", "creator_username": "daradenney", "creator_avatar": "thumbs/_profile_daradenney.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De6rcd9EUf6", "url": "https://www.instagram.com/p/De6rcd9EUf6/", "thumb": "De6rcd9EUf6.jpg", "hook": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "transcript": "", "caption": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "plays": 8703, "likes": 19, "comments": 2, "engagements": 21, "duration": 93.125, "posted_human": "Oct 25", "posted_ts": 1792930374, "ratio": 1.000402321972527, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "hormozi", "creator_username": "hormozi", "creator_avatar": "thumbs/_profile_hormozi.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De2UIwTu1ZX", "url": "https://www.instagram.com/p/De2UIwTu1ZX/", "thumb": "De2UIwTu1ZX.jpg", "hook": "\ud83e\udd82 Claude just helped design a potential scorpion antivenom.", "transcript": "", "caption": "\ud83e\udd82 Claude just helped design a potential scorpion antivenom. \n\nIn 64 hours, an internal research model generated over 318,000 protein designs, guided by five human messages. \n\nAnthropic\u2019s scientists and Citrini Research sent 211 designs to outside labs for testing and 17 met the study\u2019s binding criteria. \n\nThese tiny proteins grab scorpion toxins, potentially blocking their attack on nerve cells. \n\nBut binding isn\u2019t the same as neutralizing venom\u2026\n\nThe team hasn\u2019t tested whether they protect cells or animals, and each successful design bound only one toxin. \n\nIt\u2019s an early research result with a much bigger question ahead. Can these molecules eventually become safe and effective medicines?\n\nResearch paper: \u201cDe novo design of protein binders against scorpion toxins with Claude\u201d", "plays": 50846, "likes": 957, "comments": 12, "engagements": 969, "duration": 69.76667, "posted_human": "Oct 23", "posted_ts": 1792783997, "ratio": 1.0, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "rowancheung", "creator_username": "rowancheung", "creator_avatar": "thumbs/_profile_rowancheung.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "DezW5woRVXJ", "url": "https://www.instagram.com/p/DezW5woRVXJ/", "thumb": "DezW5woRVXJ.jpg", "hook": "I own 3 businesses\u2026 so I am juggling A LOT.", "transcript": "", "caption": "I own 3 businesses\u2026 so I am juggling A LOT. And tbh\u2026 I\u2019m not really an admin girl :) \n\nI\u2019ve been a @xero customer for over 5 years now, which makes it super easy for me to stay in sync with my bookkeeper and partners. \n\nWhether it\u2019s my checking on my P&L or seeing if a client paid an invoice\u2026 Xero\u2019s Jax always makes checking in on the finances WAY EASIER. \n\nIf only Jax could handle my client comms\u2026 :) #xeropartner #ad", "plays": 9851, "likes": 305, "comments": 16, "engagements": 321, "duration": 67.692696, "posted_human": "Oct 22", "posted_ts": 1792685005, "ratio": 1.0, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "daradenney", "creator_username": "daradenney", "creator_avatar": "thumbs/_profile_daradenney.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "Dex2AoPOz3o", "url": "https://www.instagram.com/p/Dex2AoPOz3o/", "thumb": "Dex2AoPOz3o.jpg", "hook": "The Unitree Kung-Fu Legend Robot Looks Insane!", "transcript": "", "caption": "The Unitree Kung-Fu Legend Robot Looks Insane! This, once again, is NOT AI!\n\n#Robots #robotics @unitree__robotics", "plays": 26523, "likes": 770, "comments": 85, "engagements": 855, "duration": 64.702667, "posted_human": "Oct 22", "posted_ts": 1792633945, "ratio": 1.0, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "mr.eflow", "creator_username": "mr.eflow", "creator_avatar": "thumbs/_profile_mr.eflow.jpg", "creator_verified": false, "hasClip": true}, {"shortCode": "De6zul8CH6V", "url": "https://www.instagram.com/p/De6zul8CH6V/", "thumb": "De6zul8CH6V.jpg", "hook": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "transcript": "", "caption": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "plays": 8696, "likes": 45, "comments": 0, "engagements": 45, "duration": 28.76, "posted_human": "Oct 25", "posted_ts": 1792934818, "ratio": 0.9995976780274728, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "hormozi", "creator_username": "hormozi", "creator_avatar": "thumbs/_profile_hormozi.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "DeuC41_RmWG", "url": "https://www.instagram.com/p/DeuC41_RmWG/", "thumb": "DeuC41_RmWG.jpg", "hook": "Localization is one of my favorite use cases for AI.", "transcript": "", "caption": "Localization is one of my favorite use cases for AI. \n\nWe have a handful of clients where we are using @elevenlabs to make ad creatives in different languages: Spanish, German, Italian, and French. \n\nHeck, we were even experimenting with different accents this week, like British and Aussie English. \n\nOur process for this is simple: \n\nWe like to use the USA for the main creative testing ground. \n\nWhen we find formats and angles that work really well, then we develop them specifically for our other locations.\n\nThe ElevenLabs lip sync feature is WILDDDD and makes this super simple. \n\nI even tried it on a recent ad that I filmed so you could see it in action \ud83d\udc40\n\nTell me: have you tried dubbing your creatives in old languages yet?\n\n#elevencreativepartner #ad", "plays": 6741, "likes": 191, "comments": 11, "engagements": 202, "duration": 61.972607, "posted_human": "Oct 20", "posted_ts": 1792506611, "ratio": 0.6842960105573038, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "daradenney", "creator_username": "daradenney", "creator_avatar": "thumbs/_profile_daradenney.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De6Ke78D8Q0", "url": "https://www.instagram.com/p/De6Ke78D8Q0/", "thumb": "De6Ke78D8Q0.jpg", "hook": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "transcript": "", "caption": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "plays": 3426, "likes": 56, "comments": 0, "engagements": 56, "duration": 36.911911, "posted_human": "Oct 25", "posted_ts": 1792913093, "ratio": 0.3938157365365826, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "hormozi", "creator_username": "hormozi", "creator_avatar": "thumbs/_profile_hormozi.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "Deb_IaLxvfW", "url": "https://www.instagram.com/p/Deb_IaLxvfW/", "thumb": "Deb_IaLxvfW.jpg", "hook": "How AI should be used in marketing:\n\nMore content \u003c Better experience\n\nHuge thanks to the @braze team for having me at #Forge2026 this year!!", "transcript": "", "caption": "How AI should be used in marketing:\n\nMore content \u003c Better experience\n\nHuge thanks to the @braze team for having me at #Forge2026 this year!!\n\n#BrazePartner", "plays": 3789, "likes": 122, "comments": 7, "engagements": 129, "duration": 131.233337, "posted_human": "Oct 13", "posted_ts": 1791900673, "ratio": 0.3846310019287382, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "daradenney", "creator_username": "daradenney", "creator_avatar": "thumbs/_profile_daradenney.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De7m8cRgrux", "url": "https://www.instagram.com/p/De7m8cRgrux/", "thumb": "De7m8cRgrux.jpg", "hook": "I grew up selling lemonade...", "transcript": "", "caption": "I grew up selling lemonade... everytime I see a kid slinging... I\u2019ll always stop and support. \n\n#lemonadestand #support #respect", "plays": 46222, "likes": 873, "comments": 1, "engagements": 874, "duration": 36.700001, "posted_human": "Oct 25", "posted_ts": 1792961609, "ratio": 0.25662849607883964, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "garyvee", "creator_username": "garyvee", "creator_avatar": "thumbs/_profile_garyvee.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De7UpNMgq0Y", "url": "https://www.instagram.com/p/De7UpNMgq0Y/", "thumb": "De7UpNMgq0Y.jpg", "hook": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "transcript": "", "caption": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "plays": 2138, "likes": 22, "comments": 0, "engagements": 22, "duration": 31, "posted_human": "Oct 25", "posted_ts": 1792951973, "ratio": 0.24576125064658888, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "hormozi", "creator_username": "hormozi", "creator_avatar": "thumbs/_profile_hormozi.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "DexbkXZRozg", "url": "https://www.instagram.com/p/DexbkXZRozg/", "thumb": "DexbkXZRozg.jpg", "hook": "\ud83d\udc04 Halter, a New Zealand agtech startup, has developed AI-powered smart collars that create virtual fences for cattle, allowing farmers to manage herds remotely through a phone app.", "transcript": "", "caption": "\ud83d\udc04 Halter, a New Zealand agtech startup, has developed AI-powered smart collars that create virtual fences for cattle, allowing farmers to manage herds remotely through a phone app.\n\nThe collars use sound and vibration cues to guide cows, collect over 6,000 data points per minute, and use machine learning to track grazing, predict disease, and detect breeding cycles.\n\nFounded by Craig Piggott, who grew up on a dairy farm, Halter now manages nearly 650,000 cows across 1,300 farms in New Zealand, Australia, and the United States.\n\nThe company recently raised $220 million at a $2 billion valuation \ud83d\udc40", "plays": 7445, "likes": 189, "comments": 3, "engagements": 192, "duration": 81.166664, "posted_human": "Oct 21", "posted_ts": 1792620005, "ratio": 0.14642253077921566, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "rowancheung", "creator_username": "rowancheung", "creator_avatar": "thumbs/_profile_rowancheung.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De1naj2CDkH", "url": "https://www.instagram.com/p/De1naj2CDkH/", "thumb": "De1naj2CDkH.jpg", "hook": "I need you to listen this morning \u2026 like really listen \ud83d\udc42 \u2026 please share this with someone\u2019s who\u2019s scared to share \u2026 please \ud83d\ude4f", "transcript": "", "caption": "I need you to listen this morning \u2026 like really listen \ud83d\udc42 \u2026 please share this with someone\u2019s who\u2019s scared to share \u2026 please \ud83d\ude4f", "plays": 25169, "likes": 709, "comments": 0, "engagements": 709, "duration": 64.866669, "posted_human": "Oct 23", "posted_ts": 1792760493, "ratio": 0.13974044000277605, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "garyvee", "creator_username": "garyvee", "creator_avatar": "thumbs/_profile_garyvee.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De8glGguaPi", "url": "https://www.instagram.com/p/De8glGguaPi/", "thumb": "De8glGguaPi.jpg", "hook": "Check out the Voxel Butler robot...", "transcript": "", "caption": "Check out the Voxel Butler robot... Could be yours in 2028 for roughly $20k.\n\n(New video edit test - Gave Clause ungraded S-Log footage and had it color grade as part of the editing workflow)", "plays": 2975, "likes": 59, "comments": 0, "engagements": 59, "duration": 79.018669, "posted_human": "Oct 26", "posted_ts": 1792991802, "ratio": 0.11216679862760623, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "mr.eflow", "creator_username": "mr.eflow", "creator_avatar": "thumbs/_profile_mr.eflow.jpg", "creator_verified": false, "hasClip": true}, {"shortCode": "De2gCacAPBH", "url": "https://www.instagram.com/p/De2gCacAPBH/", "thumb": "De2gCacAPBH.jpg", "hook": "Comment \u201cDOTS\u201d and I\u2019ll DM you each prompt and the link to try it yourself!\u2060\n\u2060\n@chatgpt can now do things for you even when you're not using it.\u2060\n\nDots are their new always-on AI a\u2026", "transcript": "", "caption": "Comment \u201cDOTS\u201d and I\u2019ll DM you each prompt and the link to try it yourself!\u2060\n\u2060\n@chatgpt can now do things for you even when you're not using it.\u2060\n\nDots are their new always-on AI agents that can take on ongoing tasks and work proactively in the background.\u2060\n\u2060\nHere are 3 ways to put yours to work:\u2060\n\ud83d\udcb0 Get money back: Track purchases and catch price drops so you don't get a bad deal.\u2060\n\u2708\ufe0f Avoid travel headaches: Monitor delays, find alternative routes, and prepare backup plans.\u2060\n\ud83d\udce9 Never drop the ball: Keep track of promises, deadlines, and follow-ups across your email and calendar.\u2060\n\u2060\nAnd you don't have to keep prompting it. Your dot can keep working and bring things back for your approval.\u2060\n\u2060\nDots are rolling out to eligible ChatGPT users, starting with Pro and Business plans.\u2060\n\u2060\n#ChatGPT_Partner #AI #ChatGPT #Codex #lifehack", "plays": 2325, "likes": 25, "comments": 4, "engagements": 29, "duration": 50.799999, "posted_human": "Oct 23", "posted_ts": 1792790312, "ratio": 0.08765976699468386, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "mr.eflow", "creator_username": "mr.eflow", "creator_avatar": "thumbs/_profile_mr.eflow.jpg", "creator_verified": false, "hasClip": true}, {"shortCode": "De4MKCpRKiX", "url": "https://www.instagram.com/p/De4MKCpRKiX/", "thumb": "De4MKCpRKiX.jpg", "hook": "Microsoft has been working on Project Silica for nearly a decade, and this month marked its biggest leap yet.", "transcript": "", "caption": "Microsoft has been working on Project Silica for nearly a decade, and this month marked its biggest leap yet.\n\nThe research phase is now officially complete, and the system no longer requires rare, expensive glass. \n\nIt now works with the same heat-resistant material found in Pyrex cookware. That solves what was previously the biggest barrier to real-world deployment. \n\nThe glass stores nearly 5 terabytes of data in a coaster-sized slab, needs no power to maintain it, and is immune to heat, water, and magnetic fields that would destroy conventional storage within decades.\n\nMicrosoft has already used it to archive the 1978 Superman film and partnered with the Global Music Vault to preserve recordings under Arctic ice.\n\nYou can read more about it in their latest research paper, details below\ud83d\udc47\n\nStudy: \u201cLaser writing in glass for dense, fast and efficient archival data storage\u201d published in Nature\nDOI: 10.1038/s41586-025-10042-w", "plays": 1748, "likes": 38, "comments": 1, "engagements": 39, "duration": 74.666664, "posted_human": "Oct 24", "posted_ts": 1792846821, "ratio": 0.03437831884514023, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "rowancheung", "creator_username": "rowancheung", "creator_avatar": "thumbs/_profile_rowancheung.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De11ONFn3Xk", "url": "https://www.instagram.com/p/De11ONFn3Xk/", "thumb": "De11ONFn3Xk.jpg", "hook": "I have something important to ask you \u2026.", "transcript": "", "caption": "I have something important to ask you \u2026.\n\nPlease try to \u201ccatch' the flower :)", "plays": 3324, "likes": 26, "comments": 2, "engagements": 28, "duration": 7.010975, "posted_human": "Oct 23", "posted_ts": 1792767729, "ratio": 0.01845513220903602, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "garyvee", "creator_username": "garyvee", "creator_avatar": "thumbs/_profile_garyvee.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De678_WjJDy", "url": "https://www.instagram.com/p/De678_WjJDy/", "thumb": "De678_WjJDy.jpg", "hook": "My name is Zach.", "transcript": "My name is Zach. I run a solar sales company, do about two and a half million dollars. I guess I'd like to be at ten million dollars in revenue. I feel like this whole last day and a half has kind of opened me up, and I don't know what I want anymore, I guess. Great. What's stopping me, I guess I would really say, is recruiting and hiring new people. We have 80 people. We're in New York State. We have three different main offices, about 15, 20 salespeople apiece, and then some appointment setters for each one. And I kind of feel like, one, the market's kind of getting a little tapped out, and two, I just don't know how to go from 80 people to 150 or 200 people in a door-to-door sales space. You probably lack a leadership development program and process, is my guess. We have really great leaders. I have three main managers. What's the issue limiting you then? Because if you have good leaders, then you're... I think recruiting, bringing in new people. It took us eight years to get to about 80 people. Eight years to get to 80 people. Okay. Yeah. Then, yeah. Then you probably have a manpower constraint. So what's your recruiting process look like right now? It's been all organic. Okay. Yeah. So... I kind of knew the answer with what you were going to say was more people. And so... Well, you're in the business of people selling shit to people, and so more people who sell shit to people, the more money you make. That makes sense. I'll say this. The biggest solar sales businesses are not solar sales businesses. They are recruiting businesses. Correct. I mean, I figured that out literally here when we first got here. Within the first five minutes, I turned to the guy next to me, I'm like, I could leave now. I'm like, this blew my mind, you know? That's the business you're really in. I figured that out. That's the business you're really in. And so what you need to have is basically CAT to LTGP. Okay. Cost of acquiring talent to lifetime gross profit per employee. Got it. So per sales rep. It's also just like a customer. Because functionally, they are your customer. Yeah. I figured that out. They are the recurring customer that you have, and so they become a revenue generating node for you. Every sales guy becomes activated. You have their big drop off in week one or two, then you have day 30, then if you get them past 30, you'll have a little bit more luck, and then day 90 is kind of like the rest. And it's like, if you get them past day 90, they're in. They're going to be lifers. It's going to be awesome. And so all of the work that you'll have to do is, number one, you probably need way more people on the front end. Yes. You need to kiss more toads. Right? And then the actual onboarding and training process, you have to focus purely on behaviors. And what sales guys tend to suck at is actually training sales. Because sales guys, more than any other profession, use so much mysticism and make-believe. They're like, bro, you got to give them the curiosity. And you're like, what does that mean? The thing is that they say it so convicted because they're sales guys that they believe it and the other guy believes it and they just run. They have no idea what they're doing. So it's like, we just have to boil it down to like, what do you do with your arms? What do you do with your mouth? What do you do with your head? And so when you're doing the role plays, I'm sure you guys have doors that they knock on and do this. Of course. And so we have to simulate the environment as much as possible, but you probably need to onboard way more people at a time. How many new reps are you onboarding a week? Five. Yeah, so it's probably got to be like 25 to get to where you want to go. Now, I guess my second question to this is why I feel like I was asking that before and he kind of cracked me open. Cracked you open? Told me what I need to know. Guess the whole thing before I even said anything to him. I don't feel like this opportunity anymore is going to get me to where I want to, you know? You're hitting the whole cycle, dude. And your market might not be that big, right? So I don't know. My real goal, if I did $10 million in revenue, I don't know if it would be like the thing for me anyway. You will feel nothing either way. It doesn't matter. It's fair. It's not going to happen. It's fair. Well, you're still eating chicken rice, so it's still eating chicken rice. It is what it is. Okay, so what else would you do? He kind of called it. I haven't, you know, let me give full context. I've been doing it for eight years. I said that by the time I hit 30, I'm 27. If I have X amount of dollars in my bank account, you'll be happy. No, I'm just going to give up the business and move on. I'm already happy. I'm going to give up the business and move on and go do something else. But this was like kind of my stepping stone, you know? And so eventually I'd like to open up some kind of a wellness slash farm fitness facility in another state, and that's kind of my goal. So I guess my real question is, do I wait until I'm 30 and I have X amount of dollars in my bank account? Do I just do it now? Do you have the money to do the thing now? Probably not. Okay, how much do you need to do the thing? I guess I don't know the exact number. I guess 10 million. You need 10 to do it? Yeah. Okay, I mean, can you do that in the next three years? Most likely. Sounds like a good plan. That is the goal. That was the plan. So I guess thanks for telling me that's the plan. Thanks. So you just saw a compressed version of me going back and forth with the business owner to help them find the constraint and then ideally give one to two steps on what to do next to help deconstraint it. That being said, if you would like to have the exact same process applied to your business but based on 10,000 businesses with a perfect memory, then we made this free tool that actually aggregates all of that data for different businesses and industries that we've actually had walk through the door, and it's yours. It's new, it's free, and it's fast. So go grab it, and on the thank you page, if you want to be in the room, you can book a call, but either way, the tool is free, and so are the solutions. Enjoy.", "caption": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "plays": 152, "likes": 1, "comments": 0, "engagements": 1, "duration": 328.106659, "posted_human": "Oct 25", "posted_ts": 1792939137, "ratio": 0.017472268521179377, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "hormozi", "creator_username": "hormozi", "creator_avatar": "thumbs/_profile_hormozi.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De6a91ZDuYk", "url": "https://www.instagram.com/p/De6a91ZDuYk/", "thumb": "De6a91ZDuYk.jpg", "hook": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "transcript": "", "caption": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "plays": 145, "likes": 1, "comments": 0, "engagements": 1, "duration": 369.066681, "posted_human": "Oct 25", "posted_ts": 1792921853, "ratio": 0.016667624576125063, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "hormozi", "creator_username": "hormozi", "creator_avatar": "thumbs/_profile_hormozi.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "DezQVtriRI4", "url": "https://www.instagram.com/p/DezQVtriRI4/", "thumb": "DezQVtriRI4.jpg", "hook": "You must understand this for all of you building a business\u2026 TikTok live is a monster and all of you should be testing with it, trying it ., to me twitch and TikTok live are monste\u2026", "transcript": "", "caption": "You must understand this for all of you building a business\u2026 TikTok live is a monster and all of you should be testing with it, trying it ., to me twitch and TikTok live are monsters but meta is huge too both FB and insta .. I believe live shopping for anyone selling anything is massive and in general those who can build live into their routine will do very very well \u2764\ufe0f\u2763\ufe0f\ud83e\udde1\ud83d\udc9b", "plays": 151, "likes": 4, "comments": 0, "engagements": 4, "duration": 27.200001, "posted_human": "Oct 22", "posted_ts": 1792681261, "ratio": 0.0008383649108196266, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "garyvee", "creator_username": "garyvee", "creator_avatar": "thumbs/_profile_garyvee.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "DezCm83kzHF", "url": "https://www.instagram.com/p/DezCm83kzHF/", "thumb": "DezCm83kzHF.jpg", "hook": "Hope this brings value to someone \u2665\ufe0f", "transcript": "", "caption": "Hope this brings value to someone \u2665\ufe0f", "plays": 87, "likes": 2, "comments": 0, "engagements": 2, "duration": 96.810669, "posted_human": "Oct 22", "posted_ts": 1792674089, "ratio": 0.0004830314386841557, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "garyvee", "creator_username": "garyvee", "creator_avatar": "thumbs/_profile_garyvee.jpg", "creator_verified": true, "hasClip": true}];
+const CREATORS = [{"handle": "hormozi", "username": "hormozi", "fullName": "Alex Hormozi", "followers": 5133617, "posts": 0, "verified": true, "profile_pic": "thumbs/_profile_hormozi.jpg", "median_plays": 8699.5, "reels_in_window": 10, "scopes": [], "trackingEnabled": true}, {"handle": "garyvee", "username": "garyvee", "fullName": "Gary Vay-Ner-Chuk", "followers": 12176805, "posts": 11013, "verified": true, "profile_pic": "thumbs/_profile_garyvee.jpg", "median_plays": 180112.5, "reels_in_window": 10, "scopes": [], "trackingEnabled": true}, {"handle": "daradenney", "username": "daradenney", "fullName": "Dara Denney | Performance Marketing Expert", "followers": 144895, "posts": 405, "verified": true, "profile_pic": "thumbs/_profile_daradenney.jpg", "median_plays": 9851, "reels_in_window": 5, "scopes": ["ai-dtc", "dtc-agencies", "dtc-ecommerce"], "trackingEnabled": true}, {"handle": "sharma", "username": "sharma", "fullName": "Nik Sharma", "followers": 842, "posts": 2, "verified": true, "profile_pic": "thumbs/_profile_sharma.jpg", "median_plays": 0, "reels_in_window": 0, "scopes": ["ai-dtc", "dtc-ecommerce", "dtc-agencies"], "trackingEnabled": false}, {"handle": "taylorholiday", "username": "taylorholiday", "fullName": "Taylor Holiday", "followers": 2743, "posts": 0, "verified": false, "profile_pic": "thumbs/_profile_taylorholiday.jpg", "median_plays": 0, "reels_in_window": 0, "scopes": ["dtc-agencies", "dtc-ecommerce"], "trackingEnabled": false}, {"handle": "codyplof", "username": "codyplof", "fullName": "Cody Plofker", "followers": 2911, "posts": 891, "verified": false, "profile_pic": "thumbs/_profile_codyplof.jpg", "median_plays": 0, "reels_in_window": 0, "scopes": ["ai-dtc", "dtc-ecommerce"], "trackingEnabled": false}, {"handle": "mr.eflow", "username": "mr.eflow", "fullName": "Matt Wolfe", "followers": 52837, "posts": 415, "verified": false, "profile_pic": "thumbs/_profile_mr.eflow.jpg", "median_plays": 26523, "reels_in_window": 5, "scopes": ["ai"], "trackingEnabled": true}, {"handle": "rowancheung", "username": "rowancheung", "fullName": "Rowan Cheung", "followers": 529681, "posts": 24, "verified": true, "profile_pic": "thumbs/_profile_rowancheung.jpg", "median_plays": 50846, "reels_in_window": 5, "scopes": ["ai"], "trackingEnabled": true}];
+const SCOPES = [{"id": "ai-dtc", "name": "AI \u00d7 DTC ecommerce", "description": "AI workflows, creative production, and product discovery for ecommerce."}, {"id": "dtc-agencies", "name": "DTC agencies / creative", "description": "Paid social, creative testing, and agency delivery."}, {"id": "dtc-ecommerce", "name": "DTC ecommerce", "description": "Brand growth, acquisition, retention, and conversion."}, {"id": "ai", "name": "AI broadly", "description": "AI tools, useful workflows, and industry developments."}];
+const RESEARCH = {"checkedAt": "2026-10-26", "budgetUsd": 0.6, "spendUsd": 0.1178, "sampleLimit": 5, "windowDays": 28, "method": "Primary-site evidence plus capped live profile and Reel checks. Content judgments are editorial; no claims of independently validating business results. Only authored Reels enter personal outlier baselines.", "candidates": [{"name": "Dara Denney", "handle": "daradenney", "fit": "High", "focus": "Performance creative and practical AI marketing", "recommendation": "Track Reels \u00b7 priority", "contentAssessment": "Strong fit for agency creative and AI \u00d7 DTC. The sample includes AI ad localization with ElevenLabs and rebuilding creative strategy from customer research. Some posts are sponsored; prioritize demonstrated workflows over endorsements.", "identityNote": "Personal site links directly to @daradenney; profile bio and email match.", "sources": [{"title": "Creative strategy and resources", "url": "https://www.daradenney.com/"}, {"title": "AI localization example", "url": "https://www.instagram.com/p/DeuC41_RmWG/"}], "scopes": ["ai-dtc", "dtc-agencies", "dtc-ecommerce"], "checkedAt": "2026-10-26", "recentAuthoredReels": 5, "recentCollaborations": 0, "sampleLimit": 5, "latestReelAt": "2026-10-22T16:03:25.000Z", "activityLabel": "5 authored Reels returned in the capped 28-day sample; latest 2026-10-22.", "trackingEnabled": true, "identityStatus": "matched", "sampleExamples": [{"url": "https://www.instagram.com/p/DehjhGgRtsV/", "timestamp": "2026-10-15T18:03:02.000Z", "owner": "daradenney", "caption": "My customers just told me what my brand actually is\u2026 so I rebuilt the whole thing in one day.\n\nI took the entire day (and night) to re-do the creative strategy research, make new ads, and relaunch the site on @lovable.dev (and finally moved to Shopify \ud83d\ude42).\n\nThe plan:\n- Spend $1000\n- Lower CPMs & CPA\n- More email signups, ATCs, purchases\n\nIf this works, ONE MORE TEST and then I'm off to China to make the product.\n\nReal question: would you buy sunglasses marketed for migraines, or does that sound weird? Be honest \ud83d\udc47\n\n#LovablePartner"}, {"url": "https://www.instagram.com/p/DeuC41_RmWG/", "timestamp": "2026-10-20T14:30:11.000Z", "owner": "daradenney", "caption": "Localization is one of my favorite use cases for AI. \n\nWe have a handful of clients where we are using @elevenlabs to make ad creatives in different languages: Spanish, German, Italian, and French. \n\nHeck, we were even experimenting with different accents this week, like British and Aussie English. \n\nOur process for this is simple: \n\nWe like to use the USA for the main creative testing ground. \n\nWhen we find formats and angles that work really well, then we develop them specifically for our other locations.\n\nThe ElevenLabs lip sync feature is WILDDDD and makes this super simple. \n\nI even tried it on a recent ad that I filmed so you could see "}, {"url": "https://www.instagram.com/p/DeHojO3RYAF/", "timestamp": "2026-10-05T16:27:50.000Z", "owner": "daradenney", "caption": "Comment UNIVERSAL and I\u2019ll send you $1000 in matched ad credits for TV \ud83e\udd2f\n\nHere\u2019s the thing: being a \u201cdata driven performance marketer\u201d can sometimes lead you astray\u2026 if you subscribe to just doing more of what worked before. \n\nI recently onboarded a client that was in what I like to call the \u201cMoFu Death Spiral\u201d. \n\nAll of their top performing ad creative was solution or offer driven, so when they would have a sale (which was often) they would flush their entire ecosystem. \n\nAnd they would be in the red for weeks after. \n\nInstead of just doing more top of funnel ads, I actually suggested that they give television a try since they had such a big"}]}, {"name": "Nik Sharma", "handle": "sharma", "fit": "High", "focus": "DTC growth systems and AI implementation", "recommendation": "Follow newsletter \u00b7 Reels paused", "contentAssessment": "Strong strategic fit: his public work includes building AI landing pages and a business knowledge system. The recent Instagram sample contains podcast collaborations about DTC operators and agency exits, rather than authored AI tutorials.", "identityNote": "nik.co links directly to @sharma. Recent collaborations are owned by @notzainagain; their views are excluded from Nik's personal performance baseline.", "sources": [{"title": "Growth strategies and AI workflows", "url": "https://www.nik.co/"}, {"title": "Recent DTC collaboration", "url": "https://www.instagram.com/p/Des8MbNsA3J/"}], "scopes": ["ai-dtc", "dtc-ecommerce", "dtc-agencies"], "checkedAt": "2026-10-26", "recentAuthoredReels": 0, "recentCollaborations": 2, "sampleLimit": 5, "latestReelAt": null, "activityLabel": "2 recent collaboration Reels; no original-owner Reels returned in this sample.", "trackingEnabled": false, "identityStatus": "matched", "sampleExamples": [{"url": "https://www.instagram.com/p/DeuKnY5vYiD/", "timestamp": "2026-10-20T15:34:51.000Z", "owner": "notzainagain", "caption": "Good points \ud83d\ude05\n\nVisit the What\u2019s Working podcast in the link in my bio for the full episode"}, {"url": "https://www.instagram.com/p/Des8MbNsA3J/", "timestamp": "2026-10-20T04:09:55.000Z", "owner": "notzainagain", "caption": "Agency multiples are up this year. 10X+ ebitda multiples aren\u2019t unheard of. Here\u2019s how Nik Sharma exited his agency this year\n\nVisit the What\u2019s Working podcast in the link in my bio for the full episode"}]}, {"name": "Joanna Lambadjieva", "fit": "High", "focus": "AI workflows for ecommerce and Amazon", "recommendation": "Follow newsletter \u00b7 Instagram unresolved", "contentAssessment": "One of the closest topical matches. Her current newsletter includes concrete SOP topics for product visibility in AI shopping and getting started with personal AI agents. These are useful research leads; this pass did not validate every underlying recommendation or subscriber-only step.", "identityNote": "Apify name search returned a conference account, not Joanna. Exact-name profile lookup returned not_found. No confirmed Instagram account added.", "sources": [{"title": "AI for Ecommerce newsletter", "url": "https://ecommerce-ai.beehiiv.com/"}, {"title": "AI integration practice", "url": "https://amazingwave.digital/"}], "scopes": ["ai-dtc"], "checkedAt": "2026-10-26", "recentAuthoredReels": 0, "recentCollaborations": 0, "sampleLimit": 5, "latestReelAt": null, "activityLabel": "Recent Instagram Reel activity unverified: business identity could not be established.", "trackingEnabled": false, "identityStatus": "unresolved", "sampleExamples": []}, {"name": "Max Sinclair", "fit": "High for product discovery", "focus": "AI shopping, GEO, and agentic commerce", "recommendation": "Follow writing / podcast \u00b7 Instagram unresolved", "contentAssessment": "Relevant to how products appear in AI shopping recommendations. A complementary product-discovery perspective, rather than a source of daily ad-creative tactics. His company sells in this category, so evaluate commercial claims alongside independent results.", "identityNote": "Official site identifies Azoma and The New Frontier. Search returned unrelated namesakes; none matched that business identity. No Instagram account added.", "sources": [{"title": "Agentic commerce writing and podcast", "url": "https://maxsinclair.uk/"}], "scopes": ["ai-dtc"], "checkedAt": "2026-10-26", "recentAuthoredReels": 0, "recentCollaborations": 0, "sampleLimit": 5, "latestReelAt": null, "activityLabel": "Recent Instagram Reel activity unverified: business identity could not be established.", "trackingEnabled": false, "identityStatus": "unresolved", "sampleExamples": []}, {"name": "Taylor Holiday", "handle": "taylorholiday", "fit": "High", "focus": "Profitable ecommerce growth and agency operating systems", "recommendation": "Follow podcast / writing \u00b7 Reels paused", "contentAssessment": "Useful agency and operator perspective: forecasting tied to product margins, creative output, and execution cadence. Stronger evidence in the Ecommerce Playbook and written frameworks than in this Instagram sample.", "identityNote": "Profile identifies the CEO of @commonthreadcollective and links to the company domain. Both personal and company Reel queries returned no_items; that does not establish that either account is inactive.", "sources": [{"title": "Prophit operating framework", "url": "https://commonthreadco.com/blogs/coachs-corner/growth-is-in-the-doing"}, {"title": "Ecommerce Playbook", "url": "https://commonthreadco.com/blogs/ecommerce-playbook"}], "scopes": ["dtc-agencies", "dtc-ecommerce"], "checkedAt": "2026-10-26", "recentAuthoredReels": 0, "recentCollaborations": 0, "sampleLimit": 5, "latestReelAt": null, "activityLabel": "No accessible authored Reels returned in the capped 28-day sample; absence is inconclusive.", "trackingEnabled": false, "identityStatus": "matched", "sampleExamples": []}, {"name": "Savannah Sanchez", "fit": "High", "focus": "Meta / TikTok creative, hooks, and creator production", "recommendation": "Follow agency examples \u00b7 Instagram unresolved", "contentAssessment": "Strong agency-creative fit. Her agency publishes ad examples and explains weekly production and iteration. A public workshop covers hooks, iPhone filming, and when to iterate versus create new ads.", "identityNote": "Name search produced unrelated accounts. @thesocialsavannah and @social_savannah returned not_found; an older cited @socialsavannah handle now resolves to a private profile without matching business evidence. No personal Instagram account added.", "sources": [{"title": "Agency ad examples and process", "url": "https://thesocialsavannah.com/"}, {"title": "Creative formulas workshop", "url": "https://www.foreplay.co/events/social-savanah"}], "scopes": ["dtc-agencies", "dtc-ecommerce"], "checkedAt": "2026-10-26", "recentAuthoredReels": 0, "recentCollaborations": 0, "sampleLimit": 5, "latestReelAt": null, "activityLabel": "Recent Instagram Reel activity unverified: business identity could not be established.", "trackingEnabled": false, "identityStatus": "unresolved", "sampleExamples": []}, {"name": "Cody Plofker", "handle": "codyplof", "fit": "High", "focus": "DTC growth, conversion systems, and AI implementation", "recommendation": "Follow Growth Notes \u00b7 Reels paused", "contentAssessment": "Operator-led learning source: customer research, test design, and practical growth systems. His current site also offers AI/CRO implementation. The Instagram sample surfaced a DTC podcast collaboration rather than original instructional Reels.", "identityNote": "Profile name and DTC podcast collaboration match, but no direct personal-site Instagram cross-link was found. Identity treated as probable and tracking kept paused. Collaboration owner is @notzainagain.", "sources": [{"title": "Growth Notes and operator background", "url": "https://codyplofker.com/"}, {"title": "DTC podcast collaboration", "url": "https://www.instagram.com/p/DerroElsCzB/"}], "scopes": ["ai-dtc", "dtc-ecommerce"], "checkedAt": "2026-10-26", "recentAuthoredReels": 0, "recentCollaborations": 1, "sampleLimit": 5, "latestReelAt": null, "activityLabel": "1 recent collaboration Reels; no original-owner Reels returned in this sample.", "trackingEnabled": false, "identityStatus": "probable", "sampleExamples": [{"url": "https://www.instagram.com/p/DerroElsCzB/", "timestamp": "2026-10-19T16:25:47.000Z", "owner": "notzainagain", "caption": "Is TikTok Shop the new best thing or is it just hype? The greatest d2c operators in the world share their thoughts.\n\nVisit the What\u2019s Working podcast in the link in my bio for the full episode"}]}, {"name": "Matt Wolfe", "handle": "mr.eflow", "fit": "High for broad AI; secondary for DTC", "focus": "AI tools, workflow demos, and industry news", "recommendation": "Track Reels \u00b7 broad AI", "contentAssessment": "Useful broad-AI discovery source. Recent examples include AI-assisted video editing and proactive-agent use cases, mixed with robotics and model news. Some posts are sponsored. Filter for business workflows rather than assuming every news item has DTC value.", "identityNote": "mattwolfe.com links to @mr.eflow; profile email and Future Tools reference match.", "sources": [{"title": "Videos and Future Tools", "url": "https://mattwolfe.com/"}, {"title": "AI video editing example", "url": "https://www.instagram.com/p/De21H_ZOhfN/"}], "scopes": ["ai"], "checkedAt": "2026-10-26", "recentAuthoredReels": 5, "recentCollaborations": 0, "sampleLimit": 5, "latestReelAt": "2026-10-26T05:16:42.000Z", "activityLabel": "5 authored Reels returned in the capped 28-day sample; latest 2026-10-26.", "trackingEnabled": true, "identityStatus": "matched", "sampleExamples": [{"url": "https://www.instagram.com/p/De8glGguaPi/", "timestamp": "2026-10-26T05:16:42.000Z", "owner": "mr.eflow", "caption": "Check out the Voxel Butler robot... Could be yours in 2028 for roughly $20k.\n\n(New video edit test - Gave Clause ungraded S-Log footage and had it color grade as part of the editing workflow)"}, {"url": "https://www.instagram.com/p/De2gCacAPBH/", "timestamp": "2026-10-23T21:18:32.000Z", "owner": "mr.eflow", "caption": "Comment \u201cDOTS\u201d and I\u2019ll DM you each prompt and the link to try it yourself!\u2060\n\u2060\n@chatgpt can now do things for you even when you're not using it.\u2060\n\nDots are their new always-on AI agents that can take on ongoing tasks and work proactively in the background.\u2060\n\u2060\nHere are 3 ways to put yours to work:\u2060\n\ud83d\udcb0 Get money back: Track purchases and catch price drops so you don't get a bad deal.\u2060\n\u2708\ufe0f Avoid travel headaches: Monitor delays, find alternative routes, and prepare backup plans.\u2060\n\ud83d\udce9 Never drop the ball: Keep track of promises, deadlines, and follow-ups across your email and calendar.\u2060\n\u2060\nAnd you don't have to keep prompting it. Your dot can keep wor"}, {"url": "https://www.instagram.com/p/De4zMX6OP_1/", "timestamp": "2026-10-24T18:42:24.000Z", "owner": "mr.eflow", "caption": "Kimi K3.1 Pro appears to be nearly as good as the big lab state of the art models... And it's open-weight! So wild!\n\n#kimi #openweight #aimodels"}]}, {"name": "Rowan Cheung", "handle": "rowancheung", "fit": "Medium for practical DTC; high for AI awareness", "focus": "AI news, robotics, and emerging applications", "recommendation": "Track Reels \u00b7 broad AI", "contentAssessment": "Active awareness feed. The sample covers robotics, AI science, and emerging applications; it is less directly useful for DTC execution than Dara's examples or Joanna's ecommerce-focused writing.", "identityNote": "rowancheung.com links directly to this Instagram account; profile references The Rundown.", "sources": [{"title": "Writing and interviews", "url": "https://rowancheung.com/"}, {"title": "Instagram profile", "url": "https://www.instagram.com/rowancheung/"}], "scopes": ["ai"], "checkedAt": "2026-10-26", "recentAuthoredReels": 5, "recentCollaborations": 0, "sampleLimit": 5, "latestReelAt": "2026-10-24T13:00:21.000Z", "activityLabel": "5 authored Reels returned in the capped 28-day sample; latest 2026-10-24.", "trackingEnabled": true, "identityStatus": "matched", "sampleExamples": [{"url": "https://www.instagram.com/p/De4MKCpRKiX/", "timestamp": "2026-10-24T13:00:21.000Z", "owner": "rowancheung", "caption": "Microsoft has been working on Project Silica for nearly a decade, and this month marked its biggest leap yet.\n\nThe research phase is now officially complete, and the system no longer requires rare, expensive glass. \n\nIt now works with the same heat-resistant material found in Pyrex cookware. That solves what was previously the biggest barrier to real-world deployment. \n\nThe glass stores nearly 5 terabytes of data in a coaster-sized slab, needs no power to maintain it, and is immune to heat, water, and magnetic fields that would destroy conventional storage within decades.\n\nMicrosoft has already used it to archive the 1978 Superman film and pa"}, {"url": "https://www.instagram.com/p/De2UIwTu1ZX/", "timestamp": "2026-10-23T19:33:17.000Z", "owner": "rowancheung", "caption": "\ud83e\udd82 Claude just helped design a potential scorpion antivenom. \n\nIn 64 hours, an internal research model generated over 318,000 protein designs, guided by five human messages. \n\nAnthropic\u2019s scientists and Citrini Research sent 211 designs to outside labs for testing and 17 met the study\u2019s binding criteria. \n\nThese tiny proteins grab scorpion toxins, potentially blocking their attack on nerve cells. \n\nBut binding isn\u2019t the same as neutralizing venom\u2026\n\nThe team hasn\u2019t tested whether they protect cells or animals, and each successful design bound only one toxin. \n\nIt\u2019s an early research result with a much bigger question ahead. Can these molecules "}, {"url": "https://www.instagram.com/p/DezsldAOgn8/", "timestamp": "2026-10-22T19:08:52.000Z", "owner": "rowancheung", "caption": "\ud83e\udde0 An AI system called Brain-IT can reconstruct recognizable images from brain scans of people looking at pictures.\n\nDeveloped at the Weizmann Institute, it predicts both image content and layout, then uses a diffusion model to generate the reconstruction. \n\nResearchers expanded its training data with simulated brain activity. With one hour of scans from a new person, it achieved results comparable to earlier systems trained on 40 hours. \n\nBut it still makes mistakes: one reconstruction turned a dog into a goat. \n\nReconstructing dreams is a future ambition. For now, the system reconstructs viewed pictures, with impressive results that remain i"}]}], "apifyRuns": [{"id": "dHaQLYSUnbbBwVEub", "label": "search-joanna", "costUsd": 0.0027}, {"id": "WazdkpWuIW2v1ErKn", "label": "search-max", "costUsd": 0.0081}, {"id": "7rcyXj6SxJgPpYm43", "label": "search-taylor", "costUsd": 0.0081}, {"id": "N9DUUOalioZ9gU8kC", "label": "search-savannah", "costUsd": 0.0081}, {"id": "k2NWveo88W1li1LG1", "label": "search-cody", "costUsd": 0.0081}, {"id": "m4bwECuLVUNGY3d5P", "label": "recent-reels", "costUsd": 0.053}, {"id": "Z84JUVj6yCWW4TDXd", "label": "savannah-aliases", "costUsd": 0.0054}, {"id": "Q8mKoOR9HZiG0Cfiy", "label": "profiles", "costUsd": 0.024300000000000002}]};
+const ADMIN_URL = "https://naegele--4747.getbb.app/admin";
+const CREATOR_MAP = new Map(CREATORS.map(c => [c.handle, c]));
 
 const fmtNum = (n) => {
   if (n === null || n === undefined) return "—";
@@ -866,6 +1302,71 @@ let hideCompleted = localStorage.getItem(HIDE_COMPLETED_KEY) === "1";
 let showDeleted = localStorage.getItem(SHOW_DELETED_KEY) === "1";
 let sortKey = "posted_ts";
 let sortDir = "desc";
+const SCOPE_KEY = "outlier-niche-list";
+let activeScope = new URLSearchParams(location.search).get("scope") || localStorage.getItem(SCOPE_KEY) || (SCOPES[0]?.id ?? "__all__");
+if (activeScope !== "__all__" && !SCOPES.some(s => s.id === activeScope)) activeScope = SCOPES[0]?.id ?? "__all__";
+
+function scopeRows() {
+  return activeScope === "__all__" ? REELS : REELS.filter(r => (CREATOR_MAP.get(r.creator_handle)?.scopes || []).includes(activeScope));
+}
+
+function renderResearch() {
+  const candidates = (RESEARCH.candidates || []).filter(c => activeScope === "__all__" || c.scopes.includes(activeScope));
+  document.getElementById("research-meta").textContent = RESEARCH.checkedAt
+    ? `Checked ${RESEARCH.checkedAt} · $${Number(RESEARCH.spendUsd || 0).toFixed(2)} of $${Number(RESEARCH.budgetUsd || 0).toFixed(2)} research budget used. Editorial fit and content usefulness are separate from Reel performance. Recent activity is a capped 28-day sample.`
+    : "No creator research recorded yet.";
+  const safeLink = (url) => { try { const u = new URL(url); return u.protocol === "https:" ? u.href : "#"; } catch { return "#"; } };
+  document.getElementById("research-grid").innerHTML = candidates.map(c => `
+    <article class="research-card">
+      <h3>${escapeHtml(c.name)}</h3>
+      <span class="research-tag">${escapeHtml(c.recommendation || "Needs review")}</span>
+      <p><strong>Fit: ${escapeHtml(c.fit || "Not assessed")}</strong> · ${escapeHtml(c.focus || "")}</p>
+      <p>${escapeHtml(c.contentAssessment || "")}</p>
+      <p>${escapeHtml(c.activityLabel || "Instagram activity not verified.")}${c.handle ? ` · @${escapeHtml(c.handle)}` : ""}</p>
+      <p>${escapeHtml(c.identityNote || "")}</p>
+      ${(c.sources || []).map(s => `<a href="${escapeHtml(safeLink(s.url))}" target="_blank" rel="noopener noreferrer">${escapeHtml(s.title)}</a>`).join(" · ")}
+    </article>`).join("") || '<p class="research-meta">No researched candidates in this list yet.</p>';
+}
+
+function applyScope(scope) {
+  activeScope = scope;
+  localStorage.setItem(SCOPE_KEY, scope);
+  const url = new URL(location.href); url.searchParams.set("scope", scope); history.replaceState(null, "", url);
+  document.querySelectorAll("[data-scope]").forEach(b => {
+    b.classList.toggle("active", b.dataset.scope === scope);
+    b.setAttribute("aria-pressed", String(b.dataset.scope === scope));
+  });
+  document.querySelectorAll(".creator-chip[data-creator]").forEach(chip => {
+    const c = CREATOR_MAP.get(chip.dataset.creator);
+    chip.hidden = chip.dataset.creator !== "__all__" && scope !== "__all__" && !(c?.scopes || []).includes(scope);
+    if (chip.hidden) chip.style.display = "none"; else chip.style.removeProperty("display");
+  });
+  const rows = scopeRows();
+  const adminUrl = new URL(["localhost", "127.0.0.1"].includes(location.hostname) ? "/admin" : ADMIN_URL, location.href);
+  adminUrl.searchParams.set("scope", scope);
+  adminUrl.hash = "add-creators";
+  document.getElementById("add-creator").href = adminUrl.href;
+  document.querySelector('.creator-chip.all .chip-stats').textContent = `${rows.length} reels · ${rows.filter(r => r.ratio >= 2).length} outliers`;
+  const candidates = (RESEARCH.candidates || []).filter(c => scope === "__all__" || c.scopes.includes(scope));
+  const selected = SCOPES.find(s => s.id === scope);
+  document.getElementById("niche-summary").textContent = `${selected?.description || "All lists, including the original demo creators."} ${candidates.length} researched candidates · ${rows.length} cached reels. Membership changes are managed in Admin.`;
+  const plays = rows.map(r => r.plays).sort((a,b) => a-b);
+  const mid = Math.floor(plays.length / 2);
+  const median = plays.length ? (plays.length % 2 ? plays[mid] : (plays[mid-1] + plays[mid])/2) : 0;
+  const top = [...rows].sort((a,b) => b.ratio - a.ratio)[0];
+  const values = [fmtNum(median), fmtNum(top?.plays || 0), fmtNum(rows.reduce((n,r) => n+r.plays,0)), fmtNum(rows.reduce((n,r) => n+r.engagements,0)), String(rows.filter(r => r.ratio >= 2).length)];
+  document.querySelectorAll("#scope-kpis .val").forEach((el,i) => el.textContent = values[i]);
+  const deltas = document.querySelectorAll("#scope-kpis .delta");
+  deltas[0].textContent = "Across this list";
+  deltas[1].textContent = top ? `${top.band_label} · ${top.ratio.toFixed(1)}× median` : "No reels yet";
+  deltas[2].textContent = "Reels in this list";
+  deltas[4].textContent = `${rows.length ? Math.round(100*rows.filter(r => r.ratio>=2).length/rows.length) : 0}% of list`;
+  renderResearch();
+  applyFilter("__all__");
+}
+
+document.getElementById("niche-nav").innerHTML = [...SCOPES, {id:"__all__",name:"All creators / demo"}].map(s => `<button type="button" data-scope="${escapeHtml(s.id)}">${escapeHtml(s.name)}</button>`).join("");
+document.getElementById("niche-nav").addEventListener("click", e => { const b=e.target.closest("[data-scope]"); if (b) applyScope(b.dataset.scope); });
 
 function saveState() {
   localStorage.setItem(COMPLETED_KEY, JSON.stringify([...completed]));
@@ -877,7 +1378,7 @@ function saveState() {
 }
 
 function getFiltered() {
-  let rows = REELS;
+  let rows = scopeRows();
   if (activeFilter !== "__all__") rows = rows.filter(r => r.creator_handle === activeFilter);
   if (bandFilter !== "all") rows = rows.filter(r => r.band_class === bandFilter);
   if (searchText.trim()) {
@@ -901,7 +1402,7 @@ function applyFilter(handle) {
   document.querySelectorAll(".creator-chip").forEach(c =>
     c.classList.toggle("active", c.dataset.creator === handle));
   const filtered = getFiltered();
-  document.getElementById("row-count").textContent = `${filtered.length} of ${REELS.length}`;
+  document.getElementById("row-count").textContent = `${filtered.length} of ${scopeRows().length}`;
   const status = document.getElementById("filter-status");
   if (handle === "__all__") {
     status.innerHTML = "";
@@ -914,7 +1415,7 @@ function applyFilter(handle) {
   renderGrid();
 }
 
-document.querySelectorAll(".creator-chip").forEach(c => {
+document.querySelectorAll(".creator-chip[data-creator]").forEach(c => {
   c.addEventListener("click", () => applyFilter(c.dataset.creator));
 });
 
@@ -1015,7 +1516,7 @@ document.querySelectorAll("th[data-sort]").forEach(th => {
 });
 
 // Init
-applyFilter(activeFilter);
+applyScope(activeScope);
 
 // ---- Modal ----
 const modal = document.getElementById("modal");
@@ -1217,7 +1718,7 @@ document.getElementById("filter-reset").addEventListener("click", () => {
 });
 
 function updateRowCount() {
-  document.getElementById("row-count").textContent = `${getFiltered().length} of ${REELS.length}`;
+  document.getElementById("row-count").textContent = `${getFiltered().length} of ${scopeRows().length}`;
 }
 </script>
 </body>

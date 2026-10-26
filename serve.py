@@ -28,6 +28,7 @@ import urllib.request
 import webbrowser
 from http.server import BaseHTTPRequestHandler
 from pathlib import Path
+from catalog import ALL, scopes_for, select_creators, validate_scope, validate_memberships, valid_handle
 
 ROOT = Path(__file__).resolve().parent
 ENV_FILE = ROOT / ".env"
@@ -161,6 +162,8 @@ class AdminHandler(BaseHTTPRequestHandler):
                 "tokenSet": bool(token and token.startswith("apify_api_")),
                 "tokenPrefix": "configured" if token else "",
                 "creators": config.get("creators", []),
+                "scopes": scopes_for(config),
+                "research": config.get("research", {}),
             })
             return
 
@@ -288,10 +291,17 @@ class AdminHandler(BaseHTTPRequestHandler):
         if path == "/api/creators":
             data = self._body()
             profile = data.get("profile")
-            if not profile or not re.fullmatch(r"[A-Za-z0-9._]{1,30}", profile.get("handle", "")) or profile["handle"].startswith("."):
+            if not isinstance(profile, dict) or not valid_handle(profile.get("handle")):
                 self._json(400, {"error": "no_profile"})
                 return
             config = load_config()
+            try:
+                profile["scopes"] = validate_memberships(config, data.get("scopes", profile.get("scopes", [])))
+            except ValueError as e:
+                self._json(400, {"message": str(e)})
+                return
+            profile["handle"] = profile["handle"].lower()
+            profile["trackingEnabled"] = True
             creators = config.get("creators", [])
             if any(c["handle"] == profile["handle"] for c in creators):
                 self._json(409, {"error": "already_added"})
@@ -300,6 +310,43 @@ class AdminHandler(BaseHTTPRequestHandler):
             config["creators"] = creators
             save_config(config)
             self._json(200, {"creators": creators})
+            return
+
+        creator_match = re.fullmatch(r"/api/creators/([A-Za-z0-9_.]+)", path)
+        if creator_match:
+            data = self._body()
+            config = load_config()
+            creator = next((c for c in config.get("creators", []) if c["handle"] == creator_match[1]), None)
+            if creator is None:
+                self._json(404, {"message": "Creator not found."})
+                return
+            try:
+                if "scopes" in data:
+                    creator["scopes"] = validate_memberships(config, data["scopes"])
+                if "trackingEnabled" in data:
+                    if not isinstance(data["trackingEnabled"], bool):
+                        raise ValueError("Tracking must be enabled or paused.")
+                    creator["trackingEnabled"] = data["trackingEnabled"]
+            except ValueError as e:
+                self._json(400, {"message": str(e)})
+                return
+            save_config(config)
+            self._json(200, {"creators": config["creators"]})
+            return
+
+        if path == "/api/build":
+            if getattr(self.server, "refresh_process", None) is not None and self.server.refresh_process.poll() is None:
+                self._json(409, {"message": "Wait for the current refresh to finish."})
+                return
+            try:
+                result = subprocess.run([sys.executable, str(ROOT / "build.py")], cwd=str(ROOT), capture_output=True, timeout=120)
+                if result.returncode:
+                    self._json(500, {"message": "Build failed; check the creator configuration."})
+                    return
+            except (OSError, subprocess.TimeoutExpired):
+                self._json(500, {"message": "Dashboard rebuild could not complete."})
+                return
+            self._json(200, {"ok": True})
             return
 
         if path == "/api/schedule":
@@ -353,8 +400,19 @@ class AdminHandler(BaseHTTPRequestHandler):
             if getattr(self.server, "refresh_process", None) is not None and self.server.refresh_process.poll() is None:
                 self._json(409, {"message": "A refresh is already running."})
                 return
+            data = self._body()
+            config = load_config()
+            try:
+                scope = validate_scope(config, data.get("scope", ALL))
+                selected = select_creators(config, scope)
+            except ValueError as e:
+                self._json(400, {"message": str(e)})
+                return
+            if not selected:
+                self._json(400, {"message": "No tracked creators in this list. Enable tracking or choose another list."})
+                return
             # Fire refresh.py in a subprocess (long-running)
-            env = {**os.environ, "APIFY_TOKEN": token}
+            env = {**os.environ, "APIFY_TOKEN": token, "OUTLIER_SCOPE": scope}
             log_path = ROOT / "refresh.log"
             log_path.write_text(f"# Refresh started at {time.strftime('%Y-%m-%d %H:%M:%S')}\n")
             with open(log_path, "ab") as logf:
@@ -363,7 +421,7 @@ class AdminHandler(BaseHTTPRequestHandler):
                     cwd=str(ROOT), env=env, stdout=logf, stderr=subprocess.STDOUT,
                 )
             self.server.refresh_process = p
-            self._json(200, {"ok": True, "pid": p.pid, "logPath": str(log_path)})
+            self._json(200, {"ok": True, "pid": p.pid, "logPath": str(log_path), "scope": scope, "creatorCount": len(selected)})
             return
 
         self._json(404, {"error": "not_found"})

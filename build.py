@@ -14,6 +14,7 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 from html import escape
 from pathlib import Path
+from catalog import select_creators, scopes_for
 
 ROOT = Path(__file__).resolve().parent
 DATA = ROOT / "data"
@@ -40,18 +41,13 @@ def _load_creators():
     except json.JSONDecodeError as e:
         print(f"ERROR: config.json is malformed: {e}", file=sys.stderr)
         sys.exit(1)
-    handles = [c.get("handle") for c in data.get("creators", []) if c.get("handle")]
-    if not handles:
-        print(
-            "ERROR: config.json has no creators yet.\n"
-            "Run `python3 configure.py` and add at least one.",
-            file=sys.stderr,
-        )
-        sys.exit(1)
-    return handles
+    return [c["handle"] for c in select_creators(data, tracked_only=False)]
 
 
 CREATORS = _load_creators()
+CONFIG = json.loads((ROOT / "config.json").read_text())
+SCOPES = scopes_for(CONFIG)
+CREATOR_CONFIG = {c["handle"]: c for c in select_creators(CONFIG, tracked_only=False)}
 
 
 def load(path):
@@ -185,6 +181,8 @@ def main():
             "profile_pic": profile_path,
             "median_plays": median_plays,
             "reels_in_window": len(posts),
+            "scopes": CREATOR_CONFIG[handle].get("scopes", []),
+            "trackingEnabled": CREATOR_CONFIG[handle].get("trackingEnabled", True),
         }
         creators.append(creator_meta)
 
@@ -243,6 +241,15 @@ def main():
 
     reels_payload = json.dumps(all_rows, default=str).replace("<", "\\u003c")
     creators_payload = json.dumps(creators).replace("<", "\\u003c")
+    scopes_payload = json.dumps(SCOPES).replace("<", "\\u003c")
+    research = CONFIG.get("research", {})
+    roster = []
+    for candidate in research.get("candidates", []):
+        creator = CREATOR_CONFIG.get(candidate.get("handle"), {})
+        roster.append({**candidate, "scopes": creator.get("scopes", candidate.get("scopes", [])),
+                       "trackingEnabled": creator.get("trackingEnabled", False)})
+    research_payload = json.dumps({**research, "candidates": roster}).replace("<", "\\u003c")
+    admin_url_payload = json.dumps(CONFIG.get("adminUrl", "/admin")).replace("<", "\\u003c")
 
     # Grid cards (still available via toggle)
     def card_html(r):
@@ -284,7 +291,7 @@ def main():
           {avatar}
           <div class="chip-info">
             <div class="chip-name">@{escape(c['username'])}{verified}</div>
-            <div class="chip-stats">{fmt_num(c['followers'])} followers · median {fmt_num(c['median_plays'])} · {c['reels_in_window']} reels</div>
+            <div class="chip-stats">{fmt_num(c['followers'])} followers · median {fmt_num(c['median_plays'])} · {c['reels_in_window']} reels{' · paused' if not c['trackingEnabled'] else ''}</div>
           </div>
         </button>
         """
@@ -298,6 +305,19 @@ def main():
 <title>Outlier Lab — {today}</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <style>
+  .niche-nav {{ display:flex; flex-wrap:wrap; gap:8px; margin:22px 0 12px; }}
+  .niche-nav button {{ background:var(--bg-2); color:var(--fg-dim); border:1px solid var(--border); border-radius:999px; padding:10px 15px; font:inherit; cursor:pointer; }}
+  .niche-nav button.active {{ background:var(--orange); color:#0a0a0c; border-color:var(--orange); font-weight:700; }}
+  .niche-summary {{ color:var(--fg-dim); font-size:13px; margin-bottom:24px; line-height:1.6; }}
+  .research-section {{ margin:28px 0; }}
+  .research-grid {{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,310px),1fr)); gap:12px; }}
+  .research-card {{ padding:18px; border:1px solid var(--border); background:var(--bg-2); border-radius:12px; }}
+  .research-card h3 {{ margin:0 0 8px; font-size:16px; }}
+  .research-card p {{ font-size:13px; line-height:1.6; color:var(--fg-dim); margin:8px 0; }}
+  .research-card a {{ color:var(--orange); font-size:12px; }}
+  .research-tag {{ display:inline-block; padding:4px 8px; border-radius:6px; background:rgba(255,138,61,.12); color:var(--orange); font-size:11px; }}
+  .research-meta {{ color:var(--fg-faint); font-size:12px; margin:8px 0 16px; line-height:1.6; }}
+  .creator-add {{ color:var(--orange); text-decoration:none; border-style:dashed !important; justify-content:center; min-width:145px; }}
   :root {{
     --bg: #0a0a0c;
     --bg-2: #14141a;
@@ -511,30 +531,40 @@ def main():
     </div>
     <div class="header-meta">
       <div class="date">{today}</div>
-      <div>{len(creators)} creator{'' if len(creators)==1 else 's'} · {len(all_rows)} reels tracked</div>
-      <div>Next refresh: <b>tomorrow 07:00</b></div>
+      <div>{len(creators)} saved accounts · {len(all_rows)} cached reels</div>
+      <div>Refresh: <b>manual · choose a list in Admin</b></div>
     </div>
   </header>
 
-  <h3 class="section-title">Creators tracked</h3>
+  <nav class="niche-nav" id="niche-nav" aria-label="Niche lists"></nav>
+  <div class="niche-summary" id="niche-summary"></div>
+
+  <h3 class="section-title">Creators in this list</h3>
   <div class="creators-row">
     <button class="creator-chip all active" data-creator="__all__" type="button">
-      <div class="avatar-fallback" style="display:flex;align-items:center;justify-content:center;font-size:18px">⊕</div>
+      <div class="avatar-fallback" style="display:flex;align-items:center;justify-content:center;font-size:18px" aria-hidden="true">◎</div>
       <div class="chip-info">
-        <div class="chip-name">All creators</div>
+        <div class="chip-name">Everyone in this list</div>
         <div class="chip-stats">{len(all_rows)} reels · {len(outliers)} outliers</div>
       </div>
     </button>
     {creator_chips}
+    <a id="add-creator" class="creator-chip creator-add" href="/admin#add-creators"><span aria-hidden="true">＋</span> Add creator</a>
   </div>
 
-  <div class="kpis">
+  <div class="kpis" id="scope-kpis">
     <div class="kpi"><div class="lab">Median plays</div><div class="val">{fmt_num(median_overall)}</div><div class="delta">Across all tracked</div></div>
     <div class="kpi"><div class="lab">Top reel</div><div class="val accent">{fmt_num(all_rows[0]['plays'] if all_rows else 0)}</div><div class="delta">{all_rows[0]['band_label'] if all_rows else 'No reels yet'} · {all_rows[0]['ratio'] if all_rows else 0:.1f}× median</div></div>
-    <div class="kpi"><div class="lab">Total plays · 30d</div><div class="val">{fmt_num(total_plays)}</div><div class="delta">All reels combined</div></div>
-    <div class="kpi"><div class="lab">Engagements · 30d</div><div class="val">{fmt_num(total_engagements)}</div><div class="delta">Likes + comments</div></div>
+    <div class="kpi"><div class="lab">Sample plays · 28d</div><div class="val">{fmt_num(total_plays)}</div><div class="delta">All reels combined</div></div>
+    <div class="kpi"><div class="lab">Sample engagements · 28d</div><div class="val">{fmt_num(total_engagements)}</div><div class="delta">Likes + comments</div></div>
     <div class="kpi"><div class="lab">Outliers (≥2×)</div><div class="val">{len(outliers)}</div><div class="delta">{round(100*len(outliers)/len(all_rows)) if all_rows else 0}% of feed</div></div>
   </div>
+
+  <section class="research-section" aria-labelledby="research-heading">
+    <h2 id="research-heading">Creator research</h2>
+    <p class="research-meta" id="research-meta"></p>
+    <div class="research-grid" id="research-grid"></div>
+  </section>
 
   <div class="view-bar">
     <div class="left">
@@ -575,7 +605,7 @@ def main():
             <th></th>
             <th data-sort="ratio">Outlier<span class="arrow">▼</span></th>
             <th data-sort="creator_username" class="creator-col">Creator<span class="arrow">▼</span></th>
-            <th>Hook (spoken)</th>
+            <th>Hook / caption</th>
             <th data-sort="plays" class="num">Plays<span class="arrow">▼</span></th>
             <th data-sort="likes" class="num">Likes<span class="arrow">▼</span></th>
             <th data-sort="comments" class="num">Comments<span class="arrow">▼</span></th>
@@ -606,7 +636,7 @@ def main():
   </div>
 
   <footer>
-    <div>Outlier Lab · v1.2 · {len(creators)} creator{'' if len(creators)==1 else 's'} tracked — multi-account list comes next</div>
+    <div>Outlier Lab · four niche lists · shared creators scraped once</div>
     <div>Data: Apify · Built {datetime.now().strftime('%Y-%m-%d %H:%M')}</div>
   </footer>
 
@@ -642,6 +672,10 @@ def main():
 <script>
 const REELS = {reels_payload};
 const CREATORS = {creators_payload};
+const SCOPES = {scopes_payload};
+const RESEARCH = {research_payload};
+const ADMIN_URL = {admin_url_payload};
+const CREATOR_MAP = new Map(CREATORS.map(c => [c.handle, c]));
 
 const fmtNum = (n) => {{
   if (n === null || n === undefined) return "—";
@@ -682,6 +716,71 @@ let hideCompleted = localStorage.getItem(HIDE_COMPLETED_KEY) === "1";
 let showDeleted = localStorage.getItem(SHOW_DELETED_KEY) === "1";
 let sortKey = "posted_ts";
 let sortDir = "desc";
+const SCOPE_KEY = "outlier-niche-list";
+let activeScope = new URLSearchParams(location.search).get("scope") || localStorage.getItem(SCOPE_KEY) || (SCOPES[0]?.id ?? "__all__");
+if (activeScope !== "__all__" && !SCOPES.some(s => s.id === activeScope)) activeScope = SCOPES[0]?.id ?? "__all__";
+
+function scopeRows() {{
+  return activeScope === "__all__" ? REELS : REELS.filter(r => (CREATOR_MAP.get(r.creator_handle)?.scopes || []).includes(activeScope));
+}}
+
+function renderResearch() {{
+  const candidates = (RESEARCH.candidates || []).filter(c => activeScope === "__all__" || c.scopes.includes(activeScope));
+  document.getElementById("research-meta").textContent = RESEARCH.checkedAt
+    ? `Checked ${{RESEARCH.checkedAt}} · $${{Number(RESEARCH.spendUsd || 0).toFixed(2)}} of $${{Number(RESEARCH.budgetUsd || 0).toFixed(2)}} research budget used. Editorial fit and content usefulness are separate from Reel performance. Recent activity is a capped 28-day sample.`
+    : "No creator research recorded yet.";
+  const safeLink = (url) => {{ try {{ const u = new URL(url); return u.protocol === "https:" ? u.href : "#"; }} catch {{ return "#"; }} }};
+  document.getElementById("research-grid").innerHTML = candidates.map(c => `
+    <article class="research-card">
+      <h3>${{escapeHtml(c.name)}}</h3>
+      <span class="research-tag">${{escapeHtml(c.recommendation || "Needs review")}}</span>
+      <p><strong>Fit: ${{escapeHtml(c.fit || "Not assessed")}}</strong> · ${{escapeHtml(c.focus || "")}}</p>
+      <p>${{escapeHtml(c.contentAssessment || "")}}</p>
+      <p>${{escapeHtml(c.activityLabel || "Instagram activity not verified.")}}${{c.handle ? ` · @${{escapeHtml(c.handle)}}` : ""}}</p>
+      <p>${{escapeHtml(c.identityNote || "")}}</p>
+      ${{(c.sources || []).map(s => `<a href="${{escapeHtml(safeLink(s.url))}}" target="_blank" rel="noopener noreferrer">${{escapeHtml(s.title)}}</a>`).join(" · ")}}
+    </article>`).join("") || '<p class="research-meta">No researched candidates in this list yet.</p>';
+}}
+
+function applyScope(scope) {{
+  activeScope = scope;
+  localStorage.setItem(SCOPE_KEY, scope);
+  const url = new URL(location.href); url.searchParams.set("scope", scope); history.replaceState(null, "", url);
+  document.querySelectorAll("[data-scope]").forEach(b => {{
+    b.classList.toggle("active", b.dataset.scope === scope);
+    b.setAttribute("aria-pressed", String(b.dataset.scope === scope));
+  }});
+  document.querySelectorAll(".creator-chip[data-creator]").forEach(chip => {{
+    const c = CREATOR_MAP.get(chip.dataset.creator);
+    chip.hidden = chip.dataset.creator !== "__all__" && scope !== "__all__" && !(c?.scopes || []).includes(scope);
+    if (chip.hidden) chip.style.display = "none"; else chip.style.removeProperty("display");
+  }});
+  const rows = scopeRows();
+  const adminUrl = new URL(["localhost", "127.0.0.1"].includes(location.hostname) ? "/admin" : ADMIN_URL, location.href);
+  adminUrl.searchParams.set("scope", scope);
+  adminUrl.hash = "add-creators";
+  document.getElementById("add-creator").href = adminUrl.href;
+  document.querySelector('.creator-chip.all .chip-stats').textContent = `${{rows.length}} reels · ${{rows.filter(r => r.ratio >= 2).length}} outliers`;
+  const candidates = (RESEARCH.candidates || []).filter(c => scope === "__all__" || c.scopes.includes(scope));
+  const selected = SCOPES.find(s => s.id === scope);
+  document.getElementById("niche-summary").textContent = `${{selected?.description || "All lists, including the original demo creators."}} ${{candidates.length}} researched candidates · ${{rows.length}} cached reels. Membership changes are managed in Admin.`;
+  const plays = rows.map(r => r.plays).sort((a,b) => a-b);
+  const mid = Math.floor(plays.length / 2);
+  const median = plays.length ? (plays.length % 2 ? plays[mid] : (plays[mid-1] + plays[mid])/2) : 0;
+  const top = [...rows].sort((a,b) => b.ratio - a.ratio)[0];
+  const values = [fmtNum(median), fmtNum(top?.plays || 0), fmtNum(rows.reduce((n,r) => n+r.plays,0)), fmtNum(rows.reduce((n,r) => n+r.engagements,0)), String(rows.filter(r => r.ratio >= 2).length)];
+  document.querySelectorAll("#scope-kpis .val").forEach((el,i) => el.textContent = values[i]);
+  const deltas = document.querySelectorAll("#scope-kpis .delta");
+  deltas[0].textContent = "Across this list";
+  deltas[1].textContent = top ? `${{top.band_label}} · ${{top.ratio.toFixed(1)}}× median` : "No reels yet";
+  deltas[2].textContent = "Reels in this list";
+  deltas[4].textContent = `${{rows.length ? Math.round(100*rows.filter(r => r.ratio>=2).length/rows.length) : 0}}% of list`;
+  renderResearch();
+  applyFilter("__all__");
+}}
+
+document.getElementById("niche-nav").innerHTML = [...SCOPES, {{id:"__all__",name:"All creators / demo"}}].map(s => `<button type="button" data-scope="${{escapeHtml(s.id)}}">${{escapeHtml(s.name)}}</button>`).join("");
+document.getElementById("niche-nav").addEventListener("click", e => {{ const b=e.target.closest("[data-scope]"); if (b) applyScope(b.dataset.scope); }});
 
 function saveState() {{
   localStorage.setItem(COMPLETED_KEY, JSON.stringify([...completed]));
@@ -693,7 +792,7 @@ function saveState() {{
 }}
 
 function getFiltered() {{
-  let rows = REELS;
+  let rows = scopeRows();
   if (activeFilter !== "__all__") rows = rows.filter(r => r.creator_handle === activeFilter);
   if (bandFilter !== "all") rows = rows.filter(r => r.band_class === bandFilter);
   if (searchText.trim()) {{
@@ -717,7 +816,7 @@ function applyFilter(handle) {{
   document.querySelectorAll(".creator-chip").forEach(c =>
     c.classList.toggle("active", c.dataset.creator === handle));
   const filtered = getFiltered();
-  document.getElementById("row-count").textContent = `${{filtered.length}} of ${{REELS.length}}`;
+  document.getElementById("row-count").textContent = `${{filtered.length}} of ${{scopeRows().length}}`;
   const status = document.getElementById("filter-status");
   if (handle === "__all__") {{
     status.innerHTML = "";
@@ -730,7 +829,7 @@ function applyFilter(handle) {{
   renderGrid();
 }}
 
-document.querySelectorAll(".creator-chip").forEach(c => {{
+document.querySelectorAll(".creator-chip[data-creator]").forEach(c => {{
   c.addEventListener("click", () => applyFilter(c.dataset.creator));
 }});
 
@@ -831,7 +930,7 @@ document.querySelectorAll("th[data-sort]").forEach(th => {{
 }});
 
 // Init
-applyFilter(activeFilter);
+applyScope(activeScope);
 
 // ---- Modal ----
 const modal = document.getElementById("modal");
@@ -1033,7 +1132,7 @@ document.getElementById("filter-reset").addEventListener("click", () => {{
 }});
 
 function updateRowCount() {{
-  document.getElementById("row-count").textContent = `${{getFiltered().length}} of ${{REELS.length}}`;
+  document.getElementById("row-count").textContent = `${{getFiltered().length}} of ${{scopeRows().length}}`;
 }}
 </script>
 </body>
