@@ -1,0 +1,122 @@
+{
+  "realchasechappell": {
+    "requestedAt": "2026-10-26T16:24:45.576304+00:00",
+    "limit": 40,
+    "authoredReels": 18,
+    "collaborations": 0,
+    "status": "loaded",
+    "errors": [],
+    "rowsReturned": 18
+  },
+  "kallaway": {
+    "requestedAt": "2026-10-26T16:24:45.576321+00:00",
+    "limit": 40,
+    "authoredReels": 9,
+    "collaborations": 2,
+    "status": "loaded",
+    "errors": [],
+    "rowsReturned": 11
+  },
+  "iamaayushswamy": {
+    "requestedAt": "2026-10-26T16:24:45.576333+00:00",
+    "limit": 40,
+    "authoredReels": 40,
+    "collaborations": 0,
+    "status": "loaded",
+    "errors": [],
+    "rowsReturned": 40
+  },
+  "tenfoldmarc": {
+    "requestedAt": "2026-10-26T16:24:45.576347+00:00",
+    "limit": 40,
+    "authoredReels": 40,
+    "collaborations": 0,
+    "status": "loaded",
+    "errors": [],
+    "rowsReturned": 40
+  },
+  "therealbrianmark": {
+    "requestedAt": "2026-10-26T16:24:45.576359+00:00",
+    "limit": 40,
+    "authoredReels": 40,
+    "collaborations": 0,
+    "status": "loaded",
+    "errors": [],
+    "rowsReturned": 40
+  },
+  "markbrazil": {
+    "requestedAt": "2026-10-26T16:24:45.576370+00:00",
+    "limit": 40,
+    "authoredReels": 38,
+    "collaborations": 0,
+    "status": "loaded",
+    "errors": [],
+    "rowsReturned": 38
+  },
+  "jasonfladlien": {
+    "requestedAt": "2026-10-26T16:24:45.576383+00:00",
+    "limit": 40,
+    "authoredReels": 39,
+    "collaborations": 1,
+    "status": "loaded",
+    "errors": [],
+    "rowsReturned": 40
+  },
+  "toddbrown": {
+    "requestedAt": "2026-10-26T16:24:45.576386+00:00",
+    "limit": 40,
+    "authoredReels": 0,
+    "collaborations": 0,
+    "status": "no_reels_returned",
+    "errors": [
+      "no_items"
+    ],
+    "rowsReturned": 1,
+    "note": "Profile snapshot\u2019s newest returned post was dated 2026-02-02, outside the 28-day window."
+  },
+  "itsjonbenson": {
+    "requestedAt": "2026-10-26T16:24:45.576393+00:00",
+    "limit": 40,
+    "authoredReels": 28,
+    "collaborations": 0,
+    "status": "loaded",
+    "errors": [],
+    "rowsReturned": 28
+  },
+  "danmartell": {
+    "requestedAt": "2026-10-26T16:24:45.576404+00:00",
+    "limit": 40,
+    "authoredReels": 40,
+    "collaborations": 0,
+    "status": "loaded",
+    "errors": [],
+    "rowsReturned": 40
+  },
+  "sferro.ai": {
+    "requestedAt": "2026-10-26T16:24:45.576413+00:00",
+    "limit": 40,
+    "authoredReels": 26,
+    "collaborations": 1,
+    "status": "loaded",
+    "errors": [],
+    "rowsReturned": 27
+  },
+  "samin_yasar12": {
+    "requestedAt": "2026-10-26T16:24:45.576419+00:00",
+    "limit": 40,
+    "authoredReels": 17,
+    "collaborations": 0,
+    "status": "loaded",
+    "errors": [],
+    "rowsReturned": 17
+  },
+  "sabrina_ramonov": {
+    "requestedAt": "2026-10-26T16:24:45.576432+00:00",
+    "limit": 40,
+    "authoredReels": 38,
+    "collaborations": 2,
+    "status": "loaded",
+    "errors": [],
+    "rowsReturned": 40
+  }
+}

@@ -1,5 +1,6 @@
 """Saved niche lists and creator selection shared by the admin and refresh job."""
 import re
+import urllib.parse
 
 DEFAULT_SCOPES = [
     {"id": "ai-dtc", "name": "AI × DTC ecommerce", "description": "AI workflows, creative production, and product discovery for ecommerce."},
@@ -29,6 +30,31 @@ def validate_memberships(config, scopes):
 
 def valid_handle(handle):
     return isinstance(handle, str) and bool(re.fullmatch(r"[A-Za-z0-9_][A-Za-z0-9._]{0,29}", handle))
+
+
+def parse_handles(value):
+    values = re.split(r"[\s,;]+", value.strip()) if isinstance(value, str) else value
+    if not isinstance(values, list):
+        raise ValueError("Paste Instagram handles separated by spaces, commas, or new lines.")
+    handles = []
+    for item in values:
+        if not isinstance(item, str):
+            raise ValueError("Each Instagram handle must be text.")
+        handle = item.strip().strip("\"'“”‘’").lstrip("@").lower()
+        if not handle:
+            continue
+        if handle.startswith(("https://", "http://")):
+            url = urllib.parse.urlparse(handle)
+            if url.hostname not in {"instagram.com", "www.instagram.com"}:
+                raise ValueError("Use Instagram profile links or exact handles.")
+            handle = url.path.strip("/")
+        if not valid_handle(handle):
+            raise ValueError(f"Invalid Instagram handle: {item[:50]}")
+        if handle not in handles:
+            handles.append(handle)
+    if not handles or len(handles) > 25:
+        raise ValueError("Add between 1 and 25 unique Instagram handles at a time.")
+    return handles
 
 
 def select_creators(config, scope=ALL, tracked_only=True):

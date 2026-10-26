@@ -8,11 +8,12 @@ import threading
 import unittest
 import urllib.error
 import urllib.request
+from concurrent.futures import ThreadPoolExecutor
 from unittest.mock import patch
 
 import serve
 import export_site
-from catalog import ALL, DEFAULT_SCOPES, select_creators, validate_memberships
+from catalog import ALL, DEFAULT_SCOPES, select_creators, validate_memberships, parse_handles
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -167,8 +168,79 @@ class SetupTests(unittest.TestCase):
             self.assertEqual(Path(run.call_args.args[0][-1]).name, 'build.py')
             popen.assert_not_called()
 
+    def test_bulk_import_saves_without_waiting_for_profile_job(self):
+        self.seed_lists()
+        with patch.object(serve, 'get_jobs') as jobs:
+            jobs.return_value.submit.return_value = {'id': 'slow', 'status': 'running'}
+            data = json.load(self.request('/api/creators/import', {'handles': '@One @two, @ONE', 'scopes': ['ai']}))
+            self.assertEqual(data['saved'], ['one', 'two'])
+            self.assertEqual(data['job']['status'], 'running')
+            self.assertEqual(next(c for c in data['creators'] if c['handle'] == 'one')['scopes'], ['ai'])
+            self.assertEqual(json.load(self.request('/api/state'))['creators'], data['creators'])
+
+    def test_bulk_import_is_idempotent_and_budget_errors_do_not_lose_handles(self):
+        self.seed_lists()
+        with patch.object(serve, 'get_jobs') as jobs:
+            jobs.return_value.submit.side_effect = ValueError('Daily lookup budget reached')
+            for _ in range(2):
+                response = json.load(self.request('/api/creators/import', {'handles': ['new'], 'scopes': ['ai-dtc']}))
+            self.assertIn('budget', response['warning'])
+            self.assertEqual(sum(c['handle'] == 'new' for c in response['creators']), 1)
+
+    def test_enrichment_preserves_membership_and_does_not_resurrect_deleted_creators(self):
+        self.seed_lists()
+        serve.apply_profile_details(['shared', 'removed'], [
+            {'handle': 'shared', 'name': 'Enriched name', 'profileStatus': 'ready', 'scopes': ['ai'], 'trackingEnabled': False},
+            {'handle': 'removed', 'name': 'Deleted', 'profileStatus': 'ready'}])
+        creators = serve.load_config()['creators']
+        shared = next(c for c in creators if c['handle'] == 'shared')
+        self.assertEqual(shared['scopes'], ['ai-dtc', 'dtc-agencies'])
+        self.assertTrue(shared['trackingEnabled'])
+        self.assertFalse(any(c['handle'] == 'removed' for c in creators))
+
+    def test_concurrent_saves_do_not_lose_creators(self):
+        with patch.object(serve, 'get_jobs') as jobs:
+            jobs.return_value.submit.return_value = {'id': 'pending', 'status': 'queued'}
+            def add(number):
+                return json.load(self.request('/api/creators/import', {'handles': [f'creator{number}'], 'scopes': ['ai']}))
+            with ThreadPoolExecutor(max_workers=6) as pool:
+                list(pool.map(add, range(12)))
+        self.assertEqual(len(serve.load_config()['creators']), 12)
+
+    def test_new_name_search_returns_a_job_immediately(self):
+        with patch.object(serve, 'get_jobs') as jobs:
+            jobs.return_value.submit.return_value = {'id': 'pending', 'status': 'running', 'message': 'Still searching'}
+            response = self.request('/api/search?q=Alice')
+            self.assertEqual(response.status, 202)
+            self.assertEqual(json.load(response)['job']['id'], 'pending')
+
+    def test_admin_remains_available_during_a_long_request(self):
+        entered, release = threading.Event(), threading.Event()
+        def slow_build(*args, **kwargs):
+            entered.set()
+            release.wait(2)
+            class Result:
+                returncode = 0
+            return Result()
+        with patch.object(serve.subprocess, 'run', side_effect=slow_build):
+            request_thread = threading.Thread(target=lambda: self.request('/api/build', {}).close())
+            request_thread.start()
+            try:
+                self.assertTrue(entered.wait(1))
+                with urllib.request.urlopen(self.base+'/api/state', timeout=1) as response:
+                    self.assertEqual(response.status, 200)
+            finally:
+                release.set()
+                request_thread.join(2)
+
 
 class CatalogTests(unittest.TestCase):
+    def test_pasted_handles_support_urls_case_and_dotted_names(self):
+        self.assertEqual(parse_handles('@Kallaway, @sferro.ai\nhttps://www.instagram.com/KALLAWAY/ @samin_yasar12'),
+                         ['kallaway', 'sferro.ai', 'samin_yasar12'])
+        for invalid in ['https://evil.example/alice', '@../private', '']:
+            with self.subTest(invalid=invalid), self.assertRaises(ValueError):
+                parse_handles(invalid)
     def test_shared_membership_costs_one_scrape(self):
         config = {'creators': [{'handle': 'SHARED', 'scopes': ['ai-dtc', 'dtc-agencies']},
                                {'handle': 'shared', 'scopes': ['ai-dtc', 'dtc-agencies']},

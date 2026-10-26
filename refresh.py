@@ -29,6 +29,8 @@ CLIPS = ROOT / "clips"
 THUMBS = ROOT / "thumbs"
 
 from catalog import ALL, select_creators
+from reel_coverage import summarize_coverage
+from storage import write_json
 CONFIG = json.loads((ROOT / "config.json").read_text())
 SCOPE = os.environ.get("OUTLIER_SCOPE", ALL)
 CREATORS = [c["handle"] for c in select_creators(CONFIG, SCOPE)]
@@ -147,6 +149,7 @@ REEL_FIELDS = [
     "videoPlayCount", "videoViewCount", "likesCount", "commentsCount",
     "displayUrl", "videoUrl", "musicInfo", "transcript",
     "ownerUsername", "ownerFullName",
+    "inputUrl", "coauthorProducers",
 ]
 
 
@@ -156,7 +159,7 @@ def pass1_stats_refresh():
     print(f"PASS 1 (stats only, no transcripts) for {len(CREATORS)} creators…")
     run = start_actor(REEL_SCRAPER, {
         "username": list(CREATORS),
-        "resultsLimit": SETTINGS.get("reelsPerCreator", 10),
+        "resultsLimit": SETTINGS.get("reelsPerCreator", 40),
         "onlyPostsNewerThan": f"{WINDOW_DAYS} days",
         "includeTranscript": False,  # cheap pass
         "skipPinnedPosts": True,
@@ -165,6 +168,10 @@ def pass1_stats_refresh():
     if run["status"] != "SUCCEEDED":
         raise RuntimeError(f"pass1 scrape failed: {run['status']}")
     items = fetch_dataset(run["defaultDatasetId"], fields=REEL_FIELDS)
+    coverage_path = DATA / "coverage.json"
+    coverage = json.loads(coverage_path.read_text()) if coverage_path.exists() else {}
+    coverage.update(summarize_coverage(CREATORS, items, SETTINGS.get("reelsPerCreator", 40)))
+    write_json(coverage_path, coverage)
     valid = [it for it in items if it.get("shortCode") and it.get("ownerUsername") in CREATORS]
     print(f"  scraped {len(valid)} usable reels (stats only)")
     if not valid:

@@ -90,15 +90,23 @@ The pipeline uses a **two-pass** approach:
 - **Pass 1** (cheap, no transcripts): refreshes plays/likes/comments stats for all reels in your 28-day window
 - **Pass 2** (transcripts, expensive add-on): only for reels you haven't transcribed yet
 
-Transcript pricing varies by plan and is charged per started minute. The installed demo limits each refresh to 10 reels per creator and three new transcripts, with Apify run caps of $0.25 for stats, $0.50 for transcripts, and $0.10 for profiles. Adjust the `refresh` settings in `config.json` to change these limits. Refresh scheduling starts in manual mode.
+Transcript pricing varies by plan and is charged per started minute. The installed demo limits each refresh to 40 reels per creator and three new transcripts, with Apify run caps of $1.50 for stats, $0.50 for transcripts, and $0.10 for profiles. Adjust the `refresh` settings in `config.json` to change these limits. Refresh scheduling starts in manual mode.
 
 Vercel runs `export_site.py` to publish only `index.html`, `thumbs/`, and `clips/`. The admin runs locally via `start.command` (or `.venv/bin/python serve.py`); it is not part of the hosted static dashboard.
 
 ## Managing your creator list
 
+### Add creators without waiting for a scraper
+
+Paste exact Instagram handles (or profile URLs) into **Add handles now**, up to 25 at once. Saving is immediate and does not require Apify to finish, or even an API token. Duplicate handles are merged into the selected list. Profile names, photos, and follower counts load in one background batch, with progress shown in the admin.
+
+Name discovery uses **Find profiles** or Enter; typing no longer launches paid searches. The server returns a job immediately and the page polls for progress, so a slow scrape does not hold an HTTP connection open or block the admin. Cached results are reused for 24 hours. Interrupted background jobs resume their saved Apify run ID after a server restart; run submissions with uncertain outcomes are not blindly retried.
+
+Profile batches are capped at $0.10 and name searches at $0.03. A separate rolling 24-hour cap reserves at most $0.50 for these admin lookups, including queued and failed submissions. Reaching this cap does **not** prevent saving handles. These limits are separate from the existing Reel-refresh stage caps. Refresh scheduling remains manual.
+
 ### Saved niche lists
 
-The admin and dashboard offer four lists: **AI × DTC ecommerce**, **DTC agencies / creative**, **DTC ecommerce**, and **AI broadly**. Choose a list in the admin before adding a creator; use the membership checkboxes to include the same creator in additional lists. Shared creators remain a single account in `config.json` and are scraped once per refresh.
+The admin and dashboard offer **AI × DTC ecommerce**, **DTC agencies / creative**, **DTC ecommerce**, **AI broadly**, and **Marketing & sales**. The last list keeps broader copywriting, coaching, offers, and entrepreneurship content separate from ecommerce and technical AI. Choose a list in the admin before adding a creator; use the membership checkboxes to include the same creator in additional lists. Shared creators remain a single account in `config.json` and are scraped once per refresh.
 
 Each list has its own dashboard view, creator chips, metrics, and research notes. Share a view with `?scope=ai-dtc`, `?scope=dtc-agencies`, `?scope=dtc-ecommerce`, or `?scope=ai`. The original sample creators remain in **All creators / demo**.
 

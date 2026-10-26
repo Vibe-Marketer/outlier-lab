@@ -33,7 +33,7 @@ class ScopedRefreshTests(unittest.TestCase):
                 {'shortCode': 'authored', 'ownerUsername': 'selected'},
                 {'shortCode': 'collaboration', 'ownerUsername': 'different_owner', 'inputUrl': 'https://www.instagram.com/selected'},
                 {'error': 'no_items'}]
-            with patch.object(refresh, 'CREATORS', ['selected']):
+            with tempfile.TemporaryDirectory() as temp, patch.object(refresh, 'DATA', Path(temp)), patch.object(refresh, 'CREATORS', ['selected']):
                 self.assertEqual([r['shortCode'] for r in refresh.pass1_stats_refresh()], ['authored'])
 
     def test_empty_list_does_not_start_an_actor(self):

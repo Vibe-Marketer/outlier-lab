@@ -200,6 +200,7 @@
   .vetting-note { color:var(--fg-dim); font-size:12px; line-height:1.6; margin-top:8px; }
   #research-notes article { border-top:1px solid var(--border); padding:12px 0; font-size:13px; line-height:1.6; }
   #research-notes a { color:var(--orange); }
+  #handles-input { box-sizing:border-box; width:100%; resize:vertical; min-height:92px; padding:12px; background:var(--bg-3); color:var(--fg); border:1px solid var(--border); border-radius:9px; font:inherit; font-size:13px; }
 </style>
 </head>
 <body>
@@ -240,9 +241,14 @@
   <section id="add-creators">
     <div class="label">Step 2</div>
     <h2>Add creators</h2>
-    <p class="help">Type a name or handle. We'll search Instagram via Apify and show matching profiles. Click "Add" to start tracking.</p>
+    <p class="help">Know the handles? Paste up to 25 at once. They save immediately; profile names and photos load in the background. Spaces, commas, new lines, and Instagram profile links work.</p>
+    <textarea id="handles-input" rows="3" maxlength="2500" spellcheck="false" aria-label="Instagram handles to add" placeholder="@creator_one @creator_two&#10;https://www.instagram.com/creator_three/"></textarea>
+    <button id="add-handles" class="btn" style="margin-top:10px">Add handles now</button>
+    <div id="import-status" class="status" aria-live="polite"></div>
+    <p class="help" style="margin-top:20px">Don't know the handle? Search by name below. Searches run in the background and reuse cached results; typing alone doesn't spend credits.</p>
     <div class="row">
-      <input id="search-input" type="text" placeholder="Search creators by name or @handle…" autocomplete="off">
+      <input id="search-input" type="text" maxlength="100" placeholder="Search by name…" autocomplete="off">
+      <button id="search-submit" class="btn ghost">Find profiles</button>
     </div>
     <div id="results" class="results"></div>
     <div id="search-status" class="status"></div>
@@ -301,7 +307,7 @@
   <section>
     <div class="label">Step 4</div>
     <h2>Run + view</h2>
-    <p class="help">Run the pipeline now to generate <code>index.html</code> from your current creator list. Takes ~5-10 minutes on first run depending on creator count.</p>
+    <p class="help" id="refresh-help">Refresh this list's Reel data, metrics, and preview clips. Adding a profile alone does not fetch Reels. Refreshes stay manual.</p>
     <div class="actions">
       <button id="run-refresh" class="btn">Run refresh now</button>
       <button id="rebuild-dashboard" class="btn ghost">Rebuild dashboard · free</button>
@@ -321,6 +327,63 @@ const $$ = (s) => document.querySelectorAll(s);
 let STATE = { tokenSet: false, creators: [], scopes: [], research: {} };
 let activeScope = new URLSearchParams(location.search).get("scope") || localStorage.getItem("outlier-admin-list") || "ai-dtc";
 let searchProfiles = new Map();
+const profileWatchers = new Set();
+
+async function apiJSON(url, options = {}, timeout = 10000) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeout);
+  try {
+    const response = await fetch(url, {...options, signal: controller.signal});
+    let data;
+    try { data = await response.json(); }
+    catch { throw new Error(`Admin connection returned HTTP ${response.status}. Reload the admin and try again.`); }
+    if (!response.ok) throw new Error(data.message || data.error || `Request failed (HTTP ${response.status})`);
+    return data;
+  } catch (error) {
+    if (error.name === "AbortError") throw new Error("The admin connection was interrupted. Retry safely; saved handles won't be duplicated.");
+    throw error;
+  } finally { clearTimeout(timer); }
+}
+
+const pause = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+async function watchProfiles(job) {
+  if (!job || profileWatchers.has(job.id)) return;
+  profileWatchers.add(job.id);
+  try {
+    for (let attempt = 0; attempt < 200; attempt++) {
+      $("#import-status").textContent = `Creators saved. ${job.message}`;
+      if (["succeeded", "failed"].includes(job.status)) {
+        await loadState();
+        return;
+      }
+      await pause(2000);
+      job = (await apiJSON(`/api/jobs/${job.id}`)).job;
+    }
+    $("#import-status").textContent = "Creators are saved. Details are still loading in the background; you can leave this page.";
+  } catch (error) {
+    $("#import-status").textContent = `Creators remain saved. ${error.message}`;
+  } finally { profileWatchers.delete(job.id); }
+}
+
+$("#add-handles").addEventListener("click", async e => {
+  const handles = $("#handles-input").value.trim();
+  if (!handles) { toast("Paste at least one Instagram handle", "bad"); return; }
+  e.target.disabled = true;
+  try {
+    const result = await apiJSON("/api/creators/import", {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({handles, scopes:activeScope === "__all__" ? [] : [activeScope]})});
+    STATE.creators = result.creators;
+    renderCreators(); renderResearch();
+    $("#handles-input").value = "";
+    $("#import-status").className = "status ok";
+    $("#import-status").textContent = `${result.saved.length} handle(s) saved. ${result.warning || "Loading profile details in the background."}`;
+    toast(`${result.saved.length} handle(s) saved`, "ok");
+    if (result.job) watchProfiles(result.job);
+  } catch (error) {
+    $("#import-status").className = "status bad";
+    $("#import-status").textContent = error.message;
+  } finally { e.target.disabled = false; }
+});
 
 // ───── toast ─────
 function toast(msg, kind = "info", dur = 2200) {
@@ -333,13 +396,17 @@ function toast(msg, kind = "info", dur = 2200) {
 
 // ───── state load ─────
 async function loadState() {
-  const r = await fetch("/api/state");
-  STATE = await r.json();
+  STATE = await apiJSON("/api/state");
   renderHeader();
   if (activeScope !== "__all__" && !(STATE.scopes || []).some(s => s.id === activeScope)) activeScope = STATE.scopes?.[0]?.id || "__all__";
   renderScopes();
   renderCreators();
   renderResearch();
+  const limits = STATE.refresh || {};
+  $("#refresh-help").textContent = `Adding a profile alone does not fetch Reels. This refresh loads up to ${limits.reelsPerCreator || 40} Reels per account. Caps: $${Number(limits.statsMaxChargeUsd ?? .25).toFixed(2)} for stats, $${Number(limits.transcriptsMaxChargeUsd ?? .50).toFixed(2)} for up to ${limits.transcriptsPerRefresh ?? 3} new transcripts, and $0.10 for profiles. Refreshes remain manual.`;
+  for (const job of STATE.jobs || []) {
+    if (job.kind === "profiles" && !["succeeded", "failed"].includes(job.status)) watchProfiles(job);
+  }
   if (STATE.tokenSet) {
     $("#token-input").placeholder = STATE.tokenPrefix || "apify_api_… (saved)";
   }
@@ -370,7 +437,9 @@ function renderCreators() {
       ${c.profilePic ? `<img src="${escapeHtml(c.profilePic)}" alt="" referrerpolicy="no-referrer" onerror="this.style.opacity=.2">` : `<div style="width:40px;height:40px;border-radius:50%;background:var(--bg)"></div>`}
       <div class="info">
         <div class="name">${escapeHtml(c.name || c.handle)}${c.verified ? '<span class="verified">✓</span>' : ''}</div>
-        <div class="handle">@${escapeHtml(c.handle)} · ${fmtNum(c.followers)} followers · ${c.posts || 0} posts</div>
+        <div class="handle">@${escapeHtml(c.handle)}${c.followers == null ? ' · profile details pending' : ` · ${fmtNum(c.followers)} followers · ${c.posts || 0} posts`}</div>
+        ${c.profileStatus === 'pending' ? '<div class="vetting-note">Saved · loading profile details in the background</div>' : ''}
+        ${c.profileError ? `<div class="vetting-note">${escapeHtml(c.profileError)}</div>` : ''}
         <div class="memberships">${(STATE.scopes || []).map(s => `<label><input type="checkbox" data-membership="${escapeHtml(c.handle)}" value="${escapeHtml(s.id)}" ${(c.scopes || []).includes(s.id) ? 'checked' : ''}>${escapeHtml(s.name)}</label>`).join("")}</div>
         <label class="tracking-toggle"><input type="checkbox" data-tracking="${escapeHtml(c.handle)}" ${c.trackingEnabled !== false ? 'checked' : ''}> Include in refreshes</label>
       </div>
@@ -380,7 +449,7 @@ function renderCreators() {
 }
 
 function renderScopes() {
-  $("#scope-nav").innerHTML = [...(STATE.scopes || []), {id:"__all__",name:"All creators / demo"}].map(s => `<button type="button" data-scope="${escapeHtml(s.id)}" aria-pressed="${s.id === activeScope}" class="${s.id === activeScope ? 'active' : ''}">${escapeHtml(s.name)}</button>`).join("");
+  $("#scope-nav").innerHTML = [...(STATE.scopes || []), {id:"__all__",name:"All creators"}].map(s => `<button type="button" data-scope="${escapeHtml(s.id)}" aria-pressed="${s.id === activeScope}" class="${s.id === activeScope ? 'active' : ''}">${escapeHtml(s.name)}</button>`).join("");
   const scope = (STATE.scopes || []).find(s => s.id === activeScope);
   $("#scope-summary").textContent = scope?.description || "All saved accounts, including the original demo creators.";
   if (STATE.research?.checkedAt) $("#scope-summary").textContent += ` Research used $${Number(STATE.research.spendUsd).toFixed(2)} of $${Number(STATE.research.budgetUsd).toFixed(2)}. Refresh scheduling remains manual.`;
@@ -464,32 +533,46 @@ $("#token-save").addEventListener("click", async () => {
 });
 
 // ───── search ─────
-let searchTimer = null;
+let searchVersion = 0;
 $("#search-input").addEventListener("input", () => {
-  clearTimeout(searchTimer);
+  searchVersion++;
   const q = $("#search-input").value.trim();
-  if (!q) { $("#results").innerHTML = ""; $("#search-status").textContent = ""; return; }
-  if (!STATE.tokenSet) { $("#search-status").textContent = "Save your Apify token first."; $("#search-status").className = "status bad"; return; }
-  $("#search-status").innerHTML = '<span class="spinner"></span> searching…';
+  $("#results").innerHTML = "";
+  $("#search-status").textContent = q ? "Press Find profiles or Enter. Exact handles can be pasted above and saved immediately." : "";
   $("#search-status").className = "status";
-  searchTimer = setTimeout(doSearch, 450);
 });
+$("#search-submit").addEventListener("click", doSearch);
+$("#search-input").addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); doSearch(); } });
 
 async function doSearch() {
   const q = $("#search-input").value.trim();
-  if (!q) return;
+  if (q.length < 2) { toast("Enter at least two characters", "bad"); return; }
+  if (q.startsWith("@") || q.includes("instagram.com/")) {
+    $("#handles-input").value = q;
+    $("#add-handles").focus();
+    $("#search-status").textContent = "Exact handle ready above. Click Add handles now; no name search needed.";
+    return;
+  }
+  const version = ++searchVersion;
   try {
-    const r = await fetch(`/api/search?q=${encodeURIComponent(q)}`);
-    const j = await r.json();
-    if (!r.ok) {
-      $("#search-status").textContent = j.message || "Search failed";
-      $("#search-status").className = "status bad";
-      return;
+    let response = await apiJSON(`/api/search?q=${encodeURIComponent(q)}`);
+    let job = response.job;
+    for (let attempt = 0; job && attempt < 200; attempt++) {
+      if (version !== searchVersion) return;
+      $("#search-status").textContent = job.message;
+      if (job.status === "failed") throw new Error(job.message);
+      if (job.status === "succeeded") break;
+      await pause(2000);
+      job = (await apiJSON(`/api/jobs/${job.id}`)).job;
     }
-    renderResults(j.results || []);
-    $("#search-status").textContent = j.results?.length ? `${j.results.length} match${j.results.length === 1 ? "" : "es"}` : "No matches";
+    if (version !== searchVersion) return;
+    if (job && job.status !== "succeeded") { $("#search-status").textContent = "Search is still running in the background. You can save exact handles above."; return; }
+    const results = job?.results || response.results || [];
+    renderResults(results);
+    $("#search-status").textContent = results.length ? `${results.length} matches` : "No matches. You can still save an exact handle above.";
     $("#search-status").className = "status";
   } catch (e) {
+    if (version !== searchVersion) return;
     $("#search-status").textContent = "Search failed: " + e.message;
     $("#search-status").className = "status bad";
   }
@@ -564,21 +647,6 @@ document.addEventListener("click", async (e) => {
   }
 });
 
-async function lookupProfile(handle) {
-  const r = await fetch("/api/lookup", {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({handle}),
-  });
-  if (!r.ok) {
-    const j = await r.json();
-    toast(j.message || "Lookup failed", "bad");
-    return null;
-  }
-  const j = await r.json();
-  return j.profile;
-}
-
 // ───── schedule ─────
 async function loadSchedule() {
   try {
@@ -645,7 +713,7 @@ $("#open-dashboard").addEventListener("click", () => {
 });
 
 // ───── init ─────
-loadState();
+loadState().catch(error => toast(error.message, "bad"));
 loadSchedule();
 </script>
 </body>

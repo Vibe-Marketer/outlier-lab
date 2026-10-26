@@ -17,6 +17,7 @@ on:
           - dtc-agencies
           - dtc-ecommerce
           - ai
+          - marketing-sales
           - __all__
 
 permissions:

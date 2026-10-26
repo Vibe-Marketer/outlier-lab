@@ -48,6 +48,8 @@ CREATORS = _load_creators()
 CONFIG = json.loads((ROOT / "config.json").read_text())
 SCOPES = scopes_for(CONFIG)
 CREATOR_CONFIG = {c["handle"]: c for c in select_creators(CONFIG, tracked_only=False)}
+COVERAGE_PATH = DATA / "coverage.json"
+COVERAGE = json.loads(COVERAGE_PATH.read_text()) if COVERAGE_PATH.exists() else {}
 
 
 def load(path):
@@ -124,7 +126,11 @@ def load_creator(handle):
     posts_path = DATA / f"{handle}_posts.json"
     details_path = DATA / f"{handle}_details.json"
     posts = load(posts_path)["items"] if posts_path.exists() else []
-    details = load(details_path)["dataset"]["previewItems"][0] if details_path.exists() else {"username": handle}
+    saved = CREATOR_CONFIG.get(handle, {})
+    details = load(details_path)["dataset"]["previewItems"][0] if details_path.exists() else {
+        "username": handle, "fullName": saved.get("name", ""), "followersCount": saved.get("followers", 0),
+        "postsCount": saved.get("posts", 0), "verified": saved.get("verified", False), "profilePicUrl": saved.get("profilePic", ""),
+    }
     return posts, details
 
 
@@ -183,6 +189,7 @@ def main():
             "reels_in_window": len(posts),
             "scopes": CREATOR_CONFIG[handle].get("scopes", []),
             "trackingEnabled": CREATOR_CONFIG[handle].get("trackingEnabled", True),
+            "coverage": COVERAGE.get(handle, {}),
         }
         creators.append(creator_meta)
 
@@ -318,6 +325,10 @@ def main():
   .research-tag {{ display:inline-block; padding:4px 8px; border-radius:6px; background:rgba(255,138,61,.12); color:var(--orange); font-size:11px; }}
   .research-meta {{ color:var(--fg-faint); font-size:12px; margin:8px 0 16px; line-height:1.6; }}
   .creator-add {{ color:var(--orange); text-decoration:none; border-style:dashed !important; justify-content:center; min-width:145px; }}
+  .coverage {{ margin:18px 0 28px; color:var(--fg-dim); font-size:13px; }}
+  .coverage summary {{ cursor:pointer; color:var(--fg); margin-bottom:12px; }}
+  .coverage table {{ width:100%; border-collapse:collapse; }}
+  .coverage td, .coverage th {{ padding:9px; text-align:left; border-bottom:1px solid var(--border); }}
   :root {{
     --bg: #0a0a0c;
     --bg-2: #14141a;
@@ -560,6 +571,12 @@ def main():
     <div class="kpi"><div class="lab">Outliers (≥2×)</div><div class="val">{len(outliers)}</div><div class="delta">{round(100*len(outliers)/len(all_rows)) if all_rows else 0}% of feed</div></div>
   </div>
 
+  <details class="coverage" id="coverage-details">
+    <summary id="coverage-summary">Data coverage</summary>
+    <div style="overflow-x:auto"><table><thead><tr><th>Creator</th><th>Cached Reels</th><th>Sample / status</th><th>Last request</th></tr></thead><tbody id="coverage-body"></tbody></table></div>
+    <p>Outliers are at least 2× that creator's sampled median views. Small samples are provisional. Collaboration views owned by another account do not enter the personal baseline.</p>
+  </details>
+
   <section class="research-section" aria-labelledby="research-heading">
     <h2 id="research-heading">Creator research</h2>
     <p class="research-meta" id="research-meta"></p>
@@ -636,7 +653,7 @@ def main():
   </div>
 
   <footer>
-    <div>Outlier Lab · four niche lists · shared creators scraped once</div>
+    <div>Outlier Lab · {len(SCOPES)} niche lists · shared creators scraped once</div>
     <div>Data: Apify · Built {datetime.now().strftime('%Y-%m-%d %H:%M')}</div>
   </footer>
 
@@ -756,6 +773,14 @@ function applyScope(scope) {{
     if (chip.hidden) chip.style.display = "none"; else chip.style.removeProperty("display");
   }});
   const rows = scopeRows();
+  const scopedCreators = CREATORS.filter(c => scope === "__all__" || c.scopes.includes(scope));
+  const loaded = scopedCreators.filter(c => c.reels_in_window > 0).length;
+  document.getElementById("coverage-summary").textContent = `Data coverage · ${{loaded}} of ${{scopedCreators.length}} saved creators have cached Reels`;
+  document.getElementById("coverage-body").innerHTML = scopedCreators.map(c => {{
+    const sample = c.coverage;
+    const status = !c.trackingEnabled ? "Paused" : c.reels_in_window ? (c.reels_in_window < 10 ? "Small sample · provisional baseline" : "Sample loaded") : sample.status === "collaborations_only" ? "Collaborations only; personal baseline unavailable" : sample.requestedAt ? "No authored Reels returned; check profile / coverage" : "Profile only · Reels not fetched yet";
+    return `<tr><td>@${{escapeHtml(c.handle)}}</td><td>${{c.reels_in_window}}</td><td>${{escapeHtml(status)}}${{sample.limit ? ` · limit ${{sample.limit}}` : ""}}${{sample.collaborations ? ` · ${{sample.collaborations}} collaborations` : ""}}${{sample.note ? ` · ${{escapeHtml(sample.note)}}` : ""}}</td><td>${{escapeHtml(sample.requestedAt?.slice(0,16).replace("T", " ") || "Not recorded")}}</td></tr>`;
+  }}).join("");
   const adminUrl = new URL(["localhost", "127.0.0.1"].includes(location.hostname) ? "/admin" : ADMIN_URL, location.href);
   adminUrl.searchParams.set("scope", scope);
   adminUrl.hash = "add-creators";
@@ -779,7 +804,7 @@ function applyScope(scope) {{
   applyFilter("__all__");
 }}
 
-document.getElementById("niche-nav").innerHTML = [...SCOPES, {{id:"__all__",name:"All creators / demo"}}].map(s => `<button type="button" data-scope="${{escapeHtml(s.id)}}">${{escapeHtml(s.name)}}</button>`).join("");
+document.getElementById("niche-nav").innerHTML = [...SCOPES, {{id:"__all__",name:"All creators"}}].map(s => `<button type="button" data-scope="${{escapeHtml(s.id)}}">${{escapeHtml(s.name)}}</button>`).join("");
 document.getElementById("niche-nav").addEventListener("click", e => {{ const b=e.target.closest("[data-scope]"); if (b) applyScope(b.dataset.scope); }});
 
 function saveState() {{

@@ -28,7 +28,9 @@ import urllib.request
 import webbrowser
 from http.server import BaseHTTPRequestHandler
 from pathlib import Path
-from catalog import ALL, scopes_for, select_creators, validate_scope, validate_memberships, valid_handle
+from catalog import ALL, scopes_for, select_creators, validate_scope, validate_memberships, valid_handle, parse_handles
+from creator_jobs import ProfileJobs
+from storage import write_json
 
 ROOT = Path(__file__).resolve().parent
 ENV_FILE = ROOT / ".env"
@@ -37,6 +39,7 @@ ADMIN_HTML = ROOT / "admin.html"
 
 PORT = 4747
 HOST = "127.0.0.1"
+CONFIG_LOCK = threading.RLock()
 
 # Apify actor IDs
 IG_SCRAPER = "shu8hvrXbJbY3Eb9W"  # apify/instagram-scraper (general)
@@ -74,7 +77,44 @@ def load_config():
 
 
 def save_config(config):
-    CONFIG_FILE.write_text(json.dumps(config, indent=2) + "\n")
+    with CONFIG_LOCK:
+        write_json(CONFIG_FILE, config)
+
+
+def apply_profile_details(handles, profiles):
+    """Only enrich still-saved accounts; preserve edits made while lookup was running."""
+    by_handle = {p["handle"]: p for p in profiles if p.get("handle") in handles}
+    with CONFIG_LOCK:
+        config = load_config()
+        for creator in config.get("creators", []):
+            handle = creator["handle"]
+            if handle not in handles:
+                continue
+            profile = by_handle.get(handle)
+            if profile and profile.get("profileStatus") in {"ready", "private"}:
+                creator.update({k: v for k, v in profile.items() if k not in {"handle", "scopes", "trackingEnabled"}})
+                creator.pop("profileError", None)
+            else:
+                creator["profileStatus"] = "unavailable"
+                creator["profileError"] = "No matching profile details returned. Check the handle; it remains saved."
+        save_config(config)
+
+
+def profile_details_failed(handles, message):
+    with CONFIG_LOCK:
+        config = load_config()
+        for creator in config.get("creators", []):
+            if creator["handle"] in handles:
+                creator.update(profileStatus="unavailable", profileError=message)
+        save_config(config)
+
+
+def get_jobs(server):
+    with server.jobs_lock:
+        if server.profile_jobs is None:
+            server.profile_jobs = ProfileJobs(ROOT / ".cache" / "creator-jobs.json", load_env_token,
+                                               normalize_profile, apply_profile_details, profile_details_failed)
+        return server.profile_jobs
 
 
 def apify_run_sync(actor_id, input_body, token, timeout=90):
@@ -124,6 +164,8 @@ class AdminHandler(BaseHTTPRequestHandler):
         self.send_response(status)
         self.send_header("Content-Type", content_type)
         self.send_header("Content-Length", str(len(body)))
+        if content_type.startswith("text/html"):
+            self.send_header("Cache-Control", "no-store")
         self.end_headers()
         self.wfile.write(body)
 
@@ -133,7 +175,8 @@ class AdminHandler(BaseHTTPRequestHandler):
             return {}
         raw = self.rfile.read(length)
         try:
-            return json.loads(raw)
+            value = json.loads(raw)
+            return value if isinstance(value, dict) else {}
         except json.JSONDecodeError:
             return {}
 
@@ -164,6 +207,8 @@ class AdminHandler(BaseHTTPRequestHandler):
                 "creators": config.get("creators", []),
                 "scopes": scopes_for(config),
                 "research": config.get("research", {}),
+                "refresh": config.get("refresh", {}),
+                "jobs": self.server.profile_jobs.recent() if self.server.profile_jobs else [],
             })
             return
 
@@ -186,30 +231,23 @@ class AdminHandler(BaseHTTPRequestHandler):
             if not q or len(q) < 2:
                 self._json(200, {"results": []})
                 return
-            token = load_env_token()
-            if not token:
+            if not load_env_token():
                 self._json(400, {"error": "no_token", "message": "Save your Apify token first."})
                 return
+            if len(q) > 100:
+                self._json(400, {"message": "Search must be 100 characters or fewer."})
+                return
             try:
-                items = apify_run_sync(IG_SCRAPER, {
-                    "search": q,
-                    "searchType": "user",
-                    "searchLimit": 8,
-                    "resultsType": "details",
-                    "resultsLimit": 1,
-                }, token, timeout=45)
-            except urllib.error.HTTPError as e:
-                self._json(502, {"error": "apify", "message": f"Apify HTTP {e.code}"})
+                job = get_jobs(self.server).submit("search", q)
+            except ValueError as e:
+                self._json(429, {"message": str(e)})
                 return
-            except Exception as e:
-                self._json(502, {"error": "apify", "message": str(e)[:140]})
-                return
-            results = []
-            for it in items:
-                if not it.get("username") or it.get("error"):
-                    continue
-                results.append(normalize_profile(it))
-            self._json(200, {"results": results})
+            self._json(200 if job["status"] in {"succeeded", "failed"} else 202, {"job": job, "results": job.get("results", [])})
+            return
+
+        if path.startswith("/api/jobs/"):
+            job = get_jobs(self.server).get(path.rsplit("/", 1)[-1])
+            self._json(200 if job else 404, {"job": job} if job else {"message": "Lookup not found. Your saved creators are unchanged."})
             return
 
         # serve any other static file in the project root (so admin.html can <link> styles/images if added later)
@@ -252,6 +290,33 @@ class AdminHandler(BaseHTTPRequestHandler):
             return
         parsed = urllib.parse.urlparse(self.path)
         path = parsed.path
+        # Threaded requests must serialize the whole read/modify/write transaction.
+        if path.startswith("/api/creators") or path == "/api/scopes":
+            with CONFIG_LOCK:
+                self._post(path)
+        elif path in {"/api/build", "/api/refresh", "/api/schedule"}:
+            with self.server.operations_lock:
+                self._post(path)
+        else:
+            self._post(path)
+
+    def _post(self, path):
+
+        if path == "/api/scopes":
+            data = self._body()
+            scope_id = data.get("id", "")
+            name = data.get("name", "")
+            description = data.get("description", "")
+            if not isinstance(scope_id, str) or not re.fullmatch(r"[a-z][a-z0-9-]{0,39}", scope_id) or not isinstance(name, str) or not 1 <= len(name.strip()) <= 80 or not isinstance(description, str) or len(description) > 300:
+                self._json(400, {"message": "Use a list ID, a name up to 80 characters, and a short description."})
+                return
+            config = load_config()
+            scopes = scopes_for(config)
+            if not any(s["id"] == scope_id for s in scopes):
+                config["scopes"] = scopes + [{"id": scope_id, "name": name.strip(), "description": description}]
+                save_config(config)
+            self._json(200, {"scopes": scopes_for(config)})
+            return
 
         if path == "/api/token":
             data = self._body()
@@ -265,27 +330,54 @@ class AdminHandler(BaseHTTPRequestHandler):
 
         if path == "/api/lookup":
             data = self._body()
-            handle = (data.get("handle") or "").lstrip("@").strip()
-            if not handle:
-                self._json(400, {"error": "no_handle"})
+            try:
+                handles = parse_handles([data.get("handle", "")])
+            except ValueError as e:
+                self._json(400, {"message": str(e)})
                 return
-            token = load_env_token()
-            if not token:
+            if not load_env_token():
                 self._json(400, {"error": "no_token"})
                 return
             try:
-                items = apify_run_sync(IG_SCRAPER, {
-                    "directUrls": [f"https://www.instagram.com/{handle}/"],
-                    "resultsType": "details",
-                    "resultsLimit": 1,
-                }, token, timeout=45)
-            except Exception as e:
-                self._json(502, {"error": "apify", "message": str(e)[:140]})
+                job = get_jobs(self.server).submit("profiles", handles)
+            except ValueError as e:
+                self._json(429, {"message": str(e)})
                 return
-            if not items or items[0].get("error") or not items[0].get("username"):
-                self._json(404, {"error": "not_found", "message": "Profile not found or empty."})
+            self._json(200 if job["status"] in {"succeeded", "failed"} else 202, {"job": job, "profile": next(iter(job.get("results", [])), None)})
+            return
+
+        if path == "/api/creators/import":
+            data = self._body()
+            config = load_config()
+            try:
+                handles = parse_handles(data.get("handles"))
+                scopes = validate_memberships(config, data.get("scopes", []))
+            except ValueError as e:
+                self._json(400, {"message": str(e)})
                 return
-            self._json(200, {"profile": normalize_profile(items[0])})
+            by_handle = {c["handle"].lower(): c for c in config.get("creators", [])}
+            for handle in handles:
+                if handle not in by_handle:
+                    by_handle[handle] = {"handle": handle, "name": handle, "scopes": scopes[:],
+                                         "trackingEnabled": True, "profileStatus": "pending"}
+                else:
+                    by_handle[handle]["scopes"] = list(dict.fromkeys(by_handle[handle].get("scopes", []) + scopes))
+            config["creators"] = list(by_handle.values())
+            save_config(config)  # Saving never depends on Apify completing (or even being configured).
+            job = None
+            warning = ""
+            if load_env_token():
+                try:
+                    job = get_jobs(self.server).submit("profiles", handles)
+                    if job["status"] == "succeeded":
+                        apply_profile_details(handles, job.get("profiles", []))
+                except ValueError as e:
+                    warning = str(e)
+            else:
+                warning = "Creators saved. Set an Apify token to load profile details later."
+            if warning:
+                profile_details_failed(handles, warning)
+            self._json(200, {"ok": True, "saved": handles, "creators": load_config()["creators"], "job": job, "warning": warning})
             return
 
         if path == "/api/creators":
@@ -427,6 +519,10 @@ class AdminHandler(BaseHTTPRequestHandler):
         self._json(404, {"error": "not_found"})
 
     def do_DELETE(self):
+        with CONFIG_LOCK:
+            self._delete()
+
+    def _delete(self):
         parsed = urllib.parse.urlparse(self.path)
         path = parsed.path
 
@@ -445,8 +541,20 @@ class AdminHandler(BaseHTTPRequestHandler):
 
 # ───────────────────────── server ─────────────────────────
 
-class ReusableTCPServer(socketserver.TCPServer):
+class ReusableTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
     allow_reuse_address = True
+    daemon_threads = True
+
+    def __init__(self, *args, **kwargs):
+        self.profile_jobs = None
+        self.jobs_lock = threading.Lock()
+        self.operations_lock = threading.Lock()
+        super().__init__(*args, **kwargs)
+
+    def server_close(self):
+        if self.profile_jobs is not None:
+            self.profile_jobs.close()
+        super().server_close()
 
 
 def main():
@@ -470,6 +578,8 @@ def main():
         threading.Thread(target=_open, daemon=True).start()
 
     with ReusableTCPServer((HOST, PORT), AdminHandler) as httpd:
+        if (ROOT / ".cache" / "creator-jobs.json").exists():
+            get_jobs(httpd)  # Resume saved run IDs after a server restart.
         try:
             httpd.serve_forever()
         except KeyboardInterrupt:
