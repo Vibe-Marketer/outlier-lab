@@ -19,3 +19,7 @@ venv/
 
 # Logs
 *.log
+public/
+LOCAL-SETUP.md
+.vercel
+.env*

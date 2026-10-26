@@ -1,1 +1,28 @@
-{"creators": []}
+{
+  "creators": [
+    {
+      "handle": "hormozi",
+      "name": "Alex Hormozi",
+      "followers": 5133604,
+      "posts": 0,
+      "verified": true,
+      "private": false,
+      "profilePic": "https://scontent.cdninstagram.com/v/t51.82787-19/517386261_18283544059250343_2310324648245609872_n.jpg?_nc_cat=1&ig_cache_key=GBWw1h6nBuNUyfRAAJBFguYG7A8gbmNDAQAB0j-ccb7-5&ccb=7-5&_nc_sid=669407&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=qO66KjcjobYQ7kNvwG1ap3o&_nc_oc=Adobr5YTJPQjsodKC7o_cy_810J5NN8sxxrC0AdpxI4quKOhh32fAkxFwtMd77WJuMc&_nc_zt=24&_nc_ht=scontent.cdninstagram.com&_nc_gid=Bsyqhnn51GCRquaAAWHC5g&_nc_ss=70689&oh=00_AQOVHxwlQ3mz5G_SuhRsmcVhMzeDiyyWfzYWXJ9Ef2D-Ng&oe=6AE50680"
+    },
+    {
+      "handle": "garyvee",
+      "name": "Gary Vay-Ner-Chuk",
+      "followers": 12176801,
+      "posts": 11013,
+      "verified": true,
+      "private": false,
+      "profilePic": "https://instagram.fbfh3-2.fna.fbcdn.net/v/t51.2885-19/447913595_1241465900569550_7339008130351792368_n.jpg?stp=dst-jpg_s320x320_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=instagram.fbfh3-2.fna.fbcdn.net&_nc_cat=1&_nc_oc=Q6cZ2gFKX1gLvvj8u5ifu43ca9FzgKl55V2EGegRxaSFQwIqpfDryKmpTkuGJRAQwB4Bu7g&_nc_ohc=78dZunUQxeAQ7kNvwEbm4H4&_nc_gid=A2UJjeugWpA4C1mG-kO2Ew&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AQPRUGWIKV3TDJ4smY3oLedoiYGqkcXXm2LYXQ3KB8w5BQ&oe=6AE5236B&_nc_sid=8b3546"
+    }
+  ],
+  "refresh": {
+    "reelsPerCreator": 10,
+    "transcriptsPerRefresh": 3,
+    "statsMaxChargeUsd": 0.25,
+    "transcriptsMaxChargeUsd": 0.5
+  }
+}

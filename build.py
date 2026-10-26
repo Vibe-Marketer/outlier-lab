@@ -125,8 +125,10 @@ def outlier_band(ratio):
 
 
 def load_creator(handle):
-    posts = load(DATA / f"{handle}_posts.json")["items"]
-    details = load(DATA / f"{handle}_details.json")["dataset"]["previewItems"][0]
+    posts_path = DATA / f"{handle}_posts.json"
+    details_path = DATA / f"{handle}_details.json"
+    posts = load(posts_path)["items"] if posts_path.exists() else []
+    details = load(details_path)["dataset"]["previewItems"][0] if details_path.exists() else {"username": handle}
     return posts, details
 
 
@@ -239,8 +241,8 @@ def main():
     for r in all_rows:
         r["hasClip"] = r["shortCode"] in available_clips
 
-    reels_payload = json.dumps(all_rows, default=str)
-    creators_payload = json.dumps(creators)
+    reels_payload = json.dumps(all_rows, default=str).replace("<", "\\u003c")
+    creators_payload = json.dumps(creators).replace("<", "\\u003c")
 
     # Grid cards (still available via toggle)
     def card_html(r):
@@ -528,7 +530,7 @@ def main():
 
   <div class="kpis">
     <div class="kpi"><div class="lab">Median plays</div><div class="val">{fmt_num(median_overall)}</div><div class="delta">Across all tracked</div></div>
-    <div class="kpi"><div class="lab">Top reel</div><div class="val accent">{fmt_num(max(r['plays'] for r in all_rows))}</div><div class="delta">{all_rows[0]['band_label']} · {all_rows[0]['ratio']:.1f}× median</div></div>
+    <div class="kpi"><div class="lab">Top reel</div><div class="val accent">{fmt_num(all_rows[0]['plays'] if all_rows else 0)}</div><div class="delta">{all_rows[0]['band_label'] if all_rows else 'No reels yet'} · {all_rows[0]['ratio'] if all_rows else 0:.1f}× median</div></div>
     <div class="kpi"><div class="lab">Total plays · 30d</div><div class="val">{fmt_num(total_plays)}</div><div class="delta">All reels combined</div></div>
     <div class="kpi"><div class="lab">Engagements · 30d</div><div class="val">{fmt_num(total_engagements)}</div><div class="delta">Likes + comments</div></div>
     <div class="kpi"><div class="lab">Outliers (≥2×)</div><div class="val">{len(outliers)}</div><div class="delta">{round(100*len(outliers)/len(all_rows)) if all_rows else 0}% of feed</div></div>
@@ -1038,7 +1040,7 @@ function updateRowCount() {{
 </html>
 """
 
-    OUT.write_text(html)
+    OUT.write_text("\n".join(line.rstrip() for line in html.splitlines()) + "\n")
     print(f"\n✓ Wrote {OUT}")
     print(f"  {len(creators)} creator(s) · {len(all_rows)} reels · {len(outliers)} outliers (≥2×)")
     if all_rows:

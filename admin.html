@@ -535,7 +535,7 @@ $("#run-refresh").addEventListener("click", async () => {
   $("#run-status").innerHTML = 'Refresh started — see <code>refresh.log</code> for progress. This window won\'t auto-refresh; reload manually when done.';
   $("#run-status").className = "status";
   try {
-    const r = await fetch("/api/refresh", {method: "POST"});
+    const r = await fetch("/api/refresh", {method: "POST", headers: {"Content-Type": "application/json"}, body: "{}"});
     const j = await r.json();
     if (r.ok) {
       toast(`Refresh started (PID ${j.pid})`, "ok");

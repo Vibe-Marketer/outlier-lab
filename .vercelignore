@@ -1,0 +1,8 @@
+.env
+.env.*
+.venv/
+.git/
+__pycache__/
+*.log
+tests/
+public/

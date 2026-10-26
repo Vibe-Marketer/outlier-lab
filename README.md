@@ -67,14 +67,15 @@ git commit -m "My setup"
 git push
 
 # Make APIFY_TOKEN available to GitHub Actions:
-gh secret set APIFY_TOKEN < .env
+gh secret set APIFY_TOKEN
+# Paste only the token at the prompt, without the APIFY_TOKEN= prefix.
 # (or via UI: repo → Settings → Secrets → Actions → New repository secret)
 ```
 
 ### 5. Deploy to Vercel
 
 ```bash
-vercel
+vercel --prod
 ```
 
 Vercel auto-deploys on every push from now on, including the scheduled refresh from GitHub Actions.
@@ -89,7 +90,9 @@ The pipeline uses a **two-pass** approach:
 - **Pass 1** (cheap, no transcripts): refreshes plays/likes/comments stats for all reels in your 28-day window
 - **Pass 2** (transcripts, expensive add-on): only for reels you haven't transcribed yet
 
-That keeps transcript spend roughly flat at "new reels per interval × seconds × $0.041/min" rather than re-paying for the whole archive every refresh.
+Transcript pricing varies by plan and is charged per started minute. The installed demo limits each refresh to 10 reels per creator and three new transcripts, with Apify run caps of $0.25 for stats, $0.50 for transcripts, and $0.10 for profiles. Adjust the `refresh` settings in `config.json` to change these limits. Refresh scheduling starts in manual mode.
+
+Vercel runs `export_site.py` to publish only `index.html`, `thumbs/`, and `clips/`. The admin runs locally via `start.command` (or `.venv/bin/python serve.py`); it is not part of the hosted static dashboard.
 
 ## Managing your creator list
 
@@ -140,7 +143,7 @@ If you prefer the terminal, `python3 configure.py` also works.
 ## Troubleshooting
 
 **A scheduled run failed.** Check repo → Actions → click the failed run → look at "Run refresh pipeline" step. Most common cause:
-- `APIFY_TOKEN` not set as a secret → fix via `gh secret set APIFY_TOKEN < .env`
+- `APIFY_TOKEN` not set as a secret → run `gh secret set APIFY_TOKEN` and paste only the token at the prompt
 - A handle in your config went private mid-week → remove via admin
 
 **Apify returned 502.** Transient. `refresh.py` retries with exponential backoff automatically. If it still fails, trigger the workflow again.

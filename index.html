@@ -2,108 +2,1223 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Outlier Lab — Setup needed</title>
+<title>Outlier Lab — Monday October 26, 2026</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <style>
   :root {
-    --bg: #0a0a0c; --bg-2: #14141a; --bg-3: #1e1e26;
-    --fg: #f4f4f6; --fg-dim: rgba(244,244,246,.55); --fg-faint: rgba(244,244,246,.32);
-    --orange: #FF8A3D; --pink: #FF3D6E; --border: rgba(255,255,255,.08);
+    --bg: #0a0a0c;
+    --bg-2: #14141a;
+    --bg-3: #1e1e26;
+    --fg: #f4f4f6;
+    --fg-dim: rgba(244,244,246,.55);
+    --fg-faint: rgba(244,244,246,.32);
+    --orange: #FF8A3D;
+    --pink: #FF3D6E;
+    --yellow: #FFD43D;
+    --border: rgba(255,255,255,.08);
+    --border-strong: rgba(255,255,255,.16);
   }
   * { box-sizing: border-box; }
-  html, body {
-    margin: 0; padding: 0; background: var(--bg); color: var(--fg);
-    font-family: -apple-system, BlinkMacSystemFont, "Inter", "SF Pro Display", system-ui, sans-serif;
-    min-height: 100vh; display: flex; align-items: center; justify-content: center;
-    -webkit-font-smoothing: antialiased;
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); font-family: -apple-system, BlinkMacSystemFont, "Inter", "SF Pro Display", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; color: inherit; border: 0; background: none; cursor: pointer; padding: 0; }
+  .wrap { max-width: 1620px; margin: 0 auto; padding: 28px 36px 80px; }
+
+  /* ===== HEADER — compact ===== */
+  header.hero { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: end; padding-bottom: 20px; border-bottom: 1px solid var(--border); margin-bottom: 28px; }
+  .eyebrow { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--fg-faint); margin-bottom: 6px; }
+  h1 { font-size: 32px; line-height: 1.1; letter-spacing: -.02em; margin: 0 0 4px; font-weight: 600; }
+  h1 .accent { background: linear-gradient(90deg, var(--orange), var(--pink)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .sub { color: var(--fg-dim); font-size: 13px; max-width: 64ch; }
+  .header-meta { text-align: right; font-size: 12px; color: var(--fg-faint); }
+  .header-meta .date { font-size: 13px; color: var(--fg-dim); margin-bottom: 2px; }
+
+  /* ===== CREATORS section ===== */
+  .section-title { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--fg-faint); margin: 0 0 12px; font-weight: 600; }
+  .creators-row { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 28px; }
+  .creator-chip { display: flex; align-items: center; gap: 12px; padding: 10px 16px 10px 10px; background: var(--bg-2); border: 1px solid var(--border); border-radius: 12px; transition: all .15s ease; flex-shrink: 0; text-align: left; }
+  .creator-chip:hover { border-color: var(--border-strong); transform: translateY(-1px); }
+  .creator-chip.active { border-color: var(--orange); background: linear-gradient(90deg, rgba(255,138,61,.1), rgba(255,138,61,.02)); }
+  .creator-chip img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+  .creator-chip .avatar-fallback { width: 40px; height: 40px; border-radius: 50%; background: var(--bg-3); }
+  .chip-name { font-size: 14px; font-weight: 600; }
+  .chip-name .verified { color: var(--orange); margin-left: 4px; font-size: 11px; }
+  .chip-stats { font-size: 11px; color: var(--fg-dim); margin-top: 2px; }
+  .creator-chip.all { background: var(--bg-3); }
+  .creator-chip.all .chip-name { font-size: 13px; }
+
+  /* ===== KPI strip — compact ===== */
+  .kpis { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 24px; }
+  .kpi { background: var(--bg-2); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
+  .kpi .lab { font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: var(--fg-faint); margin-bottom: 6px; }
+  .kpi .val { font-size: 22px; font-weight: 600; letter-spacing: -.01em; }
+  .kpi .val.accent { color: var(--orange); }
+  .kpi .delta { font-size: 10px; color: var(--fg-dim); margin-top: 2px; }
+
+  /* ===== View toggle ===== */
+  .view-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; gap: 16px; flex-wrap: wrap; }
+  .view-bar .left { display: flex; align-items: baseline; gap: 14px; }
+  .view-bar h2 { font-size: 18px; font-weight: 600; margin: 0; letter-spacing: -.01em; }
+  .view-bar .count { font-size: 12px; color: var(--fg-faint); }
+  .view-toggle { display: inline-flex; gap: 4px; background: var(--bg-2); border: 1px solid var(--border); border-radius: 999px; padding: 3px; }
+  .view-toggle button { padding: 6px 14px; border-radius: 999px; font-size: 11px; font-weight: 600; letter-spacing: .04em; color: var(--fg-dim); transition: all .15s; }
+  .view-toggle button.active { background: var(--fg); color: var(--bg); }
+  .view-toggle button:not(.active):hover { color: var(--fg); }
+  .filter-status { font-size: 11px; color: var(--fg-faint); }
+  .filter-status .pill { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; border-radius: 999px; background: rgba(255,138,61,.15); color: var(--orange); margin-left: 6px; }
+  .filter-status .pill button { color: var(--orange); font-size: 12px; }
+
+  /* ===== View visibility ===== */
+  body[data-view="grid"] .table-view { display: none; }
+  body[data-view="table"] .grid-view { display: none; }
+
+  /* ===== TABLE — the main event ===== */
+  .table-wrap { background: var(--bg-2); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+  table.reels-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  table.reels-table thead th { background: var(--bg-3); padding: 13px 14px; text-align: left; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--fg-faint); font-weight: 600; border-bottom: 1px solid var(--border); user-select: none; white-space: nowrap; position: sticky; top: 0; z-index: 1; }
+  table.reels-table thead th[data-sort] { cursor: pointer; transition: color .15s; }
+  table.reels-table thead th[data-sort]:hover { color: var(--fg); }
+  table.reels-table thead th.sort-active { color: var(--orange); }
+  table.reels-table thead th .arrow { display: inline-block; margin-left: 4px; opacity: 0; font-size: 9px; }
+  table.reels-table thead th.sort-active .arrow { opacity: 1; }
+  table.reels-table tbody tr { border-bottom: 1px solid var(--border); transition: background .12s; cursor: pointer; }
+  table.reels-table tbody tr:hover { background: var(--bg-3); }
+  table.reels-table tbody tr:hover .row-expand { opacity: 1; }
+  table.reels-table tbody tr:last-child { border-bottom: none; }
+  table.reels-table td { padding: 8px 14px; vertical-align: middle; height: 36px; line-height: 1.3; }
+  table.reels-table td.num { font-variant-numeric: tabular-nums; font-weight: 500; font-feature-settings: "tnum"; text-align: right; white-space: nowrap; }
+  table.reels-table thead th.num { text-align: right; }
+  table.reels-table td { white-space: nowrap; }
+  table.reels-table td.hook-cell { white-space: normal; }
+
+  td.outlier-cell { width: 86px; }
+  .outlier-pill { display: inline-flex; align-items: center; justify-content: center; min-width: 54px; padding: 3px 9px; border-radius: 999px; font-size: 11px; font-weight: 700; color: #0a0a0c; font-variant-numeric: tabular-nums; }
+  .outlier-pill.normal { background: rgba(255,255,255,.10); color: var(--fg-dim); }
+
+  td.creator-col { width: 140px; }
+  .handle { font-size: 12px; font-weight: 500; color: var(--fg-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 130px; display: inline-block; }
+  tr:hover .handle { color: var(--fg); }
+
+  td.hook-cell { max-width: 460px; min-width: 320px; }
+  .row-hook { font-size: 13px; color: var(--fg); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
+  td.audio-cell { font-size: 11px; color: var(--fg-dim); max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .row-expand { color: var(--orange); font-size: 11px; opacity: 0; transition: opacity .12s; user-select: none; }
+
+  /* Compact density toggle */
+  body[data-density="compact"] table.reels-table td { padding: 5px 14px; height: 28px; font-size: 12px; }
+  body[data-density="compact"] table.reels-table td.hook-cell .row-hook { font-size: 12px; }
+
+  /* Per-row checkbox / delete */
+  td.action-cell { width: 80px; white-space: nowrap; }
+  .row-check { width: 18px; height: 18px; border-radius: 5px; border: 1.5px solid var(--border-strong); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: all .12s; background: transparent; vertical-align: middle; }
+  .row-check:hover { border-color: var(--orange); }
+  .row-check.checked { background: #2DD46F; border-color: #2DD46F; color: #0a0a0c; }
+  .row-check.checked::after { content: "✓"; font-size: 12px; font-weight: 700; }
+  .row-delete { color: var(--fg-faint); font-size: 14px; margin-left: 8px; cursor: pointer; transition: color .12s; vertical-align: middle; }
+  .row-delete:hover { color: var(--pink); }
+  tr.completed { opacity: .42; }
+  tr.completed .row-hook { text-decoration: line-through; }
+
+  /* Filter bar */
+  .filter-bar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 14px 16px; background: var(--bg-2); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 12px; }
+  .filter-search { flex: 1; min-width: 240px; padding: 8px 12px; background: var(--bg-3); border: 1px solid var(--border); border-radius: 8px; color: var(--fg); font-size: 13px; outline: none; transition: border-color .12s; }
+  .filter-search:focus { border-color: var(--orange); }
+  .filter-search::placeholder { color: var(--fg-faint); }
+  .band-filter { display: inline-flex; gap: 4px; background: var(--bg-3); border: 1px solid var(--border); border-radius: 999px; padding: 3px; }
+  .band-filter button { padding: 5px 12px; border-radius: 999px; font-size: 11px; font-weight: 600; color: var(--fg-dim); transition: all .12s; display: inline-flex; align-items: center; gap: 5px; }
+  .band-filter button:hover:not(.active) { color: var(--fg); }
+  .band-filter button.active { background: var(--fg); color: var(--bg); }
+  .band-filter button .swatch { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+  .toggle-pill { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; background: var(--bg-3); border: 1px solid var(--border); border-radius: 999px; font-size: 12px; color: var(--fg-dim); cursor: pointer; transition: all .12s; }
+  .toggle-pill:hover { color: var(--fg); }
+  .toggle-pill.on { background: rgba(45,212,111,.15); border-color: rgba(45,212,111,.4); color: #2DD46F; }
+  .toggle-pill.on::before { content: "✓ "; }
+  .filter-reset { font-size: 11px; color: var(--fg-faint); cursor: pointer; padding: 6px 10px; border-radius: 8px; transition: color .12s; }
+  .filter-reset:hover { color: var(--pink); }
+  .density-toggle { display: inline-flex; gap: 4px; background: var(--bg-2); border: 1px solid var(--border); border-radius: 999px; padding: 3px; margin-left: 8px; }
+  .density-toggle button { padding: 6px 12px; border-radius: 999px; font-size: 11px; font-weight: 600; color: var(--fg-dim); transition: all .15s; }
+  .density-toggle button.active { background: var(--fg); color: var(--bg); }
+  .density-toggle button:not(.active):hover { color: var(--fg); }
+
+  /* Legend below table */
+  .legend { display: flex; gap: 18px; font-size: 11px; color: var(--fg-dim); margin: 14px 0 0; flex-wrap: wrap; }
+  .legend .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+
+  /* ===== Grid view (secondary) ===== */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
+  .card { background: var(--bg-2); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; transition: transform .15s ease, border-color .15s ease; display: flex; flex-direction: column; }
+  .card:hover { transform: translateY(-2px); border-color: var(--border-strong); }
+  .card.band-breakout { border-color: rgba(255,61,110,.4); box-shadow: 0 0 0 1px rgba(255,61,110,.2); }
+  .card.band-strong { border-color: rgba(255,138,61,.35); }
+  .card .thumb { position: relative; aspect-ratio: 9/12; display: block; background: var(--bg-3); overflow: hidden; width: 100%; }
+  .card .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .25s ease; }
+  .card:hover .thumb img { transform: scale(1.04); }
+  .play-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 42px; color: rgba(255,255,255,.92); text-shadow: 0 4px 24px rgba(0,0,0,.6); opacity: 0; transition: opacity .15s ease; pointer-events: none; }
+  .card:hover .play-overlay { opacity: 1; }
+  .play-badge { position: absolute; bottom: 8px; left: 8px; padding: 3px 8px; background: rgba(0,0,0,.7); border-radius: 999px; font-size: 11px; font-weight: 600; backdrop-filter: blur(4px); }
+  .play-badge::before { content: "▶ "; }
+  .band-badge { position: absolute; top: 8px; right: 8px; padding: 3px 9px; border-radius: 999px; font-size: 10px; font-weight: 700; color: #0a0a0c; letter-spacing: .02em; }
+  .meta { padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+  .creator-row { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--fg-dim); }
+  .creator-avatar-sm { width: 20px; height: 20px; border-radius: 50%; object-fit: cover; }
+  .hook { font-size: 13px; line-height: 1.35; font-weight: 500; color: var(--fg); }
+  .stats { display: flex; gap: 10px; font-size: 11px; color: var(--fg-dim); border-top: 1px solid var(--border); padding-top: 8px; margin-top: auto; flex-wrap: wrap; }
+  .stats b { color: var(--fg); font-weight: 600; }
+
+  /* ===== Accountability + footer ===== */
+  .accountability { margin-top: 40px; padding: 20px 24px; background: linear-gradient(135deg, rgba(255,61,110,.08), rgba(255,138,61,.04)); border: 1px solid rgba(255,61,110,.2); border-radius: 14px; }
+  .accountability h3 { margin: 0 0 6px; font-size: 16px; font-weight: 600; }
+  .accountability p { margin: 0; color: var(--fg-dim); font-size: 13px; }
+  .accountability .ask { color: var(--pink); font-weight: 600; }
+  footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; font-size: 11px; color: var(--fg-faint); }
+
+  /* ===== MODAL ===== */
+  .modal { position: fixed; inset: 0; z-index: 1000; display: none; }
+  .modal.open { display: block; }
+  .modal-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,.78); backdrop-filter: blur(10px); animation: fadeIn .15s ease; }
+  .modal-content { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: min(1100px, 95vw); max-height: 92vh; background: var(--bg-2); border: 1px solid var(--border-strong); border-radius: 20px; overflow: hidden; animation: popIn .2s ease; }
+  .modal-close { position: absolute; top: 14px; right: 14px; z-index: 2; width: 36px; height: 36px; border-radius: 50%; background: rgba(0,0,0,.6); color: #fff; font-size: 20px; line-height: 1; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); transition: background .15s; }
+  .modal-close:hover { background: var(--pink); }
+  .modal-grid { display: grid; grid-template-columns: 460px 1fr; gap: 0; width: 100%; max-height: 92vh; }
+  .modal-video { background: #000; display: flex; align-items: stretch; justify-content: center; min-height: 600px; position: relative; }
+  .modal-video iframe { width: 100%; height: 100%; border: 0; background: #000; }
+  .modal-video video { width: 100%; height: 100%; object-fit: cover; background: #000; }
+  .modal-source-toggle { position: absolute; bottom: 14px; left: 14px; padding: 8px 14px; border-radius: 999px; background: rgba(0,0,0,.72); color: #fff; font-size: 11px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,.15); transition: all .12s; cursor: pointer; }
+  .modal-source-toggle:hover { background: var(--orange); color: #0a0a0c; }
+  .hook-clip-badge { position: absolute; top: 14px; left: 14px; padding: 4px 10px; border-radius: 999px; background: rgba(255,138,61,.92); color: #0a0a0c; font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; pointer-events: none; }
+  .modal-info { padding: 28px 30px 24px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
+  .modal-info .modal-badge { align-self: flex-start; padding: 6px 14px; border-radius: 999px; font-size: 12px; font-weight: 700; color: #0a0a0c; letter-spacing: .02em; }
+  .modal-info h2 { font-size: 20px; line-height: 1.3; margin: 0; font-weight: 600; letter-spacing: -.01em; }
+  .modal-creator { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--fg-dim); }
+  .modal-creator img { width: 24px; height: 24px; border-radius: 50%; }
+  .modal-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 12px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .modal-stat .lab { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--fg-faint); margin-bottom: 4px; }
+  .modal-stat .val { font-size: 18px; font-weight: 600; }
+  .modal-meta { font-size: 12px; color: var(--fg-dim); display: flex; gap: 16px; flex-wrap: wrap; }
+  .modal-caption { font-size: 13px; line-height: 1.5; color: var(--fg-dim); white-space: pre-wrap; max-height: 180px; overflow-y: auto; padding: 12px; background: var(--bg); border-radius: 10px; border: 1px solid var(--border); }
+  .modal-field-label { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--fg-faint); margin-top: 4px; font-weight: 600; }
+  .modal-link { display: inline-flex; align-items: center; gap: 6px; padding: 9px 16px; background: var(--orange); color: #0a0a0c; border-radius: 10px; font-size: 13px; font-weight: 600; transition: background .15s; align-self: flex-start; }
+  .modal-link:hover { background: var(--pink); color: #fff; }
+  @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
+  @keyframes popIn { from { opacity: 0; transform: translate(-50%, -48%) scale(.97) } to { opacity: 1; transform: translate(-50%, -50%) scale(1) } }
+  @media (max-width: 900px) {
+    .modal-grid { grid-template-columns: 1fr; max-height: 92vh; overflow-y: auto; }
+    .modal-video { min-height: 480px; }
   }
-  .card {
-    width: min(620px, 92vw);
-    background: var(--bg-2);
-    border: 1px solid var(--border);
-    border-radius: 18px;
-    padding: 40px 36px 32px;
-    position: relative; overflow: hidden;
-  }
-  .card::before {
-    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-    background: linear-gradient(90deg, var(--orange), var(--pink));
-  }
-  .eyebrow {
-    font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
-    color: var(--fg-faint); margin-bottom: 10px;
-  }
-  h1 {
-    font-size: 28px; line-height: 1.15; letter-spacing: -.02em;
-    margin: 0 0 12px; font-weight: 600;
-  }
-  h1 .accent {
-    background: linear-gradient(90deg, var(--orange), var(--pink));
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-  }
-  p { color: var(--fg-dim); font-size: 14px; line-height: 1.55; margin: 0 0 14px; }
-  code, pre {
-    font-family: ui-monospace, SFMono-Regular, monospace; font-size: 13px;
-    background: var(--bg-3); padding: 2px 7px; border-radius: 5px;
-    color: var(--orange);
-  }
-  pre {
-    padding: 14px 16px; margin: 14px 0; overflow-x: auto;
-    color: var(--fg); background: var(--bg); border: 1px solid var(--border);
-    border-radius: 10px; font-size: 13px;
-  }
-  .steps { display: flex; flex-direction: column; gap: 14px; margin-top: 20px; }
-  .step {
-    display: flex; gap: 14px; padding: 14px 16px;
-    background: var(--bg-3); border: 1px solid var(--border); border-radius: 12px;
-  }
-  .step .n {
-    width: 28px; height: 28px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--orange), var(--pink));
-    color: #0a0a0c; font-weight: 700; font-size: 13px;
-    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-  }
-  .step .text { font-size: 13px; color: var(--fg); line-height: 1.5; }
-  .step .text code { color: var(--orange); font-weight: 600; }
-  footer {
-    margin-top: 24px; padding-top: 18px; border-top: 1px solid var(--border);
-    font-size: 12px; color: var(--fg-faint); text-align: center;
-  }
-  footer a { color: var(--orange); text-decoration: none; }
-  footer a:hover { color: var(--pink); }
 </style>
 </head>
-<body>
-<div class="card">
-  <div class="eyebrow">Outlier Lab</div>
-  <h1>Almost there — <span class="accent">finish setup</span> to see your dashboard.</h1>
-  <p>This page is the default landing before you've added any creators. Once you run the setup wizard and the refresh, this file is replaced with your live dashboard.</p>
+<body data-view="table">
+<div class="wrap">
 
-  <div class="steps">
-    <div class="step">
-      <div class="n">1</div>
-      <div class="text">In your terminal, from this folder, run:<br>
-        <pre>python3 serve.py</pre>
-        Your browser will open the admin at <code>http://localhost:4747/admin</code>.
+  <header class="hero">
+    <div>
+      <div class="eyebrow">Outlier Lab</div>
+      <h1>What's <span class="accent">going viral</span> in your niche today.</h1>
+      <p class="sub">Rolling 28-day competitive intel. Outlier ratio = each reel's plays ÷ that account's own median.</p>
+    </div>
+    <div class="header-meta">
+      <div class="date">Monday October 26, 2026</div>
+      <div>2 creators · 20 reels tracked</div>
+      <div>Next refresh: <b>tomorrow 07:00</b></div>
+    </div>
+  </header>
+
+  <h3 class="section-title">Creators tracked</h3>
+  <div class="creators-row">
+    <button class="creator-chip all active" data-creator="__all__" type="button">
+      <div class="avatar-fallback" style="display:flex;align-items:center;justify-content:center;font-size:18px">⊕</div>
+      <div class="chip-info">
+        <div class="chip-name">All creators</div>
+        <div class="chip-stats">20 reels · 5 outliers</div>
       </div>
+    </button>
+
+        <button class="creator-chip" data-creator="hormozi" type="button">
+          <img src="thumbs/_profile_hormozi.jpg" alt="">
+          <div class="chip-info">
+            <div class="chip-name">@hormozi<span class="verified">✓</span></div>
+            <div class="chip-stats">5.1M followers · median 8.7K · 10 reels</div>
+          </div>
+        </button>
+
+
+        <button class="creator-chip" data-creator="garyvee" type="button">
+          <img src="thumbs/_profile_garyvee.jpg" alt="">
+          <div class="chip-info">
+            <div class="chip-name">@garyvee<span class="verified">✓</span></div>
+            <div class="chip-stats">12.2M followers · median 180K · 10 reels</div>
+          </div>
+        </button>
+
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="lab">Median plays</div><div class="val">14K</div><div class="delta">Across all tracked</div></div>
+    <div class="kpi"><div class="lab">Top reel</div><div class="val accent">185K</div><div class="delta">Breakout · 21.3× median</div></div>
+    <div class="kpi"><div class="lab">Total plays · 30d</div><div class="val">2.7M</div><div class="delta">All reels combined</div></div>
+    <div class="kpi"><div class="lab">Engagements · 30d</div><div class="val">55K</div><div class="delta">Likes + comments</div></div>
+    <div class="kpi"><div class="lab">Outliers (≥2×)</div><div class="val">5</div><div class="delta">25% of feed</div></div>
+  </div>
+
+  <div class="view-bar">
+    <div class="left">
+      <h2>Reels</h2>
+      <span class="count" id="row-count">20 of 20</span>
+      <span class="filter-status" id="filter-status"></span>
     </div>
-    <div class="step">
-      <div class="n">2</div>
-      <div class="text">In the admin: paste your <a href="https://console.apify.com/settings/api" target="_blank" style="color:var(--orange)">Apify API token</a>, then search for creators and add them. Set your refresh frequency.</div>
-    </div>
-    <div class="step">
-      <div class="n">3</div>
-      <div class="text">Click <code>Run refresh now</code>. After ~5–10 min, refresh this tab — you'll see your dashboard with outlier scores, transcripts, and 3-sec hook clips.</div>
-    </div>
-    <div class="step">
-      <div class="n">4</div>
-      <div class="text">Commit & push to GitHub. Add <code>APIFY_TOKEN</code> as a repo secret. Deploy to Vercel with <code>vercel</code>. From then on, GitHub Actions runs every Sunday automatically.</div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <div class="density-toggle" role="tablist">
+        <button data-density="comfy" class="active">Comfy</button>
+        <button data-density="compact">Compact</button>
+      </div>
+      <div class="view-toggle" role="tablist">
+        <button data-view="table" class="active">☰ Table</button>
+        <button data-view="grid">▦ Grid</button>
+      </div>
     </div>
   </div>
 
+  <div class="table-view">
+    <div class="filter-bar">
+      <input type="text" class="filter-search" id="search-input" placeholder="🔎 Search hooks, captions, transcripts…">
+      <div class="band-filter" id="band-filter">
+        <button data-band="all" class="active">All</button>
+        <button data-band="breakout"><span class="swatch" style="background:#FF3D6E"></span>Breakout</button>
+        <button data-band="strong"><span class="swatch" style="background:#FF8A3D"></span>Replicable</button>
+        <button data-band="good"><span class="swatch" style="background:#FFD43D"></span>Working</button>
+        <button data-band="normal"><span class="swatch" style="background:rgba(255,255,255,.4)"></span>Normal</button>
+      </div>
+      <button class="toggle-pill" id="toggle-completed" type="button">Hide completed</button>
+      <button class="toggle-pill" id="toggle-deleted" type="button">Show deleted</button>
+      <span class="filter-reset" id="filter-reset">Reset filters</span>
+    </div>
+    <div class="table-wrap">
+      <table class="reels-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th data-sort="ratio">Outlier<span class="arrow">▼</span></th>
+            <th data-sort="creator_username" class="creator-col">Creator<span class="arrow">▼</span></th>
+            <th>Hook (spoken)</th>
+            <th data-sort="plays" class="num">Plays<span class="arrow">▼</span></th>
+            <th data-sort="likes" class="num">Likes<span class="arrow">▼</span></th>
+            <th data-sort="comments" class="num">Comments<span class="arrow">▼</span></th>
+            <th data-sort="engagements" class="num">Engagements<span class="arrow">▼</span></th>
+            <th data-sort="duration" class="num">Length<span class="arrow">▼</span></th>
+            <th data-sort="posted_ts" class="sort-active sort-desc">Posted<span class="arrow">▼</span></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="reels-tbody"></tbody>
+      </table>
+    </div>
+    <div class="legend">
+      <span><span class="dot" style="background:#FF3D6E"></span>Breakout (≥15×) — usually unrepeatable</span>
+      <span><span class="dot" style="background:#FF8A3D"></span>Replicable (5–15×) — the sweet spot</span>
+      <span><span class="dot" style="background:#FFD43D"></span>Working (2–5×) — note the pattern</span>
+      <span><span class="dot" style="background:rgba(255,255,255,.4)"></span>Normal (&lt;2×)</span>
+    </div>
+  </div>
+
+  <div class="grid-view">
+    <div class="grid">
+        <article class="card band-breakout" data-shortcode="De7izHVE7U_" data-creator="hormozi">
+          <button class="thumb" type="button">
+            <img src="thumbs/De7izHVE7U_.jpg" alt="" loading="lazy">
+            <span class="play-overlay">▶</span>
+            <span class="play-badge">185K</span>
+            <span class="band-badge" style="background:#FF3D6E">21.3× · Breakout</span>
+          </button>
+          <div class="meta">
+            <div class="creator-row">
+              <img src="thumbs/_profile_hormozi.jpg" class="creator-avatar-sm" alt="">
+              <span>@hormozi</span>
+            </div>
+            <div class="hook">There&#x27;s three things that have to happen in order for you to be obligated to enforce a standard, which is that number one, someone has to know the standard you have.</div>
+            <div class="stats">
+              <span><b>185K</b> plays</span>
+              <span>♥ 3.4K</span>
+              <span>💬 57</span>
+              <span>⏱ 51s</span>
+            </div>
+          </div>
+        </article>
+
+
+        <article class="card band-breakout" data-shortcode="De7SITIjTj8" data-creator="hormozi">
+          <button class="thumb" type="button">
+            <img src="thumbs/De7SITIjTj8.jpg" alt="" loading="lazy">
+            <span class="play-overlay">▶</span>
+            <span class="play-badge">157K</span>
+            <span class="band-badge" style="background:#FF3D6E">18.0× · Breakout</span>
+          </button>
+          <div class="meta">
+            <div class="creator-row">
+              <img src="thumbs/_profile_hormozi.jpg" class="creator-avatar-sm" alt="">
+              <span>@hormozi</span>
+            </div>
+            <div class="hook">I sell communication skills to senior leaders.</div>
+            <div class="stats">
+              <span><b>157K</b> plays</span>
+              <span>♥ 2.4K</span>
+              <span>💬 71</span>
+              <span>⏱ 1:22</span>
+            </div>
+          </div>
+        </article>
+
+
+        <article class="card band-good" data-shortcode="De1lH-hxr89" data-creator="garyvee">
+          <button class="thumb" type="button">
+            <img src="thumbs/De1lH-hxr89.jpg" alt="" loading="lazy">
+            <span class="play-overlay">▶</span>
+            <span class="play-badge">818K</span>
+            <span class="band-badge" style="background:#FFD43D">4.5× · Working</span>
+          </button>
+          <div class="meta">
+            <div class="creator-row">
+              <img src="thumbs/_profile_garyvee.jpg" class="creator-avatar-sm" alt="">
+              <span>@garyvee</span>
+            </div>
+            <div class="hook">There’s no way out of fear 😰 Besides attacking it head on … fall in love with rejection … have sympathy for those who judge you … relaxed you only have 1 life … and go get yours to…</div>
+            <div class="stats">
+              <span><b>818K</b> plays</span>
+              <span>♥ 21K</span>
+              <span>💬 350</span>
+              <span>⏱ 37s</span>
+            </div>
+          </div>
+        </article>
+
+
+        <article class="card band-good" data-shortcode="De2rOjvvabL" data-creator="garyvee">
+          <button class="thumb" type="button">
+            <img src="thumbs/De2rOjvvabL.jpg" alt="" loading="lazy">
+            <span class="play-overlay">▶</span>
+            <span class="play-badge">439K</span>
+            <span class="band-badge" style="background:#FFD43D">2.4× · Working</span>
+          </button>
+          <div class="meta">
+            <div class="creator-row">
+              <img src="thumbs/_profile_garyvee.jpg" class="creator-avatar-sm" alt="">
+              <span>@garyvee</span>
+            </div>
+            <div class="hook"><em style='opacity:.4'>no hook</em></div>
+            <div class="stats">
+              <span><b>439K</b> plays</span>
+              <span>♥ 8.3K</span>
+              <span>💬 237</span>
+              <span>⏱ 8s</span>
+            </div>
+          </div>
+        </article>
+
+
+        <article class="card band-good" data-shortcode="De7Mvvykz8G" data-creator="hormozi">
+          <button class="thumb" type="button">
+            <img src="thumbs/De7Mvvykz8G.jpg" alt="" loading="lazy">
+            <span class="play-overlay">▶</span>
+            <span class="play-badge">18K</span>
+            <span class="band-badge" style="background:#FFD43D">2.0× · Working</span>
+          </button>
+          <div class="meta">
+            <div class="creator-row">
+              <img src="thumbs/_profile_hormozi.jpg" class="creator-avatar-sm" alt="">
+              <span>@hormozi</span>
+            </div>
+            <div class="hook">Comment the word “WIN” to get a free scaling roadmap</div>
+            <div class="stats">
+              <span><b>18K</b> plays</span>
+              <span>♥ 131</span>
+              <span>💬 11</span>
+              <span>⏱ 57s</span>
+            </div>
+          </div>
+        </article>
+
+
+        <article class="card band-normal" data-shortcode="De5VdK3OJEj" data-creator="garyvee">
+          <button class="thumb" type="button">
+            <img src="thumbs/De5VdK3OJEj.jpg" alt="" loading="lazy">
+            <span class="play-overlay">▶</span>
+            <span class="play-badge">359K</span>
+            <span class="band-badge" style="background:rgba(255,255,255,.4)">2.0× · Normal</span>
+          </button>
+          <div class="meta">
+            <div class="creator-row">
+              <img src="thumbs/_profile_garyvee.jpg" class="creator-avatar-sm" alt="">
+              <span>@garyvee</span>
+            </div>
+            <div class="hook">The world doesn’t revolve around you ….</div>
+            <div class="stats">
+              <span><b>359K</b> plays</span>
+              <span>♥ 4.5K</span>
+              <span>💬 113</span>
+              <span>⏱ 33s</span>
+            </div>
+          </div>
+        </article>
+
+
+        <article class="card band-normal" data-shortcode="De4PtL5MvzC" data-creator="garyvee">
+          <button class="thumb" type="button">
+            <img src="thumbs/De4PtL5MvzC.jpg" alt="" loading="lazy">
+            <span class="play-overlay">▶</span>
+            <span class="play-badge">321K</span>
+            <span class="band-badge" style="background:rgba(255,255,255,.4)">1.8× · Normal</span>
+          </button>
+          <div class="meta">
+            <div class="creator-row">
+              <img src="thumbs/_profile_garyvee.jpg" class="creator-avatar-sm" alt="">
+              <span>@garyvee</span>
+            </div>
+            <div class="hook">Wake up this morning 🌞 and do your 15 hours of homework - eBay live, TikTok shop, whatnot,
+Fanatics live, district live shopping and more … learn the space ..</div>
+            <div class="stats">
+              <span><b>321K</b> plays</span>
+              <span>♥ 5.4K</span>
+              <span>💬 207</span>
+              <span>⏱ 40s</span>
+            </div>
+          </div>
+        </article>
+
+
+        <article class="card band-normal" data-shortcode="De7g88Pgapm" data-creator="garyvee">
+          <button class="thumb" type="button">
+            <img src="thumbs/De7g88Pgapm.jpg" alt="" loading="lazy">
+            <span class="play-overlay">▶</span>
+            <span class="play-badge">314K</span>
+            <span class="band-badge" style="background:rgba(255,255,255,.4)">1.7× · Normal</span>
+          </button>
+          <div class="meta">
+            <div class="creator-row">
+              <img src="thumbs/_profile_garyvee.jpg" class="creator-avatar-sm" alt="">
+              <span>@garyvee</span>
+            </div>
+            <div class="hook">Congrats dolphins fans</div>
+            <div class="stats">
+              <span><b>314K</b> plays</span>
+              <span>♥ 6.3K</span>
+              <span>💬 557</span>
+              <span>⏱ 12s</span>
+            </div>
+          </div>
+        </article>
+
+
+        <article class="card band-normal" data-shortcode="De6Sz_WD2O3" data-creator="hormozi">
+          <button class="thumb" type="button">
+            <img src="thumbs/De6Sz_WD2O3.jpg" alt="" loading="lazy">
+            <span class="play-overlay">▶</span>
+            <span class="play-badge">10K</span>
+            <span class="band-badge" style="background:rgba(255,255,255,.4)">1.2× · Normal</span>
+          </button>
+          <div class="meta">
+            <div class="creator-row">
+              <img src="thumbs/_profile_hormozi.jpg" class="creator-avatar-sm" alt="">
+              <span>@hormozi</span>
+            </div>
+            <div class="hook">Comment the word “WIN” to get a free scaling roadmap</div>
+            <div class="stats">
+              <span><b>10K</b> plays</span>
+              <span>♥ 54</span>
+              <span>💬 3</span>
+              <span>⏱ 24s</span>
+            </div>
+          </div>
+        </article>
+
+
+        <article class="card band-normal" data-shortcode="De6rcd9EUf6" data-creator="hormozi">
+          <button class="thumb" type="button">
+            <img src="thumbs/De6rcd9EUf6.jpg" alt="" loading="lazy">
+            <span class="play-overlay">▶</span>
+            <span class="play-badge">8.7K</span>
+            <span class="band-badge" style="background:rgba(255,255,255,.4)">1.0× · Normal</span>
+          </button>
+          <div class="meta">
+            <div class="creator-row">
+              <img src="thumbs/_profile_hormozi.jpg" class="creator-avatar-sm" alt="">
+              <span>@hormozi</span>
+            </div>
+            <div class="hook">Comment the word “WIN” to get a free scaling roadmap</div>
+            <div class="stats">
+              <span><b>8.7K</b> plays</span>
+              <span>♥ 19</span>
+              <span>💬 2</span>
+              <span>⏱ 1:33</span>
+            </div>
+          </div>
+        </article>
+
+
+        <article class="card band-normal" data-shortcode="De6zul8CH6V" data-creator="hormozi">
+          <button class="thumb" type="button">
+            <img src="thumbs/De6zul8CH6V.jpg" alt="" loading="lazy">
+            <span class="play-overlay">▶</span>
+            <span class="play-badge">8.7K</span>
+            <span class="band-badge" style="background:rgba(255,255,255,.4)">1.0× · Normal</span>
+          </button>
+          <div class="meta">
+            <div class="creator-row">
+              <img src="thumbs/_profile_hormozi.jpg" class="creator-avatar-sm" alt="">
+              <span>@hormozi</span>
+            </div>
+            <div class="hook">Comment the word “WIN” to get a free scaling roadmap</div>
+            <div class="stats">
+              <span><b>8.7K</b> plays</span>
+              <span>♥ 45</span>
+              <span>💬 0</span>
+              <span>⏱ 29s</span>
+            </div>
+          </div>
+        </article>
+
+
+        <article class="card band-normal" data-shortcode="De6Ke78D8Q0" data-creator="hormozi">
+          <button class="thumb" type="button">
+            <img src="thumbs/De6Ke78D8Q0.jpg" alt="" loading="lazy">
+            <span class="play-overlay">▶</span>
+            <span class="play-badge">3.4K</span>
+            <span class="band-badge" style="background:rgba(255,255,255,.4)">0.4× · Normal</span>
+          </button>
+          <div class="meta">
+            <div class="creator-row">
+              <img src="thumbs/_profile_hormozi.jpg" class="creator-avatar-sm" alt="">
+              <span>@hormozi</span>
+            </div>
+            <div class="hook">Comment the word “WIN” to get a free scaling roadmap</div>
+            <div class="stats">
+              <span><b>3.4K</b> plays</span>
+              <span>♥ 56</span>
+              <span>💬 0</span>
+              <span>⏱ 37s</span>
+            </div>
+          </div>
+        </article>
+
+
+        <article class="card band-normal" data-shortcode="De7m8cRgrux" data-creator="garyvee">
+          <button class="thumb" type="button">
+            <img src="thumbs/De7m8cRgrux.jpg" alt="" loading="lazy">
+            <span class="play-overlay">▶</span>
+            <span class="play-badge">46K</span>
+            <span class="band-badge" style="background:rgba(255,255,255,.4)">0.3× · Normal</span>
+          </button>
+          <div class="meta">
+            <div class="creator-row">
+              <img src="thumbs/_profile_garyvee.jpg" class="creator-avatar-sm" alt="">
+              <span>@garyvee</span>
+            </div>
+            <div class="hook">I grew up selling lemonade...</div>
+            <div class="stats">
+              <span><b>46K</b> plays</span>
+              <span>♥ 873</span>
+              <span>💬 1</span>
+              <span>⏱ 37s</span>
+            </div>
+          </div>
+        </article>
+
+
+        <article class="card band-normal" data-shortcode="De7UpNMgq0Y" data-creator="hormozi">
+          <button class="thumb" type="button">
+            <img src="thumbs/De7UpNMgq0Y.jpg" alt="" loading="lazy">
+            <span class="play-overlay">▶</span>
+            <span class="play-badge">2.1K</span>
+            <span class="band-badge" style="background:rgba(255,255,255,.4)">0.2× · Normal</span>
+          </button>
+          <div class="meta">
+            <div class="creator-row">
+              <img src="thumbs/_profile_hormozi.jpg" class="creator-avatar-sm" alt="">
+              <span>@hormozi</span>
+            </div>
+            <div class="hook">Comment the word “WIN” to get a free scaling roadmap</div>
+            <div class="stats">
+              <span><b>2.1K</b> plays</span>
+              <span>♥ 22</span>
+              <span>💬 0</span>
+              <span>⏱ 31s</span>
+            </div>
+          </div>
+        </article>
+
+
+        <article class="card band-normal" data-shortcode="De1naj2CDkH" data-creator="garyvee">
+          <button class="thumb" type="button">
+            <img src="thumbs/De1naj2CDkH.jpg" alt="" loading="lazy">
+            <span class="play-overlay">▶</span>
+            <span class="play-badge">25K</span>
+            <span class="band-badge" style="background:rgba(255,255,255,.4)">0.1× · Normal</span>
+          </button>
+          <div class="meta">
+            <div class="creator-row">
+              <img src="thumbs/_profile_garyvee.jpg" class="creator-avatar-sm" alt="">
+              <span>@garyvee</span>
+            </div>
+            <div class="hook">I need you to listen this morning … like really listen 👂 … please share this with someone’s who’s scared to share … please 🙏</div>
+            <div class="stats">
+              <span><b>25K</b> plays</span>
+              <span>♥ 709</span>
+              <span>💬 0</span>
+              <span>⏱ 1:05</span>
+            </div>
+          </div>
+        </article>
+
+
+        <article class="card band-normal" data-shortcode="De11ONFn3Xk" data-creator="garyvee">
+          <button class="thumb" type="button">
+            <img src="thumbs/De11ONFn3Xk.jpg" alt="" loading="lazy">
+            <span class="play-overlay">▶</span>
+            <span class="play-badge">3.3K</span>
+            <span class="band-badge" style="background:rgba(255,255,255,.4)">0.0× · Normal</span>
+          </button>
+          <div class="meta">
+            <div class="creator-row">
+              <img src="thumbs/_profile_garyvee.jpg" class="creator-avatar-sm" alt="">
+              <span>@garyvee</span>
+            </div>
+            <div class="hook">I have something important to ask you ….</div>
+            <div class="stats">
+              <span><b>3.3K</b> plays</span>
+              <span>♥ 26</span>
+              <span>💬 2</span>
+              <span>⏱ 7s</span>
+            </div>
+          </div>
+        </article>
+
+
+        <article class="card band-normal" data-shortcode="De678_WjJDy" data-creator="hormozi">
+          <button class="thumb" type="button">
+            <img src="thumbs/De678_WjJDy.jpg" alt="" loading="lazy">
+            <span class="play-overlay">▶</span>
+            <span class="play-badge">152</span>
+            <span class="band-badge" style="background:rgba(255,255,255,.4)">0.0× · Normal</span>
+          </button>
+          <div class="meta">
+            <div class="creator-row">
+              <img src="thumbs/_profile_hormozi.jpg" class="creator-avatar-sm" alt="">
+              <span>@hormozi</span>
+            </div>
+            <div class="hook">My name is Zach.</div>
+            <div class="stats">
+              <span><b>152</b> plays</span>
+              <span>♥ 1</span>
+              <span>💬 0</span>
+              <span>⏱ 5:28</span>
+            </div>
+          </div>
+        </article>
+
+
+        <article class="card band-normal" data-shortcode="De6a91ZDuYk" data-creator="hormozi">
+          <button class="thumb" type="button">
+            <img src="thumbs/De6a91ZDuYk.jpg" alt="" loading="lazy">
+            <span class="play-overlay">▶</span>
+            <span class="play-badge">145</span>
+            <span class="band-badge" style="background:rgba(255,255,255,.4)">0.0× · Normal</span>
+          </button>
+          <div class="meta">
+            <div class="creator-row">
+              <img src="thumbs/_profile_hormozi.jpg" class="creator-avatar-sm" alt="">
+              <span>@hormozi</span>
+            </div>
+            <div class="hook">Comment the word “WIN” to get a free scaling roadmap</div>
+            <div class="stats">
+              <span><b>145</b> plays</span>
+              <span>♥ 1</span>
+              <span>💬 0</span>
+              <span>⏱ 6:09</span>
+            </div>
+          </div>
+        </article>
+
+
+        <article class="card band-normal" data-shortcode="DezQVtriRI4" data-creator="garyvee">
+          <button class="thumb" type="button">
+            <img src="thumbs/DezQVtriRI4.jpg" alt="" loading="lazy">
+            <span class="play-overlay">▶</span>
+            <span class="play-badge">151</span>
+            <span class="band-badge" style="background:rgba(255,255,255,.4)">0.0× · Normal</span>
+          </button>
+          <div class="meta">
+            <div class="creator-row">
+              <img src="thumbs/_profile_garyvee.jpg" class="creator-avatar-sm" alt="">
+              <span>@garyvee</span>
+            </div>
+            <div class="hook">You must understand this for all of you building a business… TikTok live is a monster and all of you should be testing with it, trying it ., to me twitch and TikTok live are monste…</div>
+            <div class="stats">
+              <span><b>151</b> plays</span>
+              <span>♥ 4</span>
+              <span>💬 0</span>
+              <span>⏱ 27s</span>
+            </div>
+          </div>
+        </article>
+
+
+        <article class="card band-normal" data-shortcode="DezCm83kzHF" data-creator="garyvee">
+          <button class="thumb" type="button">
+            <img src="thumbs/DezCm83kzHF.jpg" alt="" loading="lazy">
+            <span class="play-overlay">▶</span>
+            <span class="play-badge">87</span>
+            <span class="band-badge" style="background:rgba(255,255,255,.4)">0.0× · Normal</span>
+          </button>
+          <div class="meta">
+            <div class="creator-row">
+              <img src="thumbs/_profile_garyvee.jpg" class="creator-avatar-sm" alt="">
+              <span>@garyvee</span>
+            </div>
+            <div class="hook">Hope this brings value to someone ♥️</div>
+            <div class="stats">
+              <span><b>87</b> plays</span>
+              <span>♥ 2</span>
+              <span>💬 0</span>
+              <span>⏱ 1:37</span>
+            </div>
+          </div>
+        </article>
+        </div>
+  </div>
+
+  <div class="accountability">
+    <h3>🔥 The only metric that compounds: reps shipped.</h3>
+    <p><span class="ask">Have you posted a reel today?</span> Watching what others posted is not posting. Pick one pattern. Close this tab. Film.</p>
+  </div>
+
   <footer>
-    Full docs: <a href="https://github.com/ItsssssJack/outlier-lab" target="_blank">github.com/ItsssssJack/outlier-lab</a>
+    <div>Outlier Lab · v1.2 · 2 creators tracked — multi-account list comes next</div>
+    <div>Data: Apify · Built 2026-10-26 08:30</div>
   </footer>
+
 </div>
+
+<div class="modal" id="modal" aria-hidden="true">
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal-content">
+    <button class="modal-close" data-close aria-label="Close">×</button>
+    <div class="modal-grid">
+      <div class="modal-video">
+        <video id="modal-video" autoplay muted loop playsinline preload="metadata" hidden></video>
+        <iframe id="modal-iframe" src="" frameborder="0" scrolling="no" allowtransparency="true" allow="autoplay; encrypted-media" hidden></iframe>
+        <span class="hook-clip-badge" id="modal-clip-badge" hidden>● Hook · first 3s · muted</span>
+        <button class="modal-source-toggle" id="modal-source-toggle" type="button" hidden>Show full reel ↗</button>
+      </div>
+      <div class="modal-info">
+        <div id="modal-badge" class="modal-badge">—</div>
+        <div id="modal-creator" class="modal-creator"></div>
+        <h2 id="modal-hook">—</h2>
+        <div class="modal-stats" id="modal-stats"></div>
+        <div class="modal-meta" id="modal-meta"></div>
+        <div class="modal-field-label">Transcript</div>
+        <div class="modal-caption" id="modal-transcript">—</div>
+        <div class="modal-field-label">Description (caption)</div>
+        <div class="modal-caption" id="modal-caption">—</div>
+        <a id="modal-link" class="modal-link" href="#" target="_blank" rel="noopener">Open on Instagram ↗</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const REELS = [{"shortCode": "De7izHVE7U_", "url": "https://www.instagram.com/p/De7izHVE7U_/", "thumb": "De7izHVE7U_.jpg", "hook": "There's three things that have to happen in order for you to be obligated to enforce a standard, which is that number one, someone has to know the standard you have.", "transcript": "There's three things that have to happen in order for you to be obligated to enforce a standard, which is that number one, someone has to know the standard you have. Number two is that they have to have the ability to adhere to that standard. And then three, choose not to. The consequence for crossing you needs to be consistent, which means that every time someone crosses you, there needs to be a consequence. If there isn't, then you teach people to gamble with you because it's a variable reinforcer. And so it has to be consistent. It has to be immediate. It has to be escalating, which means if the first time I tell you, I say, don't worry, you're with us. Be here tomorrow. Do better. Fine. If you do it again, then it's like you're off for the night. Because what happens is at some moment, it stops being about punishing the behavior and it should be about punishing the pattern of behavior. And so at that point, you have to respect the standard for everyone. And out of owing it to everyone, we have to let this person go, even if they're a perceived high performer.", "caption": "A lot of management just comes down to:\n\nTell them what you want\nShow them how to do it\nCheck in to make sure they did\nGive feedback on the outcome\n\nAnd just doing that until you die.", "plays": 185182, "likes": 3407, "comments": 57, "engagements": 3464, "duration": 51.279999, "posted_human": "Oct 25", "posted_ts": 1792959477, "ratio": 21.286510719006838, "band_class": "breakout", "band_label": "Breakout", "band_color": "#FF3D6E", "creator_handle": "hormozi", "creator_username": "hormozi", "creator_avatar": "thumbs/_profile_hormozi.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De7SITIjTj8", "url": "https://www.instagram.com/p/De7SITIjTj8/", "thumb": "De7SITIjTj8.jpg", "hook": "I sell communication skills to senior leaders.", "transcript": "I sell communication skills to senior leaders. Last 10 months, 300K.\nThe outcome that you're promising is what?\nPosition them for career growth. Promotion.\nI mean, you gotta still get promoted in 90 days.\nI don't know if I can deliver on that.\nRight. You want to start with making an exceptional offer and then ask yourself, what would it take to make this true?\nSo it's not promise the world and then don't deliver. It's promise the country and then give them the world.\nYou can call that, you know, get promoted in 90 days. I can't guarantee that, obviously.\nBut then you'd share averages, right? So you can say, listen, the average person, you know, gets a raise, not necessarily a promotion in title.\nAnd it takes them on average 120 days. Again, we can figure that out.\nAnd the average person gets a 10% raise. All right. So you're making $150,000 a year. If you get $15,000 per year for life that permanently elevates you, that sounds like a pretty good deal. Just state the facts and tell the truth. We're going to try and go for this. Half of people get it. The other half don't. One in three. One in three get it. And this is where it gets important. Of the one in three, or rather of the two that didn't hit it, did they follow the checkpoints that you told them to do? No. Right. And so again, stating the facts and telling the truth is like, of the people who follow my system to a T, 80% of them hit it. But I want to be clear, overall, one out of three do it. Because it's work. You said you're the type of person who really, this means a lot to you. Okay. So then I'm not worried about it.", "caption": "If you want to stand out in a crowded marketplace\u2014tell the truth. \n\nComment \"WIN\" to get a free scaling roadmap.", "plays": 156616, "likes": 2411, "comments": 71, "engagements": 2482, "duration": 81.706703, "posted_human": "Oct 25", "posted_ts": 1792950656, "ratio": 18.002873728375192, "band_class": "breakout", "band_label": "Breakout", "band_color": "#FF3D6E", "creator_handle": "hormozi", "creator_username": "hormozi", "creator_avatar": "thumbs/_profile_hormozi.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De1lH-hxr89", "url": "https://www.instagram.com/p/De1lH-hxr89/", "thumb": "De1lH-hxr89.jpg", "hook": "There\u2019s no way out of fear \ud83d\ude30 Besides attacking it head on \u2026 fall in love with rejection \u2026 have sympathy for those who judge you \u2026 relaxed you only have 1 life \u2026 and go get yours to\u2026", "transcript": "", "caption": "There\u2019s no way out of fear \ud83d\ude30 Besides attacking it head on \u2026 fall in love with rejection \u2026 have sympathy for those who judge you \u2026 relaxed you only have 1 life \u2026 and go get yours today \ud83d\ude0d\u203c\ufe0f", "plays": 817659, "likes": 21421, "comments": 350, "engagements": 21771, "duration": 37.495831, "posted_human": "Oct 23", "posted_ts": 1792759473, "ratio": 4.539712679575265, "band_class": "good", "band_label": "Working", "band_color": "#FFD43D", "creator_handle": "garyvee", "creator_username": "garyvee", "creator_avatar": "thumbs/_profile_garyvee.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De2rOjvvabL", "url": "https://www.instagram.com/p/De2rOjvvabL/", "thumb": "De2rOjvvabL.jpg", "hook": "", "transcript": "", "caption": "", "plays": 438706, "likes": 8286, "comments": 237, "engagements": 8523, "duration": 7.733333, "posted_human": "Oct 23", "posted_ts": 1792796060, "ratio": 2.4357332222916233, "band_class": "good", "band_label": "Working", "band_color": "#FFD43D", "creator_handle": "garyvee", "creator_username": "garyvee", "creator_avatar": "thumbs/_profile_garyvee.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De7Mvvykz8G", "url": "https://www.instagram.com/p/De7Mvvykz8G/", "thumb": "De7Mvvykz8G.jpg", "hook": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "transcript": "", "caption": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "plays": 17583, "likes": 131, "comments": 11, "engagements": 142, "duration": 56.703129, "posted_human": "Oct 25", "posted_ts": 1792947847, "ratio": 2.0211506408414275, "band_class": "good", "band_label": "Working", "band_color": "#FFD43D", "creator_handle": "hormozi", "creator_username": "hormozi", "creator_avatar": "thumbs/_profile_hormozi.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De5VdK3OJEj", "url": "https://www.instagram.com/p/De5VdK3OJEj/", "thumb": "De5VdK3OJEj.jpg", "hook": "The world doesn\u2019t revolve around you \u2026.", "transcript": "", "caption": "The world doesn\u2019t revolve around you \u2026. And the second you realize it .. life gets better\n\n#garyvee #inspiration #mindset", "plays": 359112, "likes": 4467, "comments": 113, "engagements": 4580, "duration": 32.657658, "posted_human": "Oct 24", "posted_ts": 1792885339, "ratio": 1.9938205288361441, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "garyvee", "creator_username": "garyvee", "creator_avatar": "thumbs/_profile_garyvee.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De4PtL5MvzC", "url": "https://www.instagram.com/p/De4PtL5MvzC/", "thumb": "De4PtL5MvzC.jpg", "hook": "Wake up this morning \ud83c\udf1e and do your 15 hours of homework - eBay live, TikTok shop, whatnot,\nFanatics live, district live shopping and more \u2026 learn the space ..", "transcript": "", "caption": "Wake up this morning \ud83c\udf1e and do your 15 hours of homework - eBay live, TikTok shop, whatnot,\nFanatics live, district live shopping and more \u2026 learn the space .. and do your first show \u2026 \n\nShit \u2026 sell stuff from around the house \u2026 \ud83c\udfe0 \n\nStart now", "plays": 321177, "likes": 5413, "comments": 207, "engagements": 5620, "duration": 39.789791, "posted_human": "Oct 24", "posted_ts": 1792848746, "ratio": 1.7832021653133459, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "garyvee", "creator_username": "garyvee", "creator_avatar": "thumbs/_profile_garyvee.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De7g88Pgapm", "url": "https://www.instagram.com/p/De7g88Pgapm/", "thumb": "De7g88Pgapm.jpg", "hook": "Congrats dolphins fans", "transcript": "", "caption": "Congrats dolphins fans", "plays": 314003, "likes": 6257, "comments": 557, "engagements": 6814, "duration": 12.066667, "posted_human": "Oct 25", "posted_ts": 1792958463, "ratio": 1.7433715039211604, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "garyvee", "creator_username": "garyvee", "creator_avatar": "thumbs/_profile_garyvee.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De6Sz_WD2O3", "url": "https://www.instagram.com/p/De6Sz_WD2O3/", "thumb": "De6Sz_WD2O3.jpg", "hook": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "transcript": "", "caption": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "plays": 10156, "likes": 54, "comments": 3, "engagements": 57, "duration": 23.799999, "posted_human": "Oct 25", "posted_ts": 1792917533, "ratio": 1.167423415138801, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "hormozi", "creator_username": "hormozi", "creator_avatar": "thumbs/_profile_hormozi.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De6rcd9EUf6", "url": "https://www.instagram.com/p/De6rcd9EUf6/", "thumb": "De6rcd9EUf6.jpg", "hook": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "transcript": "", "caption": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "plays": 8703, "likes": 19, "comments": 2, "engagements": 21, "duration": 93.125, "posted_human": "Oct 25", "posted_ts": 1792930374, "ratio": 1.000402321972527, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "hormozi", "creator_username": "hormozi", "creator_avatar": "thumbs/_profile_hormozi.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De6zul8CH6V", "url": "https://www.instagram.com/p/De6zul8CH6V/", "thumb": "De6zul8CH6V.jpg", "hook": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "transcript": "", "caption": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "plays": 8696, "likes": 45, "comments": 0, "engagements": 45, "duration": 28.76, "posted_human": "Oct 25", "posted_ts": 1792934818, "ratio": 0.9995976780274728, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "hormozi", "creator_username": "hormozi", "creator_avatar": "thumbs/_profile_hormozi.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De6Ke78D8Q0", "url": "https://www.instagram.com/p/De6Ke78D8Q0/", "thumb": "De6Ke78D8Q0.jpg", "hook": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "transcript": "", "caption": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "plays": 3426, "likes": 56, "comments": 0, "engagements": 56, "duration": 36.911911, "posted_human": "Oct 25", "posted_ts": 1792913093, "ratio": 0.3938157365365826, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "hormozi", "creator_username": "hormozi", "creator_avatar": "thumbs/_profile_hormozi.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De7m8cRgrux", "url": "https://www.instagram.com/p/De7m8cRgrux/", "thumb": "De7m8cRgrux.jpg", "hook": "I grew up selling lemonade...", "transcript": "", "caption": "I grew up selling lemonade... everytime I see a kid slinging... I\u2019ll always stop and support. \n\n#lemonadestand #support #respect", "plays": 46222, "likes": 873, "comments": 1, "engagements": 874, "duration": 36.700001, "posted_human": "Oct 25", "posted_ts": 1792961609, "ratio": 0.25662849607883964, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "garyvee", "creator_username": "garyvee", "creator_avatar": "thumbs/_profile_garyvee.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De7UpNMgq0Y", "url": "https://www.instagram.com/p/De7UpNMgq0Y/", "thumb": "De7UpNMgq0Y.jpg", "hook": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "transcript": "", "caption": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "plays": 2138, "likes": 22, "comments": 0, "engagements": 22, "duration": 31, "posted_human": "Oct 25", "posted_ts": 1792951973, "ratio": 0.24576125064658888, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "hormozi", "creator_username": "hormozi", "creator_avatar": "thumbs/_profile_hormozi.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De1naj2CDkH", "url": "https://www.instagram.com/p/De1naj2CDkH/", "thumb": "De1naj2CDkH.jpg", "hook": "I need you to listen this morning \u2026 like really listen \ud83d\udc42 \u2026 please share this with someone\u2019s who\u2019s scared to share \u2026 please \ud83d\ude4f", "transcript": "", "caption": "I need you to listen this morning \u2026 like really listen \ud83d\udc42 \u2026 please share this with someone\u2019s who\u2019s scared to share \u2026 please \ud83d\ude4f", "plays": 25169, "likes": 709, "comments": 0, "engagements": 709, "duration": 64.866669, "posted_human": "Oct 23", "posted_ts": 1792760493, "ratio": 0.13974044000277605, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "garyvee", "creator_username": "garyvee", "creator_avatar": "thumbs/_profile_garyvee.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De11ONFn3Xk", "url": "https://www.instagram.com/p/De11ONFn3Xk/", "thumb": "De11ONFn3Xk.jpg", "hook": "I have something important to ask you \u2026.", "transcript": "", "caption": "I have something important to ask you \u2026.\n\nPlease try to \u201ccatch' the flower :)", "plays": 3324, "likes": 26, "comments": 2, "engagements": 28, "duration": 7.010975, "posted_human": "Oct 23", "posted_ts": 1792767729, "ratio": 0.01845513220903602, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "garyvee", "creator_username": "garyvee", "creator_avatar": "thumbs/_profile_garyvee.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De678_WjJDy", "url": "https://www.instagram.com/p/De678_WjJDy/", "thumb": "De678_WjJDy.jpg", "hook": "My name is Zach.", "transcript": "My name is Zach. I run a solar sales company, do about two and a half million dollars. I guess I'd like to be at ten million dollars in revenue. I feel like this whole last day and a half has kind of opened me up, and I don't know what I want anymore, I guess. Great. What's stopping me, I guess I would really say, is recruiting and hiring new people. We have 80 people. We're in New York State. We have three different main offices, about 15, 20 salespeople apiece, and then some appointment setters for each one. And I kind of feel like, one, the market's kind of getting a little tapped out, and two, I just don't know how to go from 80 people to 150 or 200 people in a door-to-door sales space. You probably lack a leadership development program and process, is my guess. We have really great leaders. I have three main managers. What's the issue limiting you then? Because if you have good leaders, then you're... I think recruiting, bringing in new people. It took us eight years to get to about 80 people. Eight years to get to 80 people. Okay. Yeah. Then, yeah. Then you probably have a manpower constraint. So what's your recruiting process look like right now? It's been all organic. Okay. Yeah. So... I kind of knew the answer with what you were going to say was more people. And so... Well, you're in the business of people selling shit to people, and so more people who sell shit to people, the more money you make. That makes sense. I'll say this. The biggest solar sales businesses are not solar sales businesses. They are recruiting businesses. Correct. I mean, I figured that out literally here when we first got here. Within the first five minutes, I turned to the guy next to me, I'm like, I could leave now. I'm like, this blew my mind, you know? That's the business you're really in. I figured that out. That's the business you're really in. And so what you need to have is basically CAT to LTGP. Okay. Cost of acquiring talent to lifetime gross profit per employee. Got it. So per sales rep. It's also just like a customer. Because functionally, they are your customer. Yeah. I figured that out. They are the recurring customer that you have, and so they become a revenue generating node for you. Every sales guy becomes activated. You have their big drop off in week one or two, then you have day 30, then if you get them past 30, you'll have a little bit more luck, and then day 90 is kind of like the rest. And it's like, if you get them past day 90, they're in. They're going to be lifers. It's going to be awesome. And so all of the work that you'll have to do is, number one, you probably need way more people on the front end. Yes. You need to kiss more toads. Right? And then the actual onboarding and training process, you have to focus purely on behaviors. And what sales guys tend to suck at is actually training sales. Because sales guys, more than any other profession, use so much mysticism and make-believe. They're like, bro, you got to give them the curiosity. And you're like, what does that mean? The thing is that they say it so convicted because they're sales guys that they believe it and the other guy believes it and they just run. They have no idea what they're doing. So it's like, we just have to boil it down to like, what do you do with your arms? What do you do with your mouth? What do you do with your head? And so when you're doing the role plays, I'm sure you guys have doors that they knock on and do this. Of course. And so we have to simulate the environment as much as possible, but you probably need to onboard way more people at a time. How many new reps are you onboarding a week? Five. Yeah, so it's probably got to be like 25 to get to where you want to go. Now, I guess my second question to this is why I feel like I was asking that before and he kind of cracked me open. Cracked you open? Told me what I need to know. Guess the whole thing before I even said anything to him. I don't feel like this opportunity anymore is going to get me to where I want to, you know? You're hitting the whole cycle, dude. And your market might not be that big, right? So I don't know. My real goal, if I did $10 million in revenue, I don't know if it would be like the thing for me anyway. You will feel nothing either way. It doesn't matter. It's fair. It's not going to happen. It's fair. Well, you're still eating chicken rice, so it's still eating chicken rice. It is what it is. Okay, so what else would you do? He kind of called it. I haven't, you know, let me give full context. I've been doing it for eight years. I said that by the time I hit 30, I'm 27. If I have X amount of dollars in my bank account, you'll be happy. No, I'm just going to give up the business and move on. I'm already happy. I'm going to give up the business and move on and go do something else. But this was like kind of my stepping stone, you know? And so eventually I'd like to open up some kind of a wellness slash farm fitness facility in another state, and that's kind of my goal. So I guess my real question is, do I wait until I'm 30 and I have X amount of dollars in my bank account? Do I just do it now? Do you have the money to do the thing now? Probably not. Okay, how much do you need to do the thing? I guess I don't know the exact number. I guess 10 million. You need 10 to do it? Yeah. Okay, I mean, can you do that in the next three years? Most likely. Sounds like a good plan. That is the goal. That was the plan. So I guess thanks for telling me that's the plan. Thanks. So you just saw a compressed version of me going back and forth with the business owner to help them find the constraint and then ideally give one to two steps on what to do next to help deconstraint it. That being said, if you would like to have the exact same process applied to your business but based on 10,000 businesses with a perfect memory, then we made this free tool that actually aggregates all of that data for different businesses and industries that we've actually had walk through the door, and it's yours. It's new, it's free, and it's fast. So go grab it, and on the thank you page, if you want to be in the room, you can book a call, but either way, the tool is free, and so are the solutions. Enjoy.", "caption": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "plays": 152, "likes": 1, "comments": 0, "engagements": 1, "duration": 328.106659, "posted_human": "Oct 25", "posted_ts": 1792939137, "ratio": 0.017472268521179377, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "hormozi", "creator_username": "hormozi", "creator_avatar": "thumbs/_profile_hormozi.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "De6a91ZDuYk", "url": "https://www.instagram.com/p/De6a91ZDuYk/", "thumb": "De6a91ZDuYk.jpg", "hook": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "transcript": "", "caption": "Comment the word \u201cWIN\u201d to get a free scaling roadmap", "plays": 145, "likes": 1, "comments": 0, "engagements": 1, "duration": 369.066681, "posted_human": "Oct 25", "posted_ts": 1792921853, "ratio": 0.016667624576125063, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "hormozi", "creator_username": "hormozi", "creator_avatar": "thumbs/_profile_hormozi.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "DezQVtriRI4", "url": "https://www.instagram.com/p/DezQVtriRI4/", "thumb": "DezQVtriRI4.jpg", "hook": "You must understand this for all of you building a business\u2026 TikTok live is a monster and all of you should be testing with it, trying it ., to me twitch and TikTok live are monste\u2026", "transcript": "", "caption": "You must understand this for all of you building a business\u2026 TikTok live is a monster and all of you should be testing with it, trying it ., to me twitch and TikTok live are monsters but meta is huge too both FB and insta .. I believe live shopping for anyone selling anything is massive and in general those who can build live into their routine will do very very well \u2764\ufe0f\u2763\ufe0f\ud83e\udde1\ud83d\udc9b", "plays": 151, "likes": 4, "comments": 0, "engagements": 4, "duration": 27.200001, "posted_human": "Oct 22", "posted_ts": 1792681261, "ratio": 0.0008383649108196266, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "garyvee", "creator_username": "garyvee", "creator_avatar": "thumbs/_profile_garyvee.jpg", "creator_verified": true, "hasClip": true}, {"shortCode": "DezCm83kzHF", "url": "https://www.instagram.com/p/DezCm83kzHF/", "thumb": "DezCm83kzHF.jpg", "hook": "Hope this brings value to someone \u2665\ufe0f", "transcript": "", "caption": "Hope this brings value to someone \u2665\ufe0f", "plays": 87, "likes": 2, "comments": 0, "engagements": 2, "duration": 96.810669, "posted_human": "Oct 22", "posted_ts": 1792674089, "ratio": 0.0004830314386841557, "band_class": "normal", "band_label": "Normal", "band_color": "rgba(255,255,255,.4)", "creator_handle": "garyvee", "creator_username": "garyvee", "creator_avatar": "thumbs/_profile_garyvee.jpg", "creator_verified": true, "hasClip": true}];
+const CREATORS = [{"handle": "hormozi", "username": "hormozi", "fullName": "Alex Hormozi", "followers": 5133617, "posts": 0, "verified": true, "profile_pic": "thumbs/_profile_hormozi.jpg", "median_plays": 8699.5, "reels_in_window": 10}, {"handle": "garyvee", "username": "garyvee", "fullName": "Gary Vay-Ner-Chuk", "followers": 12176805, "posts": 11013, "verified": true, "profile_pic": "thumbs/_profile_garyvee.jpg", "median_plays": 180112.5, "reels_in_window": 10}];
+
+const fmtNum = (n) => {
+  if (n === null || n === undefined) return "—";
+  n = Number(n);
+  if (n >= 1e6) return (n/1e6).toFixed(1) + "M";
+  if (n >= 1e4) return Math.round(n/1e3) + "K";
+  if (n >= 1e3) return (n/1e3).toFixed(1) + "K";
+  return String(Math.round(n));
+};
+const fmtDur = (s) => {
+  if (!s) return "—";
+  s = Math.round(s);
+  const m = Math.floor(s/60);
+  const sec = s % 60;
+  return m ? `${m}:${sec.toString().padStart(2,"0")}` : `${s}s`;
+};
+function escapeHtml(s) {
+  if (!s) return "";
+  return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"})[c]);
+}
+
+// ---- State ----
+const VIEW_KEY = "ig-dashboard-view";
+const FILTER_KEY = "ig-dashboard-filter";
+const COMPLETED_KEY = "ig-dashboard-completed";
+const DELETED_KEY = "ig-dashboard-deleted";
+const SEARCH_KEY = "ig-dashboard-search";
+const BAND_KEY = "ig-dashboard-band";
+const HIDE_COMPLETED_KEY = "ig-dashboard-hide-completed";
+const SHOW_DELETED_KEY = "ig-dashboard-show-deleted";
+
+let activeFilter = localStorage.getItem(FILTER_KEY) || "__all__";
+let completed = new Set(JSON.parse(localStorage.getItem(COMPLETED_KEY) || "[]"));
+let deleted = new Set(JSON.parse(localStorage.getItem(DELETED_KEY) || "[]"));
+let searchText = localStorage.getItem(SEARCH_KEY) || "";
+let bandFilter = localStorage.getItem(BAND_KEY) || "all";
+let hideCompleted = localStorage.getItem(HIDE_COMPLETED_KEY) === "1";
+let showDeleted = localStorage.getItem(SHOW_DELETED_KEY) === "1";
+let sortKey = "posted_ts";
+let sortDir = "desc";
+
+function saveState() {
+  localStorage.setItem(COMPLETED_KEY, JSON.stringify([...completed]));
+  localStorage.setItem(DELETED_KEY, JSON.stringify([...deleted]));
+  localStorage.setItem(SEARCH_KEY, searchText);
+  localStorage.setItem(BAND_KEY, bandFilter);
+  localStorage.setItem(HIDE_COMPLETED_KEY, hideCompleted ? "1" : "0");
+  localStorage.setItem(SHOW_DELETED_KEY, showDeleted ? "1" : "0");
+}
+
+function getFiltered() {
+  let rows = REELS;
+  if (activeFilter !== "__all__") rows = rows.filter(r => r.creator_handle === activeFilter);
+  if (bandFilter !== "all") rows = rows.filter(r => r.band_class === bandFilter);
+  if (searchText.trim()) {
+    const q = searchText.trim().toLowerCase();
+    rows = rows.filter(r =>
+      (r.hook || "").toLowerCase().includes(q) ||
+      (r.caption || "").toLowerCase().includes(q) ||
+      (r.transcript || "").toLowerCase().includes(q) ||
+      (r.creator_username || "").toLowerCase().includes(q)
+    );
+  }
+  if (!showDeleted) rows = rows.filter(r => !deleted.has(r.shortCode));
+  if (hideCompleted) rows = rows.filter(r => !completed.has(r.shortCode));
+  return rows;
+}
+
+// ---- Filter (creator chips) ----
+function applyFilter(handle) {
+  activeFilter = handle;
+  localStorage.setItem(FILTER_KEY, handle);
+  document.querySelectorAll(".creator-chip").forEach(c =>
+    c.classList.toggle("active", c.dataset.creator === handle));
+  const filtered = getFiltered();
+  document.getElementById("row-count").textContent = `${filtered.length} of ${REELS.length}`;
+  const status = document.getElementById("filter-status");
+  if (handle === "__all__") {
+    status.innerHTML = "";
+  } else {
+    const c = CREATORS.find(c => c.handle === handle);
+    status.innerHTML = `<span class="pill">filtered: @${escapeHtml(c.username)} <button data-clear>×</button></span>`;
+    status.querySelector("[data-clear]").addEventListener("click", () => applyFilter("__all__"));
+  }
+  renderTable();
+  renderGrid();
+}
+
+document.querySelectorAll(".creator-chip").forEach(c => {
+  c.addEventListener("click", () => applyFilter(c.dataset.creator));
+});
+
+// ---- View toggle ----
+function setView(v) {
+  document.body.dataset.view = v;
+  localStorage.setItem(VIEW_KEY, v);
+  document.querySelectorAll(".view-toggle button").forEach(b =>
+    b.classList.toggle("active", b.dataset.view === v));
+}
+document.querySelectorAll(".view-toggle button").forEach(b => {
+  b.addEventListener("click", () => setView(b.dataset.view));
+});
+setView(localStorage.getItem(VIEW_KEY) || "table");
+
+// ---- Density toggle ----
+const DENSITY_KEY = "ig-dashboard-density";
+function setDensity(d) {
+  document.body.dataset.density = d;
+  localStorage.setItem(DENSITY_KEY, d);
+  document.querySelectorAll(".density-toggle button").forEach(b =>
+    b.classList.toggle("active", b.dataset.density === d));
+}
+document.querySelectorAll(".density-toggle button").forEach(b => {
+  b.addEventListener("click", () => setDensity(b.dataset.density));
+});
+setDensity(localStorage.getItem(DENSITY_KEY) || "comfy");
+
+// ---- Table render + sort ----
+function renderTable() {
+  const tbody = document.getElementById("reels-tbody");
+  const rows = [...getFiltered()].sort((a, b) => {
+    const va = a[sortKey], vb = b[sortKey];
+    const na = typeof va === "number" ? va : (va || "");
+    const nb = typeof vb === "number" ? vb : (vb || "");
+    if (typeof na === "string" || typeof nb === "string") {
+      return sortDir === "desc" ? String(nb).localeCompare(String(na)) : String(na).localeCompare(String(nb));
+    }
+    return sortDir === "desc" ? nb - na : na - nb;
+  });
+  tbody.innerHTML = rows.map(r => {
+    const ratioStr = r.ratio ? r.ratio.toFixed(1) + "×" : "—";
+    const pillClass = r.band_class === "normal" ? "outlier-pill normal" : "outlier-pill";
+    const pillStyle = r.band_class === "normal" ? "" : `style="background:${r.band_color}"`;
+    const isDone = completed.has(r.shortCode);
+    const isDel = deleted.has(r.shortCode);
+    return `
+      <tr data-shortcode="${r.shortCode}" class="${isDone ? 'completed' : ''} ${isDel ? 'deleted' : ''}">
+        <td class="action-cell" onclick="event.stopPropagation()">
+          <button class="row-check ${isDone ? 'checked' : ''}" data-action="toggle-done" aria-label="Mark complete"></button>
+          <span class="row-delete" data-action="${isDel ? 'restore' : 'delete'}" title="${isDel ? 'Restore' : 'Remove from view'}">${isDel ? '↺' : '×'}</span>
+        </td>
+        <td class="outlier-cell">
+          <span class="${pillClass}" ${pillStyle}>${ratioStr}</span>
+        </td>
+        <td class="creator-col">
+          <span class="handle">@${escapeHtml(r.creator_username)}</span>
+        </td>
+        <td class="hook-cell">
+          <span class="row-hook" title="${escapeHtml(r.hook || '')}">${r.hook ? escapeHtml(r.hook) : "<em>no hook</em>"}</span>
+        </td>
+        <td class="num">${fmtNum(r.plays)}</td>
+        <td class="num">${fmtNum(r.likes)}</td>
+        <td class="num">${fmtNum(r.comments)}</td>
+        <td class="num">${fmtNum(r.engagements)}</td>
+        <td class="num">${fmtDur(r.duration)}</td>
+        <td>${escapeHtml(r.posted_human)}</td>
+        <td><span class="row-expand">expand ↗</span></td>
+      </tr>
+    `;
+  }).join("");
+}
+
+function renderGrid() {
+  document.querySelectorAll(".grid-view .card").forEach(card => {
+    const show = activeFilter === "__all__" || card.dataset.creator === activeFilter;
+    card.style.display = show ? "" : "none";
+  });
+}
+
+document.querySelectorAll("th[data-sort]").forEach(th => {
+  th.addEventListener("click", () => {
+    const key = th.dataset.sort;
+    if (key === sortKey) {
+      sortDir = sortDir === "desc" ? "asc" : "desc";
+    } else {
+      sortKey = key;
+      sortDir = "desc";
+    }
+    document.querySelectorAll("th[data-sort]").forEach(t => {
+      t.classList.remove("sort-active","sort-desc","sort-asc");
+      t.querySelector(".arrow").textContent = "▼";
+    });
+    th.classList.add("sort-active", `sort-${sortDir}`);
+    th.querySelector(".arrow").textContent = sortDir === "desc" ? "▼" : "▲";
+    renderTable();
+  });
+});
+
+// Init
+applyFilter(activeFilter);
+
+// ---- Modal ----
+const modal = document.getElementById("modal");
+const modalIframe = document.getElementById("modal-iframe");
+const modalVideo = document.getElementById("modal-video");
+const modalBadge = document.getElementById("modal-clip-badge");
+const modalSourceToggle = document.getElementById("modal-source-toggle");
+
+let modalCurrentShortCode = null;
+let modalShowingClip = true;
+
+function showClipMode(shortCode) {
+  modalShowingClip = true;
+  modalVideo.src = `clips/${shortCode}.mp4`;
+  modalVideo.hidden = false;
+  modalVideo.play().catch(()=>{});
+  modalIframe.src = "";
+  modalIframe.hidden = true;
+  modalBadge.hidden = false;
+  modalSourceToggle.hidden = false;
+  modalSourceToggle.textContent = "Show full reel ↗";
+}
+
+function showIframeMode(shortCode) {
+  modalShowingClip = false;
+  modalVideo.pause();
+  modalVideo.src = "";
+  modalVideo.hidden = true;
+  modalIframe.src = `https://www.instagram.com/p/${shortCode}/embed/captioned/`;
+  modalIframe.hidden = false;
+  modalBadge.hidden = true;
+  modalSourceToggle.hidden = false;
+  modalSourceToggle.textContent = "← Back to hook";
+}
+
+modalSourceToggle.addEventListener("click", () => {
+  if (!modalCurrentShortCode) return;
+  if (modalShowingClip) showIframeMode(modalCurrentShortCode);
+  else showClipMode(modalCurrentShortCode);
+});
+
+function openModal(shortCode) {
+  const r = REELS.find(x => x.shortCode === shortCode);
+  if (!r) return;
+  modalCurrentShortCode = shortCode;
+  if (r.hasClip) {
+    showClipMode(shortCode);
+  } else {
+    showIframeMode(shortCode);
+    modalSourceToggle.hidden = true;  // no clip to toggle back to
+  }
+  document.getElementById("modal-hook").textContent = r.hook || "(no hook)";
+  const badge = document.getElementById("modal-badge");
+  badge.textContent = (r.ratio ? r.ratio.toFixed(1) + "× · " : "") + r.band_label;
+  badge.style.background = r.band_color;
+  badge.style.color = r.band_class === "normal" ? "rgba(244,244,246,.6)" : "#0a0a0c";
+  document.getElementById("modal-creator").innerHTML = r.creator_avatar
+    ? `<img src="${r.creator_avatar}" alt=""><span>@${escapeHtml(r.creator_username)}</span>`
+    : `<span>@${escapeHtml(r.creator_username)}</span>`;
+  document.getElementById("modal-stats").innerHTML = `
+    <div class="modal-stat"><div class="lab">Plays</div><div class="val">${fmtNum(r.plays)}</div></div>
+    <div class="modal-stat"><div class="lab">Engagements</div><div class="val">${fmtNum(r.engagements)}</div></div>
+    <div class="modal-stat"><div class="lab">Likes</div><div class="val">${fmtNum(r.likes)}</div></div>
+    <div class="modal-stat"><div class="lab">Comments</div><div class="val">${fmtNum(r.comments)}</div></div>
+  `;
+  document.getElementById("modal-meta").innerHTML = `
+    <span>⏱ ${fmtDur(r.duration)}</span>
+    <span>📅 ${escapeHtml(r.posted_human)}</span>
+  `;
+  document.getElementById("modal-transcript").textContent = r.transcript || "(no transcript)";
+  document.getElementById("modal-caption").textContent = r.caption || "(no caption)";
+  document.getElementById("modal-link").href = r.url;
+  modal.classList.add("open");
+  modal.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+}
+
+function closeModal() {
+  modal.classList.remove("open");
+  modal.setAttribute("aria-hidden", "true");
+  modalIframe.src = "";
+  modalVideo.pause();
+  modalVideo.src = "";
+  modalVideo.hidden = true;
+  modalIframe.hidden = true;
+  modalBadge.hidden = true;
+  modalSourceToggle.hidden = true;
+  modalCurrentShortCode = null;
+  document.body.style.overflow = "";
+}
+
+modal.addEventListener("click", e => {
+  if (e.target.hasAttribute("data-close")) closeModal();
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape" && modal.classList.contains("open")) closeModal();
+});
+
+document.querySelectorAll(".card[data-shortcode] .thumb").forEach(t => {
+  t.addEventListener("click", () => openModal(t.closest(".card").dataset.shortcode));
+});
+
+// Table row clicks: open modal unless clicking checkbox/delete
+document.addEventListener("click", e => {
+  // checkbox toggle
+  if (e.target.matches(".row-check, .row-check *")) {
+    e.stopPropagation();
+    const row = e.target.closest("tr[data-shortcode]");
+    const sc = row.dataset.shortcode;
+    if (completed.has(sc)) completed.delete(sc); else completed.add(sc);
+    saveState();
+    renderTable();
+    return;
+  }
+  // delete / restore
+  if (e.target.matches(".row-delete")) {
+    e.stopPropagation();
+    const row = e.target.closest("tr[data-shortcode]");
+    const sc = row.dataset.shortcode;
+    const action = e.target.dataset.action;
+    if (action === "delete") {
+      deleted.add(sc);
+    } else {
+      deleted.delete(sc);
+    }
+    saveState();
+    renderTable();
+    updateRowCount();
+    return;
+  }
+  // expand row -> modal
+  const row = e.target.closest("tr[data-shortcode]");
+  if (row && !e.target.closest(".action-cell")) {
+    openModal(row.dataset.shortcode);
+  }
+});
+
+// Filter bar
+const searchInput = document.getElementById("search-input");
+searchInput.value = searchText;
+searchInput.addEventListener("input", () => {
+  searchText = searchInput.value;
+  saveState();
+  renderTable();
+  updateRowCount();
+});
+
+document.querySelectorAll("#band-filter button").forEach(b => {
+  if (b.dataset.band === bandFilter) {
+    document.querySelectorAll("#band-filter button").forEach(x => x.classList.remove("active"));
+    b.classList.add("active");
+  }
+  b.addEventListener("click", () => {
+    bandFilter = b.dataset.band;
+    document.querySelectorAll("#band-filter button").forEach(x => x.classList.remove("active"));
+    b.classList.add("active");
+    saveState();
+    renderTable();
+    updateRowCount();
+  });
+});
+
+const tCompleted = document.getElementById("toggle-completed");
+const tDeleted = document.getElementById("toggle-deleted");
+function syncToggles() {
+  tCompleted.classList.toggle("on", hideCompleted);
+  tCompleted.textContent = hideCompleted ? "Hiding completed" : "Hide completed";
+  tDeleted.classList.toggle("on", showDeleted);
+  tDeleted.textContent = showDeleted ? "Showing deleted" : "Show deleted";
+}
+tCompleted.addEventListener("click", () => {
+  hideCompleted = !hideCompleted;
+  syncToggles();
+  saveState();
+  renderTable();
+  updateRowCount();
+});
+tDeleted.addEventListener("click", () => {
+  showDeleted = !showDeleted;
+  syncToggles();
+  saveState();
+  renderTable();
+  updateRowCount();
+});
+syncToggles();
+
+document.getElementById("filter-reset").addEventListener("click", () => {
+  searchText = "";
+  bandFilter = "all";
+  hideCompleted = false;
+  showDeleted = false;
+  searchInput.value = "";
+  document.querySelectorAll("#band-filter button").forEach(x => x.classList.remove("active"));
+  document.querySelector('#band-filter button[data-band="all"]').classList.add("active");
+  syncToggles();
+  saveState();
+  renderTable();
+  updateRowCount();
+});
+
+function updateRowCount() {
+  document.getElementById("row-count").textContent = `${getFiltered().length} of ${REELS.length}`;
+}
+</script>
 </body>
 </html>

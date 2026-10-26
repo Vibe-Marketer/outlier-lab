@@ -35,7 +35,8 @@ build_module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(build_module)
 CREATORS = build_module.CREATORS
 
-APIFY_TOKEN = os.environ.get("APIFY_TOKEN")
+from serve import load_env_token
+APIFY_TOKEN = os.environ.get("APIFY_TOKEN") or load_env_token()
 if not APIFY_TOKEN:
     print("ERROR: APIFY_TOKEN env var required")
     sys.exit(1)
@@ -45,14 +46,15 @@ WINDOW_DAYS = 28
 CLIP_SECONDS = 3
 REEL_SCRAPER = "apify~instagram-reel-scraper"
 PROFILE_SCRAPER = "apify~instagram-scraper"
+SETTINGS = json.loads((ROOT / "config.json").read_text()).get("refresh", {})
 
 
-def apify_post(path, body):
-    url = f"https://api.apify.com/v2/{path}?token={APIFY_TOKEN}"
+def apify_post(path, body, **params):
+    url = f"https://api.apify.com/v2/{path}?{urllib.parse.urlencode(params)}"
     req = urllib.request.Request(
         url,
         data=json.dumps(body).encode(),
-        headers={"Content-Type": "application/json"},
+        headers={"Content-Type": "application/json", "Authorization": f"Bearer {APIFY_TOKEN}"},
         method="POST",
     )
     with urllib.request.urlopen(req, timeout=60) as r:
@@ -60,7 +62,7 @@ def apify_post(path, body):
 
 
 def apify_get(path, **params):
-    qs = urllib.parse.urlencode({**params, "token": APIFY_TOKEN})
+    qs = urllib.parse.urlencode(params)
     url = f"https://api.apify.com/v2/{path}?{qs}"
     # Retry with exponential backoff on transient 5xx errors (Apify's API
     # occasionally returns 502/503/504 under load).
@@ -70,7 +72,8 @@ def apify_get(path, **params):
         if delay:
             time.sleep(delay)
         try:
-            with urllib.request.urlopen(url, timeout=60) as r:
+            req = urllib.request.Request(url, headers={"Authorization": f"Bearer {APIFY_TOKEN}"})
+            with urllib.request.urlopen(req, timeout=60) as r:
                 return json.load(r)
         except urllib.error.HTTPError as e:
             last_err = e
@@ -85,8 +88,10 @@ def apify_get(path, **params):
     raise RuntimeError(f"apify_get failed after retries: {last_err}") from last_err
 
 
-def start_actor(actor_id, body):
-    return apify_post(f"acts/{actor_id}/runs", body)["data"]
+def start_actor(actor_id, body, max_charge=0.10):
+    run = apify_post(f"acts/{actor_id}/runs", body, maxTotalChargeUsd=max_charge, timeout=900)["data"]
+    print(f"  actor run: {run['id']} (cap ${max_charge:.2f})")
+    return run
 
 
 def wait_for_run(run_id, label="run", interval=8, max_wait=900):
@@ -98,6 +103,7 @@ def wait_for_run(run_id, label="run", interval=8, max_wait=900):
             print(f"  [{label}] {status} after {int(time.time()-start)}s")
             return r
         if time.time() - start > max_wait:
+            apify_post(f"actor-runs/{run_id}/abort", {})
             raise RuntimeError(f"{label} run {run_id} did not finish in {max_wait}s")
         time.sleep(interval)
 
@@ -152,22 +158,26 @@ def pass1_stats_refresh():
     print(f"PASS 1 (stats only, no transcripts) for {len(CREATORS)} creators…")
     run = start_actor(REEL_SCRAPER, {
         "username": list(CREATORS),
-        "resultsLimit": 50,
+        "resultsLimit": SETTINGS.get("reelsPerCreator", 10),
         "onlyPostsNewerThan": f"{WINDOW_DAYS} days",
         "includeTranscript": False,  # cheap pass
         "skipPinnedPosts": True,
-    })
+    }, max_charge=SETTINGS.get("statsMaxChargeUsd", 0.25))
     run = wait_for_run(run["id"], "pass1-stats")
     if run["status"] != "SUCCEEDED":
         raise RuntimeError(f"pass1 scrape failed: {run['status']}")
     items = fetch_dataset(run["defaultDatasetId"], fields=REEL_FIELDS)
-    print(f"  scraped {len(items)} reels (stats only)")
-    return items
+    valid = [it for it in items if it.get("shortCode") and it.get("ownerUsername") in CREATORS]
+    print(f"  scraped {len(valid)} usable reels (stats only)")
+    if not valid:
+        raise RuntimeError("No accessible reels returned. Check the creator handles, account privacy, and 28-day date window.")
+    return valid
 
 
 def pass2_transcripts_for_new(new_reel_urls):
     """Expensive: only for reels we don't already have transcripts for.
     Uses direct reel URLs as input to avoid re-scanning the entire 28-day window."""
+    new_reel_urls = new_reel_urls[:SETTINGS.get("transcriptsPerRefresh", 3)]
     if not new_reel_urls:
         print("PASS 2 (transcripts): no new reels — skipping ✓")
         return []
@@ -177,7 +187,7 @@ def pass2_transcripts_for_new(new_reel_urls):
         "resultsLimit": 1,
         "includeTranscript": True,
         "skipPinnedPosts": False,  # already specific URLs
-    })
+    }, max_charge=SETTINGS.get("transcriptsMaxChargeUsd", 0.50))
     run = wait_for_run(run["id"], "pass2-transcripts", max_wait=1800)
     if run["status"] != "SUCCEEDED":
         raise RuntimeError(f"pass2 scrape failed: {run['status']}")
@@ -194,8 +204,10 @@ def fetch_profile_details_for_all_creators():
         "resultsLimit": 1,
     })
     run = wait_for_run(run["id"], "details")
+    if run["status"] != "SUCCEEDED":
+        raise RuntimeError(f"profile scrape failed: {run['status']}")
     items = fetch_dataset(run["defaultDatasetId"])
-    by_handle = {it.get("username"): it for it in items if it.get("username")}
+    by_handle = {it.get("username"): it for it in items if it.get("username") and not it.get("error")}
     for handle in CREATORS:
         if handle in by_handle:
             save_details(handle, by_handle[handle])
@@ -225,7 +237,7 @@ def merge_pass1_stats(scraped_items):
     grouped = {}
     for it in scraped_items:
         u = it.get("ownerUsername")
-        if not u:
+        if u not in CREATORS:
             continue
         grouped.setdefault(u, []).append(it)
 

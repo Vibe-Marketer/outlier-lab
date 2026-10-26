@@ -60,6 +60,7 @@ def save_env_token(token):
         f"APIFY_TOKEN={token}\n"
     )
     ENV_FILE.write_text(body)
+    ENV_FILE.chmod(0o600)
 
 
 def load_config():
@@ -77,11 +78,11 @@ def save_config(config):
 
 def apify_run_sync(actor_id, input_body, token, timeout=90):
     """Call Apify's run-sync-get-dataset-items endpoint. Returns list of items."""
-    url = f"https://api.apify.com/v2/acts/{actor_id}/run-sync-get-dataset-items?token={token}"
+    url = f"https://api.apify.com/v2/acts/{actor_id}/run-sync-get-dataset-items?maxTotalChargeUsd=0.10"
     req = urllib.request.Request(
         url,
         data=json.dumps(input_body).encode(),
-        headers={"Content-Type": "application/json"},
+        headers={"Content-Type": "application/json", "Authorization": f"Bearer {token}"},
         method="POST",
     )
     with urllib.request.urlopen(req, timeout=timeout) as r:
@@ -146,7 +147,7 @@ class AdminHandler(BaseHTTPRequestHandler):
         path = parsed.path
         query = urllib.parse.parse_qs(parsed.query)
 
-        if path in ("/", "/admin", "/admin/"):
+        if path in ("/admin", "/admin/"):
             if not ADMIN_HTML.exists():
                 self._html(500, "admin.html missing")
                 return
@@ -158,7 +159,7 @@ class AdminHandler(BaseHTTPRequestHandler):
             config = load_config()
             self._json(200, {
                 "tokenSet": bool(token and token.startswith("apify_api_")),
-                "tokenPrefix": token[:16] + "…" if token else "",
+                "tokenPrefix": "configured" if token else "",
                 "creators": config.get("creators", []),
             })
             return
@@ -209,7 +210,15 @@ class AdminHandler(BaseHTTPRequestHandler):
             return
 
         # serve any other static file in the project root (so admin.html can <link> styles/images if added later)
-        safe_path = ROOT / path.lstrip("/")
+        relative = urllib.parse.unquote(path).lstrip("/") or "index.html"
+        parts = Path(relative).parts
+        if any(part.startswith(".") for part in parts) or not (
+            relative in {"index.html", "admin.html", "refresh.log"}
+            or (parts and parts[0] in {"data", "thumbs", "clips"})
+        ):
+            self._json(404, {"error": "not_found"})
+            return
+        safe_path = ROOT / relative
         try:
             safe_path = safe_path.resolve()
             safe_path.relative_to(ROOT)
@@ -235,6 +244,9 @@ class AdminHandler(BaseHTTPRequestHandler):
         self._json(404, {"error": "not_found"})
 
     def do_POST(self):
+        if self.headers.get_content_type() != "application/json":
+            self._json(415, {"error": "json_required"})
+            return
         parsed = urllib.parse.urlparse(self.path)
         path = parsed.path
 
@@ -276,7 +288,7 @@ class AdminHandler(BaseHTTPRequestHandler):
         if path == "/api/creators":
             data = self._body()
             profile = data.get("profile")
-            if not profile or not profile.get("handle"):
+            if not profile or not re.fullmatch(r"[A-Za-z0-9._]{1,30}", profile.get("handle", "")) or profile["handle"].startswith("."):
                 self._json(400, {"error": "no_profile"})
                 return
             config = load_config()
@@ -325,7 +337,7 @@ class AdminHandler(BaseHTTPRequestHandler):
                 content,
                 count=1,
             )
-            if new_content == content:
+            if not re.search(r'-\s*cron:\s*"[^"]+"', content):
                 # No match — workflow file shape changed
                 self._json(500, {"error": "cant_patch", "message": "Couldn't find cron line in refresh.yml."})
                 return
@@ -338,15 +350,19 @@ class AdminHandler(BaseHTTPRequestHandler):
             if not token:
                 self._json(400, {"error": "no_token"})
                 return
+            if getattr(self.server, "refresh_process", None) is not None and self.server.refresh_process.poll() is None:
+                self._json(409, {"message": "A refresh is already running."})
+                return
             # Fire refresh.py in a subprocess (long-running)
             env = {**os.environ, "APIFY_TOKEN": token}
             log_path = ROOT / "refresh.log"
             log_path.write_text(f"# Refresh started at {time.strftime('%Y-%m-%d %H:%M:%S')}\n")
             with open(log_path, "ab") as logf:
                 p = subprocess.Popen(
-                    [sys.executable, str(ROOT / "refresh.py")],
+                    [sys.executable, "-u", str(ROOT / "refresh.py")],
                     cwd=str(ROOT), env=env, stdout=logf, stderr=subprocess.STDOUT,
                 )
+            self.server.refresh_process = p
             self._json(200, {"ok": True, "pid": p.pid, "logPath": str(log_path)})
             return
 
@@ -392,7 +408,8 @@ def main():
     def _open():
         time.sleep(0.6)
         webbrowser.open(url)
-    threading.Thread(target=_open, daemon=True).start()
+    if not os.environ.get("OUTLIER_NO_BROWSER"):
+        threading.Thread(target=_open, daemon=True).start()
 
     with ReusableTCPServer((HOST, PORT), AdminHandler) as httpd:
         try:
