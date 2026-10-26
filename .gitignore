@@ -24,3 +24,4 @@ LOCAL-SETUP.md
 .vercel
 .env*
 .cache/
+data/.posts.lock

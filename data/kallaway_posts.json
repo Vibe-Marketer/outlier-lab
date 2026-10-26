@@ -20,9 +20,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28942005295395350"
       },
-      "transcript": null,
+      "transcript": "Elon is now creating the biggest building in human history, the TerraFab. And I don't think people realize just how insane this project actually is. This is a map of Manhattan. The TerraFab will be three times bigger than Central Park. 1,700 football fields long in one single Texas building. It's insane. But the wildest part of this project isn't even the size of the building. It's the master plan for why Elon had to build it in the first place. See, Elon went to all the major chip companies and asked to buy everything they had. And even if they would have let him, which they didn't, the total chip supply today is only 2% of what he needs internally for Tesla, SpaceX, Grok, and Optimus. So that Terra5 isn't really a play to disrupt the chip companies, it's simply the only way for him to make enough chips to keep his current projects alive. What this means is that when it's finished, Elon will own the world's biggest factory that produces computer chips for all of his own companies. And if it works, that will be the ultimate competitive advantage. At full capacity, this one building will be able to produce 200 billion AI chips per year. And most of those will be sent directly to space to build orbital data centers. So the master plan, in summary, is this. Build the biggest building ever created on Earth to produce 50 times the existing chip supply to send billions of AI chips into space to create floating data centers that power AI for the world. Never bet against Elon.",
       "ownerUsername": "kallaway",
-      "ownerFullName": "Kallaway"
+      "ownerFullName": "Kallaway",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_e48bb2ae",
+        "attemptedAt": "2026-10-26T17:19:13.944868+00:00"
+      }
     },
     {
       "shortCode": "DecoYkVOcw2",
@@ -44,9 +50,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28088211430858875"
       },
-      "transcript": null,
+      "transcript": "Google just released Gemini 4 Argon. If you're trying to use AI for complex work tasks, this model offers frontier intelligence to help you get more done. And it's especially good at engineering and knowledge work. Now, big reason why Argon is so good at these complex tasks is because it was specifically designed to work with more depth and precision. This gives it a huge advantage in completing very sophisticated tasks start to finish without losing any context or reasoning. For example, I wanted to design a custom cup holder for my son's stroller. All I did was describe the make and model of the stroller and how I wanted the design to look. And Argon was able in one shot to fully 3D model the exact piece so I could 3D print it. I also tried giving Argon everything about my Callaway marketing YouTube channel, scripts, my knowledge base, my channel strategy. And it was able to build this YouTube dashboard that is now my HQ for everything. And seeing these workflows complete in a single step is pretty mind blowing when you're watching it. Argon is so capable that Google has also been using it internally to solve their own problems as well. A team of Argon agents freed up 300 terabytes of memory across Google's data centers on their own. Argon was also able to rewrite 32,000 lines of code in one of Google's video decoders to make it 2.7 times faster. So whether it's your complex task or optimizing Google's own data centers Argon has just set the new frontier If you want to try it out Gemini 4 Argon is now available to Google AI Pro and Ultra subscribers in the Gemini app Google just released Gemini for Argonne If you trying to use AI for complex work tasks this model offers frontier intelligence to help you get more done. And it's especially good at engineering and knowledge work. Now, big reason why Argonne is so good at these complex tasks is because it was specifically designed to work with more depth and precision. This gives it a huge advantage in completing very sophisticated tasks start to finish without losing any context or reasoning. For example, I wanted to design a custom cup holder for my son's stroller. All I did was describe the make and model of the stroller and how I wanted the design to look and Argon was able in one shot to fully 3D model the exact piece so I could 3D print it. I also tried giving Argon everything about my Callaway marketing YouTube channel, scripts, my knowledge base, my channel strategy. And it was able to build this YouTube dashboard that is now my HQ for everything. And Seeing these workflows complete in a single step is pretty mind-blowing when you're watching it. Argonne is so capable that Google has also been using it internally to solve their own problems as well. A team of Argonne agents freed up 300 terabytes of memory across Google's data centers on their own. Argonne was also able to rewrite 32,000 lines of code in one of Google's video decoders to make it 2.7 times faster. So whether it's your complex task or optimizing Google's own data centers, Argonne has just set the new frontier. If you want to try it out, Gemini 4 Argon is now available to Google AI Pro and Ultra subscribers in the Gemini app.",
       "ownerUsername": "kallaway",
-      "ownerFullName": "Kallaway"
+      "ownerFullName": "Kallaway",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_e48bb2ae",
+        "attemptedAt": "2026-10-26T17:19:13.944872+00:00"
+      }
     },
     {
       "shortCode": "DeZPNanOD0W",
@@ -68,9 +80,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "39138361449142274"
       },
-      "transcript": null,
+      "transcript": "This company built one of the most advanced AI satellites in the world. These satellites can detect the model of the car in your driveway from space. The company behind these is called Planet Labs, and their Pelican 4 satellites can do something extremely unique. See, a normal satellite takes a photo from space and then beams it back down to Earth for processing. But Planet satellites have AI chips on board, so they can read and process the images while still in orbit. And this gives them some extreme advantages. For example, they could take a single snapshot of an airport and immediately identify how many planes are parked in half a second. They could also collect real-time data on military positioning or even how many cars are in a Walmart parking lot to gauge shopping trends. But the real innovation is what happens when you link two of these planet satellites together. One satellite will act like the wide-angle camera. It's constantly looking at strips of the Earth wider than most cities and scanning them every day looking for changes. Then it uses that change data to tell the second satellite exactly where to zoom in for pinpoint viewing. Together, that combination basically acts like a security system for the entire planet. And I know what you're thinking, privacy concerns, but think about all the benefits this could bring. Imagine using this type of system to track real-time weather events like hurricanes or wildfires as they're spreading. The truth is this is the future of satellite imagery, and in a few years we will have real-time detailed maps of the world available in seconds.",
       "ownerUsername": "kallaway",
-      "ownerFullName": "Kallaway"
+      "ownerFullName": "Kallaway",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_e9e034ae",
+        "attemptedAt": "2026-10-26T17:22:01.171927+00:00"
+      }
     },
     {
       "shortCode": "DeR4cwxOEzU",
@@ -92,9 +110,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "39059128883701594"
       },
-      "transcript": null,
+      "transcript": "DoorDash is completely reinventing the food delivery space. And I don't think people fully realize what they're actually working on under the hood. Last week, they announced a ton of new features at their annual event. Now, the biggest one to me was their ultra-quiet food delivery drone, DoorDash Air. This thing can fly straight from a restaurant to your yard, over top of all the traffic and dramatically reduces delivery times. But it turns out this drone program is only a small piece of their overall master plan. So to learn more, I sat down with Stanley Tang, One of the original co-founders and head of labs at DoorDash. He is the mastermind behind the Air Launch and he runs their R&D lab. And what he said really surprised me. A large part of what we built, we would call it the autonomous delivery platform. Think of it as the orchestration layer, the brains behind the scenes that actually does all the coordination. Is it a dasher? Is it a drone? Is it a dot? That's what's magical about working with someone like DoorDash. We handle all that complexity. So the secret sauce at DoorDash isn't just the drones, it's the entire delivery operating system layer they've built to sit underneath. Because DoorDash now has lots of different ways to deliver your food. They've got Dashers, the human drivers, Dot, the autonomous robot, and now Air, the delivery drones. So when an order comes in, they're able to intelligently route and deliver it in the fastest and most cost-efficient way possible. And as they build more and more methods for delivery, including things like drones and autonomous vehicles, this will increase their ability to serve customers. That orchestration layer underneath is the secret sauce behind why they're so effective. Stanley also broke down how they're using AI in the new Text DoorDash feature, as well as how he runs the R&D lab to drive new breakthroughs. And it's clear they're doing everything they can to pioneer the future of delivery.",
       "ownerUsername": "kallaway",
-      "ownerFullName": "Kallaway"
+      "ownerFullName": "Kallaway",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_91998c67",
+        "attemptedAt": "2026-10-26T17:24:11.789161+00:00"
+      }
     },
     {
       "shortCode": "DePLW7AuLjf",
@@ -116,9 +140,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28870372309242209"
       },
-      "transcript": null,
+      "transcript": "This is a broccoli farmer in Hokkaido, Japan. And he figured out how to use AI to automate his entire farm. His name is Hiroki Tamiyasu. And even though he was never taught how to drive tractors or grow vegetables, he's built an entire software system to digitize his farm, all without knowing how to code. For example, Hiroki wanted to find a way to automate his field work. But typically, self-driving tractors like these are super expensive. So instead, he figured out how to build a GPS auto steer system that drives his tractor for him at a fraction of the cost. He's also built bots for automating his greenhouse, software for tracking his plant logs. He's even using satellite imagery to figure out which fields and crops are performing the best. And all of that is powered by ChadGPT and Codex that he works with every single day. Now Hiroki describes using AI like getting access to an ultra-talented engineer that is always by his side. And the coolest part about his story is that he's live documenting all of his AI farm experiments on this website. That includes his learnings, what he's building, and step-by-step tutorials for all other farmers that want to do it for themselves. These are hands down my favorite type of AI stories because it really shows how inventive people can get when they get access to the world's best tools. Follow along for more tech and AI stories like this, and shout out to Hiroki.",
       "ownerUsername": "kallaway",
-      "ownerFullName": "Kallaway"
+      "ownerFullName": "Kallaway",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_3484d140",
+        "attemptedAt": "2026-10-26T17:22:58.108553+00:00"
+      }
     },
     {
       "shortCode": "DeKRB1Yu5is",
@@ -140,9 +170,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28997348026544406"
       },
-      "transcript": null,
+      "transcript": "OpenAI has officially launched Dots. And this is a massive deal because Dots is a completely different category of AI product. Dots are always on agents inside of ChatGPT that can handle ongoing work. Each dot has its own cloud computer and browser, which means it can keep working on tasks continuously while you're away. And the big question on everyone's mind is how are Dots different from the normal ChatGPT or Codex experiences? Think of it like this. ChatGPT and Codex are more reactive. You ask them questions or give them a task and they answer to the best of their ability. So it's kind of like you're driving the car and they are the engine, but the car doesn't move unless you press the pedal down. Dots, on the other hand, work completely different. They're designed to be more proactive. All you have to do is give them an initial objective, set boundaries, and then let them cook. And they'll come back to you when they need you to weigh in or make important decisions, but they can work continuously. So it's more like you get in the backseat of the car, say where you wanna go, and then your dot can drive, steer, and fill up its own gas tank. It's pretty awesome. Essentially the big shift here is from asking AI to complete a task to now giving your dot ongoing responsibilities And that shift from reactive to proactive will completely change how humans use AI Now, the biggest reason why DOTs are so compelling is because they're powered by GPT-6 Astra. Essentially, their agent brain is genius level using one of the best models in the world, which means its capacity to do things is extremely advanced. For example, I gave my DOT the responsibility to become my chief of staff. Every morning when I first wake up, I want to see that my emails, Slack messages, and customer support requests have been triaged and answered, and that I can see the most critical items that need my attention in one single dashboard. To do this, I just described with voice to my DOT how I wanted it to run this admin operating system. And I can't believe it, but this actually works insanely well, and it's already saving me multiple hours per day. The long-term ongoing proactive monitoring from DOTS paired with the power of GPT-6 Astra is the combination that makes this task so seamless and easy. This is the way most people envisioned working with AI and it's available now. Comment dots and I'll send you more information on exactly how to get this set up so you can take advantage of the next wave in AI.",
       "ownerUsername": "kallaway",
-      "ownerFullName": "Kallaway"
+      "ownerFullName": "Kallaway",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_e48bb2ae",
+        "attemptedAt": "2026-10-26T17:19:13.944876+00:00"
+      }
     },
     {
       "shortCode": "Dd_exowuoII",
@@ -164,9 +200,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28889597730727821"
       },
-      "transcript": null,
+      "transcript": "DoorDash just officially launched their drone delivery program. It's called DoorDash Air. And this is going to completely change how food gets delivered in the future. Customers can outplace orders that fly straight from the restaurant and land directly in your yard. These specially designed drones are extremely quiet. And you can actually watch the drone's route via a flyover visualization as it delivers. Now, the big perk is that these drones can fly right over top of the traffic. So on average, flight time is just five minutes. The service is just starting to roll out in select markets with partners like Chipotle and Popeyes, but this is a peek into the future of cutting-edge logistics and delivery. Now, in addition to drones, DoorDash also announced several new AI features that makes ordering way more personalized and dynamic. The biggest one is called Text DoorDash, and this allows you to have a text conversation directly with DoorDash to order your food. You could say something like, My mom's in town this Saturday. She loves pasta but doesn't like seafood. Order us dinner for Saturday night. DoorDash now has a personalized AI memory layer that knows exactly where you live and what you like based on previous orders, as well as all the restaurants available to you in that exact moment. It can automatically find the best meal, list it out for you, and then place the order instantly. This same approach can also be used for ordering groceries and group dinners. Simple text descriptions in, orders out, ready to go in seconds. And this all works because of this new agentic ordering layer they're rolling out now. All of this and a bunch of other cool updates were just announced at their Dash Forward event this week. And with all this AI innovation plus drones, I think DoorDash is going to pioneer the future of delivery.",
       "ownerUsername": "kallaway",
-      "ownerFullName": "Kallaway"
+      "ownerFullName": "Kallaway",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_91998c67",
+        "attemptedAt": "2026-10-26T17:24:11.789163+00:00"
+      }
     },
     {
       "shortCode": "Dd3458zuaYP",
@@ -188,9 +230,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28926808283603339"
       },
-      "transcript": null,
+      "transcript": "This factory in China is building a new robot every 10 minutes. And the crazy part is each new robot is being built by another robot. This is the latest project from UbiTech in China. And it's basically one giant industrial humanoid robot factory. On the floor, there are humanoid robots walking around moving parts and materials. Around the edges, giant robot arms are spinning to install 2,000 screws per robot. The whole place sits on two and a half football fields of industrial factory floor. And it works basically like a car plant, except that the finished products walk out the front door. But here's the wildest part about this whole project. These particular robots never have to stop working. Because instead of having to charge up like normal robots, these guys have two different battery packs in their back. When one battery is running low, they just walk over to the charging station, twist their torso, unload the dead battery, and reload for themselves. A complete battery upgrade in three minutes, no human required. And what that means is that this factory can run 24-7 without any of the robot labor needing to take any breaks. I'm telling you, robots building other robots used to be something out of a sci-fi movie, but now it's a literal production line working in China with a volume quota attached. It seems crazy now, but this type of production, robots building other robots, is going to be normalized around the globe.",
       "ownerUsername": "kallaway",
-      "ownerFullName": "Kallaway"
+      "ownerFullName": "Kallaway",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_3484d140",
+        "attemptedAt": "2026-10-26T17:22:58.108556+00:00"
+      }
     },
     {
       "shortCode": "Dd1q-AXuj3O",
@@ -212,9 +260,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28565476269758472"
       },
-      "transcript": null,
+      "transcript": "Google Gemini just integrated their agentic capabilities in Gemini Live. And there's a way of using this not many people have tried yet that is insanely valuable for creators and marketers. With this integration, you can now have voice control over your personal AI agent. It can access Docs, Drive, Slides, Sheets, Gmail, and even YouTube. As a creator, I used this new update to build out an entire content pipeline for brand partnerships. All I had to do was open Gemini Live and verbally describe the workflow I wanted. And it built this whole thing out for me automatically. First, it scans my email daily looking for any communication with brands for upcoming partnerships. When it finds one, it extracts all the campaign information shared by the brand, and then it searches all of my best content on YouTube to find the narratives that have worked well for similar stories in the past. Then it uses all that information to automatically create a folder in Google Drive with a doc inside specifically for that campaign, with ideas, power phrases, and formats that worked previously. When I go to make the video, I just open that doc and all the notes I already need are in there ready to go. I call this flow data-enabled creativity. It's using the data and examples from previous winning videos to guide my creativity for the new campaign. Now, that whole thing is just one single creator workflow. There are dozens of other ones you can run. For example, I also asked Gemini to build out an invoice tracking pipeline to keep track of all my brand partnership payments. I also built an idea repurposer that scans my Google Drive for old script documents and notes that can be turned into new ideas. And the reason all these are so easy to build is because of the new agenda capabilities in Gemini Live. By being able to fully describe the exact vision I have for the workflow, easily interrupt, change my mind, course correct, I can flow much easier than typing. And because Gemini Live can connect across my entire Google suite, it has all the context and resources it needs to build out the most complex workflows. I'm telling you, once you use this, it is clear Gemini Live is a huge productivity enhancer. This flow is now available for pro and ultra users. Comment Gemini and I'll send through the links to get all of this set up.",
       "ownerUsername": "kallaway",
-      "ownerFullName": "Kallaway"
+      "ownerFullName": "Kallaway",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_d0ee01fb",
+        "attemptedAt": "2026-10-26T17:18:14.135324+00:00"
+      }
     }
   ]
 }

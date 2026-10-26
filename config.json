@@ -296,9 +296,8 @@
   ],
   "refresh": {
     "reelsPerCreator": 40,
-    "transcriptsPerRefresh": 3,
     "statsMaxChargeUsd": 1.5,
-    "transcriptsMaxChargeUsd": 0.5
+    "transcriptProvider": "tokscript"
   },
   "scopes": [
     {

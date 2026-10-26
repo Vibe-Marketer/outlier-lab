@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 """
 Weekly refresh pipeline. Idempotent:
-  1. Call Apify reel-scraper for all CREATORS (transcripts on)
+  1. Call Apify reel-scraper for all CREATORS (stats only)
   2. Poll until done
-  3. Pull dataset, dedupe against existing data (don't re-transcribe known reels)
+  3. Merge stats; fill missing transcripts through the TokScript MCP account
   4. Refresh each creator's profile details
   5. Extract local 3-sec hook clips for new reels (ffmpeg)
   6. Prune reels + clips older than 28 days
   7. Build the dashboard HTML
 
-Requires APIFY_TOKEN env var. Designed to run in GitHub Actions weekly.
+Requires APIFY_TOKEN and TOKSCRIPT_API_KEY. Also supports local private .env.
 """
 import json
 import os
@@ -30,7 +30,8 @@ THUMBS = ROOT / "thumbs"
 
 from catalog import ALL, select_creators
 from reel_coverage import summarize_coverage
-from storage import write_json
+from storage import write_json, file_lock
+from tokscript import load_key
 CONFIG = json.loads((ROOT / "config.json").read_text())
 SCOPE = os.environ.get("OUTLIER_SCOPE", ALL)
 CREATORS = [c["handle"] for c in select_creators(CONFIG, SCOPE)]
@@ -126,9 +127,7 @@ def load_existing_posts(handle):
 
 
 def save_posts(handle, items):
-    DATA.mkdir(parents=True, exist_ok=True)
-    with open(DATA / f"{handle}_posts.json", "w") as f:
-        json.dump({"items": items}, f)
+    write_json(DATA / f"{handle}_posts.json", {"items": items})
 
 
 def save_details(handle, details):
@@ -179,28 +178,6 @@ def pass1_stats_refresh():
     return valid
 
 
-def pass2_transcripts_for_new(new_reel_urls):
-    """Expensive: only for reels we don't already have transcripts for.
-    Uses direct reel URLs as input to avoid re-scanning the entire 28-day window."""
-    new_reel_urls = new_reel_urls[:SETTINGS.get("transcriptsPerRefresh", 3)]
-    if not new_reel_urls:
-        print("PASS 2 (transcripts): no new reels — skipping ✓")
-        return []
-    print(f"PASS 2 (transcripts) for {len(new_reel_urls)} NEW reels…")
-    run = start_actor(REEL_SCRAPER, {
-        "username": new_reel_urls,  # field accepts direct reel URLs
-        "resultsLimit": 1,
-        "includeTranscript": True,
-        "skipPinnedPosts": False,  # already specific URLs
-    }, max_charge=SETTINGS.get("transcriptsMaxChargeUsd", 0.50))
-    run = wait_for_run(run["id"], "pass2-transcripts", max_wait=1800)
-    if run["status"] != "SUCCEEDED":
-        raise RuntimeError(f"pass2 scrape failed: {run['status']}")
-    items = fetch_dataset(run["defaultDatasetId"], fields=REEL_FIELDS)
-    print(f"  got transcripts for {len(items)} new reels")
-    return items
-
-
 def fetch_profile_details_for_all_creators():
     print(f"refreshing profile details for {len(CREATORS)} creators…")
     run = start_actor(PROFILE_SCRAPER, {
@@ -219,23 +196,12 @@ def fetch_profile_details_for_all_creators():
     print(f"  refreshed {len(by_handle)} profile records")
 
 
-def _find_new_reels(scraped_items):
-    """Return list of reel URLs for reels we've never transcribed before."""
-    existing_with_transcripts = set()
-    for handle in CREATORS:
-        for p in load_existing_posts(handle):
-            if p.get("transcript") and p.get("shortCode"):
-                existing_with_transcripts.add(p["shortCode"])
-    new_urls = []
-    for it in scraped_items:
-        sc = it.get("shortCode")
-        url = it.get("url")
-        if sc and url and sc not in existing_with_transcripts:
-            new_urls.append(url)
-    return new_urls
-
-
 def merge_pass1_stats(scraped_items):
+    with file_lock(DATA / ".posts.lock"):
+        return _merge_pass1_stats(scraped_items)
+
+
+def _merge_pass1_stats(scraped_items):
     """Merge pass-1 (stats-only) results into existing per-creator JSON.
     Preserves transcripts from existing records; updates plays/likes/comments
     from the fresh scrape."""
@@ -272,25 +238,11 @@ def merge_pass1_stats(scraped_items):
         print(f"  @{handle}: kept {len(kept)} reels in {WINDOW_DAYS}-day window ({new_count} new)")
 
 
-def merge_pass2_transcripts(transcribed_items):
-    """Layer transcripts from pass 2 onto whatever's currently in per-creator JSON."""
-    by_sc = {it["shortCode"]: it for it in transcribed_items if it.get("shortCode")}
-    if not by_sc:
-        return
-    for handle in CREATORS:
-        existing = load_existing_posts(handle)
-        updated = 0
-        for p in existing:
-            sc = p.get("shortCode")
-            if sc in by_sc and by_sc[sc].get("transcript"):
-                p["transcript"] = by_sc[sc]["transcript"]
-                # also pick up videoUrl in case pass 1's URL expired
-                if by_sc[sc].get("videoUrl"):
-                    p["videoUrl"] = by_sc[sc]["videoUrl"]
-                updated += 1
-        if updated:
-            save_posts(handle, existing)
-            print(f"  @{handle}: added transcripts to {updated} reels")
+def refresh_transcripts():
+    if not load_key():
+        raise RuntimeError("Configure TOKSCRIPT_API_KEY; Apify transcription fallback is disabled.")
+    subprocess.run([sys.executable, str(ROOT / "tokscript_backfill.py"), "--handles", *CREATORS],
+                   check=True, timeout=7200)
 
 
 def fetch_image(args):
@@ -411,22 +363,18 @@ def main():
     if not CREATORS:
         print("No tracked creators in this list; no Apify calls made.")
         return
+    if not load_key():
+        raise RuntimeError("Configure TOKSCRIPT_API_KEY before refreshing; Apify transcription is disabled.")
     print(f"=== refresh started · {datetime.now().isoformat()} ===")
     print(f"list: {SCOPE}; creators (deduplicated): {CREATORS}\n")
 
     # Pass 1: cheap stats refresh (no transcripts)
     scraped = pass1_stats_refresh()
 
-    # Identify reels we don't have transcripts for yet
-    new_reel_urls = _find_new_reels(scraped)
-    print(f"\nidentified {len(new_reel_urls)} new reels needing transcripts")
-
     # Merge stats first (so pass 2 can layer transcripts on saved records)
     merge_pass1_stats(scraped)
 
-    # Pass 2: transcripts ONLY for new reels (saves ~70% of Apify spend)
-    transcribed = pass2_transcripts_for_new(new_reel_urls)
-    merge_pass2_transcripts(transcribed)
+    refresh_transcripts()
 
     fetch_profile_details_for_all_creators()
     download_thumbnails()

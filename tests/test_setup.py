@@ -66,10 +66,13 @@ class SetupTests(unittest.TestCase):
             self.assertEqual(exc.exception.code, 404)
 
     def test_token_is_private_and_never_returned_in_state(self):
+        self.env.write_text(self.env.read_text() + 'TOKSCRIPT_API_KEY=sk_private_test\n')
         serve.save_env_token('apify_api_new_test')
         self.assertEqual(self.env.stat().st_mode & 0o777, 0o600)
         response = self.request('/api/state').read()
         self.assertNotIn(b'apify_api_', response)
+        self.assertNotIn(b'sk_private_test', response)
+        self.assertIn('TOKSCRIPT_API_KEY=sk_private_test', self.env.read_text())
         self.assertTrue(json.loads(response)['tokenSet'])
 
     def test_schedule_can_be_disabled_and_reenabled_idempotently(self):
@@ -90,6 +93,36 @@ class SetupTests(unittest.TestCase):
         self.server.refresh_process = Running()
         with self.assertRaises(urllib.error.HTTPError) as exc:
             self.request('/api/refresh', {})
+        self.assertEqual(exc.exception.code, 409)
+
+    def test_transcript_only_job_does_not_require_apify_token(self):
+        self.seed_lists()
+        self.env.unlink()
+        class Job:
+            pid = 42
+            def poll(self):
+                return None
+        with patch.object(serve, 'load_tokscript_key', return_value='sk_test'), patch.object(serve.subprocess, 'Popen', return_value=Job()) as start:
+            result = json.load(self.request('/api/transcripts', {'scope': 'ai-dtc'}))
+            self.assertTrue(result['ok'])
+            command = start.call_args.args[0]
+            self.assertEqual(command[0], sys.executable)
+            self.assertTrue(command[2].endswith('tokscript_backfill.py'))
+            self.assertIn('--build', command)
+            self.assertEqual(command[command.index('--handles') + 1:], ['shared'])
+
+    def test_transcript_job_requires_tokscript_and_rejects_overlap(self):
+        self.seed_lists()
+        with patch.object(serve, 'load_tokscript_key', return_value=None):
+            with self.assertRaises(urllib.error.HTTPError) as exc:
+                self.request('/api/transcripts', {'scope': 'ai-dtc'})
+            self.assertEqual(exc.exception.code, 400)
+        class Running:
+            def poll(self):
+                return None
+        self.server.refresh_process = Running()
+        with self.assertRaises(urllib.error.HTTPError) as exc:
+            self.request('/api/transcripts', {'scope': 'ai-dtc'})
         self.assertEqual(exc.exception.code, 409)
 
     def test_export_contains_only_dashboard_assets(self):

@@ -47,6 +47,7 @@ jobs:
       - name: Run refresh pipeline
         env:
           APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}
+          TOKSCRIPT_API_KEY: ${{ secrets.TOKSCRIPT_API_KEY }}
           OUTLIER_SCOPE: ${{ inputs.scope || '__all__' }}
         run: python3 refresh.py
 

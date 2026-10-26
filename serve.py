@@ -30,7 +30,8 @@ from http.server import BaseHTTPRequestHandler
 from pathlib import Path
 from catalog import ALL, scopes_for, select_creators, validate_scope, validate_memberships, valid_handle, parse_handles
 from creator_jobs import ProfileJobs
-from storage import write_json
+from storage import write_json, file_lock, update_env
+from tokscript import load_key as load_tokscript_key
 
 ROOT = Path(__file__).resolve().parent
 ENV_FILE = ROOT / ".env"
@@ -58,13 +59,7 @@ def load_env_token():
 
 
 def save_env_token(token):
-    body = (
-        "# Apify API token — used by refresh.py + serve.py.\n"
-        "# Set this as the APIFY_TOKEN GitHub Actions secret for the Sunday cron.\n"
-        f"APIFY_TOKEN={token}\n"
-    )
-    ENV_FILE.write_text(body)
-    ENV_FILE.chmod(0o600)
+    update_env(ENV_FILE, "APIFY_TOKEN", token)
 
 
 def load_config():
@@ -294,7 +289,7 @@ class AdminHandler(BaseHTTPRequestHandler):
         if path.startswith("/api/creators") or path == "/api/scopes":
             with CONFIG_LOCK:
                 self._post(path)
-        elif path in {"/api/build", "/api/refresh", "/api/schedule"}:
+        elif path in {"/api/build", "/api/refresh", "/api/transcripts", "/api/schedule"}:
             with self.server.operations_lock:
                 self._post(path)
         else:
@@ -484,9 +479,10 @@ class AdminHandler(BaseHTTPRequestHandler):
             self._json(200, {"ok": True, "message": f"Schedule set to: {cron}. Commit & push to apply."})
             return
 
-        if path == "/api/refresh":
-            token = load_env_token()
-            if not token:
+        if path in {"/api/refresh", "/api/transcripts"}:
+            transcript_only = path == "/api/transcripts"
+            token = load_env_token() if not transcript_only else None
+            if not token and not transcript_only:
                 self._json(400, {"error": "no_token"})
                 return
             if getattr(self.server, "refresh_process", None) is not None and self.server.refresh_process.poll() is None:
@@ -503,13 +499,28 @@ class AdminHandler(BaseHTTPRequestHandler):
             if not selected:
                 self._json(400, {"message": "No tracked creators in this list. Enable tracking or choose another list."})
                 return
+            if transcript_only:
+                if not load_tokscript_key(ROOT):
+                    self._json(400, {"message": "Configure the TokScript API key first. Apify transcription is disabled."})
+                    return
+                try:
+                    with file_lock(ROOT / ".cache/transcripts/worker.lock", blocking=False):
+                        pass
+                except BlockingIOError:
+                    self._json(409, {"message": "Transcription is already running. Existing results are being saved."})
+                    return
+                command = [sys.executable, "-u", str(ROOT / "tokscript_backfill.py"), "--build", "--handles", *[c["handle"] for c in selected]]
+            else:
+                command = [sys.executable, "-u", str(ROOT / "refresh.py")]
             # Fire refresh.py in a subprocess (long-running)
-            env = {**os.environ, "APIFY_TOKEN": token, "OUTLIER_SCOPE": scope}
+            env = {**os.environ, "OUTLIER_SCOPE": scope}
+            if token:
+                env["APIFY_TOKEN"] = token
             log_path = ROOT / "refresh.log"
             log_path.write_text(f"# Refresh started at {time.strftime('%Y-%m-%d %H:%M:%S')}\n")
             with open(log_path, "ab") as logf:
                 p = subprocess.Popen(
-                    [sys.executable, "-u", str(ROOT / "refresh.py")],
+                    command,
                     cwd=str(ROOT), env=env, stdout=logf, stderr=subprocess.STDOUT,
                 )
             self.server.refresh_process = p

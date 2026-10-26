@@ -310,6 +310,7 @@
     <p class="help" id="refresh-help">Refresh this list's Reel data, metrics, and preview clips. Adding a profile alone does not fetch Reels. Refreshes stay manual.</p>
     <div class="actions">
       <button id="run-refresh" class="btn">Run refresh now</button>
+      <button id="run-transcripts" class="btn ghost">Fill missing transcripts · TokScript</button>
       <button id="rebuild-dashboard" class="btn ghost">Rebuild dashboard · free</button>
       <button id="open-dashboard" class="btn ghost">Open dashboard ↗</button>
     </div>
@@ -403,7 +404,7 @@ async function loadState() {
   renderCreators();
   renderResearch();
   const limits = STATE.refresh || {};
-  $("#refresh-help").textContent = `Adding a profile alone does not fetch Reels. This refresh loads up to ${limits.reelsPerCreator || 40} Reels per account. Caps: $${Number(limits.statsMaxChargeUsd ?? .25).toFixed(2)} for stats, $${Number(limits.transcriptsMaxChargeUsd ?? .50).toFixed(2)} for up to ${limits.transcriptsPerRefresh ?? 3} new transcripts, and $0.10 for profiles. Refreshes remain manual.`;
+  $("#refresh-help").textContent = `Adding a profile alone does not fetch Reels. Refresh loads up to ${limits.reelsPerCreator || 40} Reels per account, with Apify caps of $${Number(limits.statsMaxChargeUsd ?? .25).toFixed(2)} for stats and $0.10 for profiles. Transcripts use your TokScript account: existing library first, then batches of up to 50. Fill missing transcripts skips the stats scrape entirely. Apify transcription is disabled. Refreshes remain manual.`;
   for (const job of STATE.jobs || []) {
     if (job.kind === "profiles" && !["succeeded", "failed"].includes(job.status)) watchProfiles(job);
   }
@@ -710,6 +711,20 @@ $("#run-refresh").addEventListener("click", async () => {
 
 $("#open-dashboard").addEventListener("click", () => {
   window.open(`/?scope=${encodeURIComponent(activeScope)}`, "_blank");
+});
+
+$("#run-transcripts").addEventListener("click", async () => {
+  const button = $("#run-transcripts");
+  button.disabled = true;
+  try {
+    await apiJSON("/api/transcripts", {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({scope:activeScope})});
+    $("#run-status").textContent = "Filling this list's transcripts through TokScript. Existing library results are reused first, then missing Reels are processed in batches. The local dashboard rebuilds when done; publishing it still requires a push. No Apify transcription credits used. Progress: refresh.log";
+    toast("TokScript transcription started", "ok");
+  } catch (error) {
+    toast(error.message, "bad");
+  } finally {
+    button.disabled = false;
+  }
 });
 
 // ───── init ─────

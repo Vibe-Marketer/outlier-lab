@@ -20,6 +20,7 @@ import sys
 import urllib.error
 import urllib.request
 from pathlib import Path
+from storage import update_env
 
 ROOT = Path(__file__).resolve().parent
 CONFIG = ROOT / "config.json"
@@ -84,12 +85,7 @@ def get_apify_token():
 
 
 def save_env(token):
-    body = (
-        "# Apify API token — used by refresh.py locally + by GitHub Actions\n"
-        "# (via the APIFY_TOKEN repo secret). Never commit this file.\n"
-        f"APIFY_TOKEN={token}\n"
-    )
-    ENV_FILE.write_text(body)
+    update_env(ENV_FILE, "APIFY_TOKEN", token)
     print(f"  ✓ Saved to {ENV_FILE.name} (already gitignored)")
 
 
@@ -272,7 +268,9 @@ def main():
          git push
 
     3. Add APIFY_TOKEN as a GitHub Actions secret:
-         gh secret set APIFY_TOKEN < .env
+         gh secret set APIFY_TOKEN
+         gh secret set TOKSCRIPT_API_KEY
+         # Paste each credential alone at its prompt, without the variable name.
          # (or via GitHub UI: Settings → Secrets → Actions → New)
 
     4. (Optional) Deploy the dashboard to Vercel:

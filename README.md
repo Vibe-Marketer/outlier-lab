@@ -1,9 +1,8 @@
 # Outlier Lab
 
-Track the top reels across the creators in your niche. Search creators with a live admin UI, set your own refresh schedule, and get a private weekly dashboard with spoken-hook transcripts and 3-second autoplay hook clips. **No AI API key needed** — Apify handles all the AI on their backend.
+Track the top reels across the creators in your niche. Search creators with a live admin UI, choose when to refresh, and get a dashboard with spoken-hook transcripts and 3-second autoplay hook clips. **No AI model API key needed** — transcripts use your existing TokScript account through its MCP endpoint. Apify is used only for the bounded statistics and profile scrapes.
 
 ![Pipeline](https://img.shields.io/badge/pipeline-Admin_UI_→_Apify_→_GitHub_Actions_→_Vercel-orange)
-![Cost](https://img.shields.io/badge/cost-~$2--15_per_month-green)
 ![No AI key](https://img.shields.io/badge/AI_key_required-no-brightgreen)
 
 ## What it does
@@ -11,7 +10,7 @@ Track the top reels across the creators in your niche. Search creators with a li
 Every refresh interval (you pick the frequency), a GitHub Action runs and:
 
 1. **Apify scrapes** the last 28 days of reels for your tracked creator list
-2. **Pulls spoken transcripts** for any new reels (only pays for new ones — saves ~75% vs naive setup)
+2. **Fills missing transcripts through TokScript**, reusing its library before submitting batches of up to 50 Reels
 3. **ffmpeg extracts** the first 3 seconds of each new reel as a muted autoplay clip
 4. **Regenerates** a static HTML dashboard with outlier scores, sortable table, filter-by-creator chips, click-row-to-play hook clip
 5. **Pushes** the changes back to the repo → **Vercel auto-deploys**
@@ -20,13 +19,14 @@ Every refresh interval (you pick the frequency), a GitHub Action runs and:
 
 | Thing | Why | Cost |
 |---|---|---|
-| **Apify account** | Does the scraping + transcripts | Free $5/mo credit; ~$10–15/mo for 15 creators weekly |
+| **Apify account** | Reel stats and creator profiles | Bounded per-run caps |
+| **TokScript account + API key** | Spoken transcripts via MCP | Uses the existing plan allowance |
 | **GitHub account** | Hosts the code + runs the cron | Free |
 | **Vercel account** | Hosts the dashboard | Free (Hobby tier) |
 | **Python 3.10+** | To run the local admin UI | Free |
 | **ffmpeg** | For the 3-sec hook clips | Free |
 
-**You do NOT need:** an OpenAI key, Claude key, or any other AI subscription. Apify handles all transcription internally.
+**You do NOT need:** an OpenAI key, Claude key, or any other AI subscription.
 
 ## Setup (one time, ~10 minutes)
 
@@ -66,8 +66,9 @@ git add config.json .github/workflows/refresh.yml
 git commit -m "My setup"
 git push
 
-# Make APIFY_TOKEN available to GitHub Actions:
+# Make both credentials available to GitHub Actions:
 gh secret set APIFY_TOKEN
+gh secret set TOKSCRIPT_API_KEY
 # Paste only the token at the prompt, without the APIFY_TOKEN= prefix.
 # (or via UI: repo → Settings → Secrets → Actions → New repository secret)
 ```
@@ -88,9 +89,27 @@ The cron you picked in the admin UI fires automatically. You can also trigger ma
 
 The pipeline uses a **two-pass** approach:
 - **Pass 1** (cheap, no transcripts): refreshes plays/likes/comments stats for all reels in your 28-day window
-- **Pass 2** (transcripts, expensive add-on): only for reels you haven't transcribed yet
+- **Pass 2**: fills transcripts through `https://api.tokscript.com/mcp`, reusing existing library exports first. Apify transcription is disabled; there is no paid transcription fallback.
 
-Transcript pricing varies by plan and is charged per started minute. The installed demo limits each refresh to 40 reels per creator and three new transcripts, with Apify run caps of $1.50 for stats, $0.50 for transcripts, and $0.10 for profiles. Adjust the `refresh` settings in `config.json` to change these limits. Refresh scheduling starts in manual mode.
+The installed refresh limits stats to 40 Reels per creator, with Apify run caps of $1.50 for stats and $0.10 for profiles. Transcript usage is governed by the configured TokScript account. The installed Pro account includes unlimited transcripts; a free account is limited by TokScript. No purchases or plan upgrades happen in this application. Refresh scheduling starts in manual mode.
+
+### TokScript transcripts and backfills
+
+Create an API key in TokScript → Settings → API Keys, then set `TOKSCRIPT_API_KEY` in the private, gitignored `.env` file or process environment. Keep it server side. Add the same key as the GitHub Actions secret `TOKSCRIPT_API_KEY` for cloud refreshes.
+
+In Admin, choose a list and click **Fill missing transcripts · TokScript**. This skips the stats scrape and rebuilds the local dashboard after the batch. Publishing that update to the public Vercel dashboard still requires committing and pushing it.
+
+Or run the CLI:
+
+```bash
+python tokscript_backfill.py --build
+# Small scoped batch:
+python tokscript_backfill.py --handles kallaway tenfoldmarc --limit 10 --build
+```
+
+Backfills process outliers first, match transcripts by exact Instagram Reel ID, and preserve existing statistics and list memberships. Existing library transcripts are reused before submitting new jobs. Batches contain up to 50 URLs, with at most two retries for unavailable videos. Photo/carousel failures are not retried. Job IDs and JSON exports are cached under gitignored `.cache/tokscript/`; rerunning resumes known in-flight jobs and reimports saved exports. If a submit response is lost before a job ID is confirmed, the next run reconciles the library and blocks duplicate submissions until the uncertain request is resolved. The admin rejects overlapping transcript workers. Stats merges and transcript writes share a file lock and atomic JSON writes.
+
+TokScript WEBVTT/SRT output is converted into readable spoken text. The dashboard labels the transcript provider, distinguishes spoken hooks from caption fallbacks, and counts ready transcripts by creator and list. Transcripts are machine generated and may contain recognition errors; music-only or visual-only Reels may have no usable spoken transcript.
 
 Vercel runs `export_site.py` to publish only `index.html`, `thumbs/`, and `clips/`. The admin runs locally via `start.command` (or `.venv/bin/python serve.py`); it is not part of the hosted static dashboard.
 
@@ -126,25 +145,17 @@ If you prefer the terminal, `python3 configure.py` also works.
 
 ## Architecture
 
-```
-┌─────────────────────┐   you click "Run"  ┌──────────────────┐
-│   localhost admin   │ ──────────────────▶│   Apify scrape   │
-│  (python3 serve.py) │◀──── reels + ─────│  + transcripts   │
-└──────────┬──────────┘    profile data    └──────────────────┘
-           │
-           │ refresh.py (download new thumbs + clips, run build.py)
-           ▼
-┌─────────────────────┐    git push        ┌──────────────────┐
-│ index.html + data + │ ──────────────────▶│  Vercel deploy   │
-│ thumbs/ + clips/    │                    │  (auto-trigger)  │
-└─────────────────────┘                    └──────────────────┘
-           ▲                                          │
-           │                                          ▼
-┌─────────────────────┐                    ┌──────────────────┐
-│   GitHub Actions    │                    │  Your dashboard  │
-│ (your cron, weekly  │                    │   .vercel.app    │
-│ or whatever you pick)│                   └──────────────────┘
-└─────────────────────┘
+```mermaid
+flowchart LR
+    Admin[Local Admin] --> Refresh[Refresh pipeline]
+    Actions[Manual or scheduled GitHub Action] --> Refresh
+    Apify[Apify: stats and profiles only] --> Refresh
+    TokScript[TokScript MCP: library and transcripts] --> Refresh
+    Refresh --> Data[Saved data and preview clips]
+    Data --> Build[build.py]
+    Build --> HTML[index.html]
+    HTML --> Push[Commit and push]
+    Push --> Vercel[Public dashboard on Vercel]
 ```
 
 ## Files
@@ -158,7 +169,9 @@ If you prefer the terminal, `python3 configure.py` also works.
 | `build.py` | Renders `index.html` from scraped data |
 | `extract_clips.py` | ffmpeg helper for the 3-sec hook clips |
 | `config.json` | Your creator list (committed; managed by the admin) |
-| `.env` | Your Apify token (gitignored) |
+| `tokscript.py` | Authenticated MCP client for TokScript |
+| `tokscript_backfill.py` | Library reuse, bulk transcript jobs, and exports |
+| `.env` | Apify and TokScript credentials (gitignored) |
 | `.github/workflows/refresh.yml` | The cron job — edited by the admin's schedule picker |
 | `vercel.json` | Vercel hosting config |
 | `data/`, `thumbs/`, `clips/` | Generated content (committed so Vercel can serve it) |
@@ -167,7 +180,7 @@ If you prefer the terminal, `python3 configure.py` also works.
 ## Troubleshooting
 
 **A scheduled run failed.** Check repo → Actions → click the failed run → look at "Run refresh pipeline" step. Most common cause:
-- `APIFY_TOKEN` not set as a secret → run `gh secret set APIFY_TOKEN` and paste only the token at the prompt
+- `APIFY_TOKEN` or `TOKSCRIPT_API_KEY` not set as a secret → set both, pasting only the credential at each prompt
 - A handle in your config went private mid-week → remove via admin
 
 **Apify returned 502.** Transient. `refresh.py` retries with exponential backoff automatically. If it still fails, trigger the workflow again.

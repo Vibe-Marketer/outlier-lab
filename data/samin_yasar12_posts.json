@@ -20,9 +20,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "40486897157575717"
       },
-      "transcript": null,
+      "transcript": "How to save AI credits with Hicksfield and Blender. This free plugin can save you thousands of Hicksfield credits. It's called Hicksil and it connects to Claude and Blender. So instead of you burning credits while you figure out your scene, you build the entire thing in 3D first. And this fixes one of the biggest problems with AI video right now, which is dialogue scenes. Without Blender, people switch seats. The framing changes and you end up wasting thousands of credits trying to fix it. But with Hicksil, your scene is already mapped out. So six people can stay in the right seats across every cut and your camera moves consistently as well. It also makes crazy shots way easier. Things like orbits, floor rises, robot arm moves can all be built visually and then tweaked by dragging the point instead of rewriting the prompt from scratch. And for client work, this is even better. If they want changes, you can just recut the scene in Blender instead of rebuilding the whole prompt. You can even reuse the same blocking file, swap the visual styles and pitch three completely different worlds in one day. Comment, save and I'll send you the full setup.",
       "ownerUsername": "samin_yasar12",
-      "ownerFullName": "Samin Yasar | AI Answers"
+      "ownerFullName": "Samin Yasar | AI Answers",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_adfbab87",
+        "attemptedAt": "2026-10-26T17:24:59.057294+00:00"
+      }
     },
     {
       "shortCode": "De4n3T8Euuw",
@@ -44,9 +50,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28701915092770361"
       },
-      "transcript": null,
+      "transcript": "These seven Hermes agent setups can basically run parts of your entire business for you. Number one is voice control. Connect 11 labs and you can literally talk to Hermes through Telegram while it completes work in the background. Number two is turn every call into content. Hermes can automatically grab your meeting transcripts, find the best ideas and automatically turn them into hooks and short form scripts. Number three is the finance admin. Connect your Stripe, your financial data and Hermes can track your revenue, expenses and margins and bills reports for you every month. Number four is an AI business strategist. It can research your competitors, compare their pricing, and then tell you your own business data to tell you what opportunities actually matter. Number five is running multiple employees at once. And using Hermes' Kanban board, different specialized agents can research, write, review, pass tasks between each other automatically. Number six is build a 24-7 content scout. Hermes can scan X, Reddit, YouTube, and send you the strongest content ideas every morning. And number seven is giving your entire company a second brain. You can feed Hermes your internal offers, SOPs, calendars, so it actually understands your business instead of starting from zero each time. Comment use and I'll send you the full breakdown.",
       "ownerUsername": "samin_yasar12",
-      "ownerFullName": "Samin Yasar | AI Answers"
+      "ownerFullName": "Samin Yasar | AI Answers",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_adfbab87",
+        "attemptedAt": "2026-10-26T17:24:59.057298+00:00"
+      }
     },
     {
       "shortCode": "Dewy2zmjLzq",
@@ -68,9 +80,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "29337387072551804"
       },
-      "transcript": null,
+      "transcript": "These four plugins turn Cloud Code into an absolute monster. The first is Ponytail. It stops Cloud from overengineering simple tasks and cuts down unnecessary code and reduce the tokens at the same time. Second is OmniRoute. It lets Cloud Code route between different AI providers so if one model hits a limit, it can automatically fall back to another one. Third is Graphify. This turns your entire code base into a knowledge graph that Cloud can query, look through, instead of just rereading the same files five times. And finally, agent skills. This gives Claude a full engineering workflow across planning, building, testing, reviewing, and shipping using a pack of 24 specialized skill agents. Instead of just giving Claude a better prompt, you're upgrading how it can think and use that context to actually build much better. Comment, plug, and I'll send you the four.",
       "ownerUsername": "samin_yasar12",
-      "ownerFullName": "Samin Yasar | AI Answers"
+      "ownerFullName": "Samin Yasar | AI Answers",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_e9e034ae",
+        "attemptedAt": "2026-10-26T17:22:01.174213+00:00"
+      }
     },
     {
       "shortCode": "DeuOHMjFGBI",
@@ -92,9 +110,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28042301802110931"
       },
-      "transcript": null,
+      "transcript": "This free GitHub tool can tell a business the second their competitors change their pricing. It's called ChangeDetection.io. And the offer is really simple. Take your client's biggest competitors, add their pricing pages, and the software will keep checking that automatically. And the moment something changes, it can send an alert through email, Slack, Telegram, or Webhook. So imagine a competitor quietly drops their price. Instead of your client discovering it two weeks later, they would know almost immediately. And you can make the workflow even more valuable by adding an AI. So instead of just saying change this page, the alert can explain what changed, where it changed, why it might matter to the business as well. And you can monitor pricing, offer new landing pages, product launches, or basically any other important page your competitors may own. And because Change Detection.io is an open source free software, you can self-host this monitoring tool itself for free. So you're not really selling a scraper, you're selling a competitor intelligence system that never stops watching. If you want this, comment alert and I'll send you the workflow.",
       "ownerUsername": "samin_yasar12",
-      "ownerFullName": "Samin Yasar | AI Answers"
+      "ownerFullName": "Samin Yasar | AI Answers",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_91998c67",
+        "attemptedAt": "2026-10-26T17:24:11.791735+00:00"
+      }
     },
     {
       "shortCode": "Der2z-IFfLS",
@@ -116,9 +140,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28862510803432622"
       },
-      "transcript": null,
+      "transcript": "This GitHub repo has over 6,800 stars because it fixes one of the biggest problems with AI websites. It's called Impeccable, and most coding agents keep falling back to the same design patterns like purple gradients, huge rounded corners, and enters everywhere. Basically, the same SaaS website over and over again. Impeccable, though, gives your coding agent the actual design rules instead. Now, the agent can critique the hierarchy, fix the typography, improve the spacing, and polish an overall design instead of generating more code. It even has commands like Polish, Critique, Bolder, Quieter, Animate, and Typeset. So instead of endlessly prompting, like make this look more premium, you give an AI an actual design language to work from. Comment Design Kit and I'll send you the repo.",
       "ownerUsername": "samin_yasar12",
-      "ownerFullName": "Samin Yasar | AI Answers"
+      "ownerFullName": "Samin Yasar | AI Answers",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_e9e034ae",
+        "attemptedAt": "2026-10-26T17:22:01.174216+00:00"
+      }
     },
     {
       "shortCode": "DepK7-Tj21e",
@@ -140,9 +170,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "29255930230762455"
       },
-      "transcript": null,
+      "transcript": "GVT6 Astra can now trade stocks for you while you sleep. And the setup is actually way simpler than you think. First, give Astra a goal and have it research a trading strategy using multiple sub-agents. Then, connect it to Alpaca so it can see the market data and check your account and place trades through their API. After that, set up a scheduled routine that runs throughout the trading day. And before the market opens, Astra will check the news and choose which stocks to watch. Then, it wakes up, looks out for trades, manages the positions and eventually closes them out. And the most important part is giving every agent a shared progress log. So when Astro wakes up, it can see what the last agent did and what positions are open and what it needs to do next. And I'd obviously start this with paper trading and not real money while you test the strategy. But you can basically turn Astro into an autonomous trading agent that runs your system every day. Comment trader and I'll send you the full setup.",
       "ownerUsername": "samin_yasar12",
-      "ownerFullName": "Samin Yasar | AI Answers"
+      "ownerFullName": "Samin Yasar | AI Answers",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_c8c24873",
+        "attemptedAt": "2026-10-26T17:19:59.620697+00:00"
+      }
     },
     {
       "shortCode": "DemmMV-kZmG",
@@ -164,9 +200,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28618133341212563"
       },
-      "transcript": null,
+      "transcript": "TPT6 Astra and Hicksfield can now make you $10,000 a month because brands don't need one perfect ad anymore. They need dozens of different creatives every single month just to keep testing what works and producing all those with traditional shoots gets expensive super fast. That's where Astra and Hicksfield becomes a business. Astra acts like the creative director. You can have it study winning competitor ads and then turn them into new concepts. Then Hicksfield becomes the production team and actually creates the videos and static ads. So your offer is simple. Give a brand a fixed number of new creatives every month for one monthly retainer. At $2,000 to $2,500 a client, you need only around four to five clients to make $10,000 a month. And the unfair advantage is outreach because these creatives cost almost nothing to produce and you can make prospects a few custom ads for free before they ever pay you. So instead of telling them what you could do, you just show them and comment combo and I'll send you the full business model.",
       "ownerUsername": "samin_yasar12",
-      "ownerFullName": "Samin Yasar | AI Answers"
+      "ownerFullName": "Samin Yasar | AI Answers",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_3484d140",
+        "attemptedAt": "2026-10-26T17:22:58.111258+00:00"
+      }
     },
     {
       "shortCode": "DekBfpXgYi2",
@@ -188,9 +230,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28699816486335313"
       },
-      "transcript": null,
+      "transcript": "GPT-6 Astra just killed web designers because with the right setup, Astra can now design, build, and test an entire website for you. First, give it the Emil Kowalski and Impeccable Design Skill. These teach Astra how to properly handle things like typography, spacing, layout, animations, instead of giving you the generic AI-looking design. Then add the taste skill so it has much better judgment over what actually good looks like. And finally, connect the Figma MCP and play right now. Astra can actually understand the existing designs, turn themselves into a working website and then open the site itself and test whether everything actually works. Instead of spending hours trying to prompt AI into making something look professional, you give Astra an entire design system and let it handle the workflow for you. Comment Astra and I'll send you the full setup.",
       "ownerUsername": "samin_yasar12",
-      "ownerFullName": "Samin Yasar | AI Answers"
+      "ownerFullName": "Samin Yasar | AI Answers",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_3484d140",
+        "attemptedAt": "2026-10-26T17:22:58.111261+00:00"
+      }
     },
     {
       "shortCode": "DehcrSBgLrB",
@@ -212,9 +260,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "29383941977865201"
       },
-      "transcript": null,
+      "transcript": "This GitHub repo makes Claude smarter by actually telling it what not to do. It's basically one instruction file you drop into your Claude project, and instead of giving Claude more complicated prompts, it removes the behaviors that usually make AI coding worse. First, no over-engineering simple tasks. Second, no making assumptions when it's confused. Third, no random changes it wasn't asked for. And fourth, Claude has to double-check its worth before saying it's finished. You make Claude better by giving it fewer ways to mess up. Drop this into your project, and Claude becomes way more focused and less likely to create unnecessary code. Comment repo and I'll send you that link.",
       "ownerUsername": "samin_yasar12",
-      "ownerFullName": "Samin Yasar | AI Answers"
+      "ownerFullName": "Samin Yasar | AI Answers",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_bb50e384",
+        "attemptedAt": "2026-10-26T17:21:05.714290+00:00"
+      }
     },
     {
       "shortCode": "Dee31KhDL6l",
@@ -236,9 +290,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "39183785141267983"
       },
-      "transcript": null,
+      "transcript": "There's an AI scraper that's 700 times faster than yours, and that speed isn't even its best feature. Most scrapers work fine until the site realizes you're a bot. Then you hit a cloud flare, anti-abrock protection, captchas, and the whole workflow breaks. And this one is built to keep scraping even through those protections. And you can plug it directly into cloud code or codex so your agents can pull live data from websites. And if you're building anything that depends on fresh web data, this makes the whole process way faster and actually reliable. Comment speed and I'll send you the link.",
       "ownerUsername": "samin_yasar12",
-      "ownerFullName": "Samin Yasar | AI Answers"
+      "ownerFullName": "Samin Yasar | AI Answers",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_e9e034ae",
+        "attemptedAt": "2026-10-26T17:22:01.174218+00:00"
+      }
     },
     {
       "shortCode": "DecTGumCtnK",
@@ -260,9 +320,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "29039546749069760"
       },
-      "transcript": null,
+      "transcript": "You can now give Claude 280 AI employees to help run your business for free. It's called Agency Agents, and instead of using one AI assistant for everything, it gives you 100 specialized different agents for different jobs. You've got an engineer, designer, marketer, salespeople, and even lawyers. And each of them has their own instructions, tools, and ways of working. So your marketing agent actually works like a marketer, and your developer works like a developer. One installer drops all 280 agents onto your laptop, ready to use whenever you need. So instead of asking one clock chat to somehow be good at everything, you can give it an entire AI team. Comment employee and I'll send you the link.",
       "ownerUsername": "samin_yasar12",
-      "ownerFullName": "Samin Yasar | AI Answers"
+      "ownerFullName": "Samin Yasar | AI Answers",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_3484d140",
+        "attemptedAt": "2026-10-26T17:22:58.111263+00:00"
+      }
     },
     {
       "shortCode": "DeZuRrMjvkP",
@@ -284,9 +350,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28956190440700774"
       },
-      "transcript": null,
+      "transcript": "Is it a bowling ball? Oh, hello. Oh, wait. Chad, GPT, Astra, and Hicksfield just changed live streaming forever because AI generated video just went from making clips to running an entire live stream. They partnered with massive kick streamer Neon to create an AI version of him that can actually stay live basically 24-7. And GPT-6 Astra acts like his brain behind the stream, while Higgs field continuously generates what you're actually watching. And the crazy part is, this isn't a pre-recorded loop. The stream can keep generating new moments as people watch, meaning the real Neon can literally go out, sleep while his AI version keeps entertaining thousands of people. We've spent the last few years watching AI replace parts of content creation, but this is the first time it feels like the creator itself can stay online forever. Comment live stream and I'll send you the full breakdown.",
       "ownerUsername": "samin_yasar12",
-      "ownerFullName": "Samin Yasar | AI Answers"
+      "ownerFullName": "Samin Yasar | AI Answers",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_3484d140",
+        "attemptedAt": "2026-10-26T17:22:58.111265+00:00"
+      }
     },
     {
       "shortCode": "DeXJcXmFLMv",
@@ -308,9 +380,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28740794342252304"
       },
-      "transcript": null,
+      "transcript": "You can turn Claude Opus 5.5 into an absolute design monster when it comes to web design with these five free plugins. First is Taste. It stops Claude from defaulting to the same generic AI-looking UI and gives it much stronger rules for what good front-end design should actually look like. Second is Impeccable. This gives Claude a proper design system to work from, plus a live editor you can actually tweak your websites from directly in your browser. Third is Playwright CLI. Instead of manually checking everything Claude builds, it can now open sites in multiple browsers and test whether everything actually works. Then there's awesome design. This gives Claude design systems inspired by real websites including their typography, spacing, buttons, and components so it has better references to actually build from. And finally, image23js. Give it a normal image and Claude can now use that to recreate an object in a 3D interactive model entirely through code. And all five are completely free. Comment monster and I'll send you the full list.",
       "ownerUsername": "samin_yasar12",
-      "ownerFullName": "Samin Yasar | AI Answers"
+      "ownerFullName": "Samin Yasar | AI Answers",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_e48bb2ae",
+        "attemptedAt": "2026-10-26T17:19:13.951047+00:00"
+      }
     },
     {
       "shortCode": "DeUkuSYDT7r",
@@ -332,9 +410,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28519789004381690"
       },
-      "transcript": null,
+      "transcript": "Claude Opus 5.5 just killed website designers because Claude can now handle almost the entire website workflow from just one place. Start by giving it Emil Kowalski and Impeccable. This gives Claude the actual rules for things like typography, spacing, layout, and motion, so it stops defaulting to the same generic AI-looking website. Then add the taste skill, so Claude has better references for what good design should actually look like, but the part that makes this really powerful is connecting it to Figma MCP and Playwright. Now Claude can look at an existing design and turn it into a working website so now you're not just asking Claude to code a landing page anymore, you're giving it a full system to design it, build it, and even check its own work. Comment killer and I'll send you the full setup.",
       "ownerUsername": "samin_yasar12",
-      "ownerFullName": "Samin Yasar | AI Answers"
+      "ownerFullName": "Samin Yasar | AI Answers",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_bb50e384",
+        "attemptedAt": "2026-10-26T17:21:05.714296+00:00"
+      }
     },
     {
       "shortCode": "Dd60quVALzx",
@@ -356,9 +440,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28150217031344591"
       },
-      "transcript": null,
+      "transcript": "Someone got 11 million views and 30,000 followers in 3 days with this AI workload. And the video started with her literally just opening a door. First, she filmed herself on the phone opening a normal door and walking through it. Then she went on Pinterest, found an image of a fantasy world she wanted to appear on the other side of. She then gave both ideas to Claude and had it write a detailed prompt explaining what should happen, how the door opens, how she would walk through the camera movements, and how even the wind should move her hair. Then she uploaded the original video and the fantasy image into Hicksfield, pasted in Claude's prompt, and used Seedance 2.5 to generate the final video. If anything looked wrong, she'd just show Claude what needed fixing, then regenerate the prompt and try it again. So that video got 11 million views and was basically a phone recording, a Pinterest image, and an AI video model. Comment Portal and I'll send you the full workflow.",
       "ownerUsername": "samin_yasar12",
-      "ownerFullName": "Samin Yasar | AI Answers"
+      "ownerFullName": "Samin Yasar | AI Answers",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_e9e034ae",
+        "attemptedAt": "2026-10-26T17:22:01.174219+00:00"
+      }
     },
     {
       "shortCode": "Dd22jTDgBtu",
@@ -380,9 +470,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28449394368044384"
       },
-      "transcript": null,
+      "transcript": "Claude has no taste, so here's how you give it some. First, build a taste library. Go through Dribbble, Pinterest, save designs you actually like, then give those references to Claude. Now, instead of asking it to make it a premium website, Claude actually has examples of what good design actually looks like. Second, give Claude better design tools. Install Impeccable or the Taste skill to stop it falling back on generic AI layouts, then connect Claude to Hicksfield so it can generate custom images and videos for your site. Third, stop trying to one-shot your designs. Have Claude create five completely different versions first, pick your favorite and have it create a few variations of that direction. Then keep narrowing it until you actually have something that you love. Because Claude doesn't magically develop good taste from better prompt. You have to actually give it the references, the tools, and the feedback to build it. Comment aesthetics and I'll send you the full setup.",
       "ownerUsername": "samin_yasar12",
-      "ownerFullName": "Samin Yasar | AI Answers"
+      "ownerFullName": "Samin Yasar | AI Answers",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_c8c24873",
+        "attemptedAt": "2026-10-26T17:19:59.620703+00:00"
+      }
     },
     {
       "shortCode": "Dd1rHF9Dkm3",
@@ -404,9 +500,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "27916828454662132"
       },
-      "transcript": null,
+      "transcript": "Claude just changed the stock market forever because now you can turn it into an AI trading bot that watches the entire market and executes the strategy automatically. First, connect Claude to Alpaca so it can actually place trades for you, then give it the rules you want it to follow. For example, you could tell Claude, buy a stock automatically, cut the positions if it falls by 10%, then continuously monitor and move the stop higher as the price goes up to protect your gains. But it gets even crazier. You can even give Claude access to data showing what Wall Street whales and US politicians you're buying, then have it automatically track and copy their trades. And because Claude can run these checks on a schedule, it can keep monitoring the market throughout the day without you sitting there and watching the charts. So instead of using Claude to just research stocks, you can now build an AI trading system around your own rules. Comment market and I'll send you the full video showing you how I built it.",
       "ownerUsername": "samin_yasar12",
-      "ownerFullName": "Samin Yasar | AI Answers"
+      "ownerFullName": "Samin Yasar | AI Answers",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_c8c24873",
+        "attemptedAt": "2026-10-26T17:19:59.620706+00:00"
+      }
     }
   ]
 }

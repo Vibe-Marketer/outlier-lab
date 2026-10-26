@@ -187,6 +187,9 @@ def main():
             "profile_pic": profile_path,
             "median_plays": median_plays,
             "reels_in_window": len(posts),
+            "transcripts_ready": sum(bool((p.get("transcript") or "").strip()) for p in posts),
+            "transcripts_no_speech": sum((p.get("transcription") or {}).get("status") == "no_speech" for p in posts),
+            "transcripts_review": sum((p.get("transcription") or {}).get("status") == "needs_review" for p in posts),
             "scopes": CREATOR_CONFIG[handle].get("scopes", []),
             "trackingEnabled": CREATOR_CONFIG[handle].get("trackingEnabled", True),
             "coverage": COVERAGE.get(handle, {}),
@@ -214,6 +217,7 @@ def main():
                 "thumb": thumb_local.name if thumb_local.exists() else None,
                 "hook": hook_of(transcript, caption),
                 "transcript": transcript,
+                "transcription": p.get("transcription") or {},
                 "caption": caption,
                 "plays": plays,
                 "likes": likes,
@@ -573,7 +577,7 @@ def main():
 
   <details class="coverage" id="coverage-details">
     <summary id="coverage-summary">Data coverage</summary>
-    <div style="overflow-x:auto"><table><thead><tr><th>Creator</th><th>Cached Reels</th><th>Sample / status</th><th>Last request</th></tr></thead><tbody id="coverage-body"></tbody></table></div>
+    <div style="overflow-x:auto"><table><thead><tr><th>Creator</th><th>Cached Reels</th><th>Transcripts</th><th>Sample / status</th><th>Last request</th></tr></thead><tbody id="coverage-body"></tbody></table></div>
     <p>Outliers are at least 2× that creator's sampled median views. Small samples are provisional. Collaboration views owned by another account do not enter the personal baseline.</p>
   </details>
 
@@ -676,7 +680,7 @@ def main():
         <h2 id="modal-hook">—</h2>
         <div class="modal-stats" id="modal-stats"></div>
         <div class="modal-meta" id="modal-meta"></div>
-        <div class="modal-field-label">Transcript</div>
+        <div class="modal-field-label" id="modal-transcript-label">Spoken transcript</div>
         <div class="modal-caption" id="modal-transcript">—</div>
         <div class="modal-field-label">Description (caption)</div>
         <div class="modal-caption" id="modal-caption">—</div>
@@ -775,11 +779,12 @@ function applyScope(scope) {{
   const rows = scopeRows();
   const scopedCreators = CREATORS.filter(c => scope === "__all__" || c.scopes.includes(scope));
   const loaded = scopedCreators.filter(c => c.reels_in_window > 0).length;
-  document.getElementById("coverage-summary").textContent = `Data coverage · ${{loaded}} of ${{scopedCreators.length}} saved creators have cached Reels`;
+  const transcribed = rows.filter(r => r.transcript.trim()).length;
+  document.getElementById("coverage-summary").textContent = `Data coverage · ${{loaded}} of ${{scopedCreators.length}} creators have Reels · ${{transcribed}} of ${{rows.length}} transcripts ready`;
   document.getElementById("coverage-body").innerHTML = scopedCreators.map(c => {{
     const sample = c.coverage;
     const status = !c.trackingEnabled ? "Paused" : c.reels_in_window ? (c.reels_in_window < 10 ? "Small sample · provisional baseline" : "Sample loaded") : sample.status === "collaborations_only" ? "Collaborations only; personal baseline unavailable" : sample.requestedAt ? "No authored Reels returned; check profile / coverage" : "Profile only · Reels not fetched yet";
-    return `<tr><td>@${{escapeHtml(c.handle)}}</td><td>${{c.reels_in_window}}</td><td>${{escapeHtml(status)}}${{sample.limit ? ` · limit ${{sample.limit}}` : ""}}${{sample.collaborations ? ` · ${{sample.collaborations}} collaborations` : ""}}${{sample.note ? ` · ${{escapeHtml(sample.note)}}` : ""}}</td><td>${{escapeHtml(sample.requestedAt?.slice(0,16).replace("T", " ") || "Not recorded")}}</td></tr>`;
+    return `<tr><td>@${{escapeHtml(c.handle)}}</td><td>${{c.reels_in_window}}</td><td>${{c.transcripts_ready}} / ${{c.reels_in_window}} ready${{c.transcripts_no_speech ? ` · ${{c.transcripts_no_speech}} no reliable speech` : ""}}${{c.transcripts_review ? ` · ${{c.transcripts_review}} need review` : ""}}</td><td>${{escapeHtml(status)}}${{sample.limit ? ` · limit ${{sample.limit}}` : ""}}${{sample.collaborations ? ` · ${{sample.collaborations}} collaborations` : ""}}${{sample.note ? ` · ${{escapeHtml(sample.note)}}` : ""}}</td><td>${{escapeHtml(sample.requestedAt?.slice(0,16).replace("T", " ") || "Not recorded")}}</td></tr>`;
   }}).join("");
   const adminUrl = new URL(["localhost", "127.0.0.1"].includes(location.hostname) ? "/admin" : ADMIN_URL, location.href);
   adminUrl.searchParams.set("scope", scope);
@@ -915,6 +920,7 @@ function renderTable() {{
         </td>
         <td class="hook-cell">
           <span class="row-hook" title="${{escapeHtml(r.hook || '')}}">${{r.hook ? escapeHtml(r.hook) : "<em>no hook</em>"}}</span>
+          <small style="display:block;color:var(--fg-dim);font-size:10px">${{r.transcript ? "Spoken hook" : "Caption · no spoken transcript"}}</small>
         </td>
         <td class="num">${{fmtNum(r.plays)}}</td>
         <td class="num">${{fmtNum(r.likes)}}</td>
@@ -1025,7 +1031,18 @@ function openModal(shortCode) {{
     <span>⏱ ${{fmtDur(r.duration)}}</span>
     <span>📅 ${{escapeHtml(r.posted_human)}}</span>
   `;
-  document.getElementById("modal-transcript").textContent = r.transcript || "(no transcript)";
+  const transcription = r.transcription || {{}};
+  document.getElementById("modal-transcript-label").textContent = r.transcript
+    ? `Spoken transcript · ${{transcription.provider === "tokscript" ? "TokScript" : transcription.provider === "mlx-whisper" ? "local Whisper · English" : "machine generated"}} · may contain errors${{transcription.shortResult ? " · short result; verify audio" : ""}}`
+    : "Spoken transcript";
+  const emptyTranscript = transcription.status === "no_speech"
+    ? "No reliable speech detected in the full audio. This Reel may use music or on-screen text; its caption is below."
+    : transcription.status === "needs_review"
+    ? "Speech recognition produced repetitive text and needs review. Its caption is shown separately below."
+    : transcription.status === "error"
+    ? "Transcript unavailable: the service could not return usable speech after retries. Use Fill missing transcripts in Admin to retry through TokScript."
+    : "Not transcribed yet. The displayed hook comes from the caption. Use Fill missing transcripts in Admin to process this list through TokScript.";
+  document.getElementById("modal-transcript").textContent = r.transcript || emptyTranscript;
   document.getElementById("modal-caption").textContent = r.caption || "(no caption)";
   document.getElementById("modal-link").href = r.url;
   modal.classList.add("open");

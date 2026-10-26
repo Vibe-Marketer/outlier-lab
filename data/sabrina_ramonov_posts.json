@@ -20,9 +20,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "39389314184047171"
       },
-      "transcript": null,
+      "transcript": "In a world where people can vibe clone your startup in hours, what are durable advantages in the startup world? I've been thinking about this a lot because here in SF for the past month, a lot of people are saying there's no advantage anymore in building software. So where is there actually competitive advantage and defensibility? I think number one is if you have any kind of data flywheel where your users are generating data and you're actually able to learn from that and fine tune your product or eventually build your own models. I think number two is still network effects. So things like marketplaces, social networks, or adding more users or more usage actually makes your products more valuable to everybody else. And number three, also like regulation heavy industries like healthcare, fintech, those are still incredibly expensive for anyone to build in and get their product live with users. And so there's still advantage there just because it's really hard. However, I honestly don't think most indie builders need to care that much about this question because if you think about like a micro sass app let's say you have a thousand users each one paying 50 bucks per month that's fifty thousand dollars per month the vast majority of indie builders would be perfectly happy bringing in fifty thousand dollars per month even with a tiny team so on one hand it's been like really fascinating being here in sf for the month like getting uh inundated with kind of like the big thinking big ambition big startups and the thinking around the strategy right now but also on the other hand like as a bootstrapped indie builder, I always try to remind myself that there are multiple ways to build a profitable company.",
       "ownerUsername": "sabrina_ramonov",
-      "ownerFullName": "Sabrina Ramonov \ud83c\udf44"
+      "ownerFullName": "Sabrina Ramonov \ud83c\udf44",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_adfbab87",
+        "attemptedAt": "2026-10-26T17:24:59.043361+00:00"
+      }
     },
     {
       "shortCode": "De7aJAQCZEm",
@@ -44,9 +50,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "29289472267332345"
       },
-      "transcript": null,
+      "transcript": "The craziest thing at TechCrunch is listening to an investor panel where they seriously said going from zero to 10 million in annual recurring revenue is no longer interesting to VCs. They only care now about companies going from zero to 100 million as fast as possible. And that was kind of shocking because as a bootstrap founder, I'm sitting here like, oh, zero to 10 million. That's literally amazing and life-changing and absolutely was unthinkable 10 years ago unless you raised a bunch of investor capital. I honestly kind of feel bad for founders who are listening to this and think it's the only way to build companies. Like I wish they could see that you can actually just bootstrap a company to millions of dollars in annual recurring revenue and be totally fine and chill and never need VC funding ever. The other thing that was surprising is these investors talking about companies 100 million plus in revenue, but still struggling to maintain their product market fit. Nothing is certain, nothing is defensible. And they're saying that these companies have to rediscover product market fits every year. So it's definitely the craziest time ever in the world of startups, but it's also the easiest time ever in the world of startups to build something and get it to a meaningful amount of revenue and profit.",
       "ownerUsername": "sabrina_ramonov",
-      "ownerFullName": "Sabrina Ramonov \ud83c\udf44"
+      "ownerFullName": "Sabrina Ramonov \ud83c\udf44",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_91998c67",
+        "attemptedAt": "2026-10-26T17:24:11.780813+00:00"
+      }
     },
     {
       "shortCode": "De6340fjDhr",
@@ -68,9 +80,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28939201192359235"
       },
-      "transcript": null,
+      "transcript": "There are eight YouTube channels that make you smarter instead of doom scrolling brain rot. But first, if you're not already using YouTube to learn stuff and get ahead, you are falling behind millions of other people that are using YouTube to learn how to build their own business, make their own money, work for themselves. So save this video so you can actually go back and watch all these channels. First channel is called MIT OpenCourseWare. It is run by MIT, the Massachusetts Institute of Technology. They're one of the best colleges in the entire world and all their content is free. The second YouTube channel is called Free Code Camp. And that's where you can learn to code for free. And they have a ton of different courses. The third YouTube channel is called Big Think. And they bring on lots of different experts that give educational content across all kinds. The fourth YouTube channel is Y Combinator. It gives you everything you need to know about building a successful tech startup. Fifth channel is Smarter Every Day. And it explores the world using science. Every single day, you'll learn something new about science. Sixth channel is TED. This is from the TED conference. Best leaders and thinkers and doers around the world share information and insights. The seventh channel is called Crash Course. It offers short and entertaining educational courses on a variety of different subjects. The channel, Thomas Frank. He teaches you productivity, growth, mindset, and how to learn more effectively to reach your potential. Save this video for the future so you can check out all of these YouTube channels and learn really important stuff for free. Get better every day. Get smarter every day. Hit follow if you want more content like this.",
       "ownerUsername": "sabrina_ramonov",
-      "ownerFullName": "Sabrina Ramonov \ud83c\udf44"
+      "ownerFullName": "Sabrina Ramonov \ud83c\udf44",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_e9e034ae",
+        "attemptedAt": "2026-10-26T17:22:01.164028+00:00"
+      }
     },
     {
       "shortCode": "De41V2QjMfT",
@@ -92,9 +110,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28956488917315520"
       },
-      "transcript": null,
+      "transcript": "This is the one thing you should do before every interview. Type, act as a tough hiring manager interviewing me for this role at this company. Ask one realistic question at a time, challenge vague answers with follow ups, and score my answer from 1 to 10 and tell me how to improve. Now step two, upload your resume and paste the job description into chat, and then type this prompt. Now use my resume and job descriptions to ask me way harder questions.",
       "ownerUsername": "sabrina_ramonov",
-      "ownerFullName": "Sabrina Ramonov \ud83c\udf44"
+      "ownerFullName": "Sabrina Ramonov \ud83c\udf44",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_3484d140",
+        "attemptedAt": "2026-10-26T17:22:58.097841+00:00"
+      }
     },
     {
       "shortCode": "De4TAw2jqsu",
@@ -116,9 +140,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "29078172891820205"
       },
-      "transcript": null,
+      "transcript": "10 ways to learn anything fast. Number one, Eli 5. Type this anywhere and chat will explain things in super simple terms. Number two, 80-20. You can type this anywhere in the prompts and chat will focus on the most important 20% you need to know. Number three, make sticky notes. ChatGPT will create a visual sticky note guide like this. Number four, Feynman technique. Type this anywhere. It's a super popular study technique so that you can learn faster. Number five, make a mind map. ChatGPT will make a visual mind map of the key concepts. Number six, quiz me. Chat will quiz you one question at a time until you understand. Number seven, make visual study guide. ChatGPT will take the topic and create a one-pager study sheet so that you can learn everything you need. Number eight, first principles. Type this anywhere in your prompt and chat will explain from first principles thinking. Number nine, Socrates. This is my favorite. ChatGPT will teach you by asking you questions one at a time. Number ten, make schematic. Type this anywhere and chat will make a schematic diagram to explain things to you. If you want hundreds more secret codes like this, hit follow and comment codes and I'll DM you. you.",
       "ownerUsername": "sabrina_ramonov",
-      "ownerFullName": "Sabrina Ramonov \ud83c\udf44"
+      "ownerFullName": "Sabrina Ramonov \ud83c\udf44",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_e48bb2ae",
+        "attemptedAt": "2026-10-26T17:19:13.929281+00:00"
+      }
     },
     {
       "shortCode": "De2QpgJk_ux",
@@ -140,9 +170,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "39337136782567396"
       },
-      "transcript": null,
+      "transcript": "This is the one prompt you need to make AI sound less robotic and more like you. First hit follow, bookmark this prompt. Tells ChatGPT exactly what to do to sound more human and exactly what to avoid to stop sounding like AI. The last line forces ChatGPT to check everything and remove em dashes. Save this prompt in your ChatGPT preferences so that it's applied to all future conversations. If you want me to send you the full prompt and instructions, hit follow and comment humanizer and I'll DM you.",
       "ownerUsername": "sabrina_ramonov",
-      "ownerFullName": "Sabrina Ramonov \ud83c\udf44"
+      "ownerFullName": "Sabrina Ramonov \ud83c\udf44",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_bb50e384",
+        "attemptedAt": "2026-10-26T17:21:05.690876+00:00"
+      }
     },
     {
       "shortCode": "De1uT54lAiN",
@@ -164,9 +200,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28825982353734535"
       },
-      "transcript": null,
+      "transcript": "Six videos to learn the six most important life skills, but first hit follow and share this with a friend trying to level up. One, learning how to learn. This video will teach you how to learn anything 10 times faster. Two, confidence. This video will teach you how to speak with confidence even if you're shy or anxious. Three, AI. Learn how to use ChatGPT and Cloud because it's changing literally everything. Four, money mindset. Watch this if you're tired of being broke. Five, personal brand. How to build your audience from literally zero followers. Six, starting your own business. This video shows you nine potential businesses you can start today. And if you want to stay ahead and learn new skills, hit follow and comment guide and I'll DM you.",
       "ownerUsername": "sabrina_ramonov",
-      "ownerFullName": "Sabrina Ramonov \ud83c\udf44"
+      "ownerFullName": "Sabrina Ramonov \ud83c\udf44",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_bb50e384",
+        "attemptedAt": "2026-10-26T17:21:05.690894+00:00"
+      }
     },
     {
       "shortCode": "Dezr1vcD3Gz",
@@ -188,9 +230,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "40397479303172348"
       },
-      "transcript": null,
+      "transcript": "I'll learn anything 10 times faster with ChatGPT, but first hit follow, save this video. If you type slash handwritten before your topic, it explains the topic so easily even kids can understand it. The second command is slash make sticky notes. It lays out all the important points of the topic in front of you in a really simple way. The third command is slash visualize learning. Use this command to understand any topic visually in just a few minutes. Number four, type slash question predictor and the topic. ChatGPT will predict the most likely questions on your next test. Number five, type slash Socrates and the topic. That GPT will teach you by asking you questions. I have dozens more commands like these. If you want me to send them to you, hit follow and comment 10.",
       "ownerUsername": "sabrina_ramonov",
-      "ownerFullName": "Sabrina Ramonov \ud83c\udf44"
+      "ownerFullName": "Sabrina Ramonov \ud83c\udf44",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_e9e034ae",
+        "attemptedAt": "2026-10-26T17:22:01.164031+00:00"
+      }
     },
     {
       "shortCode": "DezJfovlTex",
@@ -212,9 +260,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28868357082831182"
       },
-      "transcript": null,
+      "transcript": "What's your degree worth? This website shows you salary data and which career paths are actually growing. The entry-level salary, the number of projected openings over time, whether your job is exposed to AI, the competitiveness. This is really helpful to understand if you have no idea kind of what you wanna do with your life and you're exploring different options. You can even search by your major and get information about opportunities. It's 100% free. Go here to check it out or comment major and I'll send you the link.",
       "ownerUsername": "sabrina_ramonov",
-      "ownerFullName": "Sabrina Ramonov \ud83c\udf44"
+      "ownerFullName": "Sabrina Ramonov \ud83c\udf44",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_91998c67",
+        "attemptedAt": "2026-10-26T17:24:11.780816+00:00"
+      }
     },
     {
       "shortCode": "DexG9q6jluD",
@@ -236,9 +290,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28799473979691355"
       },
-      "transcript": null,
+      "transcript": "Major has hundreds of potential careers you don't know about. For example, let's take sociology. This website analyzes a bunch of job data to tell you the number of projected openings, the entry-level salary, and all the occupations, in this case over 800, that your sociology degree is relevant to. Literally hundreds and hundreds of potential careers. If you click map on each one, you can see how many openings there are in each state, the entry-level salary. Go here to try it out or comment major and I'll send you the link.",
       "ownerUsername": "sabrina_ramonov",
-      "ownerFullName": "Sabrina Ramonov \ud83c\udf44"
+      "ownerFullName": "Sabrina Ramonov \ud83c\udf44",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_3484d140",
+        "attemptedAt": "2026-10-26T17:22:58.097845+00:00"
+      }
     },
     {
       "shortCode": "DewkwUwCUox",
@@ -260,9 +320,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "39341380385476715"
       },
-      "transcript": null,
+      "transcript": "Holy Christ. If you want help landing your first job, this free platform will fix your resume, fix your LinkedIn, hook you up with Gen Z peers who navigated the process, connect you with industry mentors with years of successful experience, and it's 100% free. Check it out here or comment hiring to get the link.",
       "ownerUsername": "sabrina_ramonov",
-      "ownerFullName": "Sabrina Ramonov \ud83c\udf44"
+      "ownerFullName": "Sabrina Ramonov \ud83c\udf44",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_3484d140",
+        "attemptedAt": "2026-10-26T17:22:58.097847+00:00"
+      }
     },
     {
       "shortCode": "DeuiLinDHvc",
@@ -284,9 +350,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "39360469286931101"
       },
-      "transcript": null,
+      "transcript": "Top five YouTube channels for overthinkers. This is for you. If you spiral in perfectionism, you're constantly overthinking, you can't decide, you have a lot of anxiety because you're overthinking. Number one is four ways to stop overthinking via a skill called cognitive diffusion. It's a really neat technique and I recommend everyone try it. Number two is why overthinkers make no progress. It's more of a mental overview of why overthinking is really not productive at all. Number three is a famous TED talk, how to make hard choices. Oftentimes, overthinking is just an excuse so you don't have to actually decide or do anything. And this number four is interesting. This is yoga specifically for overthinking. This is a good one to try if like nothing else is working. And number five, if you're gonna be overthinking, you might as well overthink learning something useful like AI and getting ahead of everyone else. So watch this. If you want me to send you the video links, hit follow and comment overthinker and I'll DM you.",
       "ownerUsername": "sabrina_ramonov",
-      "ownerFullName": "Sabrina Ramonov \ud83c\udf44"
+      "ownerFullName": "Sabrina Ramonov \ud83c\udf44",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_3484d140",
+        "attemptedAt": "2026-10-26T17:22:58.097849+00:00"
+      }
     },
     {
       "shortCode": "Det_5jzlKd3",
@@ -308,9 +380,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28998113159826972"
       },
-      "transcript": null,
+      "transcript": "The top five YouTube videos you absolutely have to watch if you are the parents of gifted kids. Number one is why being called gifted can hide the support you actually need. Everyone wants to think that their kids are gifted, but what if they actually need more support? Number two, how to study when school came so easily you never learned how. Gifted kids' school is easy and boring, but it's still important that they learn how to learn. Number three, why creativity and sensitivity matter as much as academic ability. It's great to get straight A's in school, but there's also more to life. Number four, a painfully funny take on gifted kid pressure and perfectionism. Every parent should just watch this one. Number five, if your kids are truly gifted, get them to start learning AI early. Play with AI. Build stuff with AI. Check out my YouTube channel for a lot of tutorials. If you want me to send you this list of videos, hit follow and comment gifted and I'll DM you.",
       "ownerUsername": "sabrina_ramonov",
-      "ownerFullName": "Sabrina Ramonov \ud83c\udf44"
+      "ownerFullName": "Sabrina Ramonov \ud83c\udf44",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_91998c67",
+        "attemptedAt": "2026-10-26T17:24:11.780817+00:00"
+      }
     },
     {
       "shortCode": "DepkrwLAYp-",
@@ -332,9 +410,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28442309965464359"
       },
-      "transcript": null,
+      "transcript": "You don't want to fall behind, so learn the basics of AI right now. Don't worry about AI agents, just start with basics. But first, hit follow, save this video so you can actually re-watch and learn this. Your default reaction should be to ask AI first rather than other people. Number two, always be skeptical of AI influencers, of AI's responses. It hallucinates. Figure things out for yourself. Number three, always feed in meaningful context. Number four, don't think about replacing people. Augment yourself, augment your team. Number five, treat AI like a new hire. Explain stuff. Number six, treat AI like a continuously improving system. Always give it feedback. Number seven, maintain clean documentation, playbooks, and SOPs. This is what you feed into AI as helpful context. Number eight, give your AI agents access to the tools you use to get work done. Number nine, stop trying to build an AI business. Most people should just take their existing business or proven business model and then apply AI to automate tedious stuff. If you want my free course on how to win with AI in 2026, hit follow and comment wealth and I'll DM you.",
       "ownerUsername": "sabrina_ramonov",
-      "ownerFullName": "Sabrina Ramonov \ud83c\udf44"
+      "ownerFullName": "Sabrina Ramonov \ud83c\udf44",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_e9e034ae",
+        "attemptedAt": "2026-10-26T17:22:01.164033+00:00"
+      }
     },
     {
       "shortCode": "DepLLMiD8Zn",
@@ -356,9 +440,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "29454293374195182"
       },
-      "transcript": null,
+      "transcript": "10 secret codes to learn anything. Number one, Eli 5. Type this anywhere and chat will explain things in super simple terms. Number two, 8020. You can type this anywhere in the prompt and chat will focus on the most important 20% you need to know. Number three, make sticky notes. ChatGPT will create a visual sticky note guide like this. Number four, Feynman technique. Type this anywhere. It's a super popular study technique so that you can learn faster. Number five, make a mind map. ChatGPT will make a visual mind map of the key concepts. Number six, quiz me. Chat will quiz you one question at a time until you understand. Number seven, make visual study guide. ChatGPT will take the topic and create a one pager study sheet so that you can learn everything you need. Number eight, first principles. Type this anywhere in your prompt and chat will explain from first principles thinking. Number nine, Socrates, this is my favorite. ChatGPT will teach you by asking you questions one at a time. Number 10, make schematic. Type this anywhere and chat will make a schematic diagram to explain things to you. If you want hundreds more secret codes like this, hit follow and comment codes and I'll DM you.",
       "ownerUsername": "sabrina_ramonov",
-      "ownerFullName": "Sabrina Ramonov \ud83c\udf44"
+      "ownerFullName": "Sabrina Ramonov \ud83c\udf44",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_e48bb2ae",
+        "attemptedAt": "2026-10-26T17:19:13.929307+00:00"
+      }
     },
     {
       "shortCode": "DepCQT1Aax0",
@@ -380,9 +470,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "30185465074387022"
       },
-      "transcript": null,
+      "transcript": "ChatGPT just killed ManyChat. It's managing all of these DM automations and it's way faster and way cheaper. Make DM automations for Facebook and Instagram. Here's the keyword I want you to use. Here's the link I want you to send people. In settings, click plugins, go to MCPs and make sure you add Blotato, copy your API key here. You can even update dozens of automations at the same time and you can check the status of everything. So here's the DM automation. You can see I asked for a follow, I asked for an email. If you want the full step-by-step tutorial, hit follow and comment ManyChat and I'll send you the link.",
       "ownerUsername": "sabrina_ramonov",
-      "ownerFullName": "Sabrina Ramonov \ud83c\udf44"
+      "ownerFullName": "Sabrina Ramonov \ud83c\udf44",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_e48bb2ae",
+        "attemptedAt": "2026-10-26T17:19:13.929311+00:00"
+      }
     },
     {
       "shortCode": "DenbQerEuHg",
@@ -404,9 +500,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28732988556364937"
       },
-      "transcript": null,
+      "transcript": "The top five YouTube videos you absolutely have to watch if you are the parents of gifted kids. Number one is why being called gifted can hide the support you actually need. Everyone wants to think that their kids are gifted, but what if they actually need more support? Number two, how to study when school came so easily you never learned how. Gifted kids' school is easy and boring, but it's still important that they learn how to learn. Number three, why creativity and sensitivity matter as much as academic ability. It's great to get straight A's in school, but there's also more to life. Number four, a painfully funny take on gifted kid pressure and perfectionism. Every parent should just watch this one. Number five, if your kids are truly gifted, get them to start learning AI early. Play with AI. Build stuff with AI. Check out my YouTube channel for a lot of tutorials. If you want me to send you this list of videos, hit follow and comment gifted and I'll DM you.",
       "ownerUsername": "sabrina_ramonov",
-      "ownerFullName": "Sabrina Ramonov \ud83c\udf44"
+      "ownerFullName": "Sabrina Ramonov \ud83c\udf44",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_e9e034ae",
+        "attemptedAt": "2026-10-26T17:22:01.164035+00:00"
+      }
     },
     {
       "shortCode": "Dem_yuglXSh",
@@ -428,9 +530,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28744375141888243"
       },
-      "transcript": null,
+      "transcript": "I just bought this Iron Man robot for $29,756, and the first thing it did was break my wall. That's like really painful unboxing it. I pretty much almost pulled my back trying to lift this up onto the table. It's the box that it came in, fully assembled. I really just had to pull it out of the box and everything was ready to go. I'm just plugging in the battery, okay, boom, and powering it on. And yeah, there's this remote control to tell it what to do. Here, My dog starts getting up for the very first time. And my dog is pretty scared, so he's running under the table. It's actually kind of scary. It's very like sudden, and it's like 60 pounds or so. And here is it doing kung fu on my ball. Boom. This is the EDU version, which means I can train it.",
       "ownerUsername": "sabrina_ramonov",
-      "ownerFullName": "Sabrina Ramonov \ud83c\udf44"
+      "ownerFullName": "Sabrina Ramonov \ud83c\udf44",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_c8c24873",
+        "attemptedAt": "2026-10-26T17:19:59.599883+00:00"
+      }
     },
     {
       "shortCode": "DemddrQlWX1",
@@ -452,9 +560,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28174107942266744"
       },
-      "transcript": null,
+      "transcript": "There are eight secret websites for your kids to learn AI encoding faster than adults. Just because you don't know AI doesn't mean that your kids can't learn. Prepare them for the future, which is going to be building stuff with AI. Number one is Google Labs Playground. It's free. Your kids can make custom games in minutes. Number two is ChatGPT itself. You can have them start making stories about dinosaurs and dolphins or other things that they like. Three is lovable. Try a prompt like build a daily journaling app with lots of rainbows and see where they take it. Number four is Suno. Sing a short melody and then use Suno AI to turn it into a full song. Five is Google Flow. Then you can take the song from Suno and make a music video to go along with it. Number six is Code.org. This will teach your kids how AI actually works. They have different courses depending on grade level. Seven is Tinker with a Y. This is more traditional learning how to code, but it also includes Minecraft mods and games. Number eight is CreateLearn.us. This is personalized small groups where three to five kids are assigned to a teacher. So it does cost money. If you want me to send you the full list, hit follow and comment lesson and I'll DM you.",
       "ownerUsername": "sabrina_ramonov",
-      "ownerFullName": "Sabrina Ramonov \ud83c\udf44"
+      "ownerFullName": "Sabrina Ramonov \ud83c\udf44",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_c8c24873",
+        "attemptedAt": "2026-10-26T17:19:59.599901+00:00"
+      }
     },
     {
       "shortCode": "DekbABfEiI_",
@@ -476,9 +590,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28791293513863251"
       },
-      "transcript": null,
+      "transcript": "So I got featured in Inc. the other day on the main homepage I was trending. And this article is basically about how I hate making content, but I love building, learning, and teaching. So after I sold my first AI startup, which did speech recognition and natural language processing, I started making TikToks to teach everyday people outside Silicon Valley how to use AI. It felt very cringe in the beginning because two years ago, nobody in Silicon Valley was actually on TikTok. The coolest part is being able to help millions of people learn AI, not fall behind, and start their own businesses. So that's why I do what I do for free. By the way, my best stuff is on YouTube or my newsletter, link in bio. TikTok and Instagram just has my most basic stuff. If you're not at all interested in starting a personal brand, but you're concerned you don't look the part of social media or it feels cringe, I highly recommend reading this. I share a lot about my journey and personal story.",
       "ownerUsername": "sabrina_ramonov",
-      "ownerFullName": "Sabrina Ramonov \ud83c\udf44"
+      "ownerFullName": "Sabrina Ramonov \ud83c\udf44",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_3484d140",
+        "attemptedAt": "2026-10-26T17:22:58.097852+00:00"
+      }
     },
     {
       "shortCode": "Dej4uD5iCrT",
@@ -500,9 +620,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28750224597965379"
       },
-      "transcript": null,
+      "transcript": "This is the stupidest ChatGPT code that actually works. It's literally helped me make a million dollars. You are not gonna believe it because it sounds really, really dumb, but just try it out. Called Eli Cactus. Eli stands for explain like I'm and most people do Eli 10, explain like I'm 10. However, Eli Cactus takes it down to an even dumber level. Type any prompt and then type Eli Cactus and you're gonna get a super easy, simple explanation to follow. I spam Eli Cactus all day long, but if you want a bunch of other codes to try, hit follow and comment, I don't know, secret or something.",
       "ownerUsername": "sabrina_ramonov",
-      "ownerFullName": "Sabrina Ramonov \ud83c\udf44"
+      "ownerFullName": "Sabrina Ramonov \ud83c\udf44",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_e48bb2ae",
+        "attemptedAt": "2026-10-26T17:19:13.929315+00:00"
+      }
     },
     {
       "shortCode": "Deh1gnJSuge",
@@ -524,9 +650,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "29018142681151397"
       },
-      "transcript": null,
+      "transcript": "They be like, smooth, what? Can you teach me how to play? You know why? Cause all the bitches love me All I need is a beat of super bump in it For you, you, you, back it up and done it",
       "ownerUsername": "sabrina_ramonov",
-      "ownerFullName": "Sabrina Ramonov \ud83c\udf44"
+      "ownerFullName": "Sabrina Ramonov \ud83c\udf44",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_adfbab87",
+        "attemptedAt": "2026-10-26T17:24:59.043369+00:00"
+      }
     },
     {
       "shortCode": "Deh2M5-lDoS",
@@ -548,9 +680,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "39684092574522440"
       },
-      "transcript": null,
+      "transcript": "You can sell this three-hour AI workshop for thousands of dollars. I just went through the entire thing at Stanford with a large group, taught everybody basic prompting techniques to building skills, to building their first autonomous AI agent that runs on a schedule. Everything you need to train companies, to train teams, and get them proficient with AI. You have my full permission to take it, to use it, to repurpose it. I share all my AI education and training for free so that you have a high-quality starting point. If you want the entire guide how to do this and the PowerPoint presentation, hit follow and comment beginner and I'll send you the link.",
       "ownerUsername": "sabrina_ramonov",
-      "ownerFullName": "Sabrina Ramonov \ud83c\udf44"
+      "ownerFullName": "Sabrina Ramonov \ud83c\udf44",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_c8c24873",
+        "attemptedAt": "2026-10-26T17:19:59.599909+00:00"
+      }
     },
     {
       "shortCode": "DehrvqBvGP_",
@@ -572,9 +710,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28526920660251767"
       },
-      "transcript": null,
+      "transcript": "They be like, smooth, what? Can you teach me how to play? You know what? Cause all the bitches love me. All I need is a beat of super bump and if it you, you, you, back it up and done it, yeah.",
       "ownerUsername": "sabrina_ramonov",
-      "ownerFullName": "Sabrina Ramonov \ud83c\udf44"
+      "ownerFullName": "Sabrina Ramonov \ud83c\udf44",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_adfbab87",
+        "attemptedAt": "2026-10-26T17:24:59.043378+00:00"
+      }
     },
     {
       "shortCode": "DehT3u1CcI7",
@@ -596,9 +740,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "29902191966036604"
       },
-      "transcript": null,
+      "transcript": "This is the AI job search hack that actually works. And no, you don't have to pay any money. No, there's no course. Let me explain the psychology first. The number one thing that stands out in 2026 is relevant AI projects. Even if you're a student and getting conflicting messages about using AI, the reality is every employer wants you to use AI for everything so you can make them more money. Here's how to hack that psychology and reverse engineer so you get a job. Open up chat, Claude or Gemini and type this. I'm applying to this role, fill in the blank, brainstorm 10 easy AI project ideas I can do for under 100 bucks that are highly relevant to the role and would help my resume stand out because everyone's obsessed with AI. I'll walk you through everything step by step like exactly which projects how to do them and all you have to do is go do them and then add them to your resume. If you want me to send you the full prompt and everything hit follow and comment career and I'll send you the link.",
       "ownerUsername": "sabrina_ramonov",
-      "ownerFullName": "Sabrina Ramonov \ud83c\udf44"
+      "ownerFullName": "Sabrina Ramonov \ud83c\udf44",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_e9e034ae",
+        "attemptedAt": "2026-10-26T17:22:01.164037+00:00"
+      }
     },
     {
       "shortCode": "DefRaJKAMdN",
@@ -620,9 +770,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "29188913404054995"
       },
-      "transcript": null,
+      "transcript": "This one thing fixed my AI. You know how you use AI and agrees with everything you say, it tries to do everything you want, and you've started a thousand projects, but you are not actually making any more money or being any more productive. This one thing will help you fix that, okay? Open an existing chat and then type, what am I missing? This will tell AI to find your blind spots and weak assumptions so that you can think more critically about the thing you're trying to do before you commit to it. If you want me to send you lots more prompts, hit follow and comment guide and I'll DM you.",
       "ownerUsername": "sabrina_ramonov",
-      "ownerFullName": "Sabrina Ramonov \ud83c\udf44"
+      "ownerFullName": "Sabrina Ramonov \ud83c\udf44",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_3484d140",
+        "attemptedAt": "2026-10-26T17:22:58.097855+00:00"
+      }
     },
     {
       "shortCode": "DeevE6kAY4_",
@@ -644,9 +800,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28830434796589309"
       },
-      "transcript": null,
+      "transcript": "Guys, this resume strategy is 10-10 because it's leveraging psychology and hype. If you've applied to hundreds of jobs and not hearing anything back, you need to stop, take a step back, and do this exercise right now. First, open Chatship TV, Gemini, or Claude. It doesn't matter which one. Type this prompt. I'm applying to this role. Fill in the title. Brainstorm 10 easy AI project ideas I can do for under 100 bucks that are highly relevant to the role and would help my resume stand out because everyone's obsessed with AI. Tell you what to do exactly step-by-step, exactly which projects are gonna make your employers drool over hiring you. You're gonna stand out over thousands of applicants that have no experience with AI. Every employer wants you to learn how to use AI so you can make them more money. That is why this works. If you want me to send you the full tutorial, hit follow and comment career and I'll DM you.",
       "ownerUsername": "sabrina_ramonov",
-      "ownerFullName": "Sabrina Ramonov \ud83c\udf44"
+      "ownerFullName": "Sabrina Ramonov \ud83c\udf44",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_c8c24873",
+        "attemptedAt": "2026-10-26T17:19:59.599917+00:00"
+      }
     },
     {
       "shortCode": "DecsnXvAJNH",
@@ -668,9 +830,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "27977713278569795"
       },
-      "transcript": null,
+      "transcript": "Neuroscience research shows that when you focus on the good things in your life, then you literally rewire your brain to look for more good things. First, open up chat, claw, Gemini, doesn't matter which one. I'm rewiring my brain through positive psychology. Guide me through a five-minute daily exercise to train my attention to notice good things in my life. Ask me one question at a time. Then at the end, finish by helping me notice one small good thing tomorrow. Do this every single day, and you literally rewire your brain to be happier through the power of neuroplasticity. The prompt is in the caption, but if you want me to DM it to you, hit follow and comment positive and I'll send you",
       "ownerUsername": "sabrina_ramonov",
-      "ownerFullName": "Sabrina Ramonov \ud83c\udf44"
+      "ownerFullName": "Sabrina Ramonov \ud83c\udf44",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_e9e034ae",
+        "attemptedAt": "2026-10-26T17:22:01.164038+00:00"
+      }
     },
     {
       "shortCode": "DecKSPsglnY",
@@ -692,9 +860,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28615485488061771"
       },
-      "transcript": null,
+      "transcript": "I really hope the next viral trend is critical thinking. You shouldn't just believe everything that AI says. I'll give you three super simple prompts that will help elevate your critical thinking. What is the one thing I'm missing? Okay, now AI is going to rip apart your ideas and find your blind spots. Number two, let's say you're doing a bunch of research. Make sure you say, show me supporting data for each claim. And then you should go actually read the sources cited by AI. Number three, this is one of my favorites. type the keyword Socrates and AI will ask you questions to determine whether you understand the topic. This is gonna force you to do active recall, which is the number one activity if you actually wanna learn something.",
       "ownerUsername": "sabrina_ramonov",
-      "ownerFullName": "Sabrina Ramonov \ud83c\udf44"
+      "ownerFullName": "Sabrina Ramonov \ud83c\udf44",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_3484d140",
+        "attemptedAt": "2026-10-26T17:22:58.097857+00:00"
+      }
     },
     {
       "shortCode": "DeaMACayWUB",
@@ -716,9 +890,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28983949311244020"
       },
-      "transcript": null,
+      "transcript": "Hi, I'm Alex. Hello. Hello. Hello. Hello. Hello. Hello.",
       "ownerUsername": "sabrina_ramonov",
-      "ownerFullName": "Sabrina Ramonov \ud83c\udf44"
+      "ownerFullName": "Sabrina Ramonov \ud83c\udf44",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_c8c24873",
+        "attemptedAt": "2026-10-26T17:19:59.599925+00:00"
+      }
     },
     {
       "shortCode": "DeaH0kjEqu2",
@@ -740,9 +920,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28866506296351242"
       },
-      "transcript": null,
+      "transcript": "I don't have a list of ice here. I don't think it's really a long hair. I think it's really a long hair. I think it's really a long hair.",
       "ownerUsername": "sabrina_ramonov",
-      "ownerFullName": "Sabrina Ramonov \ud83c\udf44"
+      "ownerFullName": "Sabrina Ramonov \ud83c\udf44",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_c8c24873",
+        "attemptedAt": "2026-10-26T17:19:59.599929+00:00"
+      }
     },
     {
       "shortCode": "DeZlfCXiXfV",
@@ -764,9 +950,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "26552284347801936"
       },
-      "transcript": null,
+      "transcript": "That'd be great, that'd be great.",
       "ownerUsername": "sabrina_ramonov",
-      "ownerFullName": "Sabrina Ramonov \ud83c\udf44"
+      "ownerFullName": "Sabrina Ramonov \ud83c\udf44",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_e48bb2ae",
+        "attemptedAt": "2026-10-26T17:19:13.929319+00:00"
+      }
     },
     {
       "shortCode": "DeXAwaEjF0s",
@@ -788,9 +980,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28555851397414949"
       },
-      "transcript": null,
+      "transcript": "If you're serious about learning artificial intelligence in 2026, it's not too late. There are five stages of AI mastery. One, asking AI. Stage two, thinking with AI. Stage three, teaching AI how you work. Stage four, delegating to AI. And stage five, automating with AI agents. If you want the full step-by-step tutorial, hit follow and comment beginner and I'll DM you. Or just go to this link.",
       "ownerUsername": "sabrina_ramonov",
-      "ownerFullName": "Sabrina Ramonov \ud83c\udf44"
+      "ownerFullName": "Sabrina Ramonov \ud83c\udf44",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_e9e034ae",
+        "attemptedAt": "2026-10-26T17:22:01.164040+00:00"
+      }
     },
     {
       "shortCode": "DeU-T4LCPNM",
@@ -812,9 +1010,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28273946595640173"
       },
-      "transcript": null,
+      "transcript": "10 broken codes for chat gpt number one is lindy mode this will give you answers based on long time proven methods not just trends number two is 80 20 type this anywhere it'll tell you the easiest path to get the highest return number three is truth mode this will stop chat gpt from glazing and be brutally honest with you number four is eli 10 type this anywhere and chat will explain everything like you're 10 years old easy to understand number five is red team type this anywhere and chat will play devil's advocate to make you smarter number six is hormosi when you type this chat will become your hundred million dollar business coach like alex hormosi number seven is y combinator type this anywhere and chat will be your 10 billion dollar startup coach like yc number eight is gary v this will make chat gpt your hundred million dollar attention coach like gary v number nine is my favorite socrates chat gpt will teach you by asking you questions which is the best way to learn number 10 is future you add this anywhere and chat gpt will answer like your future self would. It's really fun to do. If you want hundreds more codes like this, hit follow and comment codes and I'll send them to you.",
       "ownerUsername": "sabrina_ramonov",
-      "ownerFullName": "Sabrina Ramonov \ud83c\udf44"
+      "ownerFullName": "Sabrina Ramonov \ud83c\udf44",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_e48bb2ae",
+        "attemptedAt": "2026-10-26T17:19:13.929323+00:00"
+      }
     },
     {
       "shortCode": "DeU9nJcSApM",
@@ -836,9 +1040,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28953731067597083"
       },
-      "transcript": null,
+      "transcript": "I'm a little bit older I'm just like it took me one more time Whoa, you know, you know, you know, you know, you know, you know To the window",
       "ownerUsername": "sabrina_ramonov",
-      "ownerFullName": "Sabrina Ramonov \ud83c\udf44"
+      "ownerFullName": "Sabrina Ramonov \ud83c\udf44",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_adfbab87",
+        "attemptedAt": "2026-10-26T17:24:59.043382+00:00"
+      }
     },
     {
       "shortCode": "DeU9JX5S8iJ",
@@ -860,9 +1070,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "29081957894742373"
       },
-      "transcript": null,
+      "transcript": "I'm a little bit older I'm just like it took me one more time Whoa, you know, you know, you know, you know, you know, you know To the window",
       "ownerUsername": "sabrina_ramonov",
-      "ownerFullName": "Sabrina Ramonov \ud83c\udf44"
+      "ownerFullName": "Sabrina Ramonov \ud83c\udf44",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_adfbab87",
+        "attemptedAt": "2026-10-26T17:24:59.043384+00:00"
+      }
     },
     {
       "shortCode": "DeUuaboTpcW",
@@ -884,9 +1100,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28368459216189827"
       },
-      "transcript": null,
+      "transcript": "I'm a little bit older I'm just like it took me one more time Whoa, you know, you know, you know, you know, you know, you know To the window",
       "ownerUsername": "sabrina_ramonov",
-      "ownerFullName": "Sabrina Ramonov \ud83c\udf44"
+      "ownerFullName": "Sabrina Ramonov \ud83c\udf44",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_c8c24873",
+        "attemptedAt": "2026-10-26T17:19:59.599933+00:00"
+      }
     },
     {
       "shortCode": "DeR3Gd8FJvs",
@@ -908,9 +1130,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "39014869554794816"
       },
-      "transcript": null,
+      "transcript": "10 secret codes to learn anything. Number one, Eli 5. Type this anywhere and chat will explain things in super simple terms. Number two, 8020. You can type this anywhere in the prompt and chat will focus on the most important 20% you need to know. Number three, make sticky notes. ChatGPT will create a visual sticky note guide like this. Number four, Feynman technique. Type this anywhere. It's a super popular study technique so that you can learn faster. Number five, make a mind map. ChatGPT will make a visual mind map of the key concepts. Number six, quiz me. Chat will quiz you one question at a time until you understand. Number seven, make visual study guide. ChatGPT will take the topic and create a one pager study sheet so that you can learn everything you need. Number eight, first principles. Type this anywhere in your prompt and chat will explain from first principles thinking. Number nine, Socrates, this is my favorite. ChatGPT will teach you by asking you questions one at a time. Number 10, make schematic. Type this anywhere and chat will make a schematic diagram to explain things to you. If you want hundreds more secret codes like this, hit follow and comment codes and I'll DM you.",
       "ownerUsername": "sabrina_ramonov",
-      "ownerFullName": "Sabrina Ramonov \ud83c\udf44"
+      "ownerFullName": "Sabrina Ramonov \ud83c\udf44",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_d0ee01fb",
+        "attemptedAt": "2026-10-26T17:18:14.126565+00:00"
+      }
     }
   ]
 }

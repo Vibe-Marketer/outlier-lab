@@ -20,9 +20,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "29219233081063266"
       },
-      "transcript": null,
+      "transcript": "I had enough promo for 24 I picked you from a pasta bro Pretty little body dancing like oh oh yeah You are 100% dead of old I need to get to I had enough promo for 24 I picked you from a pasta bro Pretty little body dancing like oh oh yeah You are 100% dead of old I need teenagers",
       "ownerUsername": "sferro.ai",
-      "ownerFullName": "Simone Ferretti | AI Content Creator"
+      "ownerFullName": "Simone Ferretti | AI Content Creator",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_91998c67",
+        "attemptedAt": "2026-10-26T17:24:11.787940+00:00"
+      }
     },
     {
       "shortCode": "De4HnfIj4S7",
@@ -44,9 +50,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "29301315452820364"
       },
-      "transcript": null,
+      "transcript": "I replaced my entire content team with four AI agents that run on one prompt. Here's how to build yours. Open Claude and paste the master prompt to generate your first agent step-by-step. Set up agent 1 for content ideas, agent 2 for scroll-stopping hooks with scoring, agent 3 for full scripts with scene breakdowns, and agent 4 for performance analysis. My weekly plan, top hooks, and every published script come from this exact setup. comment team and i'll send you the exact prompt directly to your dms",
       "ownerUsername": "sferro.ai",
-      "ownerFullName": "Simone Ferretti | AI Content Creator"
+      "ownerFullName": "Simone Ferretti | AI Content Creator",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_91998c67",
+        "attemptedAt": "2026-10-26T17:24:11.787944+00:00"
+      }
     },
     {
       "shortCode": "De331p_x_RV",
@@ -68,9 +80,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "29432733302978689"
       },
-      "transcript": null,
+      "transcript": "I'm not an idiot, but I'm not an idiot.",
       "ownerUsername": "sferro.ai",
-      "ownerFullName": "Simone Ferretti | AI Content Creator"
+      "ownerFullName": "Simone Ferretti | AI Content Creator",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_bb50e384",
+        "attemptedAt": "2026-10-26T17:21:05.708757+00:00"
+      }
     },
     {
       "shortCode": "De03hp7DKVf",
@@ -92,9 +110,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "39372561175725580"
       },
-      "transcript": null,
+      "transcript": "You may not need separate subscriptions to try different AI models anymore. Higgsfield now lets you access multiple AI models through one API, including Seedence, Kling, Nano Banana, and more. Instead of paying for several different plants, you can add money to your account and pay based on what you actually use. You can also see the cost before generating, so it's easier to control your spending. One API, multiple AI models, and you only pay for what you use. comment models and I'll DM you the API link plus my cost per model guide.",
       "ownerUsername": "sferro.ai",
-      "ownerFullName": "Simone Ferretti | AI Content Creator"
+      "ownerFullName": "Simone Ferretti | AI Content Creator",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_91998c67",
+        "attemptedAt": "2026-10-26T17:24:11.787946+00:00"
+      }
     },
     {
       "shortCode": "DewHg0LEdpv",
@@ -116,9 +140,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "39946901858228255"
       },
-      "transcript": null,
+      "transcript": "You can create motion graphics like this without spending hours in an editing app. First, find a video with a style you really like, then upload it to Claude and add the prompt I'm sharing. Claude looks at the video and gives you a prompt that describes the same visual style. Now copy that prompt and open Google Flow. Paste it in, select OmniFlash and hit generate. A few minutes later, you'll have your own motion graphic ready to use. If you want to try this yourself, comment AI and I'll send you the prompt and setup.",
       "ownerUsername": "sferro.ai",
-      "ownerFullName": "Simone Ferretti | AI Content Creator"
+      "ownerFullName": "Simone Ferretti | AI Content Creator",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_bb50e384",
+        "attemptedAt": "2026-10-26T17:21:05.708767+00:00"
+      }
     },
     {
       "shortCode": "Deot7Men2ij",
@@ -140,9 +170,16 @@
         "should_mute_audio_reason": "",
         "audio_id": "39333456366298108"
       },
-      "transcript": null,
+      "transcript": "Oh",
       "ownerUsername": "sferro.ai",
-      "ownerFullName": "Simone Ferretti | AI Content Creator"
+      "ownerFullName": "Simone Ferretti | AI Content Creator",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_c8c24873",
+        "attemptedAt": "2026-10-26T17:19:59.615031+00:00",
+        "shortResult": true
+      }
     },
     {
       "shortCode": "DeoXLOJD5ri",
@@ -164,9 +201,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "39473149312332894"
       },
-      "transcript": null,
+      "transcript": "This cinematic transition looks like it took hours to build. It actually takes 60 seconds. You screenshot the last frame of one clip and the first frame of the next, then let ChatGPT turn them into X-ray versions. The rest is just blending. Take both screenshots and upload them to ChatGPT with a prompt that says, convert this to an X-ray style image. You now have two glowing negative frames that match your cut perfectly. Now the part that makes it actually looks cinematic. Back in your editor, duplicate both sides of the cut. Mask out the subject on each duplicate, boost the exposure and set the blend mode to difference. Drop the x-ray frames right beside those negative layers. One last thing that sells the whole effect. Add a whoosh or impact sound effect right at the cut point and the transition feels alive. Comment x-ray and I'll send you the exact chat GPT prompt and full workflow breakdown.",
       "ownerUsername": "sferro.ai",
-      "ownerFullName": "Simone Ferretti | AI Content Creator"
+      "ownerFullName": "Simone Ferretti | AI Content Creator",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_91998c67",
+        "attemptedAt": "2026-10-26T17:24:11.787947+00:00"
+      }
     },
     {
       "shortCode": "Del2TaClwkg",
@@ -188,9 +231,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "29195891216696232"
       },
-      "transcript": null,
+      "transcript": "Now I understand why everyone is making these Jarvis videos. Because you can now turn your computer into your own AI assistant for free. Here's the setup. Grab the GitHub project and paste it into Claude code. Tell it, set this up on my device. Claude handles the download, installation and setup. Next, get a voice from 11labs and give Claude the voice key so it can connect it. Then connect the tools you actually use, like your calendar, inbox or other apps. Now, instead of constantly opening apps yourself, your AI can brief you, pull information together, and handle tasks for you. Comment Jarvis to get the full setup guide.",
       "ownerUsername": "sferro.ai",
-      "ownerFullName": "Simone Ferretti | AI Content Creator"
+      "ownerFullName": "Simone Ferretti | AI Content Creator",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_3484d140",
+        "attemptedAt": "2026-10-26T17:22:58.107245+00:00"
+      }
     },
     {
       "shortCode": "Dei18bJgBSQ",
@@ -212,9 +261,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "29969840872605495"
       },
-      "transcript": null,
+      "transcript": "Someone just open sourced a GitHub repo that lets you combine Claude Fable 5.1 and GPT-6 Astra to 10x your workflow. It's called Claudex and it's completely free. Drop the skill into Claude or Codex and it automatically routes tasks between both models. Fable 5.1 creates the plan, Astra audits it and they go back and forth until they agree. Then they switch roles. Astra builds the project while Fable audits the code. So not only one AI checking its own work, you get a second model reviewing everything. Comment split and I'll send you the skill.",
       "ownerUsername": "sferro.ai",
-      "ownerFullName": "Simone Ferretti | AI Content Creator"
+      "ownerFullName": "Simone Ferretti | AI Content Creator",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_3484d140",
+        "attemptedAt": "2026-10-26T17:22:58.107248+00:00"
+      }
     },
     {
       "shortCode": "Degnah8hc1H",
@@ -236,9 +291,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28745844285068264"
       },
-      "transcript": null,
+      "transcript": "I gave Claude a brief. Here's the reference and here's the final edit. That motion graphic came straight out of Claude Motion. Open Claude, go to settings, connectors, discover, find in video and hit connect. I pasted my brief and reference assets and Claude generated the whole video from there. Then I opened the same project in in video editor. Full timeline, every scene and text layer sitting right there, fully editable. I changed the headline and shortened the scene. Same project I started in In Claude, nothing rebuilt. That's what makes this setup different. InVideo is built for you and your AI to edit together. You direct from Claude, then refine in the editor. The generation and the edit live in the same project. Comment InVideo and I'll send you the connector.",
       "ownerUsername": "sferro.ai",
-      "ownerFullName": "Simone Ferretti | AI Content Creator"
+      "ownerFullName": "Simone Ferretti | AI Content Creator",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_bb50e384",
+        "attemptedAt": "2026-10-26T17:21:05.708772+00:00"
+      }
     },
     {
       "shortCode": "DeeDAMKx0l0",
@@ -260,9 +321,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "29021440064116745"
       },
-      "transcript": null,
+      "transcript": "Your AI agent can now search LinkedIn, YouTube, Instagram, and X through one open source tool. It's called Agent Reach with over 80,000 GitHub stars. All you do is run this one command in Cloud or ChatGPT and it gets full internet access with zero restrictions. Find jobs on LinkedIn, analyze YouTube videos, and check Instagram trends all through one connection. What used to take days can now take one command. Comment Agent and I'll DM you the GitHub link plus my platform by platform prompt back.",
       "ownerUsername": "sferro.ai",
-      "ownerFullName": "Simone Ferretti | AI Content Creator"
+      "ownerFullName": "Simone Ferretti | AI Content Creator",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_91998c67",
+        "attemptedAt": "2026-10-26T17:24:11.787948+00:00"
+      }
     },
     {
       "shortCode": "DebhiVPAMkP",
@@ -284,9 +351,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28964998456428442"
       },
-      "transcript": null,
+      "transcript": "Submagic isn't just an editing tool anymore. It recently added two major features and now gives you more control over your captions. It lets you use 35 animation styles, 9 word level effects, and 18 emoji animations. You can adjust the XY position and create up to 5 animation variants. After your video is ready on this platform, open Publisher and schedule it to Instagram, YouTube, TikTok, Facebook, or LinkedIn. Switch between week or month view, pick a time, and publish. You can also edit, reschedule or delete any post from one modal. Then there's analytics. It tracks views, engagement and follower growth across your connected platforms. Tap any post to see the full breakdown and a direct link to the live version, so can now handle your entire content setup all in one place. Comment Submagic and I'll send you the link and also a 10% off code for your subscription.",
       "ownerUsername": "sferro.ai",
-      "ownerFullName": "Simone Ferretti | AI Content Creator"
+      "ownerFullName": "Simone Ferretti | AI Content Creator",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_91998c67",
+        "attemptedAt": "2026-10-26T17:24:11.787949+00:00"
+      }
     },
     {
       "shortCode": "DeWZjHyFNCq",
@@ -308,9 +381,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28503082599360706"
       },
-      "transcript": null,
+      "transcript": "You can turn Claude into a serious AI designer with five open source tools. First, taste skill. It gives Claude real design rules so you stop getting those generic looking websites. Second, impeccable. It upgrades your front end with its own design system plus a live editor right in the browser. Third, playwright. It spins up browsers, tests your site automatically, and screenshots the results to confirm it all works. Fourth, awesome design. It hands Claude design systems pulled from real sites, including typography, spacing, buttons and layouts. And the last one, an image to 3.js workflow. Give Claude a photo of a bike and it rebuilds the whole thing as an interactive 3D model, written entirely in code. Comment Claude and I'll DM you starter prompt.",
       "ownerUsername": "sferro.ai",
-      "ownerFullName": "Simone Ferretti | AI Content Creator"
+      "ownerFullName": "Simone Ferretti | AI Content Creator",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_e9e034ae",
+        "attemptedAt": "2026-10-26T17:22:01.170832+00:00"
+      }
     },
     {
       "shortCode": "DeTvTfaDqGW",
@@ -332,9 +411,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28800338209599822"
       },
-      "transcript": null,
+      "transcript": "Minimalism, Maximalism, Futuristic, Vector Art, Collage Art, Retro, Cyberpunk, Pop Art, Glassmorphism, Clay Style, Pixel Art, Editorial, Y2K, Swiss Design, Serial Design, Bohemian, Victorian Style, Graffiti, Aurora, Handwritten.",
       "ownerUsername": "sferro.ai",
-      "ownerFullName": "Simone Ferretti | AI Content Creator"
+      "ownerFullName": "Simone Ferretti | AI Content Creator",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_c8c24873",
+        "attemptedAt": "2026-10-26T17:19:59.615040+00:00"
+      }
     },
     {
       "shortCode": "DeQ0X72DSVf",
@@ -356,9 +441,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "39457222313891929"
       },
-      "transcript": null,
+      "transcript": "Someone spent 10 months building a powerful cloud code setup, then open-sourced the entire thing. It's called Everything Cloud Code with 286 skills and 68 sub-agents that can work like a full AI development team. One checks your code for security issues, one helps manage memory across sessions, another learns from your previous work and is not limited to cloud code. You can also use it with Courser, Codex and Gemini. Comment stack and I'll DM you the GitHub link plus my top 5 skills to install first.",
       "ownerUsername": "sferro.ai",
-      "ownerFullName": "Simone Ferretti | AI Content Creator"
+      "ownerFullName": "Simone Ferretti | AI Content Creator",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_91998c67",
+        "attemptedAt": "2026-10-26T17:24:11.787950+00:00"
+      }
     },
     {
       "shortCode": "DeMeXfqDmnl",
@@ -380,9 +471,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28499585119719173"
       },
-      "transcript": null,
+      "transcript": "T.L.A. T.L.A. T.L.A. T.L.A. T.L.A.",
       "ownerUsername": "sferro.ai",
-      "ownerFullName": "Simone Ferretti | AI Content Creator"
+      "ownerFullName": "Simone Ferretti | AI Content Creator",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_bb50e384",
+        "attemptedAt": "2026-10-26T17:21:05.708776+00:00"
+      }
     },
     {
       "shortCode": "DeL_jCQx0yO",
@@ -404,9 +501,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28681481641518379"
       },
-      "transcript": null,
+      "transcript": "You don't need to pay for expensive AI video tools anymore because I just found a free open source model you can run on your own computer. It's called LTX 2.5. It can generate connected shots while keeping your characters, lighting and scenes consistent. You also get sharper faces, clearer text, less motion breaking and better prompt understanding. Comment video and I'll send you the link to try it yourself.",
       "ownerUsername": "sferro.ai",
-      "ownerFullName": "Simone Ferretti | AI Content Creator"
+      "ownerFullName": "Simone Ferretti | AI Content Creator",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_c8c24873",
+        "attemptedAt": "2026-10-26T17:19:59.615043+00:00"
+      }
     },
     {
       "shortCode": "DeJtaVAE5K-",
@@ -428,9 +531,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28714182978266904"
       },
-      "transcript": null,
+      "transcript": "Stop using longer prompts to generate the AI images everyone else is making. Try these three commands to turn your images into videos. First, open Google Flow, upload your image, and type slash superbike riding. It turns your photo into a cinematic superbike riding video. Next, try slash gym to create an intense cinematic workout scene. And if you type slash cinematic trailer, it turns your photo into a movie-style trailer. I've made a guide with 50 plus more commands like these, comment trick, and I'll send you the full list. Thank you.",
       "ownerUsername": "sferro.ai",
-      "ownerFullName": "Simone Ferretti | AI Content Creator"
+      "ownerFullName": "Simone Ferretti | AI Content Creator",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_c8c24873",
+        "attemptedAt": "2026-10-26T17:19:59.615046+00:00"
+      }
     },
     {
       "shortCode": "DeJgoUaHQFV",
@@ -452,9 +561,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28003492712662849"
       },
-      "transcript": null,
+      "transcript": "One developer just handed the entire planet the power to replace every engineer alive with 63 AI agents, 249 skills, and an AI that can hack its own code before hackers can. It's called ECC and it's completely free on GitHub. Installing it takes just a few commands. Open CloudCode, Cursor or Codex, add the ECC plugin marketplace, then install ECC. After that, you can give it simple commands. Say, plan this feature. And an agent designs the architecture. Say, build it. And it writes the code. Also say, secure it. And it reviews your app for vulnerabilities and helps patch them. Not only that, it runs tests and works toward higher test coverage. Comment code and I'll send you the GitHub link with the full install guide.",
       "ownerUsername": "sferro.ai",
-      "ownerFullName": "Simone Ferretti | AI Content Creator"
+      "ownerFullName": "Simone Ferretti | AI Content Creator",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_91998c67",
+        "attemptedAt": "2026-10-26T17:24:11.787951+00:00"
+      }
     },
     {
       "shortCode": "DeG92MSv_E7",
@@ -476,9 +591,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "38697050746609303"
       },
-      "transcript": null,
+      "transcript": "The End Thank you.",
       "ownerUsername": "sferro.ai",
-      "ownerFullName": "Simone Ferretti | AI Content Creator"
+      "ownerFullName": "Simone Ferretti | AI Content Creator",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_bb50e384",
+        "attemptedAt": "2026-10-26T17:21:05.708779+00:00"
+      }
     },
     {
       "shortCode": "DeEVZKnju-u",
@@ -500,9 +621,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "29009193808716630"
       },
-      "transcript": null,
+      "transcript": "Content creators are secretly using this AI tool, which offers C-Dance 2.5 completely free. All you need to do is upload your reference image, enter your prompt, select C-Dance 2.5, and click generate. And just like that, the video starts generating for free. If you want the website, just follow me and comment link. I'll send you the complete guide.",
       "ownerUsername": "sferro.ai",
-      "ownerFullName": "Simone Ferretti | AI Content Creator"
+      "ownerFullName": "Simone Ferretti | AI Content Creator",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_bb50e384",
+        "attemptedAt": "2026-10-26T17:21:05.708782+00:00"
+      }
     },
     {
       "shortCode": "DeBrQRXgMTX",
@@ -524,9 +651,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28609115208701281"
       },
-      "transcript": null,
+      "transcript": "That's the way I like it",
       "ownerUsername": "sferro.ai",
-      "ownerFullName": "Simone Ferretti | AI Content Creator"
+      "ownerFullName": "Simone Ferretti | AI Content Creator",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_c8c24873",
+        "attemptedAt": "2026-10-26T17:19:59.615049+00:00"
+      }
     },
     {
       "shortCode": "Dd-yy9gDstK",
@@ -548,9 +681,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "29430879456514297"
       },
-      "transcript": null,
+      "transcript": "You can turn any character into the person from your favorite video using AI, and the result looks like the new character was actually filmed in the original footage. First, open Higgsfield and select the Genjutsu model, then go to Motion Transfer and upload the original video you want to use. Next, upload a photo of the character you want to put into the video. If you want the exact prompt and the full setup, comment motion and I'll send it to you.",
       "ownerUsername": "sferro.ai",
-      "ownerFullName": "Simone Ferretti | AI Content Creator"
+      "ownerFullName": "Simone Ferretti | AI Content Creator",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_3484d140",
+        "attemptedAt": "2026-10-26T17:22:58.107251+00:00"
+      }
     },
     {
       "shortCode": "Dd6eJDXguUH",
@@ -572,9 +711,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "28540185628954496"
       },
-      "transcript": null,
+      "transcript": "If you write this, you'll get this. Comment image and I'll send you the complete command pack.",
       "ownerUsername": "sferro.ai",
-      "ownerFullName": "Simone Ferretti | AI Content Creator"
+      "ownerFullName": "Simone Ferretti | AI Content Creator",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_e9e034ae",
+        "attemptedAt": "2026-10-26T17:22:01.170835+00:00"
+      }
     },
     {
       "shortCode": "Dd6CMEDhW89",
@@ -596,9 +741,15 @@
         "should_mute_audio_reason": "",
         "audio_id": "29934150139506356"
       },
-      "transcript": null,
+      "transcript": "I created this cinematic street fight scene right inside C-Dense 2.5. The quality gap between this and most AI video tools is damn crazy. And here's how to make this. First, open Vosu, go to Video Generator and select C-Dense 2.5. Then add your reference image. Paste in the prompt, adjust your settings and hit Generate. It builds the scene with realistic movement, natural expressions and cinematic camera work. Comment video and I'll send you the prompt I used.",
       "ownerUsername": "sferro.ai",
-      "ownerFullName": "Simone Ferretti | AI Content Creator"
+      "ownerFullName": "Simone Ferretti | AI Content Creator",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_3484d140",
+        "attemptedAt": "2026-10-26T17:22:58.107253+00:00"
+      }
     },
     {
       "shortCode": "Dd3anb2BXps",
@@ -620,9 +771,16 @@
         "should_mute_audio_reason": "",
         "audio_id": "28990558870549998"
       },
-      "transcript": null,
+      "transcript": "I",
       "ownerUsername": "sferro.ai",
-      "ownerFullName": "Simone Ferretti | AI Content Creator"
+      "ownerFullName": "Simone Ferretti | AI Content Creator",
+      "transcription": {
+        "status": "ready",
+        "provider": "tokscript",
+        "source": "ts_e48bb2ae",
+        "attemptedAt": "2026-10-26T17:19:13.942865+00:00",
+        "shortResult": true
+      }
     }
   ]
 }
