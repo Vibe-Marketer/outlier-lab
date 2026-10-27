@@ -15,6 +15,7 @@ from datetime import datetime
 from html import escape
 from pathlib import Path
 from catalog import select_creators, scopes_for
+from curated import load_curated_research, render_curated_research
 
 ROOT = Path(__file__).resolve().parent
 DATA = ROOT / "data"
@@ -49,6 +50,7 @@ CONFIG = json.loads((ROOT / "config.json").read_text())
 SCOPES = scopes_for(CONFIG)
 CREATOR_CONFIG = {c["handle"]: c for c in select_creators(CONFIG, tracked_only=False)}
 COVERAGE_PATH = DATA / "coverage.json"
+CURATED_PATH = DATA / "curated_research.json"
 COVERAGE = json.loads(COVERAGE_PATH.read_text()) if COVERAGE_PATH.exists() else {}
 
 
@@ -135,6 +137,8 @@ def load_creator(handle):
 
 
 def main():
+    # Curated research is independently retained and intentionally never joins feed data.
+    curated_html = render_curated_research(load_curated_research(CURATED_PATH))
     THUMBS.mkdir(parents=True, exist_ok=True)
 
     # === Pre-pass: queue up all image fetches and run them in parallel ===
@@ -321,6 +325,27 @@ def main():
   .niche-nav button.active {{ background:var(--orange); color:#0a0a0c; border-color:var(--orange); font-weight:700; }}
   .niche-summary {{ color:var(--fg-dim); font-size:13px; margin-bottom:24px; line-height:1.6; }}
   .research-section {{ margin:28px 0; }}
+  .header-curated-link {{ display:inline-block; margin-top:10px; color:var(--orange); font-size:12px; font-weight:600; }}
+  .curated-research {{ margin:0 0 22px; border:1px solid var(--border); border-radius:12px; background:var(--bg-2); }}
+  .curated-research details {{ padding:16px 18px; }}
+  .curated-research summary {{ cursor:pointer; display:flex; justify-content:space-between; gap:16px; color:var(--fg-dim); font-size:12px; }}
+  .curated-research summary strong {{ display:block; color:var(--fg); font-size:16px; margin-top:4px; }}
+  .curated-intro, .curated-card p, .curated-card li {{ color:var(--fg-dim); font-size:13px; line-height:1.55; }}
+  .curated-search-label {{ display:block; color:var(--fg-dim); font-size:12px; margin:14px 0; }}
+  .curated-search-label input {{ display:block; width:min(360px,100%); margin-top:6px; padding:9px 10px; background:var(--bg); color:var(--fg); border:1px solid var(--border); border-radius:8px; font:inherit; }}
+  .curated-notes {{ display:flex; gap:24px; flex-wrap:wrap; margin:12px 0; font-size:12px; color:var(--fg-dim); }}
+  .curated-notes h3 {{ margin:0; font-size:12px; color:var(--fg); }}
+  .curated-notes ul {{ margin:5px 0; padding-left:18px; }}
+  .curated-grid {{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr)); gap:12px; }}
+  .curated-card {{ padding:15px; border:1px solid var(--border); border-radius:10px; background:var(--bg); }}
+  .curated-card-top, .curated-metrics {{ display:flex; flex-wrap:wrap; gap:7px; font-size:11px; color:var(--fg-faint); }}
+  .curated-status {{ color:var(--orange); font-weight:700; }}
+  .curated-fit {{ margin:10px 0; }}
+  .curated-metrics span {{ padding:3px 6px; border:1px solid var(--border); border-radius:5px; }}
+  .curated-card ul {{ margin:6px 0; padding-left:18px; }}
+  .curated-limit {{ color:var(--fg-faint) !important; }}
+  .curated-scopes, .curated-links {{ font-size:12px !important; }}
+  .curated-links a {{ color:var(--orange); margin-right:10px; }}
   .research-grid {{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,310px),1fr)); gap:12px; }}
   .research-card {{ padding:18px; border:1px solid var(--border); background:var(--bg-2); border-radius:12px; }}
   .research-card h3 {{ margin:0 0 8px; font-size:16px; }}
@@ -543,6 +568,7 @@ def main():
       <div class="eyebrow">Outlier Lab</div>
       <h1>What's <span class="accent">going viral</span> in your niche today.</h1>
       <p class="sub">Rolling 28-day competitive intel. Outlier ratio = each reel's plays ÷ that account's own median.</p>
+      <a class="header-curated-link" href="#curated-research">Curated research ↓</a>
     </div>
     <div class="header-meta">
       <div class="date">{today}</div>
@@ -550,6 +576,8 @@ def main():
       <div>Refresh: <b>manual · choose a list in Admin</b></div>
     </div>
   </header>
+
+  {curated_html}
 
   <nav class="niche-nav" id="niche-nav" aria-label="Niche lists"></nav>
   <div class="niche-summary" id="niche-summary"></div>
@@ -696,6 +724,11 @@ const CREATORS = {creators_payload};
 const SCOPES = {scopes_payload};
 const RESEARCH = {research_payload};
 const ADMIN_URL = {admin_url_payload};
+
+document.getElementById("curated-search")?.addEventListener("input", event => {{
+  const query = event.target.value.trim().toLowerCase();
+  document.querySelectorAll("[data-curated-search]").forEach(card => {{ card.hidden = query && !card.dataset.curatedSearch.includes(query); }});
+}});
 const CREATOR_MAP = new Map(CREATORS.map(c => [c.handle, c]));
 
 const fmtNum = (n) => {{
