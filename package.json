@@ -1,0 +1,12 @@
+{
+  "name": "outlier-lab",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test:auth": "node --test tests/auth.test.js"
+  },
+  "dependencies": {
+    "@clerk/backend": "3.26.3",
+    "@vercel/functions": "3.10.3"
+  }
+}

@@ -25,3 +25,4 @@ LOCAL-SETUP.md
 .env*
 .cache/
 data/.posts.lock
+node_modules/

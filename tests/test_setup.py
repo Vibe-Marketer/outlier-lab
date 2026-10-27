@@ -133,6 +133,16 @@ class SetupTests(unittest.TestCase):
         self.assertEqual({p.name for p in (self.root / 'public').iterdir()}, {'index.html', 'clips'})
         self.assertFalse((self.root / 'public/.env').exists())
 
+    def test_authenticated_export_includes_public_key_but_never_secret(self):
+        (self.root/'index.html').write_text('<body>Dashboard</body>')
+        (self.root/'auth-client.js').write_text('/* session refresh */')
+        with patch.object(export_site, 'ROOT', self.root), patch.dict('os.environ', {'CLERK_PUBLISHABLE_KEY':'pk_test_public', 'CLERK_SECRET_KEY':'sk_test_private'}):
+            export_site.main()
+        body = (self.root/'public/index.html').read_text()
+        self.assertIn('pk_test_public', body)
+        self.assertIn('/auth-client.js', body)
+        self.assertNotIn('sk_test_private', body)
+
     def test_empty_feed_builds_successfully(self):
         shutil.copy2(ROOT / 'build.py', self.root / 'build.py')
         shutil.copy2(ROOT / 'catalog.py', self.root / 'catalog.py')

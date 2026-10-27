@@ -158,6 +158,14 @@ flowchart LR
     Push --> Vercel[Public dashboard on Vercel]
 ```
 
+## Hosted sign-in
+
+The hosted dashboard is configured for `https://outlier.aisimple.co` with the same production Clerk instance as `life.aisimple.co`. Vercel middleware checks a valid Clerk session on every dashboard and media request, then checks the user's verified primary email against the same three-account allowlist in `auth.js`. Missing credentials or Clerk errors fail closed. Deployment aliases redirect to the custom domain; direct `index.html` and media URLs are also protected, and authenticated content is not publicly cached.
+
+Set `CLERK_SECRET_KEY` and `CLERK_PUBLISHABLE_KEY` in the Vercel production environment. The export embeds only the publishable key and a session-refresh client; the secret stays on the server. Local Python admin access remains through its existing localhost / private BB connection. The custom domain requires the DNS-only CNAME provided by Vercel in the Cloudflare zone before promotion.
+
+Run `npm ci` and `npm run test:auth` for the hosted authorization checks. `vercel build --prod` builds the static export and middleware together.
+
 ## Files
 
 | File | What it is |
