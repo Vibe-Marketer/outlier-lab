@@ -32,6 +32,8 @@ from catalog import ALL, scopes_for, select_creators, validate_scope, validate_m
 from creator_jobs import ProfileJobs
 from storage import write_json, file_lock, update_env
 from tokscript import load_key as load_tokscript_key
+import ai_engine
+import social_sync
 
 ROOT = Path(__file__).resolve().parent
 ENV_FILE = ROOT / ".env"
@@ -209,6 +211,17 @@ class AdminHandler(BaseHTTPRequestHandler):
             })
             return
 
+        if path == "/api/ai/status":
+            providers = ai_engine.detect_providers()
+            providers["ytdlp"] = bool(social_sync._ytdlp_bin())
+            self._json(200, providers)
+            return
+
+        if path == "/api/ai/batch":
+            st = getattr(self.server, "ai_batch_status", None) or {"running": False, "completed": 0, "total": 0, "results": []}
+            self._json(200, st)
+            return
+
         if path == "/api/schedule":
             wf_path = ROOT / ".github" / "workflows" / "refresh.yml"
             if not wf_path.exists():
@@ -288,7 +301,7 @@ class AdminHandler(BaseHTTPRequestHandler):
         parsed = urllib.parse.urlparse(self.path)
         path = parsed.path
         # Threaded requests must serialize the whole read/modify/write transaction.
-        if path.startswith("/api/creators") or path in {"/api/scopes", "/api/workspaces", "/api/videos/analyze"}:
+        if path.startswith("/api/creators") or path in {"/api/scopes", "/api/workspaces", "/api/videos/analyze", "/api/socials/connect", "/api/socials/sync"}:
             with CONFIG_LOCK:
                 self._post(path)
         elif path in {"/api/build", "/api/refresh", "/api/transcripts", "/api/schedule"}:
@@ -333,21 +346,155 @@ class AdminHandler(BaseHTTPRequestHandler):
             if not url or not url.startswith(("http://", "https://")):
                 self._json(400, {"message": "Provide a valid video URL."})
                 return
-            config = load_config()
+            transcript = (data.get("transcript") or "").strip()
+            platform = (data.get("platform") or social_sync.detect_platform_from_url(url) or "instagram")[:24]
+            fetched = {}
+            if not transcript or data.get("autoFetch", True):
+                try:
+                    fetched = social_sync.fetch_single_video(url)
+                except Exception:
+                    fetched = {}
+            if not transcript and fetched.get("transcript"):
+                transcript = fetched["transcript"]
+            caption = (fetched.get("caption") or fetched.get("title") or "").strip()
+            short_code = fetched.get("shortCode") or data.get("id") or f"vid_{int(time.time()*1000)}"
             entry = {
-                "id": data.get("id") or f"vid_{int(time.time()*1000)}",
-                "url": url,
-                "platform": (data.get("platform") or "instagram")[:24],
+                "id": short_code,
+                "shortCode": short_code,
+                "url": fetched.get("url") or url,
+                "platform": fetched.get("platform") or platform,
                 "workspace": (data.get("workspace") or "aisimple")[:60],
-                "tag": (data.get("tag") or "")[:80],
-                "transcript": (data.get("transcript") or "")[:12000],
+                "tag": (data.get("tag") or fetched.get("creator_username") or "")[:80],
+                "creator_username": fetched.get("creator_username") or (data.get("tag") or "custom").lstrip("@"),
+                "title": fetched.get("title") or "",
+                "caption": caption,
+                "transcript": transcript[:12000],
+                "plays": fetched.get("plays") or 0,
+                "likes": fetched.get("likes") or 0,
+                "comments": fetched.get("comments") or 0,
+                "duration": fetched.get("duration") or 0,
+                "thumbUrl": fetched.get("thumbUrl") or "",
                 "createdAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
             }
+            provider = (data.get("provider") or "").strip().lower()
+            if provider in {"claude", "codex", "anthropic_api", "openai_api"} and (transcript or caption):
+                try:
+                    ws_profile = data.get("workspaceProfile") or None
+                    entry["breakdown"] = ai_engine.generate_video_breakdown(entry, workspace_profile=ws_profile, provider=provider)
+                except Exception as exc:
+                    entry["aiError"] = str(exc)[:200]
+            config = load_config()
             saved = config.get("singleVideos", [])
-            saved = [entry] + [v for v in saved if v.get("url") != url]
+            saved = [entry] + [v for v in saved if v.get("url") != url and v.get("shortCode") != short_code]
             config["singleVideos"] = saved[:100]
             save_config(config)
             self._json(200, {"ok": True, "video": entry, "singleVideos": config["singleVideos"]})
+            return
+
+        if path == "/api/ai/breakdown":
+            data = self._body()
+            short_code = (data.get("shortCode") or "").strip()
+            provider = (data.get("provider") or "auto").strip().lower()
+            ws_profile = data.get("workspaceProfile") if isinstance(data.get("workspaceProfile"), dict) else None
+            reel_override = data.get("reel") if isinstance(data.get("reel"), dict) else None
+            if not short_code and not reel_override:
+                self._json(400, {"message": "Provide a shortCode or reel payload."})
+                return
+            try:
+                res = ai_engine.upgrade_reel(short_code or reel_override.get("shortCode", "custom"), provider=provider, workspace_profile=ws_profile, reel_override=reel_override)
+                if res.get("savedTo"):
+                    threading.Thread(
+                        target=lambda: subprocess.run([sys.executable, str(ROOT / "build.py")], cwd=str(ROOT), capture_output=True, timeout=120),
+                        daemon=True,
+                    ).start()
+                self._json(200, {"ok": True, **res})
+            except Exception as exc:
+                self._json(500, {"ok": False, "message": str(exc)[:300]})
+            return
+
+        if path == "/api/ai/script":
+            data = self._body()
+            step = (data.get("step") or "").strip().lower()
+            provider = (data.get("provider") or "auto").strip().lower()
+            ws_profile = data.get("workspaceProfile") if isinstance(data.get("workspaceProfile"), dict) else None
+            try:
+                out = ai_engine.generate_script_step(step, data, workspace_profile=ws_profile, provider=provider)
+                self._json(200, {"ok": True, "result": out})
+            except Exception as exc:
+                self._json(500, {"ok": False, "message": str(exc)[:300]})
+            return
+
+        if path == "/api/ai/batch":
+            data = self._body()
+            cur = getattr(self.server, "ai_batch_status", None)
+            if cur and cur.get("running"):
+                self._json(409, {"message": "An AI batch upgrade is already running.", "status": cur})
+                return
+            limit = max(1, min(20, int(data.get("limit") or 5)))
+            provider = (data.get("provider") or "auto").strip().lower()
+            ws_id = (data.get("workspaceId") or "aisimple").strip()
+            self.server.ai_batch_status = {"running": True, "completed": 0, "total": limit, "provider": provider, "results": []}
+
+            def _worker():
+                try:
+                    results = ai_engine.batch_upgrade_top(limit=limit, provider=provider, workspace_id=ws_id)
+                    subprocess.run([sys.executable, str(ROOT / "build.py")], cwd=str(ROOT), capture_output=True, timeout=120)
+                    self.server.ai_batch_status = {"running": False, "completed": len(results), "total": limit, "provider": provider, "results": results}
+                except Exception as exc:
+                    self.server.ai_batch_status = {"running": False, "error": str(exc)[:240], "results": []}
+
+            threading.Thread(target=_worker, daemon=True).start()
+            self._json(202, {"ok": True, "status": self.server.ai_batch_status})
+            return
+
+        if path in {"/api/socials/connect", "/api/socials/sync"}:
+            data = self._body()
+            platform = (data.get("platform") or "").strip().lower()
+            handle = (data.get("handle") or "").strip()
+            ws_id = (data.get("workspaceId") or "aisimple").strip()
+            role = (data.get("role") or "owned").strip().lower()
+            scope = (data.get("scope") or "all").strip()
+            if not handle:
+                self._json(400, {"message": "Provide a handle or profile URL."})
+                return
+            try:
+                record = social_sync.sync_social_account(
+                    platform=platform,
+                    handle_or_url=handle,
+                    workspace_id=ws_id,
+                    role=role,
+                    scope=scope,
+                    limit=int(data.get("limit") or 18),
+                )
+            except Exception as exc:
+                self._json(500, {"ok": False, "message": str(exc)[:300]})
+                return
+
+            # Also persist the connected social handle into config.json['connectedSocials']
+            config = load_config()
+            conn = config.get("connectedSocials") or []
+            summary = {
+                "workspaceId": ws_id,
+                "role": role,
+                "platform": record["platform"],
+                "handle": record["handle"],
+                "sourceUrl": record["sourceUrl"],
+                "syncedAt": record["syncedAt"],
+                "videoCount": record["videoCount"],
+                "medianViews": record["medianViews"],
+                "totalViews": record["totalViews"],
+                "outlierCount": record["outlierCount"],
+                "verifiedCode": (data.get("verifiedCode") or "")[:24],
+                "note": record.get("note") or "",
+            }
+            conn = [summary] + [c for c in conn if not (c.get("workspaceId") == ws_id and c.get("platform") == record["platform"] and c.get("role") == role and c.get("handle").lower() == record["handle"].lower())]
+            config["connectedSocials"] = conn[:60]
+            save_config(config)
+            threading.Thread(
+                target=lambda: subprocess.run([sys.executable, str(ROOT / "build.py")], cwd=str(ROOT), capture_output=True, timeout=120),
+                daemon=True,
+            ).start()
+            self._json(200, {"ok": True, "account": summary, "items": record["items"]})
             return
 
         if path == "/api/token":

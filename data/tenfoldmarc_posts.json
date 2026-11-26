@@ -958,6 +958,128 @@
         "provider": "tokscript",
         "source": "library",
         "attemptedAt": "2026-10-26T17:18:18.034831+00:00"
+      },
+      "breakdown": {
+        "engine": "claude",
+        "analyzedAt": "2026-11-26T18:54:04Z",
+        "wordCount": 86,
+        "summary": "A 17-item rapid-fire demo reel of named Claude-built video effects ('Orbit, Couch wall, UI world... Glass type') that makes the product the hook, then turns the attention into a comment-gated waitlist: 'comment studio and I'll send you the wait list.' Retention comes from novelty stacking, with a new named effect roughly every 0.75 seconds and no setup, plus an open loop of 17 shown against '26 different' promised. It hit 83.6x because the CTA and the caption ('Number 14 is my favorite. What's yours?') both drive comments: 23,939 comments against 15,458 likes, a ~4% comment-to-view rate that feeds distribution.",
+        "beatOverview": "Cold-open proof montage of 17 named effects \u2192 launch announcement with a number \u2192 one-line social proof \u2192 keyword comment gate \u2192 follow ask.",
+        "beats": [
+          {
+            "label": "Cold-Open Named Effect Montage",
+            "timeRange": "0:00 \u2013 0:13 (estimated from word count)",
+            "text": "Orbit, Couch wall, UI world, Frame break, Digital zoom, phone mockup, Checklist, Headline wall, Zoom through cut, Chart grow, Pull back reveal, Green screen, Paper cut, Doodle boil, Vertigo, Cover story, Glass type.",
+            "why": "Each 1-3 word label is paired with its effect, so the viewer gets a new payoff before the swipe impulse can form, and the proof arrives before any claim is made."
+          },
+          {
+            "label": "Quantified Launch Announcement",
+            "timeRange": "0:13 \u2013 0:17",
+            "text": "I'm going to release 26 different cloud video effects in the next few days",
+            "why": "Reframes the montage as a preview of something obtainable, and '26' against the 17 just shown opens a gap of 9 unseen effects."
+          },
+          {
+            "label": "Social Proof Magnifier",
+            "timeRange": "0:17 \u2013 0:20",
+            "text": "and the last time that I did it broke the internet.",
+            "why": "A single line of past-result proof adds scarcity and FOMO just before the ask."
+          },
+          {
+            "label": "Keyword Comment Gate",
+            "timeRange": "0:20 \u2013 0:24",
+            "text": "But if you want it, let's just comment studio and I'll send you the wait list.",
+            "why": "A one-word, low-friction action turns desire into comments, the engagement signal that produced 23,939 of them."
+          },
+          {
+            "label": "Follow Tag",
+            "timeRange": "0:24 \u2013 0:27",
+            "text": "Or to make sure to follow for more AI tips like this.",
+            "why": "Offers a fallback action to viewers who won't comment, categorizing the account as 'AI tips' for the follow decision."
+          }
+        ],
+        "idea": {
+          "topic": "Claude AI Video Effects",
+          "ideaSeed": "Show 17 finished, named Claude-made video effects in 13 seconds, then gate the full pack of 26 behind a one-word comment.",
+          "uniqueAngle": "No tutorial and no explanation: the output is the content. Naming every effect ('Doodle boil', 'Couch wall', 'Glass type') turns a demo reel into a menu, and the caption asks viewers to choose from it ('Number 14 is my favorite. What's yours?').",
+          "commonBelief": "Polished motion graphics require After Effects skill, a paid editor, or hours of keyframing, and AI chat tools like Claude are for text, not video.",
+          "contrarianReality": "Claude can generate a library of studio-grade effects, and a creator can hand over 26 of them as a pack. The barrier is having the prompts or templates, not editing skill.",
+          "supportingEvidence": [
+            "17 named effects demonstrated back to back: 'Orbit, Couch wall, UI world, Frame break, Digital zoom, phone mockup, Checklist, Headline wall, Zoom through cut, Chart grow, Pull back reveal, Green screen, Paper cut, Doodle boil, Vertigo, Cover story, Glass type.'",
+            "A specific quantity and deadline: '26 different cloud video effects in the next few days' ('cloud' is a mis-transcription of Claude, per the #claude #claudeai hashtags).",
+            "A past-launch proof claim: 'the last time that I did it broke the internet.'",
+            "The caption singles out one item, 'Number 14 is my favorite', which is 'Doodle boil' by transcript order and gives viewers a reason to rewatch and count."
+          ],
+          "remixes": [
+            "Option 1, the One-Click Ops reel: 12 screen recordings at one second each, every one a finished automation firing with a 2-word label and an hours tag on screen. Spoken: 'Inbox triage. Call recap. Proposal draft. Lead enrichment. Invoice chase. Client onboarding. Weekly report. Content repurpose. Testimonial pull. Churn flag. Follow-up sequence. KPI digest. Those are 12 of the 21 One-Click Ops that took 15 to 20 hours a week off my plate. I'm releasing all 21 this week. Comment STACK and I'll send you the list.' Caption: 'Number 9 saves me the most hours. Which one do you need?'",
+            "Option 2, the Leverage Audit teardown: film a real founder's weekly task list and cross items off in rapid cuts, each replaced by its layer of the AI Simple Stack (prompt, workflow, distribution). Hook: 'Client reports. Gone. Lead follow-up. Gone. Content repurposing. Gone. This is a Leverage Audit: 14 tasks, 17 hours a week, deleted in 30 days. Comment AUDIT and I'll send you the exact scorecard I run on $30K to $500K a month businesses.'",
+            "Option 3, the 47-node takedown: open on a zoomed-out automation canvas and read node names as the camera pans. 'Webhook. Router. Filter. Iterator. Aggregator. Error handler. Second error handler. That's 47 nodes to send one follow-up email, and it breaks every Tuesday. Here's the same job in 3.' Cut to the 3-step version running. Close: 'If an AI workflow takes longer to maintain than to run, kill it. Simplicity scales. Complexity kills. Comment SIMPLE for the 3-step version.'"
+          ]
+        },
+        "hook": {
+          "category": "List",
+          "formula": "[Named Item 1], [Named Item 2], [Named Item 3]... ([10-17] named results, one per cut, each shown as it is named). I'm going to release [Number Larger Than Shown] different [Tool] [Asset Type] in the next [Short Timeframe], and the last time I did, it [Outsized Social-Proof Result]. If you want it, comment [ONE-WORD KEYWORD] and I'll send you the [Waitlist / Asset].",
+          "spokenHook": "Orbit, Couch wall, UI world, Frame break, Digital zoom, phone mockup...",
+          "visualHook": "Inferred from the transcript, since no frames were provided: start mid-motion on the most dramatic effect (a 3D orbit move) with a bold lower-third label reading 'ORBIT', then hard-cut to a new effect and label every ~0.75 seconds. Add a persistent '1/26' counter in a corner so the viewer knows it is a countdown.",
+          "analysis": "Spoken, visual and text alignment is close to complete: the word spoken is the label of the effect on screen. The weakness is context, because nothing in the first 3 seconds says these were made with Claude or that 26 are coming; that arrives at ~0:13, so cold viewers are held by eye candy alone. The tweak: pin a static headline from frame one ('26 Claude video effects, releasing this week') and number each effect on screen, which makes the caption's 'Number 14 is my favorite' checkable and encourages rewatches."
+        },
+        "format": {
+          "category": "Listicle",
+          "description": "A rapid enumeration of discrete, named items where each item is a self-contained micro-payoff and the count itself is the structure.",
+          "analysis": "This is a listicle reduced to nouns: no intro, no transitions, no explanation, so each of the 17 items costs about 0.75 seconds and gives the viewer no natural exit. Roughly half the runtime is proof before any ask, which earns a 14-second CTA block. To model it, lead with finished outputs, name each one in 1-3 words, show fewer than you are releasing, and close on a one-word comment gate.",
+          "tactics": [
+            "Cold-Open Proof Montage: 17 results shown before any claim or introduction.",
+            "Named Item Specificity: coined 1-3 word labels ('Doodle boil', 'Couch wall', 'Glass type') make each effect memorable and easy to cite in a comment.",
+            "Shown-vs-Promised Gap: 17 demonstrated against '26 different' released leaves 9 unseen as an open loop.",
+            "One-Line Social Proof Before the Ask: 'the last time that I did it broke the internet' sits directly ahead of the CTA.",
+            "Dual Comment Trigger: spoken keyword gate ('comment studio') plus a caption preference question ('Number 14 is my favorite. What's yours?') give two separate reasons to comment."
+          ]
+        },
+        "visual": {
+          "category": "Full Screen / Hybrid",
+          "subCategory": "Faceless Visual Explainer",
+          "visualHook": "Inferred from the transcript, since no frames were provided: start mid-motion on the most dramatic effect (a 3D orbit move) with a bold lower-third label reading 'ORBIT', then hard-cut to a new effect and label every ~0.75 seconds. Add a persistent '1/26' counter in a corner so the viewer knows it is a countdown.",
+          "pacingNote": "Inferred from the transcript, not from frames: a full-screen 9:16 effect showcase with one effect per cut at ~0.75 seconds for 17 cuts, voiceover naming each on the beat. Several effect names ('Couch wall', 'Green screen', 'Pull back reveal', 'phone mockup') suggest the creator appears inside the effects as the subject. At ~0:13, settle into a steadier shot or direct-to-camera for the announcement and CTA. To recreate: render each effect as a 1-second clip on the same subject so the effect is the only variable, cut on the spoken label, then hold one shot for the ask.",
+          "textCues": "0:00-0:03: large effect-name label per cut ('ORBIT', 'COUCH WALL', 'UI WORLD', 'FRAME BREAK') plus a running number. ~0:13: full-screen '26 EFFECTS, DROPPING THIS WEEK'. ~0:20: 'Comment STUDIO' with a down arrow toward the comments, held to the end. Final 3 seconds: follow prompt."
+        },
+        "kennedy": {
+          "characterVsPlot": "Plot-Led",
+          "polarization": "None",
+          "magnification": "Moderately Magnified",
+          "contextAnchor": "Partially Anchored",
+          "coreStory": "Information Delivery",
+          "deficitScore": 9,
+          "elements": {
+            "origin": {
+              "status": "Absent",
+              "evidence": "No backstory on who he is or why he built these. Inject one line before the announcement: 'I used to pay an editor $2K a month for these. Now Claude builds them in one prompt.'"
+            },
+            "parables": {
+              "status": "Absent",
+              "evidence": "No story or lesson; the body is a list of nouns. Missed opportunity: a 5-second story of one effect taking a specific video from flat to viral."
+            },
+            "miracles": {
+              "status": "Present",
+              "evidence": "'the last time that I did it broke the internet', a past-result claim with no number attached, plus the 17 on-screen effects as demonstrated proof."
+            },
+            "insiderLanguage": {
+              "status": "Present",
+              "evidence": "Coined effect names work as a private vocabulary: 'Couch wall', 'Doodle boil', 'Glass type', 'Cover story', 'Zoom through cut', along with the keyword 'studio'."
+            },
+            "dogma": {
+              "status": "Absent",
+              "evidence": "No rule or belief is stated. Gap: one line such as 'If you're still keyframing by hand, you're wasting your week.'"
+            },
+            "enemies": {
+              "status": "Absent",
+              "evidence": "No enemy is named. The obvious candidates are After Effects, expensive editors and template marketplaces, and none is mentioned."
+            },
+            "flaws": {
+              "status": "Absent",
+              "evidence": "No self-disclosure. The caption's 'Number 14 is my favorite. \ud83d\ude02' is the only personal touch, and it is a preference, not a vulnerability."
+            }
+          },
+          "characterRewrite": "\"Inbox triage. Call recap. Proposal draft. Lead follow-up. Weekly report. Five jobs, five One-Click Ops, zero 47-node science projects, and I say that as the guy who built the 47-node version first and watched it break every Tuesday. I'm a systems architect, not a hype guru, and my rule is simple: if an AI workflow takes longer to maintain than to run, kill it. I'm releasing all 21 this week. Comment STACK and I'll send you the list.\""
+        }
       }
     },
     {

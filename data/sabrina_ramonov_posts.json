@@ -1138,6 +1138,146 @@
         "provider": "tokscript",
         "source": "ts_d0ee01fb",
         "attemptedAt": "2026-10-26T17:18:14.126565+00:00"
+      },
+      "breakdown": {
+        "engine": "claude",
+        "analyzedAt": "2026-11-26T18:56:35Z",
+        "wordCount": 213,
+        "summary": "A zero-friction listicle that rebrands ordinary study prompts (ELI5, 80/20, Feynman, Socrates) as '10 secret codes' you can 'type anywhere', so 10 years of known learning techniques feel like hidden ChatGPT cheat commands. Retention runs on a numbered countdown with a new payoff about every 5 seconds, alternating text codes with visual-output codes ('make sticky notes', 'make a mind map', 'make schematic') so the screen keeps changing. It hit 59.7x because the universal promise ('learn anything') drives saves, while the comment-gate ('comment codes and I'll DM you') produced 15,779 comments, a 22.8% comment-to-like ratio that feeds the algorithm.",
+        "beatOverview": "A 6-word curiosity hook, then ten identical micro-loops of code name, 'type this anywhere', and one-line payoff, closing on a 'hundreds more' comment-gated CTA (timestamps estimated from the transcript's word pacing, not from the video itself).",
+        "beats": [
+          {
+            "label": "Secret Reveal Number Hook",
+            "timeRange": "0:00 \u2013 0:02",
+            "text": "10 secret codes to learn anything.",
+            "why": "Six words stack a number (a finish line), 'secret codes' (insider access) and 'learn anything' (universal benefit), with no intro to skip past."
+          },
+          {
+            "label": "Code 1: The Easy Win (ELI5)",
+            "timeRange": "0:02 \u2013 0:06",
+            "text": "Number one, Eli 5. Type this anywhere and chat will explain things in super simple terms.",
+            "why": "Opens with the most familiar, lowest-effort code so the viewer immediately thinks 'I can do that' and the format is proven in 4 seconds."
+          },
+          {
+            "label": "Code 2: The Efficiency Promise (80/20)",
+            "timeRange": "0:06 \u2013 0:14",
+            "text": "Number two, 8020. You can type this anywhere in the prompt and chat will focus on the most important 20% you need to know.",
+            "why": "Reinforces 'type this anywhere' as the repeatable mechanic and sells speed, which is the real desire behind 'learn anything'."
+          },
+          {
+            "label": "Code 3: First Visual Pattern Break (Sticky Notes)",
+            "timeRange": "0:14 \u2013 0:18",
+            "text": "Number three, make sticky notes. ChatGPT will create a visual sticky note guide like this.",
+            "why": "'Like this' switches from telling to showing, resetting attention with an image output just as the list rhythm could go flat."
+          },
+          {
+            "label": "Code 4: Borrowed Authority (Feynman)",
+            "timeRange": "0:18 \u2013 0:23",
+            "text": "Number four, Feynman technique. Type this anywhere. It's a super popular study technique so that you can learn faster.",
+            "why": "A named technique plus 'super popular' lends social proof without the creator having to explain or prove anything."
+          },
+          {
+            "label": "Code 5: Visual Output #2 (Mind Map)",
+            "timeRange": "0:23 \u2013 0:28",
+            "text": "Number five, make a mind map. ChatGPT will make a visual mind map of the key concepts.",
+            "why": "A second visual artifact at the midpoint rewards viewers who stayed and signals the back half has more to see."
+          },
+          {
+            "label": "Code 6: Interactive Turn (Quiz Me)",
+            "timeRange": "0:28 \u2013 0:33",
+            "text": "Number six, quiz me. Chat will quiz you one question at a time until you understand.",
+            "why": "Moves ChatGPT from answer machine to tutor, a new use-case category that keeps the list from feeling like ten versions of 'explain it'."
+          },
+          {
+            "label": "Code 7: The Save Trigger (Visual Study Guide)",
+            "timeRange": "0:33 \u2013 0:40",
+            "text": "Number seven, make visual study guide. ChatGPT will take the topic and create a one pager study sheet so that you can learn everything you need.",
+            "why": "'One pager' and 'everything you need' promise a complete, tangible deliverable, which is the item most likely to prompt a save."
+          }
+        ],
+        "idea": {
+          "topic": "ChatGPT Study Prompts",
+          "ideaSeed": "Ten short trigger words you can type anywhere in a ChatGPT prompt to turn it into a personal tutor.",
+          "uniqueAngle": "Known study methods and prompt phrases are repackaged as 'secret codes', which turns prompt engineering (hard, wordy) into typing a cheat code (easy, one word). The reframe is in the packaging; the information itself is not new.",
+          "commonBelief": "Getting good output from ChatGPT takes long, carefully engineered prompts, and most people just use it to get the answer.",
+          "contrarianReality": "A one- or two-word 'code' dropped 'anywhere in the prompt' changes how ChatGPT teaches you. The caption says it outright: 'Stop asking AI for answers.'",
+          "supportingEvidence": [
+            "On-screen demo of the output: 'ChatGPT will create a visual sticky note guide like this.'",
+            "Four visual-output codes that can be shown, not just described: 'make sticky notes', 'make a mind map', 'make visual study guide', 'make schematic'.",
+            "Borrowed authority from named methods: 'Feynman technique... It's a super popular study technique', 'first principles', 'Socrates'.",
+            "Implied depth of library: 'hundreds more secret codes like this'. No results, numbers or case studies are cited; the proof is demo only."
+          ],
+          "remixes": [
+            "Option 1: '7 secret codes that replace 15 hours of founder busywork.' Hook: '7 codes I type into Claude that run my ops for me. Number one: SOP-IT. Paste any Loom transcript and it writes the SOP your team actually follows.' Same loop per code (name, where to paste it, one-line payoff, screen proof), each tied to a real task: client onboarding, proposal drafts, call follow-ups, weekly reporting. CTA: 'Comment STACK and I'll DM you the full AI Simple Stack.'",
+            "Option 2: 'The Leverage Audit in 5 prompts.' Hook: 'Type these 5 codes in order and ChatGPT will tell you which 20 hours of your week a workflow should be doing.' Each code is one layer of the AI Simple Stack (prompt, workflow, distribution), demoed on a real calendar export and task list and ending in a ranked One-Click Ops shortlist. CTA: 'Comment AUDIT and I'll send the 5 codes plus the scoring sheet.'",
+            "Option 3: 'Stop saving prompt lists. That's Prompt Slop.' Hook: 'You've saved 400 secret ChatGPT codes and your business still runs on you. Here are the only 3 that make money or buy back hours this week.' Stitch or greenscreen over a typical '100 prompts' guru carousel, kill it in one line, then show 3 codes each wired to a workflow that runs without you. Close on the dogma: 'If it takes longer to maintain than to run, kill it.' CTA: 'Comment SIMPLE for the 3.'"
+          ]
+        },
+        "hook": {
+          "category": "Secret Reveal Breakdown",
+          "formula": "[Number] secret [Insider Noun] to [Universal Outcome] [Anything/Anyone/Anywhere].",
+          "spokenHook": "10 secret codes to learn anything. Number one, Eli 5.",
+          "visualHook": "Face-cam with the ChatGPT input box visible, the headline '10 SECRET CODES TO LEARN ANYTHING' in bold on-screen text from frame 1, and 'ELI5' being typed into the prompt bar before second 3 so the first code is already paying off as the hook ends.",
+          "analysis": "Alignment is tight by design: the spoken line is short enough to double as the on-screen headline, and the caption's first line ('Comment \"CODES\"') repeats the same noun, so the spoken hook, text and CTA all push one word, 'codes'. The weakness is zero stakes: the hook says what the video is but not why it matters now. Tweak: add a 1-second visual contrast in the first 3 seconds, a wall-of-text ChatGPT answer next to the sticky-note output, with a text overlay such as 'Same question. One extra word.' That shows the payoff before code #1 without adding a spoken syllable."
+        },
+        "format": {
+          "category": "Listicle",
+          "description": "A numbered list where every item is a self-contained micro-payoff delivered in an identical repeating structure, so the count itself becomes the retention device.",
+          "analysis": "Each item is a 4\u20137 second closed loop (code name, 'type this anywhere', one-line benefit), so the viewer never waits for a payoff and always knows how many remain; leaving at #6 feels like quitting a nearly finished checklist. The order is engineered: familiar and easy first (ELI5, 80/20), visual pattern breaks at #3, #5, #7 and #10, and the lone opinion ('this is my favorite') held for #9 to catch late drop-off. When modeling it, copy the fixed sentence skeleton, the alternation of text and visual items, and a CTA keyword that is the same noun as the hook.",
+          "tactics": [
+            "Cold-open with no intro: the 6-word hook goes straight into 'Number one', so the first payoff lands inside 5 seconds.",
+            "Repeated mechanic phrase as a simplicity anchor: 'Type this anywhere' appears 5 times, drilling in that no skill is needed.",
+            "Rename the familiar as proprietary: common prompts become 'secret codes', and the same coined noun becomes the comment keyword ('comment codes').",
+            "Show-don't-tell pattern breaks: 'like this' cues an on-screen output, and four of the ten items are visual artifacts placed at regular intervals.",
+            "Late favorite flag plus abundance CTA: 'Socrates, this is my favorite' re-spikes attention at #9, then 'hundreds more secret codes' makes the 10 feel like a free sample."
+          ]
+        },
+        "visual": {
+          "category": "Full Screen / Hybrid",
+          "subCategory": "Screen Demo + Face Cam",
+          "visualHook": "Face-cam with the ChatGPT input box visible, the headline '10 SECRET CODES TO LEARN ANYTHING' in bold on-screen text from frame 1, and 'ELI5' being typed into the prompt bar before second 3 so the first code is already paying off as the hook ends.",
+          "pacingNote": "Inferred from the transcript, not from the footage: creator in tight face-cam delivering each code to camera, cutting to or layered over a ChatGPT screen recording on each payoff line ('like this'). To recreate: one cut per code (about every 5 seconds), the code typed in the prompt bar for about 1 second, then a full-screen flash of the output (sticky-note image, mind map, one-page study guide, schematic) for 1.5\u20132 seconds, then back to face. No b-roll and no transitions longer than a hard cut.",
+          "textCues": "0\u20133s: bold headline '10 SECRET CODES TO LEARN ANYTHING', with '1. ELI5' appearing by second 2. Each turn: a large numbered code label in the caption's all-caps hyphenated style ('3. MAKE-STICKY-NOTES', '6. QUIZME', '9. SOCRATES') held on screen for the whole item so sound-off viewers can screenshot it. At #9 add a small 'my favorite' tag. Final 4s: 'Comment \"CODES\"' with a down arrow, matching the caption's first line."
+        },
+        "kennedy": {
+          "characterVsPlot": "Plot-Led",
+          "polarization": "None",
+          "magnification": "Diminished",
+          "contextAnchor": "Floating",
+          "coreStory": "Information Delivery",
+          "deficitScore": 10,
+          "elements": {
+            "origin": {
+              "status": "Absent",
+              "evidence": "No backstory anywhere in the script. Inject with one line before code #1: 'I burned 200 hours writing long prompts before I found out one word does the job.'"
+            },
+            "parables": {
+              "status": "Absent",
+              "evidence": "No story or example of a real person learning something. Missed opportunity at #9: 'this is my favorite' is never followed by a 5-second story of Socrates mode teaching her or a student something specific."
+            },
+            "miracles": {
+              "status": "Absent",
+              "evidence": "No result is cited: no grade, no time saved, no before/after. The only proof is a demo ('a visual sticky note guide like this') and the vague 'so that you can learn faster'."
+            },
+            "insiderLanguage": {
+              "status": "Present",
+              "evidence": "'Secret codes' is the coined container, repeated in the hook, the CTA ('hundreds more secret codes') and the comment keyword 'codes', with command-style names in the caption ('MAKE-STICKY-NOTES', 'QUIZME')."
+            },
+            "dogma": {
+              "status": "Absent",
+              "evidence": "Nothing non-negotiable is spoken. The caption gets closest with 'Stop asking AI for answers.', which is a real belief but is buried in text instead of said to camera as the opening line."
+            },
+            "enemies": {
+              "status": "Absent",
+              "evidence": "No enemy or anti-pattern is named. The obvious one, lazy answer-copying or bloated mega-prompts, is implied by the caption but never called out."
+            },
+            "flaws": {
+              "status": "Absent",
+              "evidence": "No self-disclosure. The only personal trace is 'this is my favorite', which is a preference and not a vulnerability."
+            }
+          },
+          "characterRewrite": "\"You've saved 400 'secret ChatGPT codes' from hype gurus and you're still working 60 hours a week. That's Prompt Slop. I build systems for founders doing $30K to $500K a month, and my rule is simple: if a prompt doesn't make money or buy back hours this week, kill it. So here are the only 5 codes I'd keep, each one wired to a workflow that runs without you. Simplicity scales, complexity kills.\""
+        }
       }
     }
   ]

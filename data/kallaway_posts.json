@@ -268,6 +268,146 @@
         "provider": "tokscript",
         "source": "ts_d0ee01fb",
         "attemptedAt": "2026-10-26T17:18:14.135324+00:00"
+      },
+      "breakdown": {
+        "engine": "claude",
+        "analyzedAt": "2026-11-26T18:52:50Z",
+        "wordCount": 416,
+        "summary": "Kallaway takes a fresh Google release (agentic capabilities in Gemini Live) and collapses it into one concrete creator workflow: a voice-built brand-partnership pipeline that turns Gmail, YouTube and Drive into a pre-loaded campaign doc. Retention comes from a news hook, a scarcity gap ('a way of using this not many people have tried yet'), then a First/When/Then chain where every step names a real Google app, capped by a coined term ('data-enabled creativity') and a comment-keyword CTA. On the 239.2x: 14.17M views against 2,941 likes and 127 comments is roughly a 0.02% like rate, and the script closes on product-tier availability ('now available for pro and ultra users'), so this reads like sponsored or paid-amplified distribution rather than organic pull (my inference from the numbers, not confirmed). Model the structure, not the view count.",
+        "beatOverview": "News hook \u2192 untapped-use curiosity gap \u2192 capability list \u2192 one personal workflow walked step by step \u2192 payoff \u2192 coined framework \u2192 'dozens more' expansion \u2192 mechanism explanation \u2192 endorsement and keyword CTA.",
+        "beats": [
+          {
+            "label": "News-Peg Hook",
+            "timeRange": "0:00 \u2013 0:04 (estimated from word count)",
+            "text": "Google Gemini just integrated their agentic capabilities in Gemini Live.",
+            "why": "Borrows Google's authority and the recency of 'just' to earn the first three seconds without needing any personal credibility."
+          },
+          {
+            "label": "Untapped-Use Curiosity Gap",
+            "timeRange": "0:04 \u2013 0:10",
+            "text": "And there's a way of using this not many people have tried yet that is insanely valuable for creators and marketers.",
+            "why": "Opens a loop (what is the way?) and names the audience so creators and marketers self-select instead of scrolling."
+          },
+          {
+            "label": "Capability Stack",
+            "timeRange": "0:10 \u2013 0:19",
+            "text": "With this integration, you can now have voice control over your personal AI agent. It can access Docs, Drive, Slides, Sheets, Gmail, and even YouTube.",
+            "why": "Six familiar app names in a row make an abstract 'agentic' claim feel concrete and already relevant to the viewer's daily tools."
+          },
+          {
+            "label": "Personal Case Setup + Ease Claim",
+            "timeRange": "0:19 \u2013 0:31",
+            "text": "As a creator, I used this new update to build out an entire content pipeline for brand partnerships. All I had to do was open Gemini Live and verbally describe the workflow I wanted. And it built this whole thing out for me automatically.",
+            "why": "Switches from news to first-person proof and drops effort to near zero ('All I had to do'), raising perceived value before the walkthrough."
+          },
+          {
+            "label": "Step Chain: Scan \u2192 Extract \u2192 Search \u2192 Build",
+            "timeRange": "0:31 \u2013 0:58",
+            "text": "First, it scans my email daily looking for any communication with brands for upcoming partnerships. When it finds one, it extracts all the campaign information shared by the brand, and then it searches all of my best content on YouTube to find the narratives that have worked well for similar stories in the past. Then it uses all that information to automatically create a folder in Google Drive with a doc inside specifically for that campaign, with ideas, power phrases, and formats that worked previously.",
+            "why": "First/When/Then sequencing creates forward momentum, and each step produces a visible artifact so the viewer stays to see the finished output."
+          },
+          {
+            "label": "Payoff Snapshot",
+            "timeRange": "0:58 \u2013 1:04",
+            "text": "When I go to make the video, I just open that doc and all the notes I already need are in there ready to go.",
+            "why": "Closes the loop with the end state the viewer wants: showing up to work with the prep already done."
+          },
+          {
+            "label": "Coined Framework",
+            "timeRange": "1:04 \u2013 1:13",
+            "text": "I call this flow data-enabled creativity. It's using the data and examples from previous winning videos to guide my creativity for the new campaign.",
+            "why": "Naming the workflow turns a tool demo into ownable IP and gives the viewer a phrase to remember and repeat."
+          },
+          {
+            "label": "'Just One' Expansion",
+            "timeRange": "1:13 \u2013 1:31",
+            "text": "Now, that whole thing is just one single creator workflow. There are dozens of other ones you can run. For example, I also asked Gemini to build out an invoice tracking pipeline to keep track of all my brand partnership payments. I also built an idea repurposer that scans my Google Drive for old script documents and notes that can be turned into new ideas.",
+            "why": "Resets attention at the point a one-example video would end, and widens relevance to viewers who don't do brand deals."
+          }
+        ],
+        "idea": {
+          "topic": "Gemini Live Agent Workflows",
+          "ideaSeed": "Gemini Live can now build multi-app Google Workspace workflows from a spoken description, shown through one creator's brand-partnership pipeline.",
+          "uniqueAngle": "Instead of reviewing the feature, he shows a single finished business workflow built by talking, then brands the result 'data-enabled creativity' so the tool is cast as a creative aid rather than an automation chore.",
+          "commonBelief": "Gemini Live is a voice chatbot for casual questions, and building real automations takes typing, node builders, or technical skill.",
+          "contrarianReality": "You can 'verbally describe the workflow' and get a working pipeline across Gmail, YouTube and Drive, and talking beats typing because you can 'easily interrupt, change my mind, course correct'.",
+          "supportingEvidence": [
+            "Brand-partnership pipeline: 'scans my email daily', 'extracts all the campaign information', searches 'my best content on YouTube', then creates 'a folder in Google Drive with a doc inside' holding 'ideas, power phrases, and formats that worked previously'.",
+            "Named app access: 'Docs, Drive, Slides, Sheets, Gmail, and even YouTube'.",
+            "Two further builds: 'an invoice tracking pipeline to keep track of all my brand partnership payments' and 'an idea repurposer that scans my Google Drive for old script documents'.",
+            "Availability claim: 'now available for pro and ultra users'. Note there is no number anywhere in the script (no hours saved, no deals, no revenue), which is the main proof gap."
+          ],
+          "remixes": [
+            "Option 1: 'I talked to my phone for 4 minutes and it built my client onboarding pipeline.' Screen-record a founder-ops version: the agent scans Gmail for signed proposals, pulls scope and deadlines, creates the client folder, kickoff doc and tracker row. Open with a stopwatch on screen, close with the hours it removes per client, and CTA: 'Comment STACK and I'll send the exact spoken prompt.'",
+            "Option 2: 'Run a Leverage Audit before you build a single AI workflow.' List the three tasks eating your week, pick the one with the worst hours-to-revenue ratio, then build only that one by voice as a One-Click Op, framed through the AI Simple Stack (prompt + workflow + distribution). Hook: 'You don't need 12 automations. You need the one that buys back 5 hours this week.'",
+            "Option 3: 'That 47-node automation your favorite AI guru posted will be broken in 30 days.' Split screen: a spaghetti node canvas on the left, one spoken paragraph building the same outcome on the right. Land the dogma on camera: 'If an AI workflow takes longer to maintain than to run, kill it. Simplicity scales. Complexity kills.'"
+          ]
+        },
+        "hook": {
+          "category": "Secret Reveal Breakdown",
+          "formula": "[Big Tech Company] just [released / integrated] [new capability] in [product]. And there's a way of using this not many people have tried yet that is insanely valuable for [audience 1] and [audience 2].",
+          "spokenHook": "Google Gemini just integrated their agentic capabilities in Gemini Live. And there's a way of using this not many people have tried yet that is insanely valuable for creators and marketers.",
+          "visualHook": "Inferred, since only transcript and caption were provided: face cam with the Gemini Live interface or Google app icons animating in, plus a headline such as 'Gemini Live just got agents'. For a remake, open on the finished Drive folder and campaign doc appearing on screen while you are mid-sentence speaking to the phone.",
+          "analysis": "The spoken hook and the caption's first line are identical, so topic clarity is high and nothing competes for attention. The weakness is that line one is the company's news, not the viewer's outcome: 'integrated their agentic capabilities' is abstract, and the concrete payoff ('content pipeline for brand partnerships') doesn't arrive until about 0:19. Tweak: lead with the result, for example 'I described a workflow out loud and Gemini built my entire brand-deal pipeline', show the finished doc in the first 2 seconds, and move the Google news to line two as the reason why."
+        },
+        "format": {
+          "category": "Breakdown Explainer",
+          "description": "Takes one new tool or idea and walks through how it works using a single concrete example, step by step, before generalizing.",
+          "analysis": "The video works because it resists listing features and instead follows one email from inbox to finished campaign doc, so every sentence produces a visible next artifact. The 'that whole thing is just one single creator workflow' line re-opens the loop exactly where attention would drop, and the mechanism section answers the skeptic's 'why is this easy?' before the CTA. Copy the order: news, gap, one workflow in First/When/Then steps, payoff, named term, two fast extra examples, reason why, CTA.",
+          "tactics": [
+            "News Peg Plus Scarcity Gap: 'just integrated' followed by 'not many people have tried yet'.",
+            "Named Tool Specificity Anchor: 'Docs, Drive, Slides, Sheets, Gmail, and even YouTube' instead of 'your apps'.",
+            "First / When / Then Step Chaining: each step's output becomes the next step's input, so there is no natural exit point.",
+            "Coined Term After The Demo: 'I call this flow data-enabled creativity' lands only once the viewer has seen it work.",
+            "'Just One' Expansion Reset: 'There are dozens of other ones you can run' followed by two rapid examples (invoice tracker, idea repurposer)."
+          ]
+        },
+        "visual": {
+          "category": "Full Screen / Hybrid",
+          "subCategory": "Screen Demo + Face Cam",
+          "visualHook": "Inferred, since only transcript and caption were provided: face cam with the Gemini Live interface or Google app icons animating in, plus a headline such as 'Gemini Live just got agents'. For a remake, open on the finished Drive folder and campaign doc appearing on screen while you are mid-sentence speaking to the phone.",
+          "pacingNote": "Inferred from the script, not observed. To recreate: talking head for the hook and the 'I call this' line, cutting to full-screen recordings for each step (Gmail brand thread, extracted campaign details, YouTube results, the Drive folder, the finished doc). Aim for a new visual every 2 to 4 seconds across the step chain, with app icons popping in as each one is named.",
+          "textCues": "0-3s: headline 'Gemini Live just got agents' with the Gemini logo. Capability beat: the six app icons appearing one per word. Step chain: on-screen labels 'Scan', 'Extract', 'Search', 'Build'. Framework beat: 'Data-Enabled Creativity' as a title card. Close: 'Comment GEMINI' pinned on screen."
+        },
+        "kennedy": {
+          "characterVsPlot": "Plot-Led",
+          "polarization": "None",
+          "magnification": "Moderately Magnified",
+          "contextAnchor": "Fully Anchored",
+          "coreStory": "Information Delivery",
+          "deficitScore": 9,
+          "elements": {
+            "origin": {
+              "status": "Absent",
+              "evidence": "The only identity cue is 'As a creator'. Inject one line of before-state, such as how brand-deal prep used to be done by hand and what it cost."
+            },
+            "parables": {
+              "status": "Absent",
+              "evidence": "The brand-partnership pipeline is a demo, not a story with stakes. Missed opportunity: one specific campaign where the pre-built doc changed the outcome."
+            },
+            "miracles": {
+              "status": "Present",
+              "evidence": "'It built this whole thing out for me automatically' and 'all the notes I already need are in there ready to go'. It is a demonstrated result but unquantified: no hours saved, deals closed, or revenue."
+            },
+            "insiderLanguage": {
+              "status": "Present",
+              "evidence": "'I call this flow data-enabled creativity', plus 'power phrases' as a term of art."
+            },
+            "dogma": {
+              "status": "Absent",
+              "evidence": "No non-negotiable rule is stated. The nearest belief is 'I can flow much easier than typing', which is a preference, not a rule."
+            },
+            "enemies": {
+              "status": "Absent",
+              "evidence": "No villain or anti-pattern is named. Typing is a mild foil at most, and manual brand-deal prep is never called out."
+            },
+            "flaws": {
+              "status": "Absent",
+              "evidence": "No self-disclosure. 'Change my mind, course correct' hints at messy thinking but is framed as a product feature, not a personal admission."
+            }
+          },
+          "characterRewrite": "Google just gave Gemini Live the ability to build workflows across your Gmail, Drive and Sheets by voice, and the AI gurus are about to turn it into another 47-node demo that breaks by Friday. I'm a systems architect, so here's the only rule I build by: if an AI workflow takes longer to maintain than to run, kill it. So I built one workflow, out loud, in four minutes, and it buys back five hours of my week. Simplicity scales. Complexity kills."
+        }
       }
     }
   ]

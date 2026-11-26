@@ -1108,6 +1108,134 @@
         "provider": "tokscript",
         "source": "ts_e48bb2ae",
         "attemptedAt": "2026-10-26T17:19:13.946081+00:00"
+      },
+      "breakdown": {
+        "engine": "claude",
+        "analyzedAt": "2026-11-26T18:55:17Z",
+        "wordCount": 131,
+        "summary": "A 39-second podcast trailer that opens on a million-dollar question, removes the two biggest objections ('You don't have to get more than 25,000 views a video. You don't need a huge following.'), then borrows Kallaway's authority to sell a live screen-share build. Retention runs on open loops that never close: it names 'monetize a different way' and 'a winning content strategy from scratch' but shows neither, so the only payoff is the full episode. It hit 75.9x because the unresolved loop is gated behind 'Comment BLUEPRINT', producing 3,775 comments on 13,717 likes (a 27.5% comment-to-like ratio) that fed distribution.",
+        "beatOverview": "Million-dollar question, double objection removal, guest authority stamp, contrarian monetization thesis, live-demo tease, then a price-anchored value close that pushes to a comment gate (timestamps estimated from word pacing, no frame data supplied).",
+        "beats": [
+          {
+            "label": "Million-Dollar Zero-Start Question",
+            "timeRange": "0:00 \u2013 0:03",
+            "text": "How would I make a million dollars in one year from zero?",
+            "why": "Packs a big number, a deadline and a zero starting point into one question, so the viewer self-selects and needs the answer."
+          },
+          {
+            "label": "Double Objection Kill + Open Loop",
+            "timeRange": "0:03 \u2013 0:09",
+            "text": "You don't have to get more than 25,000 views a video. You don't need a huge following. You just need to monetize a different way.",
+            "why": "Lowers the bar to something the viewer already clears, then opens the loop ('a different way') that the clip never closes."
+          },
+          {
+            "label": "Regis Authority Stamp",
+            "timeRange": "0:09 \u2013 0:16",
+            "text": "Callaway is a creator with billions of views and founder of Sandcastles, a content strategy tool that has printed him millions.",
+            "why": "Host voiceover tells the viewer why this person is worth the next 25 seconds before skepticism can form."
+          },
+          {
+            "label": "Contrarian Thesis: Skills Over Views",
+            "timeRange": "0:16 \u2013 0:25",
+            "text": "The way to make money with content is to have expert level skills. Content is just a vehicle to amplify attention on those skills and monetize around it.",
+            "why": "Gives one quotable principle so the clip feels valuable on its own while demoting the thing the audience obsesses over."
+          },
+          {
+            "label": "Live Build Tease",
+            "timeRange": "0:25 \u2013 0:30",
+            "text": "Callaway shares his screen and live on the podcast, builds out a winning content strategy from scratch.",
+            "why": "Moves from theory to promised proof: 'shares his screen' and 'from scratch' signal a copyable process."
+          },
+          {
+            "label": "Price-Anchor Value Close",
+            "timeRange": "0:30 \u2013 0:39",
+            "text": "To be honest, this is the whole game. People pay like 10 grand to a strategist for weeks of work, and we just did this in 30 minutes.",
+            "why": "Anchors the free episode against '10 grand' and 'weeks of work', turning the comment CTA into a $10K item for one word."
+          }
+        ],
+        "idea": {
+          "topic": "Content Monetization Strategy",
+          "ideaSeed": "You can make a million dollars in a year from zero on small view counts if you monetize expert skills instead of chasing reach.",
+          "uniqueAngle": "It puts a ceiling on the views you need ('25,000 views a video') instead of promising more, reframing content as 'just a vehicle' for a skill and making the offer the lever.",
+          "commonBelief": "Making real money from content requires going viral and building a huge following first.",
+          "contrarianReality": "Views are not the constraint; 'The way to make money with content is to have expert level skills' and the money comes from how you 'monetize around it'.",
+          "supportingEvidence": [
+            "The ceiling number: 'You don't have to get more than 25,000 views a video.'",
+            "Guest credentials: 'a creator with billions of views and founder of Sandcastles, a content strategy tool that has printed him millions'",
+            "The price anchor: 'People pay like 10 grand to a strategist for weeks of work, and we just did this in 30 minutes.'",
+            "Caption proof stack: 'Kallaway runs three separate 7-figure businesses, all powered by one content system' plus a 'LIVE screen share'"
+          ],
+          "remixes": [
+            "Option 1: 'The 20-Hour Buyback, Built Live'. Hook: 'How would I buy back 20 hours a week in 30 days, starting from zero automation? You don't need a developer. You don't need a 47-node workflow. You just need to stack it a different way.' Screen-record building one real client workflow from a blank canvas, then close: 'Agencies quote 10 grand and six weeks for this. We just did it in 30 minutes. Comment STACK and I'll send the build.'",
+            "Option 2: 'The Leverage Audit, On Camera'. Hook: 'Your AI isn't broken. Your stack is. Here's the 3-layer AI Simple Stack I'd install in a $100K/month agency from scratch.' Run a live Leverage Audit on a real founder's week, name the three layers (prompt, workflow, distribution), show one One-Click Op replacing a recurring manual task, and gate the audit template behind 'Comment AUDIT'.",
+            "Option 3: 'Kill the 47-Node Demo'. Hook: 'That 47-node automation the AI guru just showed you will be dead in two weeks. You don't need more nodes. You don't need more tools. You need fewer moving parts.' Put a bloated guru workflow next to a 4-step version that does the same job, then state the dogma to camera: 'If an AI workflow takes longer to maintain than to run, kill it.' Close with 'Simplicity scales. Complexity kills. Comment SIMPLE for the 4-step version.'"
+          ]
+        },
+        "hook": {
+          "category": "Question",
+          "formula": "How would I [Achieve Big Specific Outcome] in [Short Timeframe] from [Zero Starting Point]? You don't have to [Assumed Requirement With A Low Number]. You don't need [Second Assumed Requirement]. You just need to [Do The Core Activity] a different way.",
+          "spokenHook": "How would I make a million dollars in one year from zero? You don't have to get more than 25,000 views a video.",
+          "visualHook": "Tight two-shot or guest close-up from the podcast set with a bold headline burned in from frame one: '$1M IN 1 YEAR. FROM ZERO.', then a hard cut to the screen share on '25,000 views' so the number is on screen as it is spoken.",
+          "analysis": "The spoken hook is strong: number, deadline, zero start, then an immediate objection kill. The weakness is ownership, because 'How would I' is ambiguous between host and guest and the authority stamp only lands around 0:09, so for six seconds the viewer does not know why this voice is credible. Tweak: put a lower-third on screen from 0:00 ('Kallaway \u00b7 billions of views \u00b7 3 seven-figure businesses') and flash one frame of the screen-share strategy doc in the first two seconds, so text, visual and spoken line all say 'proven operator, real build' before the first objection."
+        },
+        "format": {
+          "category": "Breakdown Explainer",
+          "description": "A big outcome is posed up front and broken into the one principle and process behind it, here compressed into a trailer that explains the 'what' and withholds the 'how'.",
+          "analysis": "Each beat answers the objection the last one raised: is it possible for me (25,000 views), who says so (billions of views, printed him millions), what is the idea (skills, not reach), is there proof (live screen share), what is it worth (10 grand). The mechanism is never delivered, so the full payoff only exists behind the comment gate. Copy the sequence and the withholding: one quotable principle, then the method behind a keyword.",
+          "tactics": [
+            "Double negative objection kill before the promise: 'You don't have to... You don't need... You just need'",
+            "Low-bar specificity anchor: '25,000 views a video' makes the claim feel attainable",
+            "Third-person host voiceover as a Regis intro, cut between guest soundbites to reset attention every 6-9 seconds",
+            "Vehicle metaphor reframe: 'Content is just a vehicle' demotes the thing the audience obsesses over",
+            "Price-anchor closer with time compression: '10 grand... weeks of work' against '30 minutes', leading into the comment-keyword CTA"
+          ]
+        },
+        "visual": {
+          "category": "Studio Set",
+          "subCategory": "Screen Demo + Face Cam",
+          "visualHook": "Tight two-shot or guest close-up from the podcast set with a bold headline burned in from frame one: '$1M IN 1 YEAR. FROM ZERO.', then a hard cut to the screen share on '25,000 views' so the number is on screen as it is spoken.",
+          "pacingNote": "Inferred from the transcript and caption, since no frames were supplied: a podcast studio two-shot with punch-in close-ups on the guest for soundbites, host voiceover over B-roll for the authority beat, and screen-share inserts on the 'shares his screen' line. To recreate it, cut every 2-4 seconds, alternate face cam and screen capture, and show the actual strategy doc for at least one full beat as visual proof.",
+          "textCues": "0:00-0:03: headline '$1M IN 1 YEAR FROM ZERO' with word-by-word captions. 0:03-0:09: on-screen strikethroughs for 'MORE VIEWS' and 'HUGE FOLLOWING'. 0:09-0:16: credential lower-third 'Billions of views \u00b7 Founder, Sandcastles'. 0:25-0:30: 'LIVE BUILD' tag over the screen share. 0:30-0:39: '$10,000 / weeks' crossed out next to '30 minutes', ending on a 'Comment BLUEPRINT' end card."
+        },
+        "kennedy": {
+          "characterVsPlot": "Plot-Led",
+          "polarization": "Weak",
+          "magnification": "Moderately Magnified",
+          "contextAnchor": "Partially Anchored",
+          "coreStory": "Information Delivery",
+          "deficitScore": 8,
+          "elements": {
+            "origin": {
+              "status": "Absent",
+              "evidence": "No backstory for host or guest; 'from zero' is hypothetical, not lived. Inject one line of real origin, such as 'Three years ago I had [X] followers and no offer', before the authority stamp."
+            },
+            "parables": {
+              "status": "Absent",
+              "evidence": "No story or named example of someone who monetized on 25,000 views. A 10-second parable about a small-audience creator out-earning a viral one would carry the thesis."
+            },
+            "miracles": {
+              "status": "Present",
+              "evidence": "'a creator with billions of views and founder of Sandcastles, a content strategy tool that has printed him millions', and 'we just did this in 30 minutes' against '10 grand to a strategist for weeks of work'."
+            },
+            "insiderLanguage": {
+              "status": "Absent",
+              "evidence": "No coined framework; 'Sandcastles' is a product name and 'the whole game' is generic. The caption's 'one content system' and the CTA word 'BLUEPRINT' were chances to name the method and went unused."
+            },
+            "dogma": {
+              "status": "Present",
+              "evidence": "'The way to make money with content is to have expert level skills. Content is just a vehicle to amplify attention on those skills and monetize around it.'"
+            },
+            "enemies": {
+              "status": "Present",
+              "evidence": "Implied, not named: the view-chasing belief ('You don't need a huge following') and the overpriced strategist ('People pay like 10 grand to a strategist for weeks of work'). Neither is attacked hard enough to polarize."
+            },
+            "flaws": {
+              "status": "Absent",
+              "evidence": "No self-disclosure. 'To be honest' is a verbal tic, not vulnerability. One admission, such as 'I chased views for two years and made nothing', would add the missing character."
+            }
+          },
+          "characterRewrite": "How would I buy back 20 hours a week in 30 days, starting from zero automation? You don't need a developer, and you definitely don't need the 47-node monster some AI guru demoed last week. I build systems for a living, and my rule is simple: if an AI workflow takes longer to maintain than to run, kill it. Simplicity scales, complexity kills, and I'm about to build the whole stack on screen in 30 minutes."
+        }
       }
     },
     {

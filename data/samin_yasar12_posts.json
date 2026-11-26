@@ -388,6 +388,140 @@
         "provider": "tokscript",
         "source": "ts_e48bb2ae",
         "attemptedAt": "2026-10-26T17:19:13.951047+00:00"
+      },
+      "breakdown": {
+        "engine": "claude",
+        "analyzedAt": "2026-11-26T18:57:42Z",
+        "wordCount": 174,
+        "summary": "A five-item tool list wrapped in an identity-upgrade promise: 'turn Claude Opus 5.5 into an absolute design monster' using 'five free plugins'. Retention comes from a counted list (the viewer knows exactly how many payoffs remain) where every item names a tool and attaches one concrete capability in under 9 seconds. The 50.6x multiple is driven by the comment gate: 2,088 comments against 2,401 likes (an 87% comment-to-like ratio) because the names go by too fast to write down and 'Comment monster and I'll send you the full list' is the only way to capture them.",
+        "beatOverview": "Outcome-plus-number hook, then five rapid tool beats that each follow 'name, then what it changes for you', then a 'completely free' restatement and a keyword comment gate.",
+        "beats": [
+          {
+            "label": "Transformation Hook + Counted Promise",
+            "timeRange": "0:00 \u2013 0:06",
+            "text": "You can turn Claude Opus 5.5 into an absolute design monster when it comes to web design with these five free plugins.",
+            "why": "Names the newest model, promises an identity-level upgrade, and opens a five-item loop with zero cost, so the viewer knows the payoff and the price before second 6."
+          },
+          {
+            "label": "Item 1: Taste (Enemy Callout)",
+            "timeRange": "0:06 \u2013 0:14",
+            "text": "First is Taste. It stops Claude from defaulting to the same generic AI-looking UI and gives it much stronger rules for what good front-end design should actually look like.",
+            "why": "Leads with the pain every Claude user has already felt ('the same generic AI-looking UI'), so the list proves relevance on its first item."
+          },
+          {
+            "label": "Item 2: Impeccable (System + Live Editor)",
+            "timeRange": "0:14 \u2013 0:22",
+            "text": "Second is Impeccable. This gives Claude a proper design system to work from, plus a live editor you can actually tweak your websites from directly in your browser.",
+            "why": "Stacks two benefits in one beat ('plus a live editor'), raising perceived value per second and rewarding the viewer for staying."
+          },
+          {
+            "label": "Item 3: Playwright CLI (Labor Removal)",
+            "timeRange": "0:22 \u2013 0:30",
+            "text": "Third is Playwright CLI. Instead of manually checking everything Claude builds, it can now open sites in multiple browsers and test whether everything actually works.",
+            "why": "Switches from 'better output' to 'less work for you' with an 'Instead of manually...' contrast, which resets attention at the midpoint."
+          },
+          {
+            "label": "Item 4: Awesome Design (Real-World Reference)",
+            "timeRange": "0:30 \u2013 0:39",
+            "text": "Then there's awesome design. This gives Claude design systems inspired by real websites including their typography, spacing, buttons, and components so it has better references to actually build from.",
+            "why": "The noun stack ('typography, spacing, buttons, and components') signals depth and makes the list feel too dense to remember, which primes the comment gate."
+          },
+          {
+            "label": "Item 5: image23js (Wow Finisher)",
+            "timeRange": "0:39 \u2013 0:47",
+            "text": "And finally, image23js. Give it a normal image and Claude can now use that to recreate an object in a 3D interactive model entirely through code.",
+            "why": "Saves the most novel, most visual capability for last, so the list escalates instead of trailing off and the final beat earns the share."
+          },
+          {
+            "label": "Free Restatement + Keyword Gate",
+            "timeRange": "0:47 \u2013 0:53",
+            "text": "And all five are completely free. Comment monster and I'll send you the full list.",
+            "why": "Removes the last objection ('completely free'), then turns the viewer's inability to recall five names into a one-word comment that feeds the algorithm."
+          }
+        ],
+        "idea": {
+          "topic": "Claude Design Plugins",
+          "ideaSeed": "Five free plugins turn Claude Opus 5.5 from a generic-UI generator into a serious web designer.",
+          "uniqueAngle": "It does not teach prompting. It reframes bad AI design as an equipment problem: Claude is not bad at design, it is missing five add-ons, and all of them cost nothing.",
+          "commonBelief": "AI-built websites all look the same, and fixing that takes better prompts, a paid tool, or a human designer.",
+          "contrarianReality": "The generic look is a default, not a limit. Give Claude rules (Taste), a design system (Impeccable), testing (Playwright CLI), references (awesome design) and 3D (image23js), and the ceiling moves without spending a dollar.",
+          "supportingEvidence": [
+            "Five named tools: Taste, Impeccable, Playwright CLI, awesome design, image23js. Specific names act as proof even with no demo narrated.",
+            "A capability claim per tool, e.g. Playwright CLI 'can now open sites in multiple browsers and test whether everything actually works'.",
+            "A concrete component list for awesome design: 'typography, spacing, buttons, and components' taken from 'real websites'.",
+            "Price proof stated twice: 'five free plugins' in the hook and 'all five are completely free' before the CTA. Note: no before/after result, client outcome or number is ever cited."
+          ],
+          "remixes": [
+            "Option 1: 'The 5 free Claude plugins I'd install before paying a designer $5K for a landing page.' Hook: 'You don't need a designer for your next landing page. You need these five free Claude plugins, and it takes 10 minutes to set up.' Same five-beat structure, but each beat ends with the business result (a page that ships this week), and the CTA is 'Comment STACK and I'll send the install list plus the exact prompt I run it with'.",
+            "Option 2: 'Prompt Slop vs The AI Simple Stack.' Hook: 'This is Prompt Slop' (show the generic purple-gradient AI site) 'and this is the same prompt run through the AI Simple Stack' (show the upgraded version). Then break down the three layers, prompt + workflow + distribution, with one plugin as proof for each layer. CTA: 'Comment AUDIT and I'll send the Leverage Audit so you can find the 15-20 hours a week you're still doing by hand.'",
+            "Option 3: 'Stop saving 47-node automation demos.' Hook: 'The AI guru with the 47-node workflow is lying to you. It breaks the first week and you become the maintenance guy.' Then: 'Here are 5 free plugins that do more, with nothing to maintain.' Close on the dogma: 'If an AI workflow takes longer to maintain than to run, kill it.' CTA: 'Comment SIMPLE for the list.'"
+          ]
+        },
+        "hook": {
+          "category": "List",
+          "formula": "You can turn [Newest Named Tool/Model] into an absolute [Identity-Level Superlative] when it comes to [Specific Skill Domain] with these [Number] free [Add-On Category].",
+          "spokenHook": "You can turn Claude Opus 5.5 into an absolute design monster when it comes to web design with these five free plugins.",
+          "visualHook": "Recommended, since only the transcript was provided: open on a split screen with a generic AI-looking site on the left and a polished, animated site on the right, both labeled 'Same prompt', with the headline '5 FREE Claude plugins' on screen from frame one and the Claude logo visible.",
+          "analysis": "The spoken hook does three jobs in one sentence: recency ('Claude Opus 5.5'), outcome ('absolute design monster') and a counted, zero-cost promise ('five free plugins'). The keyword 'monster' is planted in second 3 and paid off in the CTA, which is tight scripting. I could not see the video, so visual alignment is unverified. The weakness in the script is that the hook has no stakes or enemy; the pain ('the same generic AI-looking UI') does not arrive until beat 2. The tweak: move that pain into the first three seconds visually by showing the ugly generic site while the line is spoken, so the viewer sees the problem before hearing the solution."
+        },
+        "format": {
+          "category": "Listicle",
+          "description": "A counted list where the number is promised in the hook and each item delivers one self-contained payoff, so the viewer always knows how much is left.",
+          "analysis": "Every item runs the same two-part pattern: the name in a three-to-four-word sentence ('First is Taste.'), then one sentence on what changes for the user. That consistency makes it effortless to follow at about 190 words per minute, and no item lasts longer than 9 seconds. The order is also deliberate: the most relatable problem goes first (generic UI), and the most novel capability goes last (image to 3D model), so the list escalates. Copy the pattern, the order logic, and the fact that the script never stops to explain how to install anything; the how-to is held back for the comment gate.",
+          "tactics": [
+            "Counted Promise in the Hook: 'these five free plugins' opens a loop that only closes at item five.",
+            "Named Tool Specificity Anchor: each beat opens with the tool name as its own short sentence ('Second is Impeccable.').",
+            "Old Way vs New Way Contrast inside an item: 'Instead of manually checking everything Claude builds, it can now...'.",
+            "Escalating Order with a Wow Finisher: fixes and systems first, '3D interactive model entirely through code' last.",
+            "Keyword Callback Gate: 'design monster' in the hook becomes 'Comment monster' in the CTA, after 'all five are completely free' removes the cost objection."
+          ]
+        },
+        "visual": {
+          "category": "Full Screen / Hybrid",
+          "subCategory": "Screen Demo + Face Cam",
+          "visualHook": "Recommended, since only the transcript was provided: open on a split screen with a generic AI-looking site on the left and a polished, animated site on the right, both labeled 'Same prompt', with the headline '5 FREE Claude plugins' on screen from frame one and the Claude logo visible.",
+          "pacingNote": "Inferred from the transcript, not from the footage. To recreate it: face cam for the hook line only (0:00 \u2013 0:06), then cut to full-screen screen recordings for each tool with a small face-cam bubble or voiceover. Use one shot per sentence and cut every 2 to 3 seconds. Per tool, show the GitHub or plugin page for 1 second as proof it is real, then the output: a before/after site for Taste, the in-browser editor for Impeccable, several browser windows running for Playwright CLI, a recognizable site's design tokens for awesome design, and a rotating 3D object next to its source photo for image23js.",
+          "textCues": "First 3 seconds: headline '5 FREE Claude plugins for web design' with 'Opus 5.5' tagged. At each turn: a numbered lower-third with the exact tool name ('1. Taste', '2. Impeccable', '3. Playwright CLI', '4. Awesome Design', '5. image23js'), because the names are hard to catch by ear. Final beat: 'ALL FREE' on screen, then 'Comment MONSTER' in large text matching the caption."
+        },
+        "kennedy": {
+          "characterVsPlot": "Plot-Led",
+          "polarization": "Weak",
+          "magnification": "Moderately Magnified",
+          "contextAnchor": "Partially Anchored",
+          "coreStory": "Information Delivery",
+          "deficitScore": 9,
+          "elements": {
+            "origin": {
+              "status": "Absent",
+              "evidence": "No backstory at all. Inject one line before item 1: 'I shipped three client sites that all looked like the same purple AI template before I found these.'"
+            },
+            "parables": {
+              "status": "Absent",
+              "evidence": "No story or example case. Missed opportunity: a 10-second tale of one site rebuilt with Taste, showing what the client said before and after."
+            },
+            "miracles": {
+              "status": "Absent",
+              "evidence": "Only capability claims, such as 'recreate an object in a 3D interactive model entirely through code'. No result, number or client outcome is cited."
+            },
+            "insiderLanguage": {
+              "status": "Present",
+              "evidence": "'design monster' is a light coined phrase, reused as the comment keyword 'monster'. It is a hook device, not an owned framework."
+            },
+            "dogma": {
+              "status": "Absent",
+              "evidence": "No rule is stated. A natural one to add: 'Never ship a site Claude built without a design system loaded.'"
+            },
+            "enemies": {
+              "status": "Present",
+              "evidence": "'the same generic AI-looking UI' and 'manually checking everything Claude builds'. Both are anti-patterns, not a named person or group, which is why polarization stays weak."
+            },
+            "flaws": {
+              "status": "Absent",
+              "evidence": "No self-disclosure. Inject: 'I used to ship the generic version and call it done.'"
+            }
+          },
+          "characterRewrite": "Every AI guru is selling you a 47-node design workflow that breaks by Friday. I'm a systems architect, so here is my rule: if an AI workflow takes longer to maintain than to run, kill it. These five free Claude plugins take 10 minutes to install, need zero maintenance, and end Prompt Slop websites for good."
+        }
       }
     },
     {

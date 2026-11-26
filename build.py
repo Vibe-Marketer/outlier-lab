@@ -43,7 +43,7 @@ DEFAULT_WORKSPACES = [
             {"platform": "instagram", "handle": "@aisimple.co", "followers": "42.8K", "medianViews": "14.2K", "connected": False},
             {"platform": "youtube", "handle": "@aisimple", "followers": "28.4K", "medianViews": "9.6K", "connected": False},
             {"platform": "tiktok", "handle": "@aisimple.co", "followers": "19.1K", "medianViews": "11.4K", "connected": False},
-            {"platform": "x", "handle": "@andrewnaegele", "followers": "31.5K", "medianViews": "8.2K", "connected": False},
+            {"platform": "facebook", "handle": "aisimple", "followers": "12.4K", "medianViews": "5.8K", "connected": False},
         ],
         "offer": {
             "whatYouSell": "The SIMPLE Method — AI workflow audits, team implementation, and done-for-you AI operating systems",
@@ -99,7 +99,7 @@ DEFAULT_WORKSPACES = [
             {"platform": "instagram", "handle": "@clickableimpact", "followers": "18.6K", "medianViews": "7.4K", "connected": False},
             {"platform": "youtube", "handle": "@clickableimpact", "followers": "11.2K", "medianViews": "5.1K", "connected": False},
             {"platform": "tiktok", "handle": "@clickableimpact", "followers": "9.8K", "medianViews": "6.3K", "connected": False},
-            {"platform": "x", "handle": "@clickableimpact", "followers": "14.0K", "medianViews": "4.9K", "connected": False},
+            {"platform": "facebook", "handle": "clickableimpact", "followers": "8.9K", "medianViews": "4.2K", "connected": False},
         ],
         "offer": {
             "whatYouSell": "High-converting paid social creative engines, ad testing frameworks, and DTC acquisition systems",
@@ -1388,9 +1388,10 @@ HTML_TEMPLATE = r"""<!doctype html>
           <p class="hero-sub" id="hero-sub">Every outlier video broken down by beats, hooks, storytelling formats, visual layout, and Dan Kennedy's 7 Magnetic Character Elements.</p>
           <div class="hero-actions">
             <button type="button" class="btn btn-yellow" id="hero-add-btn">＋ Analyze Video or Channel →</button>
+            <button type="button" class="btn btn-ghost-dark" id="hero-socials-btn">Connect Socials (IG/YT/TT/FB)</button>
             <button type="button" class="btn btn-ghost-dark" id="hero-script-btn">Write a Script</button>
             <button type="button" class="btn btn-ghost-dark" id="hero-character-btn">Character &amp; Offer</button>
-            <button type="button" class="btn btn-ghost-dark" id="hero-setup-btn">Setup &amp; Go Live</button>
+            <button type="button" class="btn btn-ghost-dark" id="hero-setup-btn">AI Engine &amp; Setup</button>
           </div>
         </div>
         <aside class="hero-side" aria-label="Workspace quick switcher">
@@ -1847,11 +1848,12 @@ HTML_TEMPLATE = r"""<!doctype html>
               <form id="inline-single-video-form" style="display:flex;flex-direction:column;gap:10px">
                 <div class="platform-pills" data-platform-group="single-video">
                   <button type="button" class="platform-pill active" data-platform="instagram">Instagram</button>
+                  <button type="button" class="platform-pill" data-platform="youtube">YouTube</button>
                   <button type="button" class="platform-pill" data-platform="tiktok">TikTok</button>
-                  <button type="button" class="platform-pill" data-platform="youtube">YouTube Short</button>
+                  <button type="button" class="platform-pill" data-platform="facebook">Facebook</button>
                 </div>
-                <div><label class="field-label" for="sv-url">Video URL</label><input class="field-input" id="sv-url" type="url" required placeholder="https://www.instagram.com/reel/..."></div>
-                <div><label class="field-label" for="sv-transcript">Spoken transcript or hook (optional — enables instant live breakdown)</label><textarea class="field-textarea" id="sv-transcript" rows="3" placeholder="Paste the transcript or opening lines for instant beat-by-beat &amp; Kennedy breakdown..."></textarea></div>
+                <div><label class="field-label" for="sv-url">Video URL (IG Reel, YT Short/Video, TikTok, or Facebook Reel)</label><input class="field-input" id="sv-url" type="url" required placeholder="https://www.youtube.com/shorts/... or https://www.instagram.com/reel/..."></div>
+                <div><label class="field-label" for="sv-transcript">Spoken transcript or hook (optional — auto-fetched on localhost for YT/TT/FB)</label><textarea class="field-textarea" id="sv-transcript" rows="3" placeholder="Leave blank to auto-fetch captions on localhost, or paste transcript/hook here..."></textarea></div>
                 <div class="form-row-2">
                   <div><label class="field-label" for="sv-workspace">Workspace</label><select class="field-select" id="sv-workspace"></select></div>
                   <div><label class="field-label" for="sv-tag">Creator handle or tag</label><input class="field-input" id="sv-tag" type="text" placeholder="@creator or Hook tag"></div>
@@ -1870,9 +1872,9 @@ HTML_TEMPLATE = r"""<!doctype html>
                   <button type="button" class="platform-pill active" data-platform="instagram">Instagram</button>
                   <button type="button" class="platform-pill" data-platform="youtube">YouTube</button>
                   <button type="button" class="platform-pill" data-platform="tiktok">TikTok</button>
-                  <button type="button" class="platform-pill" data-platform="x">X / Twitter</button>
+                  <button type="button" class="platform-pill" data-platform="facebook">Facebook</button>
                 </div>
-                <div><label class="field-label" for="ch-handles">Handle(s) or Profile URLs</label><textarea class="field-textarea" id="ch-handles" required placeholder="@creator_one, @creator_two&#10;https://www.instagram.com/creator_three/"></textarea></div>
+                <div><label class="field-label" for="ch-handles">Handle(s) or Profile / Page URLs</label><textarea class="field-textarea" id="ch-handles" required placeholder="@kallaway, https://youtube.com/@handle, https://facebook.com/page"></textarea></div>
                 <div class="form-row-2">
                   <div><label class="field-label" for="ch-workspace">Workspace</label><select class="field-select" id="ch-workspace"></select></div>
                   <div><label class="field-label" for="ch-scope">Niche list</label><select class="field-select" id="ch-scope"></select></div>
@@ -1926,6 +1928,26 @@ HTML_TEMPLATE = r"""<!doctype html>
       <!-- SUB 3: ZERO-FRICTION SETUP & OPTIONAL GO LIVE -->
       <div class="sub-panel" id="sub-ch-setup" hidden>
         <div class="panel-inner">
+          <section class="panel-card tone-lavender" id="ai-engine-panel">
+            <div class="section-head">
+              <div>
+                <span class="eyebrow-dot">Local AI Brain · Claude CLI &amp; Codex CLI</span>
+                <h3 style="font-size:24px">Sandcastles-grade + Dan Kennedy Deep AI Engine</h3>
+              </div>
+              <span class="status-chip muted" id="ai-engine-status-chip">Checking local CLIs…</span>
+            </div>
+            <p style="font-size:13.5px;color:var(--ink-2)">When running locally on <code>http://127.0.0.1:4747</code>, Outlier Lab plugs directly into your installed <strong>Claude Code CLI</strong> or <strong>Codex CLI</strong> (using your existing login — zero extra API billing) to run true LLM beat-by-beat breakdowns, Dan Kennedy Character rewrites, and 4-step script generation. Upgraded breakdowns are cached into <code>data/</code> and publish live to <code>outlier.aisimple.co</code>.</p>
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+              <div class="segmented" id="ai-provider-switch" role="group" aria-label="AI Engine">
+                <button type="button" data-ai-provider="claude">✦ Claude CLI</button>
+                <button type="button" data-ai-provider="codex">✦ Codex CLI</button>
+                <button type="button" data-ai-provider="local" class="active">⚡ Instant Local</button>
+              </div>
+              <button type="button" class="btn btn-yellow btn-sm" id="ai-batch-upgrade-btn">✦ Deep-Analyze Top 5 Outliers</button>
+              <span id="ai-batch-status-msg" style="font-size:12.5px;font-weight:700;color:var(--ink-2)"></span>
+            </div>
+          </section>
+
           <section class="panel-card tone-butter">
             <span class="eyebrow-dot">Zero-Friction Local Setup · 2 Minutes · Zero Cloud Accounts Required</span>
             <h3 style="font-size:26px">Run Outlier Lab on any Mac or Linux machine in one command.</h3>
@@ -2040,6 +2062,19 @@ cd outlier-lab
 
       <!-- RIGHT COLUMN: SUMMARY + 6 BREAKDOWN TABS -->
       <div class="bd-right">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 14px;border-radius:14px;background:var(--paper);border:1px solid var(--border)">
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+            <span class="status-chip muted" id="bd-engine-badge">⚡ Instant Breakdown</span>
+            <span id="bd-platform-badge" class="micro-tag">INSTAGRAM</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap">
+            <select id="bd-ai-provider" class="field-select" style="padding:5px 10px;font-size:12px;width:auto" aria-label="AI Breakdown Provider">
+              <option value="claude">Claude CLI</option>
+              <option value="codex">Codex CLI</option>
+            </select>
+            <button type="button" class="btn btn-yellow btn-xs" id="bd-ai-upgrade">✦ Deep Analyze with AI</button>
+          </div>
+        </div>
         <div class="bd-summary" id="bd-summary"></div>
 
         <div class="bd-tabs" id="bd-tabs" role="tablist" aria-label="Video breakdown sections">
@@ -2112,9 +2147,9 @@ cd outlier-lab
     <form id="qa-form" style="display:flex;flex-direction:column;gap:12px">
       <div class="platform-pills" id="qa-platforms">
         <button type="button" class="platform-pill active" data-platform="instagram">Instagram</button>
-        <button type="button" class="platform-pill" data-platform="tiktok">TikTok</button>
         <button type="button" class="platform-pill" data-platform="youtube">YouTube</button>
-        <button type="button" class="platform-pill" data-platform="x">X</button>
+        <button type="button" class="platform-pill" data-platform="tiktok">TikTok</button>
+        <button type="button" class="platform-pill" data-platform="facebook">Facebook</button>
       </div>
       <div><label class="field-label" id="qa-input-label" for="qa-input">Video URL</label><input class="field-input" id="qa-input" type="text" required autofocus placeholder="https://www.instagram.com/reel/..."></div>
       <div id="qa-transcript-wrap"><label class="field-label" for="qa-transcript">Paste spoken transcript or hook (optional — breaks down immediately)</label><textarea class="field-textarea" id="qa-transcript" rows="3" placeholder="Paste transcript or hook to generate beats, mad-lib hook, and Dan Kennedy audit right away..."></textarea></div>
@@ -2181,13 +2216,18 @@ cd outlier-lab
 <dialog id="connect-social-dialog" closedby="any" aria-labelledby="connect-social-title">
   <div class="dialog-shell form-dialog-shell">
     <div style="display:flex;justify-content:space-between;align-items:flex-start">
-      <div><span class="eyebrow-dot" id="cs-workspace-eyebrow">Connect Account</span><h1 id="connect-social-title" style="margin-top:6px">Connect Instagram</h1></div>
+      <div><span class="eyebrow-dot" id="cs-workspace-eyebrow">Connect Account · Sandcastles Style</span><h1 id="connect-social-title" style="margin-top:6px">Connect Instagram</h1></div>
       <button type="button" class="dialog-close" data-close-dialog aria-label="Close">×</button>
     </div>
+    <p style="font-size:13px;color:var(--ink-2)">Just paste your handle or profile/page URL — <strong>no OAuth developer app or API approval needed</strong>. Running locally on <code>:4747</code> syncs your recent videos, computes your real median views &amp; outlier multiples, and makes every video clickable for a full 6-tab breakdown.</p>
     <form id="connect-social-form" style="display:flex;flex-direction:column;gap:12px">
       <input type="hidden" id="cs-platform" value="instagram">
-      <div><label class="field-label" for="cs-handle">Account handle or URL</label><input class="field-input" id="cs-handle" type="text" required autofocus placeholder="@aisimple.co"></div>
-      <div style="display:flex;justify-content:flex-end;gap:8px"><button type="button" class="btn btn-outline" data-close-dialog>Cancel</button><button type="submit" class="btn btn-yellow">Connect Account →</button></div>
+      <div><label class="field-label" for="cs-handle">Account handle or channel/page URL</label><input class="field-input" id="cs-handle" type="text" required autofocus placeholder="@yourhandle or https://youtube.com/@yourchannel"></div>
+      <div style="padding:12px 14px;border-radius:14px;background:var(--paper);border:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+        <div><strong style="font-size:12px;display:block">Optional Bio Verification Code (Sandcastles Style)</strong><span style="font-size:11.5px;color:var(--ink-3)">Paste into your bio only if you want a Verified Owner badge — never required to sync.</span></div>
+        <code id="cs-verify-code" style="font-family:var(--font-mono);font-weight:700;padding:5px 10px;border-radius:8px;background:var(--yellow-soft);color:var(--ink)">AIS-4829</code>
+      </div>
+      <div style="display:flex;justify-content:flex-end;gap:8px"><button type="button" class="btn btn-outline" data-close-dialog>Cancel</button><button type="submit" class="btn btn-yellow" id="cs-submit-btn">Connect &amp; Sync Now →</button></div>
     </form>
   </div>
 </dialog>
@@ -2202,6 +2242,7 @@ const RESEARCH = __RESEARCH_JSON__;
 const ADMIN_URL = __ADMIN_URL_JSON__;
 const DEFAULT_WORKSPACES = __WORKSPACES_JSON__;
 const COLLECTIONS = __COLLECTIONS_JSON__;
+const SYNCED_OWN_SOCIALS = __OWN_SOCIALS_JSON__;
 const CREATOR_MAP = new Map(CREATORS.map(c => [c.handle, c]));
 
 const ARCHETYPES = [
@@ -2278,11 +2319,51 @@ let projects = loadJSON(KEYS.projects, [
 ]);
 let savedScripts = loadJSON(KEYS.savedScripts, []);
 let ownOutliersByWorkspace = {};
+let syncedOwnedReels = [];
+let aiCapabilities = { claude: false, codex: false, ytdlp: false, default: "local" };
+let activeAiProvider = localStorage.getItem("outlier-ai-provider") || "local";
 let previewConnectedMode = false;
+
+// Hydrate pre-synced owned socials from build time (data/socials/*.json)
+(SYNCED_OWN_SOCIALS || []).forEach(acc => {
+  const wsId = acc.workspaceId || "aisimple";
+  if (!connectedSocialOverrides[wsId]) connectedSocialOverrides[wsId] = {};
+  if (!connectedSocialOverrides[wsId][acc.platform]) {
+    connectedSocialOverrides[wsId][acc.platform] = {
+      handle: acc.handle,
+      connected: true,
+      syncedAt: acc.syncedAt,
+      medianViews: fmtNum(acc.medianViews),
+      followers: acc.videoCount ? `${acc.videoCount} vids` : "Synced",
+      note: acc.note || "",
+    };
+  }
+  const list = ownOutliersByWorkspace[wsId] || [];
+  (acc.items || []).forEach(it => {
+    syncedOwnedReels.push(it);
+    list.push({
+      shortCode: it.shortCode,
+      ratio: `${(it.ratio || 1).toFixed(1)}×`,
+      band: it.band_class || (it.ratio >= 15 ? "breakout" : it.ratio >= 5 ? "strong" : it.ratio >= 2 ? "good" : "normal"),
+      platform: `${(it.platform || acc.platform || "").toUpperCase()} · ${acc.handle}`,
+      hook: it.hook || it.title || it.caption || "Synced Video",
+      plays: fmtNum(it.plays || 0),
+      likes: fmtNum(it.likes || 0),
+    });
+  });
+  ownOutliersByWorkspace[wsId] = list.slice(0, 12);
+});
 
 function allReels() {
   const custom = singleVideos.filter(v => v.reelObj).map(v => v.reelObj);
-  return [...custom, ...BASE_REELS];
+  const seen = new Set();
+  const out = [];
+  for (const r of [...custom, ...BASE_REELS, ...syncedOwnedReels]) {
+    if (!r || !r.shortCode || seen.has(r.shortCode)) continue;
+    seen.add(r.shortCode);
+    out.push(r);
+  }
+  return out;
 }
 
 function allWorkspaces() {
@@ -3393,6 +3474,7 @@ const PLATFORM_META = {
   instagram: { name: "Instagram", icon: "IG" },
   youtube: { name: "YouTube", icon: "YT" },
   tiktok: { name: "TikTok", icon: "TT" },
+  facebook: { name: "Facebook", icon: "FB" },
   x: { name: "X / Twitter", icon: "X" },
 };
 function renderChannelsAndSocials() {
@@ -3442,12 +3524,12 @@ function renderChannelsAndSocials() {
     { platform: "instagram", handle: `@${ws.id}`, followers: "—", medianViews: "—", connected: false },
     { platform: "youtube", handle: `@${ws.id}`, followers: "—", medianViews: "—", connected: false },
     { platform: "tiktok", handle: `@${ws.id}`, followers: "—", medianViews: "—", connected: false },
-    { platform: "x", handle: `@${ws.id}`, followers: "—", medianViews: "—", connected: false },
+    { platform: "facebook", handle: `${ws.id}`, followers: "—", medianViews: "—", connected: false },
   ];
   const ov = connectedSocialOverrides[ws.id] || {};
   const socials = baseSocials.map(s => ({ ...s, ...(ov[s.platform] || {}), connected: previewConnectedMode ? true : Boolean(ov[s.platform]?.connected ?? s.connected) }));
   const connCount = socials.filter(s => s.connected).length;
-  document.getElementById("socials-subtitle").textContent = `Connect owned accounts for ${ws.name} to pull your own outliers and benchmark against your personal median.`;
+  document.getElementById("socials-subtitle").textContent = `Connect owned Instagram, YouTube, TikTok & Facebook accounts for ${ws.name} — just paste your handle or page URL (no OAuth app needed).`;
 
   document.getElementById("socials-grid").innerHTML = socials.map(s => {
     const m = PLATFORM_META[s.platform] || { name: s.platform, icon: "◎" };
@@ -3459,9 +3541,10 @@ function renderChannelsAndSocials() {
         </div>
         <div><strong style="font-family:var(--font-display);font-size:18px;display:block">${m.name}</strong><span style="font-family:var(--font-mono);font-size:12px;color:var(--ink-3)">${escapeHtml(s.handle)}</span></div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px;border-radius:12px;background:var(--paper);font-size:11.5px">
-          <div><strong style="display:block;font-size:14px">${s.connected ? escapeHtml(s.followers || "12.4K") : "—"}</strong>Followers</div>
-          <div><strong style="display:block;font-size:14px">${s.connected ? escapeHtml(s.medianViews || "6.8K") : "—"}</strong>Median</div>
+          <div><strong style="display:block;font-size:14px">${s.connected ? escapeHtml(s.followers || "Synced") : "—"}</strong>Account</div>
+          <div><strong style="display:block;font-size:14px">${s.connected ? escapeHtml(s.medianViews || "—") : "—"}</strong>Median</div>
         </div>
+        ${s.note ? `<p style="font-size:11.5px;color:var(--ink-3)">${escapeHtml(s.note)}</p>` : ""}
         <button type="button" class="btn ${s.connected ? "btn-outline" : "btn-yellow"} btn-sm" data-connect-platform="${escapeHtml(s.platform)}" data-default-handle="${escapeHtml(s.handle)}">${s.connected ? "Manage / Sync" : "Connect Account"}</button>
       </article>`;
   }).join("");
@@ -3471,16 +3554,16 @@ function renderChannelsAndSocials() {
   if (connCount > 0 || ownOutliersByWorkspace[ws.id]?.length) {
     ownStatus.textContent = previewConnectedMode ? "Connected Preview" : `${connCount} account(s) connected`;
     ownStatus.className = "status-chip live";
-    const items = ownOutliersByWorkspace[ws.id] || [
+    const items = ownOutliersByWorkspace[ws.id]?.length ? ownOutliersByWorkspace[ws.id] : [
       { ratio: "8.4×", band: "strong", platform: "Instagram Reel", hook: `How ${ws.name} fixed one workflow bottleneck and saved 12 hours a week.`, plays: "119K", likes: "6.4K" },
       { ratio: "5.2×", band: "strong", platform: "YouTube Short", hook: `Stop buying new tools until you diagnose this one step in your business.`, plays: "51K", likes: "2.9K" },
       { ratio: "3.1×", band: "good", platform: "TikTok", hook: `3 things we stopped doing this quarter that doubled inbound replies.`, plays: "35K", likes: "1.8K" },
     ];
     ownBody.innerHTML = `<div class="card-grid-3">${items.map((it, i) => `
-      <article class="panel-card ${i === 0 ? "tone-butter" : ""}" style="padding:18px;gap:8px">
-        <div style="display:flex;justify-content:space-between"><span class="band-pill ${it.band}">${escapeHtml(it.ratio)}</span><span class="micro-tag">${escapeHtml(it.platform)}</span></div>
+      <article class="panel-card ${i === 0 ? "tone-butter" : ""}" style="padding:18px;gap:8px;${it.shortCode ? "cursor:pointer" : ""}" ${it.shortCode ? `data-open-reel="${escapeHtml(it.shortCode)}"` : ""}>
+        <div style="display:flex;justify-content:space-between;gap:6px"><span class="band-pill ${it.band}">${escapeHtml(it.ratio)}</span><span class="micro-tag">${escapeHtml(it.platform)}</span></div>
         <strong style="font-family:var(--font-display);font-size:16px">“${escapeHtml(it.hook)}”</strong>
-        <div style="font-size:12px;color:var(--ink-3)"><strong>${escapeHtml(it.plays)}</strong> plays · ♥ ${escapeHtml(it.likes)}</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--ink-3)"><span><strong>${escapeHtml(it.plays)}</strong> plays · ♥ ${escapeHtml(it.likes)}</span>${it.shortCode ? `<strong style="color:var(--ink)">Breakdown ↗</strong>` : ""}</div>
       </article>`).join("")}</div>`;
   } else {
     ownStatus.textContent = "Connect to pull live outliers";
@@ -3606,6 +3689,15 @@ function openReelModal(shortCode) {
   document.getElementById("bd-hook-lbl").textContent = savedHooks.has(shortCode) ? "★ Hook saved" : "Save hook format";
   document.getElementById("bd-done-lbl").textContent = completed.has(shortCode) ? "✓ Studied (Undo)" : "Mark as studied";
 
+  const engBadge = document.getElementById("bd-engine-badge");
+  const eng = bd.engine || "local";
+  if (eng === "claude" || eng === "anthropic_api") { engBadge.className = "status-chip live"; engBadge.textContent = "✦ Claude Deep Breakdown"; }
+  else if (eng === "codex" || eng === "openai_api") { engBadge.className = "status-chip live"; engBadge.textContent = "✦ Codex Deep Breakdown"; }
+  else { engBadge.className = "status-chip muted"; engBadge.textContent = "⚡ Instant Local Breakdown"; }
+  document.getElementById("bd-platform-badge").textContent = (r.platform || "instagram").toUpperCase();
+  const bdProvSel = document.getElementById("bd-ai-provider");
+  if (bdProvSel && (activeAiProvider === "claude" || activeAiProvider === "codex")) bdProvSel.value = activeAiProvider;
+
   document.getElementById("bd-summary").innerHTML = `<strong style="display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:0.1em;color:var(--yellow-ink);margin-bottom:4px">Executive Summary</strong>${escapeHtml(bd.summary || "")}`;
 
   // Tab 1: Transcript
@@ -3616,6 +3708,7 @@ function openReelModal(shortCode) {
       <div class="beat-item">
         <div class="beat-head"><strong style="font-size:13px">${escapeHtml(b.label)}</strong><span class="beat-time">${escapeHtml(b.timeRange)}</span></div>
         <div style="font-size:13.5px;color:var(--ink-2);line-height:1.58">${escapeHtml(b.text)}</div>
+        ${b.why ? `<div style="margin-top:6px;padding:6px 10px;border-radius:8px;background:var(--yellow-tint);font-size:12px;color:var(--ink)"><strong>Retention Job:</strong> ${escapeHtml(b.why)}</div>` : ""}
       </div>`).join("") || `<div style="font-size:13px;color:var(--ink-3)">No spoken transcript available yet.</div>`}
   `;
   document.getElementById("bd-tr-para-view").textContent = r.transcript || "(No spoken transcript yet — caption is below)";
@@ -3623,7 +3716,7 @@ function openReelModal(shortCode) {
 
   // Tab 2: Idea Analysis
   const idea = bd.idea || {};
-  const remixes = personalizeIdeaForWorkspace(r, ws);
+  const remixes = (idea.remixes && idea.remixes.length) ? idea.remixes : personalizeIdeaForWorkspace(r, ws);
   document.getElementById("bdpanel-idea").innerHTML = `
     <div class="bd-card">
       <div style="display:flex;gap:8px;flex-wrap:wrap"><span class="status-chip">${escapeHtml(idea.topic || "General")}</span></div>
@@ -3634,7 +3727,7 @@ function openReelModal(shortCode) {
         <div><strong>Contrarian Reality (Contrast)</strong>${escapeHtml(idea.contrarianReality || "")}</div>
       </div>
       <div><strong class="field-label">Supporting Evidence From Script</strong><ul style="margin:4px 0 0;padding-left:18px;font-size:13px;color:var(--ink-2)">${(idea.supportingEvidence || []).map(e => `<li>${escapeHtml(e)}</li>`).join("") || "<li>No explicit proof claims extracted.</li>"}</ul></div>
-      <div class="remix-box"><strong style="display:block;font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--yellow-ink);margin-bottom:6px">How to Personalize for ${escapeHtml(ws.name)}</strong><div style="margin-bottom:5px">${escapeHtml(remixes[0])}</div><div>${escapeHtml(remixes[1])}</div></div>
+      <div class="remix-box"><strong style="display:block;font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--yellow-ink);margin-bottom:6px">How to Personalize for ${escapeHtml(ws.name)}</strong>${remixes.map(rm => `<div style="margin-bottom:6px">${escapeHtml(rm)}</div>`).join("")}</div>
     </div>`;
 
   // Tab 3: Hook
@@ -3644,6 +3737,7 @@ function openReelModal(shortCode) {
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span class="status-chip">${escapeHtml(hk.category || "Hook")}</span><button type="button" class="btn btn-outline btn-xs" data-copy-hook="${escapeHtml(hk.formula || "")}">Copy Formula</button></div>
       <div><strong class="field-label">Mad-Lib Formula</strong><div class="madlib-text">${highlightMadlib(hk.formula || "")}</div></div>
       <div><strong class="field-label">Verbatim Spoken Hook</strong><div style="padding:12px 14px;border-radius:12px;background:var(--surface);border:1px solid var(--border);font-size:14px;font-weight:700">“${escapeHtml(hk.spokenHook || "")}”</div></div>
+      ${hk.visualHook ? `<div><strong class="field-label">0–3s Visual &amp; Text Hook Cue</strong><div style="padding:10px 12px;border-radius:12px;background:var(--yellow-tint);border:1px solid rgba(255,199,29,0.5);font-size:13px;font-weight:700">${escapeHtml(hk.visualHook)}</div></div>` : ""}
       <div><strong class="field-label">Hook Alignment &amp; Craft Analysis</strong><p style="font-size:13.5px;color:var(--ink-2)">${escapeHtml(hk.analysis || "")}</p></div>
     </div>`;
 
@@ -3666,6 +3760,7 @@ function openReelModal(shortCode) {
         <div style="padding:14px;border-radius:14px;background:var(--surface);border:1px solid var(--border)"><strong class="field-label">Sub-Category</strong><div style="font-family:var(--font-display);font-size:18px">${escapeHtml(vis.subCategory || "Office Room Yap")}</div></div>
       </div>
       <div style="padding:14px;border-radius:14px;background:var(--yellow-tint);border:1px solid rgba(255,199,29,0.55)"><strong class="field-label">Recommended Sandcastles Visual Hook</strong><div style="font-weight:800;font-size:15px">${escapeHtml(vis.visualHook || "Move In Frame")}</div><p style="font-size:13px;color:var(--ink-2);margin-top:4px">${escapeHtml(vis.pacingNote || "")}</p></div>
+      ${vis.textCues ? `<div style="padding:14px;border-radius:14px;background:var(--surface);border:1px solid var(--border)"><strong class="field-label">On-Screen Text &amp; B-Roll Recipe</strong><p style="font-size:13px;color:var(--ink-2);margin-top:4px">${escapeHtml(vis.textCues)}</p></div>` : ""}
     </div>`;
 
   // Tab 6: Dan Kennedy Magnetic Audit
@@ -3685,6 +3780,7 @@ function openReelModal(shortCode) {
         <span class="status-chip muted">Regis Context: ${escapeHtml(dk.contextAnchor || "—")}</span>
         <span class="status-chip muted">Core Story: ${escapeHtml(dk.coreStory || "—")}</span>
       </div>
+      ${dk.characterRewrite ? `<div class="remix-box"><strong style="display:block;font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--yellow-ink);margin-bottom:5px">How ${escapeHtml(ws.name)}'s Character Would Open &amp; Reframe This</strong><div style="font-size:13.5px;line-height:1.58">${escapeHtml(dk.characterRewrite)}</div></div>` : ""}
       <div class="k7-grid">
         ${elNames.map(([k, lbl]) => {
           const item = els[k] || { status: "Absent", evidence: "" };
@@ -3822,33 +3918,171 @@ document.getElementById("qa-platforms").addEventListener("click", e => {
   document.querySelectorAll("#qa-platforms .platform-pill").forEach(x => x.classList.toggle("active", x === p));
 });
 
-async function handleAddSingleVideo({ url, platform, workspace, tag, transcript }) {
-  const reelObj = buildClientBreakdown({ url, platform, workspace, tag, transcript });
-  const entry = { id: reelObj.shortCode, url, platform, workspace, tag, transcript, reelObj, createdAt: new Date().toISOString() };
-  singleVideos.unshift(entry);
-  saveJSON(KEYS.singleVideos, singleVideos.slice(0, 40));
-  if (["localhost", "127.0.0.1"].includes(location.hostname)) {
-    fetch("/api/videos/analyze", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id: entry.id, url, platform, workspace, tag, transcript }) }).catch(() => {});
+const isLocalServer = () => ["localhost", "127.0.0.1"].includes(location.hostname);
+
+async function initAiEngineStatus() {
+  const chip = document.getElementById("ai-engine-status-chip");
+  if (!isLocalServer()) {
+    if (chip) { chip.textContent = "Hosted static mode (use localhost:4747 for live Claude/Codex)"; chip.className = "status-chip muted"; }
+    return;
   }
+  try {
+    const r = await fetch("/api/ai/status");
+    if (!r.ok) return;
+    aiCapabilities = await r.json();
+    if (activeAiProvider === "local" && (aiCapabilities.claude || aiCapabilities.codex)) {
+      activeAiProvider = aiCapabilities.default || "claude";
+      localStorage.setItem("outlier-ai-provider", activeAiProvider);
+    }
+    const found = [];
+    if (aiCapabilities.claude) found.push("Claude CLI ✓");
+    if (aiCapabilities.codex) found.push("Codex CLI ✓");
+    if (aiCapabilities.ytdlp) found.push("yt-dlp IG/YT/TT/FB ✓");
+    if (chip) {
+      chip.textContent = found.length ? found.join(" · ") : "Instant Local Mode";
+      chip.className = `status-chip ${found.length ? "live" : "muted"}`;
+    }
+    document.querySelectorAll("#ai-provider-switch button").forEach(b => b.classList.toggle("active", b.dataset.aiProvider === activeAiProvider));
+  } catch {}
+}
+
+document.getElementById("ai-provider-switch")?.addEventListener("click", e => {
+  const b = e.target.closest("[data-ai-provider]"); if (!b) return;
+  activeAiProvider = b.dataset.aiProvider;
+  localStorage.setItem("outlier-ai-provider", activeAiProvider);
+  document.querySelectorAll("#ai-provider-switch button").forEach(x => x.classList.toggle("active", x === b));
+  showToast(`AI Engine set to ${b.textContent.trim()} ✓`);
+});
+
+document.getElementById("ai-batch-upgrade-btn")?.addEventListener("click", async () => {
+  if (!isLocalServer()) { showToast("Open http://127.0.0.1:4747 to run local Claude/Codex batch analysis"); return; }
+  const prov = activeAiProvider === "local" ? (aiCapabilities.default || "claude") : activeAiProvider;
+  const msg = document.getElementById("ai-batch-status-msg");
+  if (msg) msg.textContent = `Running ${prov} on Top 5 outliers…`;
+  try {
+    const r = await fetch("/api/ai/batch", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ limit: 5, provider: prov, workspaceId: activeWorkspaceId }) });
+    const d = await r.json();
+    if (!r.ok) { showToast(d.message || "Batch could not start"); return; }
+    showToast(`Started ${prov} deep analysis on Top 5 outliers ✦`);
+    const poll = setInterval(async () => {
+      try {
+        const sr = await fetch("/api/ai/batch");
+        const st = await sr.json();
+        if (!st.running) {
+          clearInterval(poll);
+          const okCount = (st.results || []).filter(x => x.ok).length;
+          if (msg) msg.textContent = st.error ? `Error: ${st.error}` : `✓ Upgraded ${okCount} reels via ${prov} — reload to view all`;
+          showToast(`Upgraded ${okCount} reels with ${prov} ✓`);
+        }
+      } catch { clearInterval(poll); }
+    }, 3500);
+  } catch { showToast("Could not reach local server on :4747"); }
+});
+
+document.getElementById("bd-ai-upgrade")?.addEventListener("click", async () => {
+  if (!modalShortCode) return;
+  if (!isLocalServer()) { showToast("Open http://127.0.0.1:4747 to run live Claude/Codex deep breakdowns"); return; }
+  const btn = document.getElementById("bd-ai-upgrade");
+  const prov = document.getElementById("bd-ai-provider")?.value || (aiCapabilities.default || "claude");
+  const r = allReels().find(x => x.shortCode === modalShortCode);
+  if (!r) return;
+  btn.disabled = true; btn.textContent = `Analyzing with ${prov}…`;
+  showToast(`Running deep Sandcastles + Dan Kennedy breakdown via ${prov}…`);
+  try {
+    const resp = await fetch("/api/ai/breakdown", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ shortCode: modalShortCode, provider: prov, workspaceProfile: getActiveWorkspace(), reel: r }),
+    });
+    const data = await resp.json();
+    if (!resp.ok || !data.breakdown) throw new Error(data.message || "Breakdown failed");
+    r.breakdown = data.breakdown;
+    const sv = singleVideos.find(v => v.id === modalShortCode || v.reelObj?.shortCode === modalShortCode);
+    if (sv?.reelObj) { sv.reelObj.breakdown = data.breakdown; saveJSON(KEYS.singleVideos, singleVideos); }
+    openReelModal(modalShortCode);
+    renderAll();
+    showToast(`✦ Upgraded with ${data.breakdown.engine} & saved to disk ✓`);
+  } catch (err) {
+    showToast(`AI breakdown failed: ${err.message}`);
+  } finally {
+    btn.disabled = false; btn.textContent = "✦ Deep Analyze with AI";
+  }
+});
+
+async function handleAddSingleVideo({ url, platform, workspace, tag, transcript }) {
+  let finalTranscript = transcript, finalCaption = "", finalPlays = 0, finalDur = 0, finalCreator = tag, finalShortCode = null, aiBreakdown = null;
+  if (isLocalServer()) {
+    showToast("Fetching video metadata & captions…");
+    try {
+      const prov = activeAiProvider === "local" ? "" : activeAiProvider;
+      const resp = await fetch("/api/videos/analyze", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url, platform, workspace, tag, transcript, provider: prov, workspaceProfile: getActiveWorkspace(), autoFetch: true }),
+      });
+      if (resp.ok) {
+        const d = await resp.json();
+        const v = d.video || {};
+        if (v.transcript) finalTranscript = v.transcript;
+        if (v.caption) finalCaption = v.caption;
+        if (v.plays) finalPlays = v.plays;
+        if (v.duration) finalDur = v.duration;
+        if (v.creator_username) finalCreator = v.creator_username;
+        if (v.shortCode) finalShortCode = v.shortCode;
+        if (v.breakdown) aiBreakdown = v.breakdown;
+      }
+    } catch {}
+  }
+  const reelObj = buildClientBreakdown({ url, platform, workspace, tag: finalCreator, transcript: finalTranscript || finalCaption });
+  if (finalShortCode) reelObj.shortCode = finalShortCode;
+  if (finalPlays) reelObj.plays = finalPlays;
+  if (finalDur) reelObj.duration = finalDur;
+  if (finalCaption) reelObj.caption = finalCaption;
+  if (aiBreakdown) reelObj.breakdown = aiBreakdown;
+  const entry = { id: reelObj.shortCode, url, platform, workspace, tag: finalCreator, transcript: finalTranscript, reelObj, createdAt: new Date().toISOString() };
+  singleVideos = [entry, ...singleVideos.filter(v => v.id !== entry.id && v.url !== url)];
+  saveJSON(KEYS.singleVideos, singleVideos.slice(0, 40));
   renderAll();
-  showToast("Video broken down & added to workspace ✓");
+  showToast(aiBreakdown ? `✦ Video broken down via ${aiBreakdown.engine} ✓` : "Video broken down & added to workspace ✓");
   emitEvent("outlier:add-video", entry);
   openReelModal(reelObj.shortCode);
 }
 
 async function handleAddChannel({ handles, platform, workspace, scope }) {
   let status = "Queued for tracking", live = false;
-  if (platform === "instagram" && ["localhost", "127.0.0.1"].includes(location.hostname)) {
-    try {
-      const r = await fetch("/api/creators/import", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ handles, scopes: scope ? [scope] : [] }) });
-      if (r.ok) { status = "Saved to Local Admin ✓"; live = true; }
-    } catch {}
+  if (isLocalServer()) {
+    if (platform === "instagram") {
+      try {
+        const r = await fetch("/api/creators/import", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ handles, scopes: scope ? [scope] : [] }) });
+        if (r.ok) { status = "Saved to Local Admin ✓"; live = true; }
+      } catch {}
+    } else {
+      showToast(`Syncing ${platform.toUpperCase()} channel ${handles}…`);
+      try {
+        const firstHandle = handles.split(/[\n,]+/)[0].trim();
+        const r = await fetch("/api/socials/connect", {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ platform, handle: firstHandle, workspaceId: workspace, role: "watchlist", scope: scope || "all", limit: 15 }),
+        });
+        const d = await r.json();
+        if (r.ok && d.ok) {
+          status = d.items?.length ? `Synced ${d.items.length} videos ✓` : (d.account?.note || "Saved to Watchlist ✓");
+          live = true;
+          (d.items || []).forEach(it => {
+            const ro = buildClientBreakdown({ url: it.url, platform, workspace, tag: it.creator_username, transcript: it.transcript || it.caption || it.title });
+            ro.shortCode = it.shortCode; ro.plays = it.plays || 0; ro.likes = it.likes || 0; ro.duration = it.duration || 0; ro.ratio = it.ratio || 1;
+            ro.band_class = ro.ratio >= 15 ? "breakout" : ro.ratio >= 5 ? "strong" : ro.ratio >= 2 ? "good" : "normal";
+            ro.band_label = ro.ratio >= 15 ? "Breakout" : ro.ratio >= 5 ? "Replicable" : ro.ratio >= 2 ? "Working" : "Normal";
+            if (it.breakdown) ro.breakdown = it.breakdown;
+            syncedOwnedReels.unshift(ro);
+          });
+        }
+      } catch {}
+    }
   }
   const entry = { id: "ch_" + Date.now(), handles, platform, workspace, scope, status, live, createdAt: new Date().toISOString() };
   queuedChannels.unshift(entry);
   saveJSON(KEYS.queuedChannels, queuedChannels.slice(0, 30));
-  renderChannelsAndSocials();
-  showToast(live ? "Channel saved to Admin ✓" : "Channel queued ✓");
+  renderAll();
+  showToast(live ? `${platform.toUpperCase()}: ${status}` : "Channel queued ✓");
   emitEvent("outlier:add-channel", entry);
 }
 
@@ -3914,15 +4148,65 @@ document.getElementById("create-ws-form").addEventListener("submit", e => {
 });
 
 const connectDialog = document.getElementById("connect-social-dialog");
-document.getElementById("connect-social-form").addEventListener("submit", e => {
+document.getElementById("connect-social-form").addEventListener("submit", async e => {
   e.preventDefault();
   const ws = getActiveWorkspace(), platform = document.getElementById("cs-platform").value, handle = document.getElementById("cs-handle").value.trim();
+  const verifyCode = document.getElementById("cs-verify-code")?.textContent || "";
   if (!handle) return;
+  const subBtn = document.getElementById("cs-submit-btn");
+  if (subBtn) { subBtn.disabled = true; subBtn.textContent = "Syncing account…"; }
+
+  let syncedMeta = { handle, connected: true, syncedAt: new Date().toISOString() };
+  if (isLocalServer()) {
+    showToast(`Syncing ${handle} (${platform.toUpperCase()})…`);
+    try {
+      const resp = await fetch("/api/socials/connect", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ workspaceId: ws.id, platform, handle, role: "owned", verifiedCode: verifyCode, limit: 15 }),
+      });
+      const data = await resp.json();
+      if (resp.ok && data.ok) {
+        const acc = data.account || {};
+        syncedMeta = {
+          handle: acc.handle || handle,
+          connected: true,
+          syncedAt: acc.syncedAt || new Date().toISOString(),
+          followers: acc.videoCount ? `${acc.videoCount} vids synced` : "Connected",
+          medianViews: acc.medianViews ? fmtNum(acc.medianViews) : "—",
+          note: acc.note || "",
+        };
+        if (data.items?.length) {
+          const cards = data.items.slice(0, 9).map(it => {
+            const ro = buildClientBreakdown({ url: it.url, platform, workspace: ws.id, tag: it.creator_username || handle, transcript: it.transcript || it.caption || it.title });
+            ro.shortCode = it.shortCode; ro.plays = it.plays || 0; ro.likes = it.likes || 0; ro.duration = it.duration || 0; ro.ratio = it.ratio || 1;
+            ro.band_class = ro.ratio >= 15 ? "breakout" : ro.ratio >= 5 ? "strong" : ro.ratio >= 2 ? "good" : "normal";
+            ro.band_label = ro.ratio >= 15 ? "Breakout" : ro.ratio >= 5 ? "Replicable" : ro.ratio >= 2 ? "Working" : "Normal";
+            if (it.breakdown) ro.breakdown = it.breakdown;
+            syncedOwnedReels.unshift(ro);
+            return {
+              shortCode: it.shortCode,
+              ratio: `${(it.ratio || 1).toFixed(1)}×`,
+              band: ro.band_class,
+              platform: `${platform.toUpperCase()} · ${acc.handle || handle}`,
+              hook: it.title || it.caption || "Synced Video",
+              plays: fmtNum(it.plays || 0),
+              likes: fmtNum(it.likes || 0),
+            };
+          });
+          ownOutliersByWorkspace[ws.id] = [...cards, ...(ownOutliersByWorkspace[ws.id] || []).filter(x => !cards.some(c => c.shortCode === x.shortCode))].slice(0, 12);
+        }
+      }
+    } catch {}
+  }
+
   if (!connectedSocialOverrides[ws.id]) connectedSocialOverrides[ws.id] = {};
-  connectedSocialOverrides[ws.id][platform] = { handle, connected: true, syncedAt: new Date().toISOString() };
+  connectedSocialOverrides[ws.id][platform] = syncedMeta;
   saveJSON(KEYS.connectedSocials, connectedSocialOverrides);
-  connectDialog.close(); renderChannelsAndSocials(); showToast(`Connected ${handle} (${platform}) ✓`);
-  emitEvent("outlier:connect-social", { workspaceId: ws.id, platform, handle });
+  if (subBtn) { subBtn.disabled = false; subBtn.textContent = "Connect & Sync Now →"; }
+  connectDialog.close();
+  renderChannelsAndSocials();
+  showToast(`Connected ${syncedMeta.handle} (${platform.toUpperCase()}) ✓`);
+  emitEvent("outlier:connect-social", { workspaceId: ws.id, platform, handle: syncedMeta.handle });
 });
 
 // ---- Export Feed CSV/JSON & Portable Workspace Backup ----
@@ -3962,6 +4246,7 @@ document.getElementById("open-quick-add").addEventListener("click", () => openQu
 document.getElementById("hero-add-btn").addEventListener("click", () => openQuickAdd("video"));
 document.getElementById("feed-quick-add").addEventListener("click", () => openQuickAdd("video"));
 document.getElementById("add-creator-chip").addEventListener("click", () => openQuickAdd("channel"));
+document.getElementById("hero-socials-btn").addEventListener("click", () => { setActiveTab("channels"); activateSubNav("channels-subnav", "ch-socials"); });
 document.getElementById("hero-script-btn").addEventListener("click", () => { setActiveTab("scripts"); activateSubNav("scripts-subnav", "script-builder"); renderScriptWizard(); });
 document.getElementById("hero-character-btn").addEventListener("click", () => setActiveTab("character"));
 document.getElementById("hero-setup-btn").addEventListener("click", () => { setActiveTab("channels"); activateSubNav("channels-subnav", "ch-setup"); });
@@ -4092,14 +4377,92 @@ document.addEventListener("click", e => {
   if (t.closest("[data-clear-creator]")) { activeFilter = "__all__"; renderFeed(); return; }
   const chip = t.closest(".creator-chip[data-creator]"); if (chip) { activeFilter = chip.dataset.creator; localStorage.setItem(KEYS.filter, activeFilter); renderFeed(); return; }
 
-  // Wizard buttons
+  // Wizard buttons (uses local Claude/Codex CLI when available, falls back cleanly to Instant Local)
   if (t.id === "wiz-clear-src") { wizard.sourceShortCode = null; renderScriptWizard(); return; }
-  if (t.id === "wiz-next-1") { wizard.topic = document.getElementById("wiz-topic").value.trim() || wizard.topic || "Fixing the #1 workflow bottleneck"; wizard.format = document.getElementById("wiz-format").value; wizard.hookStyle = document.getElementById("wiz-hook-style").value; wizard.existingDraft = document.getElementById("wiz-draft")?.value || ""; generateResearchBrief(); wizard.step = 2; renderScriptWizard(); return; }
+  if (t.id === "wiz-next-1") {
+    wizard.topic = document.getElementById("wiz-topic").value.trim() || wizard.topic || "Fixing the #1 workflow bottleneck";
+    wizard.format = document.getElementById("wiz-format").value;
+    wizard.hookStyle = document.getElementById("wiz-hook-style").value;
+    wizard.existingDraft = document.getElementById("wiz-draft")?.value || "";
+    const runStep1 = async () => {
+      if (isLocalServer() && activeAiProvider !== "local") {
+        t.disabled = true; t.textContent = `Generating via ${activeAiProvider}…`;
+        try {
+          const src = wizard.sourceShortCode ? allReels().find(r => r.shortCode === wizard.sourceShortCode) : null;
+          const stepName = wizard.existingDraft.trim() ? "fix" : "research";
+          const resp = await fetch("/api/ai/script", {
+            method: "POST", headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ step: stepName, provider: activeAiProvider, topic: wizard.topic, draft: wizard.existingDraft, workspaceProfile: getActiveWorkspace(), sourceReel: src ? { creator: src.creator_username, ratio: src.ratio, plays: src.plays, hook: src.hook, format: src.breakdown?.format?.category, transcript: src.transcript } : null }),
+          });
+          const d = await resp.json();
+          if (resp.ok && d.result) {
+            if (stepName === "fix" && d.result.fixedScript) {
+              wizard.scriptText = d.result.fixedScript;
+              wizard.step = 4; renderScriptWizard(); showToast(`✦ Draft upgraded via ${d.result.engine} ✓`); return;
+            }
+            wizard.research = {
+              execSummary: d.result.executiveSummary || "",
+              engage: Array.isArray(d.result.howToEngage) ? d.result.howToEngage.join(" · ") : (d.result.howToEngage || ""),
+              facts: d.result.surprisingFacts || [],
+              contrast: d.result.contrastMoments || [],
+            };
+            wizard.step = 2; renderScriptWizard(); showToast(`✦ Research brief generated via ${d.result.engine} ✓`); return;
+          }
+        } catch {}
+      }
+      generateResearchBrief(); wizard.step = 2; renderScriptWizard();
+    };
+    runStep1();
+    return;
+  }
   if (t.id === "wiz-back-2") { wizard.step = 1; renderScriptWizard(); return; }
-  if (t.id === "wiz-next-2") { wizard.research.execSummary = document.getElementById("wiz-res-exec").value; wizard.research.engage = document.getElementById("wiz-res-eng").value; generateHookDrafts(); wizard.step = 3; renderScriptWizard(); return; }
-  if (t.id === "wiz-regen-hooks") { generateHookDrafts(); renderScriptWizard(); showToast("Generated fresh hook variations ✓"); return; }
+  if (t.id === "wiz-next-2" || t.id === "wiz-regen-hooks") {
+    if (t.id === "wiz-next-2") {
+      wizard.research.execSummary = document.getElementById("wiz-res-exec").value;
+      wizard.research.engage = document.getElementById("wiz-res-eng").value;
+    }
+    const runHooks = async () => {
+      if (isLocalServer() && activeAiProvider !== "local") {
+        t.disabled = true; t.textContent = `Drafting hooks via ${activeAiProvider}…`;
+        try {
+          const resp = await fetch("/api/ai/script", {
+            method: "POST", headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ step: "hooks", provider: activeAiProvider, topic: wizard.topic, research: wizard.research, workspaceProfile: getActiveWorkspace() }),
+          });
+          const d = await resp.json();
+          if (resp.ok && Array.isArray(d.result?.hooks) && d.result.hooks.length) {
+            wizard.hooks = d.result.hooks.map(h => ({ style: h.style || "Hook", by: `${h.inspiredBy || "AI"} · ✦ ${d.result.engine}${h.visualCue ? " · Visual: " + h.visualCue : ""}`, text: h.text || "" }));
+            wizard.selectedHookIdx = 0; wizard.step = 3; renderScriptWizard(); showToast(`✦ 6 hooks generated via ${d.result.engine} ✓`); return;
+          }
+        } catch {}
+      }
+      generateHookDrafts(); wizard.step = 3; renderScriptWizard();
+      if (t.id === "wiz-regen-hooks") showToast("Generated fresh hook variations ✓");
+    };
+    runHooks();
+    return;
+  }
   if (t.id === "wiz-back-3") { wizard.step = 2; renderScriptWizard(); return; }
-  if (t.id === "wiz-next-3") { generateFullScript(); wizard.step = 4; renderScriptWizard(); return; }
+  if (t.id === "wiz-next-3") {
+    const runScript = async () => {
+      if (isLocalServer() && activeAiProvider !== "local") {
+        t.disabled = true; t.textContent = `Writing script via ${activeAiProvider}…`;
+        try {
+          const resp = await fetch("/api/ai/script", {
+            method: "POST", headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ step: "script", provider: activeAiProvider, topic: wizard.topic, research: wizard.research, selectedHook: wizard.hooks[wizard.selectedHookIdx]?.text || "", workspaceProfile: getActiveWorkspace() }),
+          });
+          const d = await resp.json();
+          if (resp.ok && d.result?.script) {
+            wizard.scriptText = d.result.script; wizard.step = 4; renderScriptWizard(); showToast(`✦ Script written via ${d.result.engine} ✓`); return;
+          }
+        } catch {}
+      }
+      generateFullScript(); wizard.step = 4; renderScriptWizard();
+    };
+    runScript();
+    return;
+  }
   if (t.id === "wiz-back-4") { wizard.step = 3; renderScriptWizard(); return; }
   if (t.id === "wiz-copy-script") { copyText(document.getElementById("wiz-final-script").value, "Script copied ✓"); return; }
   if (t.id === "wiz-export-llm") { const ws = getActiveWorkspace(); copyText(`Polish this short-form script using ${ws.name}'s voice (${ws.character?.writingStyle || ""}) and Dan Kennedy's 7 Magnetic Elements:\n\n` + document.getElementById("wiz-final-script").value, "LLM Polish Prompt copied ✓"); return; }
@@ -4139,6 +4502,7 @@ window.OUTLIER_APP = {
 
 renderAll();
 setActiveTab(activeTab);
+initAiEngineStatus();
 </script>
 </body>
 </html>
@@ -4248,6 +4612,75 @@ def main():
             row["breakdown"] = p.get("breakdown") or analyze_reel(row)
             all_rows.append(row)
 
+    # Merge synced multi-platform social accounts (Instagram, YouTube, TikTok, Facebook)
+    synced_own_socials = []
+    socials_dir = DATA / "socials"
+    if socials_dir.exists():
+        for sp in sorted(socials_dir.glob("*.json")):
+            try:
+                doc = json.loads(sp.read_text())
+            except json.JSONDecodeError:
+                continue
+            role = doc.get("role") or "owned"
+            plat = doc.get("platform") or "youtube"
+            handle = (doc.get("handle") or "account").lstrip("@")
+            norm_items = []
+            for it in doc.get("items") or []:
+                sc = it.get("shortCode") or it.get("id")
+                if not sc:
+                    continue
+                ratio = float(it.get("ratio") or 1.0)
+                band = outlier_band(ratio)
+                tr = it.get("transcript") or ""
+                cap = it.get("caption") or it.get("title") or ""
+                ts = it.get("timestamp") or ""
+                try:
+                    pdt = datetime.fromisoformat(ts.replace("Z", "+00:00")) if ts else None
+                except ValueError:
+                    pdt = None
+                row = {
+                    "shortCode": sc,
+                    "platform": it.get("platform") or plat,
+                    "url": it.get("url") or "",
+                    "thumb": None,
+                    "thumbUrl": it.get("thumbUrl") or "",
+                    "hook": hook_of(tr, cap),
+                    "transcript": tr,
+                    "transcription": {},
+                    "caption": cap,
+                    "plays": int(it.get("plays") or 0),
+                    "likes": int(it.get("likes") or 0),
+                    "comments": int(it.get("comments") or 0),
+                    "engagements": int(it.get("likes") or 0) + int(it.get("comments") or 0),
+                    "duration": int(it.get("duration") or 0),
+                    "posted_human": pdt.strftime("%b %-d") if pdt else "—",
+                    "posted_ts": int(pdt.timestamp()) if pdt else 0,
+                    "ratio": ratio,
+                    "band_class": band[0],
+                    "band_label": band[1],
+                    "band_color": band[2],
+                    "creator_handle": handle,
+                    "creator_username": it.get("creator_username") or handle,
+                    "creator_avatar": None,
+                    "creator_verified": False,
+                }
+                row["breakdown"] = it.get("breakdown") or analyze_reel(row)
+                norm_items.append(row)
+                if role == "watchlist" and not any(r["shortCode"] == sc for r in all_rows):
+                    all_rows.append(row)
+            if role == "owned":
+                synced_own_socials.append({
+                    "workspaceId": doc.get("workspaceId") or "aisimple",
+                    "platform": plat,
+                    "handle": doc.get("handle") or f"@{handle}",
+                    "syncedAt": doc.get("syncedAt") or "",
+                    "videoCount": len(norm_items),
+                    "medianViews": doc.get("medianViews") or 0,
+                    "totalViews": doc.get("totalViews") or 0,
+                    "note": doc.get("note") or "",
+                    "items": norm_items,
+                })
+
     all_rows.sort(key=lambda r: (r["ratio"], r["posted_ts"]), reverse=True)
     outliers = [r for r in all_rows if r["ratio"] >= 2]
     transcribed_count = sum(1 for r in all_rows if (r["transcript"] or "").strip())
@@ -4312,6 +4745,7 @@ def main():
         "__ADMIN_URL_JSON__": safe_json(CONFIG.get("adminUrl", "/admin")),
         "__WORKSPACES_JSON__": safe_json(workspaces),
         "__COLLECTIONS_JSON__": safe_json(SANDCASTLES_COLLECTIONS),
+        "__OWN_SOCIALS_JSON__": safe_json(synced_own_socials),
     }
 
     html = HTML_TEMPLATE
