@@ -2,205 +2,243 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Outlier Lab — Admin</title>
+<title>Outlier Lab · AI Simple — Admin</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0a0a0c;
-    --bg-2: #14141a;
-    --bg-3: #1e1e26;
-    --fg: #f4f4f6;
-    --fg-dim: rgba(244,244,246,.78);     /* body/help text — bumped from .55 */
-    --fg-faint: rgba(244,244,246,.55);   /* small labels — bumped from .32 */
-    --orange: #FF8A3D;
-    --pink: #FF3D6E;
-    --green: #2DD46F;
-    --border: rgba(255,255,255,.10);
-    --border-strong: rgba(255,255,255,.20);
+    --yellow: #ffc71d;
+    --yellow-hover: #f0b800;
+    --yellow-soft: #fff2ba;
+    --yellow-tint: #fff8da;
+    --yellow-ink: #856000;
+    --ink: #1f1f1f;
+    --ink-2: #575650;
+    --ink-3: #686469;
+    --surface: #ffffff;
+    --paper: #f5f4ef;
+    --input-bg: #fbfaf7;
+    --charcoal: #1f1f1f;
+    --sage: #eaf3e3;
+    --sage-ink: #255a3b;
+    --danger: #d4276b;
+    --danger-bg: #fce8f0;
+    --border: #e8e6dd;
+    --border-strong: #d8d6ce;
+    --font-display: "Sora", -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-sans: "Manrope", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    --font-mono: "Space Mono", ui-monospace, SFMono-Regular, monospace;
   }
-  * { box-sizing: border-box; }
+  *, *::before, *::after { box-sizing: border-box; }
   html, body {
     margin: 0; padding: 0;
-    background: var(--bg); color: var(--fg);
-    font-family: -apple-system, BlinkMacSystemFont, "Inter", "SF Pro Display", system-ui, sans-serif;
+    background: var(--paper); color: var(--ink);
+    font-family: var(--font-sans); font-size: 15px; line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     min-height: 100vh;
   }
-  .wrap { max-width: 880px; margin: 0 auto; padding: 32px 24px 80px; }
+  ::selection { background: var(--yellow); color: var(--ink); }
+  h1, h2, h3 { font-family: var(--font-display); font-weight: 400; letter-spacing: -0.05em; margin: 0; }
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+    outline: 3px solid var(--yellow-ink); outline-offset: 3px;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 24px 24px 88px; }
 
-  /* HEADER */
-  header { display: flex; align-items: center; justify-content: space-between; padding-bottom: 18px; border-bottom: 1px solid var(--border); margin-bottom: 24px; }
+  /* FLOATING HEADER */
+  header {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 24px; padding: 16px 22px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    margin-bottom: 24px; box-shadow: 0 10px 30px rgba(31, 31, 31, 0.04);
+  }
   .brand { display: flex; align-items: center; gap: 12px; }
-  .brand .dot { width: 12px; height: 12px; border-radius: 50%; background: linear-gradient(135deg, var(--orange), var(--pink)); box-shadow: 0 0 16px rgba(255,138,61,.5); }
-  .brand h1 { font-size: 17px; font-weight: 600; margin: 0; letter-spacing: -.01em; }
-  .brand .eyebrow { font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--fg-faint); display: block; margin-top: 1px; }
-  .conn-badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 11px; border-radius: 999px; font-size: 11px; font-weight: 600; }
-  .conn-badge.ok { background: rgba(45,212,111,.12); color: var(--green); border: 1px solid rgba(45,212,111,.25); }
-  .conn-badge.no { background: rgba(255,61,110,.12); color: var(--pink); border: 1px solid rgba(255,61,110,.25); }
-  .conn-badge::before { content: "●"; }
+  .brand-mark {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: var(--yellow); display: grid; place-items: center; flex-shrink: 0;
+  }
+  .brand h1 { font-size: 20px; line-height: 1.1; }
+  .brand .eyebrow {
+    font-size: 10px; font-weight: 800; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--ink-3); display: block; margin-bottom: 2px;
+  }
+  .header-right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+  .conn-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 13px; border-radius: 999px; font-size: 12px; font-weight: 800;
+  }
+  .conn-badge.ok { background: var(--sage); color: var(--sage-ink); }
+  .conn-badge.no { background: var(--danger-bg); color: var(--danger); }
+  .conn-badge::before { content: "●"; font-size: 10px; }
 
   /* SECTIONS */
-  section { background: var(--bg-2); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px; margin-bottom: 18px; position: relative; }
-  section .label { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--fg-faint); margin: 0 0 6px; font-weight: 600; }
-  section h2 { font-size: 18px; font-weight: 600; margin: 0 0 4px; letter-spacing: -.01em; }
-  section .help { font-size: 13px; color: var(--fg-dim); margin: 0 0 16px; line-height: 1.5; }
-  section .help code { background: var(--bg-3); padding: 2px 6px; border-radius: 4px; font-size: 12px; color: var(--orange); font-family: ui-monospace, SFMono-Regular, monospace; }
-  section .help a { color: var(--orange); text-decoration: none; border-bottom: 1px dotted var(--orange); }
+  section {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 24px; padding: 28px 30px; margin-bottom: 20px;
+    box-shadow: 0 8px 24px rgba(31, 31, 31, 0.03);
+  }
+  section.hero-panel {
+    background: var(--charcoal); color: #ffffff; border-color: var(--charcoal);
+  }
+  section.hero-panel .label { color: var(--yellow); }
+  section.hero-panel .help { color: #cfcfcf; }
+  section .label {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 800; letter-spacing: 0.13em;
+    text-transform: uppercase; color: var(--ink-3); margin: 0 0 10px;
+  }
+  section .label::before {
+    content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--yellow);
+  }
+  section h2 { font-size: clamp(22px, 2.4vw, 28px); line-height: 1.2; margin: 0 0 8px; }
+  section .help { font-size: 14px; color: var(--ink-2); margin: 0 0 18px; line-height: 1.6; }
+  section .help code {
+    background: var(--paper); padding: 2px 7px; border-radius: 6px;
+    font-size: 12px; color: var(--ink); font-family: var(--font-mono);
+    border: 1px solid var(--border);
+  }
+  section .help a { color: var(--ink); font-weight: 700; text-decoration: underline; text-underline-offset: 4px; }
+  section .help a:hover { color: var(--yellow-ink); }
 
   /* INPUTS */
-  input[type=text], input[type=password] {
-    width: 100%;
-    padding: 11px 14px;
-    background: var(--bg-3);
-    border: 1px solid var(--border);
-    border-radius: 9px;
-    color: var(--fg);
-    font: inherit; font-size: 13px;
-    outline: none;
-    transition: border-color .12s;
+  input[type=text], input[type=password], #handles-input {
+    width: 100%; padding: 12px 15px;
+    background: var(--input-bg); border: 1px solid var(--border-strong);
+    border-radius: 12px; color: var(--ink); font: inherit; font-size: 14px;
+    outline: none; transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
   }
-  input:focus { border-color: var(--orange); background: var(--bg); }
-  .row { display: flex; gap: 8px; align-items: stretch; }
+  #handles-input { resize: vertical; min-height: 98px; line-height: 1.55; }
+  input:focus, #handles-input:focus {
+    border-color: var(--yellow-ink); background: #fff;
+    box-shadow: 0 0 0 3px rgba(255, 199, 29, 0.3);
+  }
+  .row { display: flex; gap: 10px; align-items: stretch; }
   .row input { flex: 1; }
-  button.btn {
-    padding: 11px 18px;
-    background: var(--orange);
-    color: #0a0a0c;
-    border: 0; border-radius: 9px;
-    font: inherit; font-size: 13px; font-weight: 700;
-    cursor: pointer;
-    transition: background .12s;
-    white-space: nowrap;
-  }
-  button.btn:hover { background: var(--pink); color: #fff; }
-  button.btn.ghost { background: transparent; color: var(--fg-dim); border: 1px solid var(--border); }
-  button.btn.ghost:hover { border-color: var(--orange); color: var(--orange); background: transparent; }
-  button.btn:disabled { opacity: .5; cursor: not-allowed; }
 
-  .status { font-size: 11px; color: var(--fg-faint); margin-top: 8px; min-height: 14px; }
-  .status.ok { color: var(--green); }
-  .status.bad { color: var(--pink); }
-
-  /* SEARCH RESULTS */
-  .results { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
-  .result {
-    display: flex; align-items: center; gap: 12px;
-    padding: 10px 12px;
-    background: var(--bg-3);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    transition: border-color .12s;
+  /* AI SIMPLE PILL BUTTONS */
+  button.btn, a.btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 12px 20px; background: var(--yellow); color: #151515;
+    border: 0; border-radius: 999px; font: inherit; font-size: 13px; font-weight: 800;
+    cursor: pointer; white-space: nowrap; text-decoration: none;
+    transition: background 0.16s, transform 0.16s, border-color 0.16s;
   }
-  .result:hover { border-color: var(--border-strong); }
-  .result img.avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; flex-shrink: 0; background: var(--bg); }
-  .result .info { flex: 1; min-width: 0; }
-  .result .name { font-size: 14px; font-weight: 600; line-height: 1.2; }
-  .result .name .verified { color: var(--orange); margin-left: 4px; font-size: 11px; }
-  .result .handle { font-size: 12px; color: var(--fg-dim); margin-top: 2px; }
-  .result .stats { font-size: 11px; color: var(--fg-faint); }
-  .result button.add { padding: 7px 13px; font-size: 12px; }
-  .result.added button.add { background: var(--bg-2); color: var(--green); border: 1px solid rgba(45,212,111,.3); }
+  button.btn:hover, a.btn:hover { background: var(--yellow-hover); transform: translateY(-1.5px); }
+  button.btn.ghost, a.btn.ghost {
+    background: var(--surface); color: var(--ink); border: 1px solid var(--border-strong);
+  }
+  button.btn.ghost:hover, a.btn.ghost:hover { border-color: var(--ink); background: var(--paper); }
+  button.btn.dark { background: var(--charcoal); color: #fff; }
+  button.btn.dark:hover { background: #333; }
+  button.btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  .status { font-size: 12.5px; color: var(--ink-3); margin-top: 10px; min-height: 16px; font-weight: 600; }
+  .status.ok { color: var(--sage-ink); }
+  .status.bad { color: var(--danger); }
+
+  /* SCOPE NAV */
+  .scope-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+  .scope-nav button {
+    background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 999px; color: #f0f0f0; padding: 9px 16px;
+    cursor: pointer; font: inherit; font-size: 13px; font-weight: 700; transition: all 0.15s;
+  }
+  .scope-nav button:hover { border-color: var(--yellow); color: #fff; }
+  .scope-nav button.active { background: var(--yellow); color: #151515; border-color: var(--yellow); font-weight: 800; }
+
+  /* SEARCH RESULTS & TRACKING LIST */
+  .results, .creators-list { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
+  .result, .creator-row {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 14px 16px; background: var(--paper);
+    border: 1px solid var(--border); border-radius: 16px;
+    transition: border-color 0.14s;
+  }
+  .result:hover, .creator-row:hover { border-color: var(--border-strong); }
+  .result img.avatar, .creator-row img {
+    width: 44px; height: 44px; border-radius: 50%; object-fit: cover; flex-shrink: 0; background: var(--border);
+  }
+  .result .info, .creator-row .info { flex: 1; min-width: 0; }
+  .result .name, .creator-row .name { font-size: 15px; font-weight: 800; color: var(--ink); line-height: 1.25; }
+  .verified { color: var(--yellow-ink); margin-left: 4px; font-size: 12px; }
+  .handle { font-size: 12.5px; color: var(--ink-3); margin-top: 2px; }
+  .stats { font-size: 12px; color: var(--ink-3); margin-top: 2px; }
+  .result button.add { padding: 8px 16px; font-size: 12px; align-self: center; }
+  .result.added button.add { background: var(--sage); color: var(--sage-ink); }
   .result.added button.add::after { content: " ✓"; }
 
-  /* TRACKING LIST */
-  .creators-list { display: flex; flex-direction: column; gap: 8px; }
-  .creator-row {
-    display: flex; align-items: center; gap: 12px;
-    padding: 10px 12px;
-    background: var(--bg-3);
-    border: 1px solid var(--border);
-    border-radius: 10px;
+  .memberships { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; font-size: 12.5px; color: var(--ink-2); }
+  .memberships label {
+    display: inline-flex; gap: 6px; align-items: center; cursor: pointer;
+    padding: 5px 11px; border-radius: 999px; background: var(--surface);
+    border: 1px solid var(--border); font-weight: 700;
   }
-  .creator-row img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; flex-shrink: 0; background: var(--bg); }
-  .creator-row .info { flex: 1; min-width: 0; }
-  .creator-row .remove { color: var(--fg-faint); font-size: 16px; padding: 6px 10px; cursor: pointer; background: transparent; border: 0; border-radius: 7px; transition: all .12s; }
-  .creator-row .remove:hover { background: rgba(255,61,110,.12); color: var(--pink); }
+  .memberships input, .tracking-toggle input { accent-color: var(--charcoal); }
+  .tracking-toggle {
+    display: inline-flex; gap: 6px; align-items: center; cursor: pointer;
+    font-size: 12.5px; font-weight: 700; margin-top: 10px; color: var(--ink);
+  }
+  .vetting-note { color: var(--ink-3); font-size: 12.5px; line-height: 1.5; margin-top: 6px; }
+  .creator-row .remove {
+    color: var(--ink-3); font-size: 18px; width: 32px; height: 32px;
+    border-radius: 50%; cursor: pointer; background: var(--surface);
+    border: 1px solid var(--border); display: grid; place-items: center;
+    transition: all 0.14s; flex-shrink: 0;
+  }
+  .creator-row .remove:hover { background: var(--danger-bg); color: var(--danger); border-color: var(--danger); }
+
   .empty-state {
-    padding: 30px 20px;
-    text-align: center;
-    color: var(--fg-dim);
-    font-size: 14px;
-    background: var(--bg-3);
-    border: 1px dashed var(--border-strong);
-    border-radius: 12px;
+    padding: 32px 20px; text-align: center; color: var(--ink-2); font-size: 14px;
+    background: var(--paper); border: 1px dashed var(--border-strong); border-radius: 16px;
   }
+
+  /* RESEARCH */
+  #research-notes article {
+    border-top: 1px solid var(--border); padding: 14px 0; font-size: 13.5px; line-height: 1.6; color: var(--ink-2);
+  }
+  #research-notes article:first-child { border-top: 0; padding-top: 4px; }
+  #research-notes article strong { color: var(--ink); display: block; margin-bottom: 4px; }
+  #research-notes a { color: var(--ink); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
 
   /* SCHEDULE */
-  .schedule-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 8px; }
+  .schedule-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 10px; }
   .schedule-opt {
-    padding: 14px 16px;
-    background: var(--bg-3);
-    border: 1px solid var(--border-strong);
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all .12s;
-    text-align: left;
-    color: var(--fg);              /* default text is full white */
-    font: inherit;
+    padding: 15px 16px; background: var(--paper);
+    border: 1px solid var(--border-strong); border-radius: 14px;
+    cursor: pointer; transition: all 0.14s; text-align: left; color: var(--ink); font: inherit;
   }
-  .schedule-opt:hover { border-color: var(--orange); background: var(--bg); }
+  .schedule-opt:hover { border-color: var(--ink); background: var(--surface); }
   .schedule-opt.active {
-    background: linear-gradient(135deg, rgba(255,138,61,.22), rgba(255,61,110,.10));
-    border-color: var(--orange);
-    box-shadow: 0 0 0 1px var(--orange);
+    background: var(--yellow-tint); border-color: var(--yellow-ink);
+    box-shadow: inset 0 0 0 1px var(--yellow-ink);
   }
-  .schedule-opt .label-row {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--fg);              /* full white instead of dim */
-  }
-  .schedule-opt .cron {
-    font-size: 11px;
-    color: var(--fg-dim);          /* was --fg-faint, now brighter */
-    margin-top: 5px;
-    font-family: ui-monospace, SFMono-Regular, monospace;
-    letter-spacing: -.02em;
-  }
-  .schedule-opt.active .cron { color: var(--orange); font-weight: 600; }
+  .schedule-opt .label-row { font-size: 13.5px; font-weight: 800; color: var(--ink); }
+  .schedule-opt .cron { font-size: 11px; color: var(--ink-3); margin-top: 4px; font-family: var(--font-mono); }
+  .schedule-opt.active .cron { color: var(--yellow-ink); font-weight: 700; }
 
-  /* ACTIONS */
   .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
 
   /* TOAST */
   .toast {
     position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
-    padding: 12px 20px;
-    border-radius: 10px;
-    font-size: 13px; font-weight: 600;
-    box-shadow: 0 8px 32px rgba(0,0,0,.5);
-    backdrop-filter: blur(10px);
-    z-index: 1000;
-    opacity: 0; transition: opacity .2s, transform .2s;
-    pointer-events: none;
+    padding: 12px 22px; border-radius: 999px; font-size: 13px; font-weight: 800;
+    box-shadow: 0 14px 36px rgba(15, 12, 20, 0.22); z-index: 1000;
+    opacity: 0; transition: opacity 0.2s, transform 0.2s; pointer-events: none;
   }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(-4px); }
-  .toast.ok { background: rgba(45,212,111,.9); color: #0a0a0c; }
-  .toast.bad { background: rgba(255,61,110,.9); color: #fff; }
-  .toast.info { background: rgba(255,138,61,.9); color: #0a0a0c; }
+  .toast.ok { background: var(--charcoal); color: var(--yellow); }
+  .toast.bad { background: var(--danger); color: #fff; }
+  .toast.info { background: var(--yellow); color: #151515; }
 
-  /* SPINNER */
   .spinner {
     display: inline-block; width: 14px; height: 14px;
-    border: 2px solid rgba(255,255,255,.2);
-    border-top-color: var(--orange);
-    border-radius: 50%;
-    animation: spin .8s linear infinite;
-    vertical-align: middle;
+    border: 2px solid rgba(21,21,21,0.2); border-top-color: #151515;
+    border-radius: 50%; animation: spin 0.8s linear infinite; vertical-align: middle;
   }
   @keyframes spin { to { transform: rotate(360deg); } }
-</style>
-<style>
-  .scope-nav { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px; }
-  .scope-nav button { background:var(--bg-3); border:1px solid var(--border); border-radius:20px; color:var(--fg); padding:9px 12px; cursor:pointer; font:inherit; font-size:12px; }
-  .scope-nav button.active { background:var(--orange); color:var(--bg); }
-  .memberships { display:flex; flex-wrap:wrap; gap:10px; margin-top:10px; font-size:12px; color:var(--fg-dim); }
-  .memberships label, .tracking-toggle { display:flex; gap:5px; align-items:center; cursor:pointer; }
-  .creator-row { align-items:flex-start; }
-  .tracking-toggle { font-size:12px; margin-top:12px; color:var(--fg); }
-  .vetting-note { color:var(--fg-dim); font-size:12px; line-height:1.6; margin-top:8px; }
-  #research-notes article { border-top:1px solid var(--border); padding:12px 0; font-size:13px; line-height:1.6; }
-  #research-notes a { color:var(--orange); }
-  #handles-input { box-sizing:border-box; width:100%; resize:vertical; min-height:92px; padding:12px; background:var(--bg-3); color:var(--fg); border:1px solid var(--border); border-radius:9px; font:inherit; font-size:13px; }
 </style>
 </head>
 <body>
@@ -208,46 +246,54 @@
 
   <header>
     <div class="brand">
-      <div class="dot"></div>
+      <span class="brand-mark" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 64 64" fill="none">
+          <path d="M16 48L28.8 18.6C30.1 15.6 33.9 15.6 35.2 18.6L48 48" stroke="#111111" stroke-width="10.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="32" cy="44" r="6.8" fill="#111111"/>
+        </svg>
+      </span>
       <div>
-        <span class="eyebrow">Outlier Lab</span>
-        <h1>Admin</h1>
+        <span class="eyebrow">AI SIMPLE · OUTLIER LAB</span>
+        <h1>Admin Console</h1>
       </div>
     </div>
-    <span id="conn-badge" class="conn-badge no">No token</span>
+    <div class="header-right">
+      <span id="conn-badge" class="conn-badge no">No token</span>
+      <a class="btn ghost" href="/">← Back to Dashboard</a>
+    </div>
   </header>
 
-  <section>
-    <div class="label">Niche lists</div>
+  <section class="hero-panel">
+    <div class="label">Niche Lists &amp; Workspaces</div>
     <h2>Choose your focus</h2>
-    <p class="help">Creators can belong to several lists. A shared account is scraped once per refresh. Choose a list to manage membership and refresh only its tracked creators.</p>
+    <p class="help">Creators can belong to several lists. A shared account is scraped once per refresh. Pick a list below to manage memberships and refresh only its tracked channels.</p>
     <nav id="scope-nav" class="scope-nav" aria-label="Niche lists"></nav>
-    <div id="scope-summary" class="help"></div>
+    <div id="scope-summary" class="help" style="margin-bottom:0"></div>
   </section>
 
   <!-- 1. APIFY TOKEN -->
   <section>
-    <div class="label">Step 1</div>
+    <div class="label">Step 1 · Credentials</div>
     <h2>Apify API token</h2>
-    <p class="help">Get yours at <a href="https://console.apify.com/settings/api" target="_blank">console.apify.com/settings/api</a>. Stored locally in <code>.env</code>; never committed to git.</p>
+    <p class="help">Get yours at <a href="https://console.apify.com/settings/api" target="_blank" rel="noopener noreferrer">console.apify.com/settings/api</a>. Stored locally in <code>.env</code>; never committed to git.</p>
     <div class="row">
       <input id="token-input" type="password" placeholder="apify_api_..." autocomplete="off">
-      <button id="token-save" class="btn">Save</button>
+      <button id="token-save" class="btn">Save Token</button>
     </div>
     <div id="token-status" class="status"></div>
   </section>
 
   <!-- 2. SEARCH + ADD CREATORS -->
   <section id="add-creators">
-    <div class="label">Step 2</div>
+    <div class="label">Step 2 · Channel Intake</div>
     <h2>Add creators</h2>
-    <p class="help">Know the handles? Paste up to 25 at once. They save immediately; profile names and photos load in the background. Spaces, commas, new lines, and Instagram profile links work.</p>
+    <p class="help">Know the handles? Paste up to 25 at once. They save immediately; profile names and photos load in the background. Spaces, commas, new lines, and Instagram profile links all work.</p>
     <textarea id="handles-input" rows="3" maxlength="2500" spellcheck="false" aria-label="Instagram handles to add" placeholder="@creator_one @creator_two&#10;https://www.instagram.com/creator_three/"></textarea>
-    <button id="add-handles" class="btn" style="margin-top:10px">Add handles now</button>
+    <button id="add-handles" class="btn" style="margin-top:12px">Add handles now →</button>
     <div id="import-status" class="status" aria-live="polite"></div>
-    <p class="help" style="margin-top:20px">Don't know the handle? Search by name below. Searches run in the background and reuse cached results; typing alone doesn't spend credits.</p>
+    <p class="help" style="margin-top:22px">Don't know the exact handle? Search by name below. Searches run in the background and reuse cached results; typing alone doesn't spend credits.</p>
     <div class="row">
-      <input id="search-input" type="text" maxlength="100" placeholder="Search by name…" autocomplete="off">
+      <input id="search-input" type="text" maxlength="100" placeholder="Search creator by name…" autocomplete="off">
       <button id="search-submit" class="btn ghost">Find profiles</button>
     </div>
     <div id="results" class="results"></div>
@@ -256,22 +302,22 @@
 
   <!-- 3. CURRENTLY TRACKING -->
   <section>
-    <div class="label">Tracking</div>
-    <h2>Creators in this list <span id="creators-count" style="color:var(--fg-faint);font-weight:400;font-size:14px"></span></h2>
-    <p class="help">Use the checkboxes to change membership. Paused creators keep their cached data without adding refresh costs. Rebuild the dashboard after changing lists; this uses no Apify credits.</p>
+    <div class="label">Active Roster</div>
+    <h2>Creators in this list <span id="creators-count" style="color:var(--ink-3);font-family:var(--font-sans);font-weight:700;font-size:14px"></span></h2>
+    <p class="help">Use the checkboxes to change list membership. Paused creators keep their cached data without adding refresh costs. Rebuild the dashboard after changing lists; rebuilding is free.</p>
     <div id="creators-list" class="creators-list"></div>
   </section>
 
   <section>
-    <div class="label">Vetted candidates</div>
+    <div class="label">Vetted Candidates</div>
     <h2>Research notes</h2>
-    <p class="help">Topic fit and useful advice are assessed separately from recent Instagram Reel activity.</p>
+    <p class="help">Topic fit and practical value are assessed separately from recent Instagram Reel activity.</p>
     <div id="research-notes"></div>
   </section>
 
   <!-- 4. SCHEDULE -->
   <section>
-    <div class="label">Step 3</div>
+    <div class="label">Step 3 · Cadence</div>
     <h2>Refresh schedule</h2>
     <p class="help">How often should GitHub Actions auto-refresh your dashboard? After changing, commit + push <code>.github/workflows/refresh.yml</code> for it to take effect.</p>
     <div id="schedule-grid" class="schedule-grid">
@@ -305,12 +351,12 @@
 
   <!-- 5. RUN / VIEW -->
   <section>
-    <div class="label">Step 4</div>
+    <div class="label">Step 4 · Pipeline</div>
     <h2>Run + view</h2>
     <p class="help" id="refresh-help">Refresh this list's Reel data, metrics, and preview clips. Adding a profile alone does not fetch Reels. Refreshes stay manual.</p>
     <div class="actions">
-      <button id="run-refresh" class="btn">Run refresh now</button>
-      <button id="run-transcripts" class="btn ghost">Fill missing transcripts · TokScript</button>
+      <button id="run-refresh" class="btn">Run refresh now →</button>
+      <button id="run-transcripts" class="btn dark">Fill missing transcripts · TokScript</button>
       <button id="rebuild-dashboard" class="btn ghost">Rebuild dashboard · free</button>
       <button id="open-dashboard" class="btn ghost">Open dashboard ↗</button>
     </div>
@@ -386,8 +432,7 @@ $("#add-handles").addEventListener("click", async e => {
   } finally { e.target.disabled = false; }
 });
 
-// ───── toast ─────
-function toast(msg, kind = "info", dur = 2200) {
+function toast(msg, kind = "info", dur = 2400) {
   const t = $("#toast");
   t.className = `toast show ${kind}`;
   t.textContent = msg;
@@ -395,7 +440,6 @@ function toast(msg, kind = "info", dur = 2200) {
   t._timer = setTimeout(() => { t.className = "toast"; }, dur);
 }
 
-// ───── state load ─────
 async function loadState() {
   STATE = await apiJSON("/api/state");
   renderHeader();
@@ -430,12 +474,12 @@ function renderCreators() {
   const visible = STATE.creators.filter(c => activeScope === "__all__" || (c.scopes || []).includes(activeScope));
   count.textContent = `· ${visible.length} saved · ${visible.filter(c => c.trackingEnabled !== false).length} tracking`;
   if (!visible.length) {
-    list.innerHTML = `<div class="empty-state">No creators yet — search above and add some.</div>`;
+    list.innerHTML = `<div class="empty-state">No creators yet — paste handles or search above to add some.</div>`;
     return;
   }
   list.innerHTML = visible.map(c => `
     <div class="creator-row" data-handle="${escapeHtml(c.handle)}">
-      ${c.profilePic ? `<img src="${escapeHtml(c.profilePic)}" alt="" referrerpolicy="no-referrer" onerror="this.style.opacity=.2">` : `<div style="width:40px;height:40px;border-radius:50%;background:var(--bg)"></div>`}
+      ${c.profilePic ? `<img src="${escapeHtml(c.profilePic)}" alt="" referrerpolicy="no-referrer" onerror="this.style.opacity=.2">` : `<div style="width:44px;height:44px;border-radius:50%;background:var(--border);flex-shrink:0"></div>`}
       <div class="info">
         <div class="name">${escapeHtml(c.name || c.handle)}${c.verified ? '<span class="verified">✓</span>' : ''}</div>
         <div class="handle">@${escapeHtml(c.handle)}${c.followers == null ? ' · profile details pending' : ` · ${fmtNum(c.followers)} followers · ${c.posts || 0} posts`}</div>
@@ -444,7 +488,7 @@ function renderCreators() {
         <div class="memberships">${(STATE.scopes || []).map(s => `<label><input type="checkbox" data-membership="${escapeHtml(c.handle)}" value="${escapeHtml(s.id)}" ${(c.scopes || []).includes(s.id) ? 'checked' : ''}>${escapeHtml(s.name)}</label>`).join("")}</div>
         <label class="tracking-toggle"><input type="checkbox" data-tracking="${escapeHtml(c.handle)}" ${c.trackingEnabled !== false ? 'checked' : ''}> Include in refreshes</label>
       </div>
-      <button class="remove" data-action="remove" data-handle="${escapeHtml(c.handle)}" title="Stop tracking">×</button>
+      <button class="remove" data-action="remove" data-handle="${escapeHtml(c.handle)}" title="Stop tracking" aria-label="Remove @${escapeHtml(c.handle)}">×</button>
     </div>
   `).join("");
 }
@@ -514,7 +558,6 @@ function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
 }
 
-// ───── token ─────
 $("#token-save").addEventListener("click", async () => {
   const token = $("#token-input").value.trim();
   if (!token) { toast("Paste a token first", "bad"); return; }
@@ -533,7 +576,6 @@ $("#token-save").addEventListener("click", async () => {
   }
 });
 
-// ───── search ─────
 let searchVersion = 0;
 $("#search-input").addEventListener("input", () => {
   searchVersion++;
@@ -586,7 +628,7 @@ function renderResults(results) {
     const added = saved && (activeScope === "__all__" || (saved.scopes || []).includes(activeScope));
     return `
       <div class="result ${added ? 'added' : ''}" data-handle="${escapeHtml(r.handle)}">
-        ${r.profilePic ? `<img class="avatar" src="${escapeHtml(r.profilePic)}" alt="" referrerpolicy="no-referrer" onerror="this.style.opacity=.2">` : `<div class="avatar"></div>`}
+        ${r.profilePic ? `<img class="avatar" src="${escapeHtml(r.profilePic)}" alt="" referrerpolicy="no-referrer" onerror="this.style.opacity=.2">` : `<div class="avatar" style="width:44px;height:44px;border-radius:50%;background:var(--border)"></div>`}
         <div class="info">
           <div class="name">${escapeHtml(r.name || r.handle)}${r.verified ? '<span class="verified">✓</span>' : ''}</div>
           <div class="handle">@${escapeHtml(r.handle)}</div>
@@ -598,7 +640,6 @@ function renderResults(results) {
   }).join("");
 }
 
-// ───── add/remove via event delegation ─────
 document.addEventListener("click", async (e) => {
   const action = e.target.dataset.action;
   if (!action) return;
@@ -636,7 +677,6 @@ document.addEventListener("click", async (e) => {
       const j = await r.json();
       STATE.creators = j.creators;
       renderCreators();
-      // also update search result state if visible
       const resultRow = document.querySelector(`.result[data-handle="${handle}"]`);
       if (resultRow) {
         resultRow.classList.remove("added");
@@ -648,12 +688,11 @@ document.addEventListener("click", async (e) => {
   }
 });
 
-// ───── schedule ─────
 async function loadSchedule() {
   try {
     const r = await fetch("/api/schedule");
     const j = await r.json();
-    const current = j.cron || "0 11 * * 0";  // default weekly Sunday
+    const current = j.cron || "0 11 * * 0";
     document.querySelectorAll(".schedule-opt").forEach(btn => {
       btn.classList.toggle("active", btn.dataset.cron === current);
     });
@@ -682,7 +721,6 @@ document.querySelectorAll(".schedule-opt").forEach(btn => {
   });
 });
 
-// ───── run refresh ─────
 $("#run-refresh").addEventListener("click", async () => {
   if (!STATE.tokenSet) { toast("Save your Apify token first", "bad"); return; }
   const selected = STATE.creators.filter(c => c.trackingEnabled !== false && (activeScope === "__all__" || (c.scopes || []).includes(activeScope)));
@@ -700,12 +738,12 @@ $("#run-refresh").addEventListener("click", async () => {
     } else {
       toast(j.message || "Failed to start", "bad");
       $("#run-refresh").disabled = false;
-      $("#run-refresh").textContent = "Run refresh now";
+      $("#run-refresh").textContent = "Run refresh now →";
     }
   } catch (e) {
     toast("Failed: " + e.message, "bad");
     $("#run-refresh").disabled = false;
-    $("#run-refresh").textContent = "Run refresh now";
+    $("#run-refresh").textContent = "Run refresh now →";
   }
 });
 
@@ -727,7 +765,6 @@ $("#run-transcripts").addEventListener("click", async () => {
   }
 });
 
-// ───── init ─────
 loadState().catch(error => toast(error.message, "bad"));
 loadSchedule();
 </script>

@@ -1,89 +1,66 @@
-# Outlier Lab
+# Outlier Lab · AI Simple
 
-Track the top reels across the creators in your niche. Search creators with a live admin UI, choose when to refresh, and get a dashboard with spoken-hook transcripts and 3-second autoplay hook clips. **No AI model API key needed** — transcripts use your existing TokScript account through its MCP endpoint. Apify is used only for the bounded statistics and profile scrapes.
+Track top short-form outliers across creators in your niche, break down every video with full **Sandcastles-style frameworks** (beat-by-beat transcript, idea analysis, hook mad-lib, storytelling format & scriptwriting tactics, visual layout) plus **Dan Kennedy Magnetic Story Selling & Marketing Secrets** character audits, and generate remixed scripts in your brand voice.
 
-![Pipeline](https://img.shields.io/badge/pipeline-Admin_UI_→_Apify_→_GitHub_Actions_→_Vercel-orange)
+**Zero required keys, zero cloud setup, zero AI subscriptions to get started.** Everything runs locally out of the box with `./setup.sh`. Optional scrapers (Apify / TokScript) and optional cloud hosting ("Go Live" on Vercel + Clerk) can be layered in whenever you want — never required.
+
+![Setup](https://img.shields.io/badge/setup-1_command_local_start-ffc71d)
 ![No AI key](https://img.shields.io/badge/AI_key_required-no-brightgreen)
+![Go Live](https://img.shields.io/badge/go_live-100%25_optional-1f1f1f)
 
-## What it does
+## 60-Second Local Quickstart (No Accounts or Keys Required)
 
-Every refresh interval (you pick the frequency), a GitHub Action runs and:
-
-1. **Apify scrapes** the last 28 days of reels for your tracked creator list
-2. **Fills missing transcripts through TokScript**, reusing its library before submitting batches of up to 50 Reels
-3. **ffmpeg extracts** the first 3 seconds of each new reel as a muted autoplay clip
-4. **Regenerates** a static HTML dashboard with outlier scores, sortable table, filter-by-creator chips, click-row-to-play hook clip
-5. **Pushes** the changes back to the repo → **Vercel auto-deploys**
-
-## What you need
-
-| Thing | Why | Cost |
-|---|---|---|
-| **Apify account** | Reel stats and creator profiles | Bounded per-run caps |
-| **TokScript account + API key** | Spoken transcripts via MCP | Uses the existing plan allowance |
-| **GitHub account** | Hosts the code + runs the cron | Free |
-| **Vercel account** | Hosts the dashboard | Free (Hobby tier) |
-| **Python 3.10+** | To run the local admin UI | Free |
-| **ffmpeg** | For the 3-sec hook clips | Free |
-
-**You do NOT need:** an OpenAI key, Claude key, or any other AI subscription.
-
-## Setup (one time, ~10 minutes)
-
-### 1. Get the code
-
-Click **Use this template** at the top of this repo, then clone your new fork:
 ```bash
-git clone https://github.com/YOUR-USERNAME/outlier-lab.git
+git clone https://github.com/Vibe-Marketer/outlier-lab.git
 cd outlier-lab
+./setup.sh
 ```
 
-### 2. Install ffmpeg
+That's it. `./setup.sh` checks Python 3, builds the dashboard with full Sandcastles + Dan Kennedy breakdowns, starts the local studio server on `http://localhost:4747`, and opens it in your browser.
 
-macOS:
-```bash
-brew install ffmpeg
-```
+Out of the box (with **$0 spend and zero logins**), you immediately get:
+- **Multi-Workspace Studio** (`AI Simple`, `Clickable Impact`, `All Workspaces`, plus unlimited custom workspaces)
+- **Full 6-Tab Video Breakdown Studio** on every reel (Paragraph & Beat-by-Beat Transcript, Idea Analysis, Hook Mad-Lib & Alignment, Storytelling Format & Tactics, Visual Layout, Dan Kennedy 6-Dimension Magnetic Audit) + instant single-video URL/transcript analyzer
+- **Ideas & Hooks Vault** (Shortlist, Viral Hook Vault, live Hook Genius Pre-Flight Checker, Curated Frameworks, Projects)
+- **Content Strategy Audit & 4-Step AI Script Builder** (with Draft Fixer & workspace voice injection)
+- **Dan Kennedy Character & Offer Builder** (5 Archetypes, 7 Magnetic Elements, James Bond Test, PROFITS bank)
+- **Portable JSON Backup / Import** & CSV exports
 
-### 3. Launch the admin
+## Optional Add-Ons (Never Required)
 
-```bash
-python3 serve.py
-```
+| Add-on | What it unlocks | Required? |
+|---|---|---|
+| **Python 3.10+** | Local studio + instant breakdowns | Built into macOS/Linux |
+| **ffmpeg** (`brew install ffmpeg`) | Auto-extracting 3-sec muted autoplay hook clips | Optional |
+| **Apify account** | Automated 28-day Instagram reel stats & creator profile scrapes | Optional |
+| **TokScript API key** | Bulk spoken-word transcripts via MCP (no OpenAI/Claude key needed) | Optional |
+| **GitHub Actions** | Scheduled background refreshes | Optional |
+| **Vercel + Clerk ("Go Live")** | Publish static dashboard to a custom domain like `outlier.aisimple.co` | Optional |
 
-Your browser opens at `http://localhost:4747/admin`. From there:
+## Optional: Enable Live Scraping & "Go Live" Hosting
 
-- **Paste your Apify token** ([get one free](https://console.apify.com/settings/api))
-- **Search and add creators** — type a name or handle, see live results with profile photos + follower counts, click "Add" on the ones you want to track
-- **Pick a schedule** — daily, every 3 days, weekly Sunday, weekly Monday, monthly, or manual-only
-- **Click "Run refresh now"** to generate the dashboard for the first time
-- **Click "Open dashboard ↗"** when it's done
+Only do these steps when you want automated channel scrapes or a hosted URL.
 
-### 4. Push to GitHub + add the secret
+### A. Enable local Admin scraping (optional)
+Run `./setup.sh` (or `python3 serve.py`) and open `http://localhost:4747/admin`:
+- Paste an **Apify token** (optional — only needed to scrape live creator stats) and/or **TokScript API key** (optional — for bulk transcripts).
+- Add creator handles or single videos, pick a schedule, and click **Run refresh now**.
 
+### B. Go Live on GitHub + Vercel (optional)
 ```bash
 git add config.json .github/workflows/refresh.yml
 git commit -m "My setup"
 git push
 
-# Make both credentials available to GitHub Actions:
+# Optional: enable scheduled cloud refreshes in GitHub Actions
 gh secret set APIFY_TOKEN
 gh secret set TOKSCRIPT_API_KEY
-# Paste only the token at the prompt, without the APIFY_TOKEN= prefix.
-# (or via UI: repo → Settings → Secrets → Actions → New repository secret)
-```
 
-### 5. Deploy to Vercel
-
-```bash
+# Optional: publish live to Vercel
 vercel --prod
 ```
 
-Vercel auto-deploys on every push from now on, including the scheduled refresh from GitHub Actions.
-
-### 6. Done
-
-The cron you picked in the admin UI fires automatically. You can also trigger manually any time: repo → Actions → Weekly refresh → Run workflow.
+Vercel runs `export_site.py` to publish only `index.html`, `thumbs/`, and `clips/`. The local admin server (`serve.py`) never deploys publicly.
 
 ## How the cost stays low
 

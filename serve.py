@@ -201,6 +201,8 @@ class AdminHandler(BaseHTTPRequestHandler):
                 "tokenPrefix": "configured" if token else "",
                 "creators": config.get("creators", []),
                 "scopes": scopes_for(config),
+                "workspaces": config.get("workspaces", []),
+                "singleVideos": config.get("singleVideos", []),
                 "research": config.get("research", {}),
                 "refresh": config.get("refresh", {}),
                 "jobs": self.server.profile_jobs.recent() if self.server.profile_jobs else [],
@@ -286,7 +288,7 @@ class AdminHandler(BaseHTTPRequestHandler):
         parsed = urllib.parse.urlparse(self.path)
         path = parsed.path
         # Threaded requests must serialize the whole read/modify/write transaction.
-        if path.startswith("/api/creators") or path == "/api/scopes":
+        if path.startswith("/api/creators") or path in {"/api/scopes", "/api/workspaces", "/api/videos/analyze"}:
             with CONFIG_LOCK:
                 self._post(path)
         elif path in {"/api/build", "/api/refresh", "/api/transcripts", "/api/schedule"}:
@@ -311,6 +313,41 @@ class AdminHandler(BaseHTTPRequestHandler):
                 config["scopes"] = scopes + [{"id": scope_id, "name": name.strip(), "description": description}]
                 save_config(config)
             self._json(200, {"scopes": scopes_for(config)})
+            return
+
+        if path == "/api/workspaces":
+            data = self._body()
+            workspaces = data.get("workspaces")
+            if not isinstance(workspaces, list):
+                self._json(400, {"message": "Provide a workspaces list."})
+                return
+            config = load_config()
+            config["workspaces"] = workspaces[:25]
+            save_config(config)
+            self._json(200, {"ok": True, "workspaces": config["workspaces"]})
+            return
+
+        if path == "/api/videos/analyze":
+            data = self._body()
+            url = (data.get("url") or "").strip()
+            if not url or not url.startswith(("http://", "https://")):
+                self._json(400, {"message": "Provide a valid video URL."})
+                return
+            config = load_config()
+            entry = {
+                "id": data.get("id") or f"vid_{int(time.time()*1000)}",
+                "url": url,
+                "platform": (data.get("platform") or "instagram")[:24],
+                "workspace": (data.get("workspace") or "aisimple")[:60],
+                "tag": (data.get("tag") or "")[:80],
+                "transcript": (data.get("transcript") or "")[:12000],
+                "createdAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+            }
+            saved = config.get("singleVideos", [])
+            saved = [entry] + [v for v in saved if v.get("url") != url]
+            config["singleVideos"] = saved[:100]
+            save_config(config)
+            self._json(200, {"ok": True, "video": entry, "singleVideos": config["singleVideos"]})
             return
 
         if path == "/api/token":
