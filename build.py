@@ -38,7 +38,7 @@ DEFAULT_WORKSPACES = [
         "accent": "#ffc71d",
         "accentInk": "#1f1f1f",
         "tagline": "AI workflows, automation & high-leverage founder systems",
-        "scopes": ["ai", "ai-dtc", "marketing-sales"],
+        "scopes": ["ai", "ai-dtc", "marketing-sales", "notion-swipes"],
         "socials": [
             {"platform": "instagram", "handle": "@aisimple.co", "followers": "42.8K", "medianViews": "14.2K", "connected": False},
             {"platform": "youtube", "handle": "@aisimple", "followers": "28.4K", "medianViews": "9.6K", "connected": False},

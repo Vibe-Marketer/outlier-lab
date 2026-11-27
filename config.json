@@ -138,7 +138,8 @@
       "handle": "iamaayushswamy",
       "name": "Aayush Swamy",
       "scopes": [
-        "marketing-sales"
+        "marketing-sales",
+        "notion-swipes"
       ],
       "trackingEnabled": true,
       "profileStatus": "ready",
@@ -168,7 +169,8 @@
       "handle": "therealbrianmark",
       "name": "Brian Ron Mark - Social Media Growth & Monetization Expert",
       "scopes": [
-        "marketing-sales"
+        "marketing-sales",
+        "notion-swipes"
       ],
       "trackingEnabled": true,
       "profileStatus": "ready",
@@ -292,6 +294,36 @@
       "verified": true,
       "private": false,
       "profilePic": "https://instagram.fpbc5-1.fna.fbcdn.net/v/t51.2885-19/451384170_1897085457383369_7745270744457463125_n.jpg?stp=dst-jpg_s320x320_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=instagram.fpbc5-1.fna.fbcdn.net&_nc_cat=105&_nc_oc=Q6cZ2gGF8l-jIqrdvGLte94I4XuuZo1WC6TZ-OCsG-kus7GImzTu-hjEEVmCcHnDcoQKDVw&_nc_ohc=Y86-ucaJprEQ7kNvwGUglw0&_nc_gid=EEIWitVtQmTeHAMRkxbg-g&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AQNXTvLqOaCsPmZEup-DavXT6rGZk-hBu47TYTQvBjKKVA&oe=6AE53A2F&_nc_sid=8b3546"
+    },
+    {
+      "handle": "realskytan",
+      "name": "Sky Tan",
+      "scopes": [
+        "notion-swipes",
+        "marketing-sales"
+      ],
+      "trackingEnabled": false,
+      "profileStatus": "ready"
+    },
+    {
+      "handle": "laraacostar",
+      "name": "Lara Acosta",
+      "scopes": [
+        "notion-swipes",
+        "marketing-sales"
+      ],
+      "trackingEnabled": false,
+      "profileStatus": "ready"
+    },
+    {
+      "handle": "robertmckeaveney",
+      "name": "Robert McKeaveney",
+      "scopes": [
+        "notion-swipes",
+        "marketing-sales"
+      ],
+      "trackingEnabled": false,
+      "profileStatus": "ready"
     }
   ],
   "refresh": {
@@ -324,6 +356,11 @@
       "id": "marketing-sales",
       "name": "Marketing & sales",
       "description": "Copywriting, offers, agency growth, coaching, and entrepreneurship. Kept separate from DTC-specific and technical AI feeds."
+    },
+    {
+      "id": "notion-swipes",
+      "name": "Notion Swipes",
+      "description": "Curated video swipes imported directly from your Notion Marketing Library."
     }
   ],
   "research": {

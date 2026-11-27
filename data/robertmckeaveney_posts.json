@@ -1,0 +1,39 @@
+{
+  "items": [
+    {
+      "shortCode": "DeYZ_aVz-h4",
+      "id": "DeYZ_aVz-h4",
+      "url": "https://www.instagram.com/reel/DeYZ_aVz-h4/",
+      "ownerUsername": "robertmckeaveney",
+      "ownerFullName": "Robert McKeaveney",
+      "caption": "This two second reel got me 30,000 followers and sold out a drop from my clothing brand.\nKey learning: A participation mechanic can connect attention to a concrete next action. The 30,000 followers, 29,000 DMs, watch-time explanation, and sold-out drop are creator claims, not independently verified metrics. The submitted breakdown is 46.832 seconds; the two-second video mentioned inside it is a different asset.",
+      "transcript": "This two second reel got me 30,000 followers and sold out a drop from my clothing brand.",
+      "transcription": {
+        "status": "notion_hook",
+        "source": "notion_swipes"
+      },
+      "videoPlayCount": 0,
+      "videoViewCount": 0,
+      "likesCount": 0,
+      "commentsCount": 0,
+      "videoDuration": 46.832,
+      "timestamp": "2026-10-22 05:05:42Z",
+      "displayUrl": "",
+      "notionSwipe": true,
+      "notionUrl": "https://app.notion.com/5558901d03f04eeda05fcd9d700a499f",
+      "notionMeta": {
+        "value": "High",
+        "favorite": true,
+        "contentType": "Case study",
+        "framework": "Result claim \u2192 explain pause/retry challenge \u2192 reveal hidden offer \u2192 screenshot DM \u2192 claimed business outcome \u2192 lesson",
+        "presentationStyle": "Unassessed",
+        "painOrDesire": "",
+        "promise": "",
+        "objectionHandling": "",
+        "lesson": "",
+        "keyLearning": "A participation mechanic can connect attention to a concrete next action. The 30,000 followers, 29,000 DMs, watch-time explanation, and sold-out drop are creator claims, not independently verified metrics. The submitted breakdown is 46.832 seconds; the two-second video mentioned inside it is a different asset.",
+        "notes": ""
+      }
+    }
+  ]
+}
