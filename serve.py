@@ -34,6 +34,7 @@ from storage import write_json, file_lock, update_env
 from tokscript import load_key as load_tokscript_key
 import ai_engine
 import social_sync
+import vidiq_engine
 
 ROOT = Path(__file__).resolve().parent
 ENV_FILE = ROOT / ".env"
@@ -220,6 +221,17 @@ class AdminHandler(BaseHTTPRequestHandler):
         if path == "/api/ai/batch":
             st = getattr(self.server, "ai_batch_status", None) or {"running": False, "completed": 0, "total": 0, "results": []}
             self._json(200, st)
+            return
+
+        if path == "/api/seo/keyword":
+            q = (query.get("q", [""])[0] or "").strip()
+            if not q:
+                self._json(400, {"message": "Provide ?q=keyword"})
+                return
+            try:
+                self._json(200, vidiq_engine.research_keyword(q))
+            except Exception as exc:
+                self._json(500, {"message": str(exc)[:260]})
             return
 
         if path == "/api/schedule":
@@ -420,6 +432,39 @@ class AdminHandler(BaseHTTPRequestHandler):
             try:
                 out = ai_engine.generate_script_step(step, data, workspace_profile=ws_profile, provider=provider)
                 self._json(200, {"ok": True, "result": out})
+            except Exception as exc:
+                self._json(500, {"ok": False, "message": str(exc)[:300]})
+            return
+
+        if path == "/api/seo/score":
+            data = self._body()
+            try:
+                res = vidiq_engine.score_title_and_seo(
+                    title=data.get("title", ""),
+                    keyword=data.get("keyword", ""),
+                    description=data.get("description", ""),
+                    tags=data.get("tags") or [],
+                    thumbnail_text=data.get("thumbnailText", ""),
+                )
+                self._json(200, {"ok": True, **res})
+            except Exception as exc:
+                self._json(500, {"ok": False, "message": str(exc)[:260]})
+            return
+
+        if path == "/api/seo/package":
+            data = self._body()
+            topic = (data.get("topic") or "").strip()
+            if not topic:
+                self._json(400, {"message": "Provide a video topic."})
+                return
+            try:
+                out = vidiq_engine.generate_packaging_ai(
+                    topic=topic,
+                    keyword=(data.get("keyword") or "").strip(),
+                    workspace_profile=data.get("workspaceProfile") if isinstance(data.get("workspaceProfile"), dict) else None,
+                    provider=(data.get("provider") or "auto").strip().lower(),
+                )
+                self._json(200, {"ok": True, **out})
             except Exception as exc:
                 self._json(500, {"ok": False, "message": str(exc)[:300]})
             return

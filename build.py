@@ -724,99 +724,126 @@ HTML_TEMPLATE = r"""<!doctype html>
   }
   .skip-link:focus { transform: translateY(0); }
 
-  /* ===== FLOATING AI SIMPLE HEADER ===== */
-  .app-header-wrap {
-    position: sticky; top: 12px; z-index: 60;
-    width: calc(100% - 40px); max-width: 1560px; margin: 12px auto 0;
+  /* ===== CLEAN AI SIMPLE SIDEBAR SHELL ===== */
+  .app-shell {
+    display: grid; grid-template-columns: 244px minmax(0, 1fr); min-height: 100vh;
   }
-  .app-header {
-    background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(16px);
-    border: 1px solid var(--border); border-radius: var(--radius-xl);
-    padding: 10px 18px; display: flex; align-items: center; justify-content: space-between;
-    gap: 12px; box-shadow: 0 8px 28px rgba(31, 31, 31, 0.04);
-    transition: box-shadow 0.25s var(--ease), border-color 0.25s var(--ease);
+  .app-sidebar {
+    position: sticky; top: 0; height: 100vh; z-index: 60;
+    background: var(--surface); border-right: 1px solid var(--border);
+    padding: 18px 14px 16px; display: flex; flex-direction: column; gap: 16px;
+    overflow-y: auto;
   }
-  .app-header.scrolled { box-shadow: 0 14px 36px rgba(31, 31, 31, 0.09); border-color: var(--border-strong); }
-  .header-left { display: flex; align-items: center; gap: 12px; min-width: 0; flex-shrink: 0; }
+  .sidebar-brand {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 2px 4px;
+  }
   .brand-lockup { display: inline-flex; align-items: center; gap: 9px; white-space: nowrap; flex-shrink: 0; }
-  .brand-mark { width: 36px; height: 36px; border-radius: 10px; background: var(--yellow); display: grid; place-items: center; flex-shrink: 0; }
-  .brand-wordmark { font-family: var(--font-sans); font-size: 18px; font-weight: 800; letter-spacing: -0.05em; line-height: 1; }
-  .brand-sub {
-    display: inline-flex; padding: 3px 9px; border-radius: var(--radius-pill);
-    background: var(--paper); border: 1px solid var(--border);
-    font-size: 9.5px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3);
-  }
-  .header-sep { width: 1px; height: 24px; background: var(--border); flex-shrink: 0; }
+  .brand-mark { width: 34px; height: 34px; border-radius: 10px; background: var(--yellow); display: grid; place-items: center; flex-shrink: 0; }
+  .brand-wordmark { font-family: var(--font-sans); font-size: 16.5px; font-weight: 800; letter-spacing: -0.05em; line-height: 1; display: block; }
+  .brand-sub { display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin-top: 2px; }
 
-  /* Workspace Switcher */
-  .ws-wrap { position: relative; }
+  /* Workspace Switcher (Sidebar) */
+  .ws-wrap { position: relative; width: 100%; }
   .ws-trigger {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 5px 12px 5px 6px; border-radius: var(--radius-pill);
+    width: 100%; display: flex; align-items: center; gap: 10px;
+    padding: 8px 10px; border-radius: 14px;
     background: var(--paper); border: 1px solid var(--border);
     transition: border-color 0.15s, background 0.15s;
   }
   .ws-trigger:hover { border-color: var(--ink); background: var(--surface); }
-  .ws-badge { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-size: 10.5px; font-weight: 800; flex-shrink: 0; }
-  .ws-trigger-meta { text-align: left; line-height: 1.12; }
-  .ws-trigger-label { display: block; font-size: 8.5px; font-weight: 800; letter-spacing: 0.11em; text-transform: uppercase; color: var(--ink-3); }
-  .ws-trigger-name { font-size: 12.5px; font-weight: 800; color: var(--ink); }
-  .ws-chevron { width: 13px; height: 13px; color: var(--ink-3); transition: transform 0.2s; }
+  .ws-badge { width: 28px; height: 28px; border-radius: 9px; display: grid; place-items: center; font-size: 11px; font-weight: 800; flex-shrink: 0; }
+  .ws-trigger-meta { text-align: left; line-height: 1.15; flex: 1; min-width: 0; }
+  .ws-trigger-label { display: block; font-size: 9px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); }
+  .ws-trigger-name { display: block; font-size: 13px; font-weight: 800; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ws-chevron { width: 14px; height: 14px; color: var(--ink-3); transition: transform 0.2s; flex-shrink: 0; }
   .ws-trigger[aria-expanded="true"] .ws-chevron { transform: rotate(180deg); }
   .ws-menu {
-    position: absolute; top: calc(100% + 10px); left: 0; width: 344px; max-width: calc(100vw - 32px);
+    position: absolute; top: calc(100% + 8px); left: 0; width: 320px; max-width: calc(100vw - 28px);
     background: var(--surface); border: 1px solid var(--border-strong);
-    border-radius: 20px; padding: 10px; box-shadow: var(--shadow-pop); z-index: 90;
+    border-radius: 18px; padding: 10px; box-shadow: var(--shadow-pop); z-index: 95;
   }
   .ws-menu[hidden] { display: none; }
-  .ws-menu-title { font-size: 10px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); padding: 8px 10px 6px; }
-  .ws-option { width: 100%; display: flex; align-items: center; gap: 11px; padding: 10px; border-radius: 14px; text-align: left; overflow: hidden; transition: background 0.14s; }
+  .ws-menu-title { font-size: 10px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); padding: 6px 10px 6px; }
+  .ws-option { width: 100%; display: flex; align-items: center; gap: 11px; padding: 9px 10px; border-radius: 12px; text-align: left; overflow: hidden; transition: background 0.14s; }
   .ws-option:hover { background: var(--paper); }
   .ws-option.active { background: var(--yellow-tint); box-shadow: inset 0 0 0 1px rgba(133, 96, 0, 0.28); }
   .ws-option-info { flex: 1; min-width: 0; overflow: hidden; }
-  .ws-option-name { font-size: 13.5px; font-weight: 800; color: var(--ink); display: flex; align-items: center; gap: 6px; }
+  .ws-option-name { font-size: 13px; font-weight: 800; color: var(--ink); display: flex; align-items: center; gap: 6px; }
   .ws-option-desc { display: block; font-size: 11.5px; color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .ws-menu-divider { height: 1px; background: var(--border); margin: 8px 6px; }
   .ws-create-btn {
     width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;
-    padding: 10px 14px; border-radius: 12px; background: var(--paper);
-    border: 1px dashed var(--border-strong); font-size: 13px; font-weight: 700; transition: all 0.15s;
+    padding: 9px 12px; border-radius: 12px; background: var(--paper);
+    border: 1px dashed var(--border-strong); font-size: 12.5px; font-weight: 700; transition: all 0.15s;
   }
   .ws-create-btn:hover { background: var(--yellow-soft); border-color: var(--yellow-ink); border-style: solid; }
 
-  /* Primary Tabs */
+  /* Primary Sidebar Navigation */
   .primary-tabs {
-    display: flex; align-items: center; gap: 3px; overflow-x: auto; scrollbar-width: none;
-    background: var(--paper); padding: 4px; border-radius: var(--radius-pill); border: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: 2px; flex: 1;
   }
-  .primary-tabs::-webkit-scrollbar { display: none; }
+  .nav-group-label {
+    font-size: 10px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--ink-3); padding: 12px 10px 5px;
+  }
+  .nav-group-label:first-child { padding-top: 2px; }
   .primary-tab {
-    position: relative; flex: none; display: inline-flex; align-items: center; gap: 6px;
-    padding: 8px 13px; border-radius: var(--radius-pill);
-    font-size: 12.5px; font-weight: 700; color: var(--ink-2); white-space: nowrap;
-    transition: color 0.15s, background 0.15s;
+    width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    padding: 9px 12px; border-radius: 12px;
+    font-size: 13.5px; font-weight: 600; color: var(--ink-2); text-align: left;
+    transition: background 0.14s, color 0.14s;
   }
-  .primary-tab:hover { color: var(--ink); }
-  .primary-tab[aria-selected="true"] { background: var(--charcoal); color: #ffffff; }
-  .primary-tab[aria-selected="true"]::after {
-    content: ""; position: absolute; left: 14px; right: 14px; bottom: 2.5px;
-    border-block-end: 2px solid var(--yellow);
+  .primary-tab:hover { background: var(--paper); color: var(--ink); }
+  .primary-tab[aria-selected="true"] {
+    background: var(--charcoal); color: #ffffff; font-weight: 700;
   }
+  .primary-tab-left { display: inline-flex; align-items: center; gap: 9px; min-width: 0; }
+  .nav-ico { width: 16px; text-align: center; font-size: 13px; opacity: 0.85; flex-shrink: 0; }
   .tab-count {
-    font-size: 10px; font-weight: 800; padding: 1.5px 6px; border-radius: var(--radius-pill);
-    background: rgba(31, 31, 31, 0.08); color: var(--ink-2); font-variant-numeric: tabular-nums;
+    font-size: 10.5px; font-weight: 800; padding: 2px 7px; border-radius: var(--radius-pill);
+    background: var(--paper); color: var(--ink-3); font-variant-numeric: tabular-nums;
   }
   .primary-tab[aria-selected="true"] .tab-count { background: var(--yellow); color: var(--ink); }
-  .header-actions { display: flex; align-items: center; gap: 7px; flex-shrink: 0; }
+  .sidebar-footer {
+    margin-top: auto; padding-top: 12px; border-top: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .sidebar-ai-pill {
+    display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 12px;
+    background: var(--paper); font-size: 11.5px; font-weight: 700; color: var(--ink-2);
+  }
+  .sidebar-ai-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ink-3); flex-shrink: 0; }
+  .sidebar-ai-pill.ready .sidebar-ai-dot { background: var(--working); box-shadow: 0 0 0 3px rgba(46,125,82,0.18); }
+
+  /* Minimal Top Bar + Canvas */
+  .app-canvas { min-width: 0; display: flex; flex-direction: column; }
+  .app-header {
+    position: sticky; top: 0; z-index: 45; height: 60px;
+    background: rgba(245, 244, 239, 0.88); backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px; display: flex; align-items: center; justify-content: space-between; gap: 14px;
+    transition: background 0.2s;
+  }
+  .app-header.scrolled { background: rgba(255, 255, 255, 0.96); }
+  .topbar-left { display: flex; align-items: center; gap: 12px; min-width: 0; }
+  .mobile-menu-btn {
+    display: none; width: 36px; height: 36px; border-radius: 10px;
+    background: var(--surface); border: 1px solid var(--border);
+    align-items: center; justify-content: center; font-size: 16px;
+  }
+  .topbar-title { font-family: var(--font-display); font-size: 18px; font-weight: 500; letter-spacing: -0.03em; }
+  .topbar-sep { color: var(--border-strong); }
+  .topbar-sub { font-size: 12.5px; color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .header-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
 
   /* Buttons */
   .btn {
     display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-    border-radius: var(--radius-pill); padding: 10px 18px;
+    border-radius: var(--radius-pill); padding: 9px 17px;
     font-size: 13px; font-weight: 800; line-height: 1.2; white-space: nowrap;
     transition: background 0.16s var(--ease), transform 0.16s var(--ease), border-color 0.16s, color 0.16s;
   }
-  .btn:hover { transform: translateY(-1.5px); }
+  .btn:hover { transform: translateY(-1px); }
   .btn:active { transform: translateY(0); }
   .btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
   .btn-yellow { background: var(--yellow); color: #151515; }
@@ -825,8 +852,8 @@ HTML_TEMPLATE = r"""<!doctype html>
   .btn-dark:hover { background: #333; }
   .btn-outline { background: var(--surface); color: var(--ink); border: 1px solid var(--border-strong); }
   .btn-outline:hover { border-color: var(--ink); background: var(--paper); }
-  .btn-ghost-dark { background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.2); }
-  .btn-ghost-dark:hover { border-color: var(--yellow); background: rgba(255,199,29,0.14); }
+  .btn-ghost-dark { background: var(--paper); color: var(--ink); border: 1px solid var(--border); }
+  .btn-ghost-dark:hover { border-color: var(--ink); background: var(--surface); }
   .btn-sm { padding: 7px 13px; font-size: 12px; }
   .btn-xs { padding: 5px 10px; font-size: 11px; }
   .kbd {
@@ -837,10 +864,11 @@ HTML_TEMPLATE = r"""<!doctype html>
   .btn-yellow .kbd { background: rgba(21,21,21,0.14); color: #151515; }
   .btn-dark .kbd { background: rgba(255,255,255,0.16); color: #fff; }
 
-  /* Main Container */
-  .app-main { width: calc(100% - 40px); max-width: 1560px; margin: 22px auto 72px; }
+  /* Main Container — Calm, Centered, Generous Whitespace */
+  .app-main { width: 100%; max-width: 1240px; margin: 0 auto; padding: 28px 34px 84px; }
+  [hidden] { display: none !important; }
   .tab-panel[hidden], .sub-panel[hidden] { display: none; }
-  .panel-inner { display: flex; flex-direction: column; gap: 26px; }
+  .panel-inner { display: flex; flex-direction: column; gap: 30px; }
 
   /* Sub-tabs inside major sections */
   .sub-nav {
@@ -849,21 +877,21 @@ HTML_TEMPLATE = r"""<!doctype html>
     border-radius: var(--radius-pill); padding: 4px; align-self: flex-start;
   }
   .sub-nav button {
-    padding: 8px 16px; border-radius: var(--radius-pill);
+    padding: 7px 15px; border-radius: var(--radius-pill);
     font-size: 12.5px; font-weight: 700; color: var(--ink-2); transition: all 0.15s;
   }
   .sub-nav button:hover { color: var(--ink); }
-  .sub-nav button.active { background: var(--yellow); color: #151515; font-weight: 800; }
+  .sub-nav button.active { background: var(--charcoal); color: #ffffff; font-weight: 700; }
 
   /* Eyebrows & Highlights */
-  .eyebrow-slash { font-size: 12px; font-weight: 700; letter-spacing: 0.03em; color: var(--ink-3); margin-bottom: 8px; display: inline-block; }
+  .eyebrow-slash { font-size: 11.5px; font-weight: 700; letter-spacing: 0.04em; color: var(--ink-3); margin-bottom: 6px; display: inline-block; }
   .eyebrow-dot {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-size: 11px; font-weight: 800; letter-spacing: 0.13em; text-transform: uppercase; color: var(--ink-3);
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 10.5px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3);
   }
-  .eyebrow-dot::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--yellow); flex-shrink: 0; }
-  .highlight-mark { background: linear-gradient(transparent 64%, var(--yellow) 64%, var(--yellow) 94%, transparent 94%); padding-inline: 2px; }
-  .gradient-highlight { background: linear-gradient(110deg, #ffbd23, #f06c6d 55%, #d427a9); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .eyebrow-dot::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--yellow); flex-shrink: 0; }
+  .highlight-mark { background: linear-gradient(transparent 66%, var(--yellow) 66%, var(--yellow) 94%, transparent 94%); padding-inline: 2px; }
+  .gradient-highlight { background: linear-gradient(transparent 66%, var(--yellow) 66%, var(--yellow) 94%, transparent 94%); padding-inline: 2px; color: var(--ink); }
 
   /* Pills & Badges */
   .band-pill {
@@ -872,7 +900,7 @@ HTML_TEMPLATE = r"""<!doctype html>
     font-size: 11px; font-weight: 800; letter-spacing: 0.02em; font-variant-numeric: tabular-nums;
   }
   .band-pill.breakout { background: var(--breakout-bg); color: var(--breakout); }
-  .band-pill.strong { background: var(--yellow); color: #151515; }
+  .band-pill.strong { background: var(--yellow-soft); color: var(--ink); }
   .band-pill.good { background: var(--working-bg); color: var(--working); }
   .band-pill.normal { background: var(--paper); color: var(--ink-3); }
   .metric-pill-blue { background: var(--blue-bg); color: var(--blue-ink); }
@@ -886,44 +914,75 @@ HTML_TEMPLATE = r"""<!doctype html>
   .status-chip.warn { background: var(--breakout-bg); color: var(--breakout); }
   .status-chip.muted { background: var(--paper); color: var(--ink-3); border: 1px solid var(--border); }
 
-  /* Hero Banner */
+  /* Calm Light Editorial Greeting (replaces heavy dark billboard) */
   .hero-banner {
-    background: var(--charcoal); color: #fff; border-radius: var(--radius-xl);
-    padding: 34px 38px; position: relative; overflow: hidden;
-    display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.85fr); gap: 30px; align-items: center;
+    background: var(--surface); color: var(--ink); border: 1px solid var(--border);
+    border-radius: 22px; padding: 26px 30px;
+    display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;
   }
-  .hero-banner::before {
-    content: ""; position: absolute; right: -120px; bottom: -210px; width: 620px; height: 520px; border-radius: 50%;
-    background: repeating-radial-gradient(ellipse at center, transparent 0px, transparent 34px, rgba(255,255,255,0.045) 35px, transparent 36px);
-    transform: rotate(-22deg); pointer-events: none;
-  }
-  .hero-banner::after {
-    content: ""; position: absolute; top: -80px; right: -40px; width: 340px; height: 340px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(255,199,29,0.14) 0%, transparent 70%); pointer-events: none;
-  }
-  .hero-copy, .hero-side { position: relative; z-index: 1; }
+  .hero-copy { flex: 1; min-width: 280px; }
   .hero-eyebrow {
-    display: inline-flex; align-items: center; gap: 9px; font-size: 11px; font-weight: 800;
-    letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.65); margin-bottom: 12px;
+    display: inline-flex; align-items: center; gap: 8px; font-size: 10.5px; font-weight: 800;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 8px;
   }
-  .hero-eyebrow .live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--yellow); box-shadow: 0 0 0 4px rgba(255,199,29,0.22); }
-  .hero-banner h1 { font-size: clamp(28px, 3.2vw, 46px); line-height: 1.12; margin-bottom: 12px; }
-  .hero-sub { color: #c9c9c9; font-size: 14.5px; line-height: 1.65; max-width: 62ch; margin-bottom: 22px; }
-  .hero-actions { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
+  .hero-eyebrow .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--yellow); }
+  .hero-banner h1 { font-size: clamp(24px, 2.4vw, 34px); line-height: 1.15; margin-bottom: 8px; color: var(--ink); }
+  .hero-sub { color: var(--ink-2); font-size: 14px; line-height: 1.55; max-width: 58ch; margin-bottom: 16px; }
+  .hero-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
   .hero-side {
-    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 20px; padding: 20px 22px; display: flex; flex-direction: column; gap: 14px;
+    display: flex; flex-direction: column; gap: 10px; align-items: flex-end;
   }
-  .hero-ws-pills { display: flex; flex-wrap: wrap; gap: 7px; }
+  .hero-ws-pills { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; }
   .hero-ws-pill {
-    padding: 7px 13px; border-radius: var(--radius-pill); background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.14); color: rgba(255,255,255,0.86); font-size: 12px; font-weight: 700; transition: all 0.15s;
+    padding: 6px 12px; border-radius: var(--radius-pill); background: var(--paper);
+    border: 1px solid var(--border); color: var(--ink-2); font-size: 12px; font-weight: 700; transition: all 0.15s;
   }
-  .hero-ws-pill:hover { border-color: var(--yellow); color: #fff; }
-  .hero-ws-pill.active { background: var(--yellow); color: #151515; border-color: var(--yellow); }
-  .hero-side-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.12); }
-  .hero-mini-stat strong { display: block; font-family: var(--font-display); font-size: 22px; font-weight: 500; color: #fff; line-height: 1.1; font-variant-numeric: tabular-nums; }
-  .hero-mini-stat span { font-size: 11px; color: rgba(255,255,255,0.6); }
+  .hero-ws-pill:hover { border-color: var(--ink); color: var(--ink); }
+  .hero-ws-pill.active { background: var(--charcoal); color: #fff; border-color: var(--charcoal); }
+  .hero-side-stats { display: flex; gap: 18px; padding-top: 6px; }
+  .hero-mini-stat { text-align: right; }
+  .hero-mini-stat strong { display: block; font-family: var(--font-display); font-size: 20px; font-weight: 500; color: var(--ink); line-height: 1.1; font-variant-numeric: tabular-nums; }
+  .hero-mini-stat span { font-size: 11px; color: var(--ink-3); }
+
+  /* vidIQ Score Dials, Tag Pills & SEO Checklist */
+  .score-ring {
+    width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center;
+    font-family: var(--font-display); font-size: 22px; font-weight: 600; flex-shrink: 0;
+    border: 5px solid var(--working); color: var(--working); background: var(--working-bg);
+    font-variant-numeric: tabular-nums;
+  }
+  .score-ring.med { border-color: var(--yellow); color: var(--yellow-ink); background: var(--yellow-tint); }
+  .score-ring.low { border-color: var(--breakout); color: var(--breakout); background: var(--breakout-bg); }
+  .tag-score-pill {
+    display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: var(--radius-pill);
+    background: var(--surface); border: 1px solid var(--border); font-size: 12px; font-weight: 700;
+    cursor: pointer; transition: border-color 0.14s, background 0.14s;
+  }
+  .tag-score-pill:hover { border-color: var(--ink); background: var(--paper); }
+  .tag-score-num {
+    padding: 1px 6px; border-radius: var(--radius-pill); font-size: 10.5px; font-weight: 800; font-variant-numeric: tabular-nums;
+  }
+  .tag-score-num.hi { background: var(--sage); color: var(--sage-ink); }
+  .tag-score-num.med { background: var(--yellow-soft); color: var(--yellow-ink); }
+  .tag-score-num.lo { background: var(--breakout-bg); color: var(--breakout); }
+  .seo-check-row {
+    display: flex; align-items: flex-start; gap: 10px; padding: 9px 12px;
+    border-radius: 12px; background: var(--paper); font-size: 13px;
+  }
+  .seo-dot { width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; font-size: 11px; font-weight: 800; flex-shrink: 0; margin-top: 1px; }
+  .seo-dot.pass { background: var(--sage); color: var(--sage-ink); }
+  .seo-dot.fail { background: var(--breakout-bg); color: var(--breakout); }
+  .calm-details {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 18px 22px;
+  }
+  .calm-details > summary {
+    cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    font-family: var(--font-display); font-size: 19px; letter-spacing: -0.03em;
+  }
+  .calm-details > summary::-webkit-details-marker { display: none; }
+  .calm-details[open] > summary { padding-bottom: 14px; margin-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .sidebar-backdrop { display: none; position: fixed; inset: 0; background: rgba(15,12,20,0.4); z-index: 55; }
+  .sidebar-backdrop.open { display: block; }
 
   /* Section Headings & Segmented */
   .section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
@@ -1298,7 +1357,7 @@ HTML_TEMPLATE = r"""<!doctype html>
   .empty-box { padding: 36px 22px; text-align: center; border-radius: 20px; background: var(--surface); border: 1px dashed var(--border-strong); color: var(--ink-2); }
 
   @media (max-width: 1260px) {
-    .hero-banner, .checker-box, .audit-layout { grid-template-columns: 1fr; }
+    .checker-box, .audit-layout { grid-template-columns: 1fr; }
     .kpi-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .socials-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .archetype-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -1307,18 +1366,21 @@ HTML_TEMPLATE = r"""<!doctype html>
     .formula-equation { grid-template-columns: 1fr; }
     .formula-plus { display: none; }
   }
-  @media (max-width: 960px) {
-    .app-header { flex-wrap: wrap; }
-    .primary-tabs { order: 3; width: 100%; }
+  @media (max-width: 980px) {
+    .app-shell { grid-template-columns: 1fr; }
+    .app-sidebar { position: fixed; left: 0; top: 0; width: 260px; transform: translateX(-105%); transition: transform 0.22s var(--ease); box-shadow: var(--shadow-pop); }
+    .app-sidebar.open { transform: translateX(0); }
+    .mobile-menu-btn { display: inline-flex; }
+    .app-header { padding: 0 18px; }
+    .app-main { padding: 20px 18px 64px; }
     .card-grid-2, .card-grid-3, .dual-banner, .wizard-steps, .bd-body, .k7-grid, .contrast-box { grid-template-columns: 1fr; }
     .bd-left { border-right: 0; border-bottom: 1px solid var(--border); }
   }
   @media (max-width: 680px) {
-    .app-header-wrap, .app-main, .app-footer { width: calc(100% - 20px); }
-    .brand-sub, .header-sep { display: none; }
     .spotlight-card, .spotlight-card.featured { grid-column: span 6; flex-direction: column; }
     .spotlight-card.featured .spotlight-thumb { width: 100%; aspect-ratio: 16/10; min-height: 190px; }
     .kpi-grid, .socials-grid, .form-row-2, .archetype-grid { grid-template-columns: 1fr; }
+    .hero-side { align-items: flex-start; }
   }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
@@ -1328,53 +1390,77 @@ HTML_TEMPLATE = r"""<!doctype html>
 <body data-view="table" data-density="comfy">
 <a class="skip-link" href="#main-content">Skip to workspace</a>
 
-<!-- FLOATING AI SIMPLE HEADER -->
-<div class="app-header-wrap">
-  <header class="app-header" id="app-header">
-    <div class="header-left">
+<!-- CLEAN AI SIMPLE SIDEBAR LAYOUT -->
+<div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+<div class="app-shell">
+  <aside class="app-sidebar" id="app-sidebar" aria-label="Outlier Lab Navigation">
+    <div class="sidebar-brand">
       <a class="brand-lockup" href="#today" id="brand-home-link" aria-label="AI Simple Outlier Lab Home">
         <span class="brand-mark" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 64 64" fill="none">
+          <svg width="20" height="20" viewBox="0 0 64 64" fill="none">
             <path d="M16 48L28.8 18.6C30.1 15.6 33.9 15.6 35.2 18.6L48 48" stroke="#111111" stroke-width="10.5" stroke-linecap="round" stroke-linejoin="round"/>
             <circle cx="32" cy="44" r="6.8" fill="#111111"/>
           </svg>
         </span>
-        <span class="brand-wordmark">AI SIMPLE</span>
-        <span class="brand-sub">Outlier Lab</span>
+        <span>
+          <span class="brand-wordmark">AI SIMPLE</span>
+          <span class="brand-sub">Outlier Lab</span>
+        </span>
       </a>
-      <span class="header-sep" aria-hidden="true"></span>
-      <div class="ws-wrap">
-        <button type="button" class="ws-trigger" id="ws-trigger" aria-haspopup="menu" aria-expanded="false" aria-controls="ws-menu">
-          <span class="ws-badge" id="ws-active-badge" style="background:#ffc71d;color:#1f1f1f">AS</span>
-          <span class="ws-trigger-meta">
-            <span class="ws-trigger-label">Workspace</span>
-            <span class="ws-trigger-name" id="ws-active-name">AI Simple</span>
-          </span>
-          <svg class="ws-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-        </button>
-        <div class="ws-menu" id="ws-menu" role="menu" hidden>
-          <div class="ws-menu-title">Switch workspace</div>
-          <div id="ws-options"></div>
-          <div class="ws-menu-divider"></div>
-          <button type="button" class="ws-create-btn" id="open-create-ws"><span aria-hidden="true">＋</span> Create new workspace</button>
-        </div>
+    </div>
+
+    <div class="ws-wrap">
+      <button type="button" class="ws-trigger" id="ws-trigger" aria-haspopup="menu" aria-expanded="false" aria-controls="ws-menu">
+        <span class="ws-badge" id="ws-active-badge" style="background:#ffc71d;color:#1f1f1f">AS</span>
+        <span class="ws-trigger-meta">
+          <span class="ws-trigger-label">Workspace</span>
+          <span class="ws-trigger-name" id="ws-active-name">AI Simple</span>
+        </span>
+        <svg class="ws-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+      <div class="ws-menu" id="ws-menu" role="menu" hidden>
+        <div class="ws-menu-title">Switch workspace</div>
+        <div id="ws-options"></div>
+        <div class="ws-menu-divider"></div>
+        <button type="button" class="ws-create-btn" id="open-create-ws"><span aria-hidden="true">＋</span> Create new workspace</button>
       </div>
     </div>
 
-    <div class="primary-tabs" role="tablist" aria-label="Outlier Lab Studio" id="primary-tablist">
-      <button type="button" class="primary-tab" role="tab" id="tab-today" data-tab="today" aria-selected="true"><span>Today</span><span class="tab-count" id="tab-count-today">5</span></button>
-      <button type="button" class="primary-tab" role="tab" id="tab-feed" data-tab="feed" aria-selected="false"><span>Outlier Feed</span><span class="tab-count" id="tab-count-feed">__TOTAL_REELS__</span></button>
-      <button type="button" class="primary-tab" role="tab" id="tab-ideas" data-tab="ideas" aria-selected="false"><span>Ideas &amp; Hooks</span><span class="tab-count" id="tab-count-ideas">__TOTAL_OUTLIERS__</span></button>
-      <button type="button" class="primary-tab" role="tab" id="tab-scripts" data-tab="scripts" aria-selected="false"><span>Strategy &amp; Scripts</span></button>
-      <button type="button" class="primary-tab" role="tab" id="tab-character" data-tab="character" aria-selected="false"><span>Character &amp; Offer</span></button>
-      <button type="button" class="primary-tab" role="tab" id="tab-channels" data-tab="channels" aria-selected="false"><span>Channels &amp; Setup</span></button>
-    </div>
+    <nav class="primary-tabs" role="tablist" aria-orientation="vertical" aria-label="Outlier Lab Studio" id="primary-tablist">
+      <div class="nav-group-label">Discover</div>
+      <button type="button" class="primary-tab" role="tab" id="tab-today" data-tab="today" aria-selected="true"><span class="primary-tab-left"><span class="nav-ico">◈</span><span>Today</span></span><span class="tab-count" id="tab-count-today">5</span></button>
+      <button type="button" class="primary-tab" role="tab" id="tab-feed" data-tab="feed" aria-selected="false"><span class="primary-tab-left"><span class="nav-ico">▶</span><span>Outliers</span></span><span class="tab-count" id="tab-count-feed">__TOTAL_REELS__</span></button>
+      <button type="button" class="primary-tab" role="tab" id="tab-seo" data-tab="seo" aria-selected="false"><span class="primary-tab-left"><span class="nav-ico">⌕</span><span>Keywords &amp; SEO</span></span><span class="tab-count">vidIQ</span></button>
 
-    <div class="header-actions">
-      <button type="button" class="btn btn-yellow btn-sm" id="open-quick-add">＋ Add Video / Channel</button>
+      <div class="nav-group-label">Create</div>
+      <button type="button" class="primary-tab" role="tab" id="tab-ideas" data-tab="ideas" aria-selected="false"><span class="primary-tab-left"><span class="nav-ico">✦</span><span>Ideas &amp; Hooks</span></span><span class="tab-count" id="tab-count-ideas">__TOTAL_OUTLIERS__</span></button>
+      <button type="button" class="primary-tab" role="tab" id="tab-scripts" data-tab="scripts" aria-selected="false"><span class="primary-tab-left"><span class="nav-ico">✎</span><span>Scripts &amp; Strategy</span></span></button>
+
+      <div class="nav-group-label">Workspace</div>
+      <button type="button" class="primary-tab" role="tab" id="tab-character" data-tab="character" aria-selected="false"><span class="primary-tab-left"><span class="nav-ico">★</span><span>Character &amp; Offer</span></span></button>
+      <button type="button" class="primary-tab" role="tab" id="tab-channels" data-tab="channels" aria-selected="false"><span class="primary-tab-left"><span class="nav-ico">◎</span><span>Accounts &amp; Setup</span></span></button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-ai-pill" id="sidebar-ai-pill">
+        <span class="sidebar-ai-dot" aria-hidden="true"></span>
+        <span id="sidebar-ai-label">Instant Local Mode</span>
+      </div>
     </div>
-  </header>
-</div>
+  </aside>
+
+  <div class="app-canvas">
+    <header class="app-header" id="app-header">
+      <div class="topbar-left">
+        <button type="button" class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle navigation">☰</button>
+        <span class="topbar-title" id="topbar-title">Today</span>
+        <span class="topbar-sep" aria-hidden="true">/</span>
+        <span class="topbar-sub" id="topbar-sub">AI Simple · __TODAY__</span>
+      </div>
+      <div class="header-actions">
+        <button type="button" class="btn btn-yellow btn-sm" id="open-quick-add">＋ Add Video / Channel</button>
+      </div>
+    </header>
 
 <main class="app-main" id="main-content">
 
@@ -1383,27 +1469,25 @@ HTML_TEMPLATE = r"""<!doctype html>
     <div class="panel-inner">
       <section class="hero-banner" aria-labelledby="hero-heading">
         <div class="hero-copy">
-          <div class="hero-eyebrow"><span class="live-dot" aria-hidden="true"></span><span id="hero-eyebrow-text">/ AI SIMPLE WORKSPACE · __TODAY__ /</span></div>
+          <div class="hero-eyebrow"><span class="live-dot" aria-hidden="true"></span><span id="hero-eyebrow-text">AI SIMPLE WORKSPACE · __TODAY__</span></div>
           <h1 id="hero-heading">What's <span class="gradient-highlight">outperforming</span> for AI Simple today.</h1>
-          <p class="hero-sub" id="hero-sub">Every outlier video broken down by beats, hooks, storytelling formats, visual layout, and Dan Kennedy's 7 Magnetic Character Elements.</p>
+          <p class="hero-sub" id="hero-sub">Click any outlier for its full 6-tab Sandcastles + Dan Kennedy breakdown, or jump straight into keyword &amp; title scoring.</p>
           <div class="hero-actions">
-            <button type="button" class="btn btn-yellow" id="hero-add-btn">＋ Analyze Video or Channel →</button>
-            <button type="button" class="btn btn-ghost-dark" id="hero-socials-btn">Connect Socials (IG/YT/TT/FB)</button>
-            <button type="button" class="btn btn-ghost-dark" id="hero-script-btn">Write a Script</button>
-            <button type="button" class="btn btn-ghost-dark" id="hero-character-btn">Character &amp; Offer</button>
-            <button type="button" class="btn btn-ghost-dark" id="hero-setup-btn">AI Engine &amp; Setup</button>
+            <button type="button" class="btn btn-yellow btn-sm" id="hero-seo-btn">⌕ Research Keywords &amp; Titles</button>
+            <button type="button" class="btn btn-outline btn-sm" id="hero-socials-btn">Connect Socials (IG/YT/TT/FB)</button>
+            <button type="button" class="btn btn-outline btn-sm" id="hero-script-btn">Write a Script</button>
+            <button type="button" class="btn btn-outline btn-sm" id="hero-add-btn" hidden>Add</button>
+            <button type="button" class="btn btn-outline btn-sm" id="hero-character-btn" hidden>Character</button>
+            <button type="button" class="btn btn-outline btn-sm" id="hero-setup-btn" hidden>Setup</button>
           </div>
         </div>
         <aside class="hero-side" aria-label="Workspace quick switcher">
-          <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
-            <span style="font-size:10px;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;color:var(--yellow)">Active Workspace</span>
-            <span style="font-size:11.5px;color:rgba(255,255,255,0.62)" id="hero-side-tagline">AI workflows &amp; automation</span>
-          </div>
           <div class="hero-ws-pills" id="hero-ws-pills"></div>
+          <span style="display:none" id="hero-side-tagline"></span>
           <div class="hero-side-stats">
             <div class="hero-mini-stat"><strong id="hero-stat-outliers">__TOTAL_OUTLIERS__</strong><span>Outliers (≥2×)</span></div>
             <div class="hero-mini-stat"><strong id="hero-stat-channels">__TOTAL_CREATORS__</strong><span>Channels</span></div>
-            <div class="hero-mini-stat"><strong id="hero-stat-reels">__TOTAL_REELS__</strong><span>Broken Down</span></div>
+            <div class="hero-mini-stat"><strong id="hero-stat-reels">__TOTAL_REELS__</strong><span>Tracked</span></div>
           </div>
         </aside>
       </section>
@@ -1412,66 +1496,216 @@ HTML_TEMPLATE = r"""<!doctype html>
       <section aria-labelledby="spotlight-heading">
         <div class="section-head" style="margin-bottom:16px">
           <div>
-            <span class="eyebrow-dot">Land here first · Full 6-tab breakdown on every card</span>
+            <span class="eyebrow-dot">Start Here · Full 6-Tab Breakdown on Every Card</span>
             <h2 id="spotlight-heading">Top 5 <span class="highlight-mark">outliers</span> to model today.</h2>
           </div>
           <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
             <div class="segmented" id="spotlight-mode" role="group" aria-label="Top outlier mode">
-              <button type="button" data-mode="top5" class="active">Top 5 Overall</button>
+              <button type="button" data-mode="top5" class="active">Top 5</button>
               <button type="button" data-mode="replicable">Replicable (5–15×)</button>
-              <button type="button" data-mode="recent">Freshest Outliers</button>
+              <button type="button" data-mode="recent">Freshest</button>
             </div>
-            <button type="button" class="btn btn-outline btn-sm" id="spotlight-see-all">Full Feed →</button>
+            <button type="button" class="btn btn-outline btn-sm" id="spotlight-see-all">All Outliers →</button>
           </div>
         </div>
         <div class="spotlight-grid" id="spotlight-grid"></div>
       </section>
 
-      <!-- THE SUCCESS FORMULA (Sandcastles Strategy Preview) -->
-      <section class="formula-card" aria-labelledby="today-formula-heading">
-        <div class="section-head">
+      <!-- DAILY VIEW PREDICTIONS (vidIQ Style) -->
+      <section aria-labelledby="daily-pred-heading">
+        <div class="section-head" style="margin-bottom:14px">
           <div>
-            <span class="eyebrow-dot">The Success Formula · Live Workspace Uplift</span>
-            <h3 id="today-formula-heading" style="font-size:24px">Make your next video using this winning combination.</h3>
+            <span class="eyebrow-dot">vidIQ-Style Daily View Predictions</span>
+            <h2 id="daily-pred-heading" style="font-size:24px">High-probability videos to film next.</h2>
           </div>
-          <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <button type="button" class="btn btn-outline btn-sm" id="today-shuffle-formula">↻ Shuffle Formula</button>
-            <button type="button" class="btn btn-yellow btn-sm" id="today-formula-script">Turn Into Script →</button>
-          </div>
+          <button type="button" class="btn btn-outline btn-sm" id="today-open-seo">Open Keyword &amp; Title Lab →</button>
         </div>
-        <div class="formula-equation" id="today-formula-slots"></div>
+        <div class="card-grid-3" id="daily-predictions-grid"></div>
       </section>
 
       <!-- WORKSPACE PULSE KPIs -->
       <section class="kpi-grid" id="scope-kpis" aria-label="Workspace metrics">
-        <div class="kpi-card tone-yellow"><div class="kpi-label">Outliers (≥2×)</div><div class="kpi-val" id="kpi-outliers">__TOTAL_OUTLIERS__</div><div class="kpi-delta" id="kpi-outliers-delta">__OUTLIER_PCT__% of workspace</div></div>
-        <div class="kpi-card"><div class="kpi-label">Top Reel</div><div class="kpi-val" id="kpi-top">__TOP_REEL_PLAYS__</div><div class="kpi-delta" id="kpi-top-delta">__TOP_REEL_DELTA__</div></div>
-        <div class="kpi-card tone-lavender"><div class="kpi-label">Median Plays</div><div class="kpi-val" id="kpi-median">__MEDIAN_OVERALL__</div><div class="kpi-delta" id="kpi-median-delta">Across workspace</div></div>
-        <div class="kpi-card tone-sage"><div class="kpi-label">28d Sample Plays</div><div class="kpi-val" id="kpi-plays">__TOTAL_PLAYS__</div><div class="kpi-delta" id="kpi-plays-delta">All reels combined</div></div>
-        <div class="kpi-card tone-cream"><div class="kpi-label">Breakdowns Ready</div><div class="kpi-val" id="kpi-transcripts">__TOTAL_TRANSCRIPTS__</div><div class="kpi-delta" id="kpi-transcripts-delta">Spoken transcripts ready</div></div>
+        <div class="kpi-card"><div class="kpi-label">Outliers (≥2×)</div><div class="kpi-val" id="kpi-outliers">__TOTAL_OUTLIERS__</div><div class="kpi-delta" id="kpi-outliers-delta">__OUTLIER_PCT__% of workspace</div></div>
+        <div class="kpi-card"><div class="kpi-label">Top Outlier</div><div class="kpi-val" id="kpi-top">__TOP_REEL_PLAYS__</div><div class="kpi-delta" id="kpi-top-delta">__TOP_REEL_DELTA__</div></div>
+        <div class="kpi-card"><div class="kpi-label">Median Plays</div><div class="kpi-val" id="kpi-median">__MEDIAN_OVERALL__</div><div class="kpi-delta" id="kpi-median-delta">Across workspace</div></div>
+        <div class="kpi-card"><div class="kpi-label">28d Sample Plays</div><div class="kpi-val" id="kpi-plays">__TOTAL_PLAYS__</div><div class="kpi-delta" id="kpi-plays-delta">All reels combined</div></div>
+        <div class="kpi-card"><div class="kpi-label">Transcripts Ready</div><div class="kpi-val" id="kpi-transcripts">__TOTAL_TRANSCRIPTS__</div><div class="kpi-delta" id="kpi-transcripts-delta">Spoken hooks ready</div></div>
       </section>
 
-      <!-- DUAL ACTION CARDS -->
-      <section class="dual-banner">
-        <article class="action-card charcoal">
-          <span class="eyebrow-dot" style="color:rgba(255,255,255,0.6)">Dan Kennedy Magnetic Character</span>
-          <h3>Bake your character, dogma &amp; offer into every script.</h3>
-          <p>Information has a shelf life; character compounds for decades. Configure <strong id="cta-ws-name">AI Simple</strong>'s 7 Magnetic Elements, Archetype, Enemies, and PROFITS language once — then remix any outlier in one click.</p>
-          <div class="action-card-foot">
-            <button type="button" class="btn btn-yellow" id="cta-open-character">Open Character &amp; Offer Studio →</button>
-            <button type="button" class="btn btn-ghost-dark" id="cta-open-ideas">Open Ideas &amp; Hook Vault</button>
+      <!-- THE SUCCESS FORMULA -->
+      <section class="formula-card" aria-labelledby="today-formula-heading">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow-dot">The Success Formula</span>
+            <h3 id="today-formula-heading" style="font-size:22px">Winning combination for this workspace.</h3>
           </div>
-        </article>
-        <article class="action-card yellow">
-          <span class="eyebrow-dot" style="color:#514715">Zero-Friction Rule</span>
-          <h3>The only metric that compounds: reps shipped.</h3>
-          <p><strong>Have you filmed today?</strong> Click any outlier above to inspect its beat-by-beat transcript and press <span class="kbd">C</span> to launch the 4-Step Script Builder pre-loaded with your character and offer.</p>
-          <div class="action-card-foot">
-            <button type="button" class="btn btn-dark" id="cta-open-scripts">Open 4-Step Script Builder →</button>
-            <button type="button" class="btn btn-outline" id="cta-open-socials" style="background:rgba(255,255,255,0.75);border-color:rgba(31,31,31,0.2)">Connect My Socials</button>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button type="button" class="btn btn-outline btn-sm" id="today-shuffle-formula">↻ Shuffle</button>
+            <button type="button" class="btn btn-yellow btn-sm" id="today-formula-script">Turn Into Script →</button>
           </div>
-        </article>
+        </div>
+        <div class="formula-equation" id="today-formula-slots"></div>
+        <span style="display:none" id="cta-ws-name"></span>
+        <span style="display:none"><button id="cta-open-character"></button><button id="cta-open-ideas"></button><button id="cta-open-scripts"></button><button id="cta-open-socials"></button></span>
       </section>
+    </div>
+  </section>
+
+  <!-- ==================== TAB 2B: KEYWORDS, TAGS, TITLES & SEO (COMPLETE VIDIQ SUITE) ==================== -->
+  <section class="tab-panel" id="panel-seo" role="tabpanel" aria-labelledby="tab-seo" hidden>
+    <div class="panel-inner">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow-dot">Live YouTube Suggest · SERP Competition · VPH · Title &amp; Tag Scoring</span>
+          <h2>Keywords, Titles &amp; <span class="highlight-mark">SEO</span> Lab</h2>
+          <p>Everything inside vidIQ — Overall Keyword Scores (0–100), Demand, Competition, Views Per Hour (VPH), Top Ranking Outliers, Title Scoring, Scored Tags, and Thumbnail Critique — with zero credit limits.</p>
+        </div>
+        <div class="sub-nav" id="seo-subnav" role="tablist">
+          <button type="button" data-sub="seo-keywords" class="active">Keyword &amp; SERP Explorer</button>
+          <button type="button" data-sub="seo-optimizer">Title, Tags &amp; SEO Optimizer</button>
+        </div>
+      </div>
+
+      <!-- SUB 1: KEYWORD & SERP EXPLORER -->
+      <div class="sub-panel" id="sub-seo-keywords">
+        <div class="panel-inner" style="gap:22px">
+          <form id="kw-search-form" class="panel-card" style="padding:20px 22px;gap:12px">
+            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+              <input class="filter-search" id="kw-search-input" type="text" value="AI automation" placeholder="Search any keyword or topic (e.g. AI automation, claude code, meta ads creative)..." style="flex:1;min-width:240px;font-size:15px;padding:12px 16px">
+              <button type="submit" class="btn btn-yellow" id="kw-search-btn">Search Keyword →</button>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+              <span style="font-size:11.5px;font-weight:700;color:var(--ink-3)">Quick ideas:</span>
+              <button type="button" class="tag-score-pill" data-quick-kw="AI automation">AI automation</button>
+              <button type="button" class="tag-score-pill" data-quick-kw="claude code workflow">claude code workflow</button>
+              <button type="button" class="tag-score-pill" data-quick-kw="meta ads creative">meta ads creative</button>
+              <button type="button" class="tag-score-pill" data-quick-kw="viral short form hooks">viral short form hooks</button>
+              <button type="button" class="tag-score-pill" data-quick-kw="ai agents for business">ai agents for business</button>
+              <span id="kw-source-note" style="margin-left:auto;font-size:11.5px;color:var(--ink-3)"></span>
+            </div>
+          </form>
+
+          <!-- 4 VIDIQ HEADLINE METRICS -->
+          <div class="kpi-grid" style="grid-template-columns:repeat(4,minmax(0,1fr))" id="kw-headline-metrics"></div>
+
+          <!-- UNIFIED 2-COLUMN VIEW (KEYWORDS + TAGS & TOP RANKING VIDEOS) -->
+          <div class="card-grid-2" style="align-items:start;grid-template-columns:minmax(0,1.25fr) minmax(0,0.95fr)">
+            <section class="panel-card" style="min-width:0;padding:20px">
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+                <div class="segmented" id="kw-bucket-switch">
+                  <button type="button" data-kwb="matching" class="active">Matching</button>
+                  <button type="button" data-kwb="related">Related</button>
+                  <button type="button" data-kwb="questions">Questions</button>
+                </div>
+                <button type="button" class="btn btn-outline btn-xs" id="kw-export-csv">↓ CSV</button>
+              </div>
+              <div style="overflow-x:auto">
+                <table class="reels-table" style="font-size:12.5px;table-layout:fixed;width:100%">
+                  <thead><tr><th style="width:48%;padding:8px 8px">Keyword</th><th style="width:15%;padding:8px 6px">Vol</th><th style="width:18%;padding:8px 6px">Comp</th><th style="width:11%;padding:8px 6px">Score</th><th style="width:8%;padding:8px 4px"></th></tr></thead>
+                  <tbody id="kw-table-body"></tbody>
+                </table>
+              </div>
+            </section>
+
+            <div style="display:flex;flex-direction:column;gap:20px;min-width:0">
+              <section class="panel-card">
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+                  <div>
+                    <span class="eyebrow-dot">Scored Tags (0–100)</span>
+                    <h3 style="font-size:19px;margin-top:3px">High-opportunity tags</h3>
+                  </div>
+                  <div style="display:flex;gap:6px">
+                    <button type="button" class="btn btn-outline btn-xs" id="kw-copy-tags">Copy All</button>
+                    <button type="button" class="btn btn-yellow btn-xs" id="kw-send-optimizer">Send to Optimizer →</button>
+                  </div>
+                </div>
+                <div id="kw-tags-wrap" style="display:flex;flex-wrap:wrap;gap:7px"></div>
+              </section>
+
+              <section class="panel-card">
+                <div>
+                  <span class="eyebrow-dot">Live YouTube SERP · Outliers &amp; VPH</span>
+                  <h3 style="font-size:19px;margin-top:3px">Top ranking videos right now</h3>
+                </div>
+                <div id="kw-top-videos" style="display:flex;flex-direction:column;gap:10px"></div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUB 2: TITLE, TAGS, THUMBNAIL & ACTIONABLE SEO OPTIMIZER -->
+      <div class="sub-panel" id="sub-seo-optimizer" hidden>
+        <div class="card-grid-2" style="align-items:start">
+          <section class="panel-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+              <div>
+                <span class="eyebrow-dot">Zero-Credit Packaging Studio</span>
+                <h3 style="font-size:21px;margin-top:2px">Draft &amp; optimize your video</h3>
+              </div>
+              <button type="button" class="btn btn-yellow btn-sm" id="seo-ai-package-btn">✦ Generate AI Packaging</button>
+            </div>
+            <div>
+              <label class="field-label" for="opt-keyword">Primary Target Keyword</label>
+              <input class="field-input" id="opt-keyword" type="text" value="AI automation" placeholder="e.g. AI automation">
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between"><label class="field-label" for="opt-title">Video Title (aim for 35–60 chars for mobile)</label><span id="opt-title-chars" style="font-size:11.5px;font-family:var(--font-mono);color:var(--ink-3)">0/60</span></div>
+              <input class="field-input" id="opt-title" type="text" value="Stop Building 47-Node AI Automation (Do This 3-Step Fix Instead)" placeholder="Write your title to score it live...">
+            </div>
+            <div>
+              <label class="field-label" for="opt-thumb">Thumbnail Overlay Text (2–4 bold words — don't repeat title)</label>
+              <input class="field-input" id="opt-thumb" type="text" value="KILL THE BLOAT" placeholder="e.g. 3-STEP FIX">
+            </div>
+            <div>
+              <label class="field-label" for="opt-desc">Description (put primary keyword in first 180 chars)</label>
+              <textarea class="field-textarea" id="opt-desc" rows="4">Most AI automation tutorials hand you a 47-node workflow that breaks by Friday. Here is the exact 3-step AI Simple Stack we use with founders to replace 15 hours of manual ops every week without complex code. Comment SIMPLE for the blueprint.</textarea>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between"><label class="field-label" for="opt-tags">Tags (comma-separated · max 500 chars)</label><span id="opt-tags-chars" style="font-size:11.5px;font-family:var(--font-mono);color:var(--ink-3)">0/500</span></div>
+              <textarea class="field-textarea" id="opt-tags" rows="2">ai automation, ai automation for beginners, ai workflow, claude ai automation, business automation, ai agents, simple ai systems, how to automate business</textarea>
+              <div id="opt-scored-tags" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px"></div>
+            </div>
+          </section>
+
+          <div style="display:flex;flex-direction:column;gap:20px">
+            <section class="panel-card">
+              <div style="display:flex;align-items:center;gap:16px">
+                <div class="score-ring" id="opt-title-ring">88</div>
+                <div>
+                  <span class="eyebrow-dot">vidIQ + Dan Kennedy Title Score</span>
+                  <h3 style="font-size:21px;margin-top:2px" id="opt-title-verdict">Strong CTR Potential</h3>
+                  <p style="font-size:12.5px;color:var(--ink-3)">Scored live across intrigue, clarity, readability, mobile fit, and contrast.</p>
+                </div>
+              </div>
+              <div id="opt-title-checks" style="display:flex;flex-direction:column;gap:7px"></div>
+            </section>
+
+            <section class="panel-card">
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+                <div>
+                  <span class="eyebrow-dot">Classic Actionable SEO Checklist</span>
+                  <h3 style="font-size:19px;margin-top:2px">Search &amp; Discovery Score</h3>
+                </div>
+                <span class="status-chip live" id="opt-seo-badge">100 / 100</span>
+              </div>
+              <div id="opt-seo-checklist" style="display:flex;flex-direction:column;gap:7px"></div>
+              <div style="padding-top:10px;border-top:1px solid var(--border)">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                  <strong style="font-size:12.5px">Thumbnail Glanceability Critique</strong>
+                  <span class="status-chip" id="opt-thumb-badge">85 / 100</span>
+                </div>
+                <div id="opt-thumb-notes" style="font-size:12.5px;color:var(--ink-2)"></div>
+              </div>
+            </section>
+
+            <section class="panel-card" id="opt-ai-variants-card" hidden>
+              <span class="eyebrow-dot">AI-Generated Packaging Variants (Click any title to apply)</span>
+              <div id="opt-ai-variants" style="display:flex;flex-direction:column;gap:8px"></div>
+            </section>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1747,77 +1981,78 @@ HTML_TEMPLATE = r"""<!doctype html>
         </div>
       </div>
 
-      <!-- STEP 1: 2-MINUTE OFFER CLARITY -->
-      <section class="panel-card tone-butter">
-        <span class="eyebrow-dot">Step 1 · 2-Minute Offer Clarity</span>
-        <h3 style="font-size:24px">What you sell &amp; who you sell it to</h3>
-        <div class="form-row-2">
-          <div><label class="field-label" for="ch-what-sell">What do you sell?</label><textarea class="field-textarea" id="ch-what-sell" rows="2"></textarea></div>
-          <div><label class="field-label" for="ch-who-sell">Who do you sell it to?</label><textarea class="field-textarea" id="ch-who-sell" rows="2"></textarea></div>
+      <!-- STEP 1: 2-MINUTE OFFER CLARITY (OPEN BY DEFAULT) -->
+      <details class="calm-details" open>
+        <summary><span>1. Offer Clarity — What you sell &amp; who you sell it to</span><span class="status-chip">Core Offer</span></summary>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div class="form-row-2">
+            <div><label class="field-label" for="ch-what-sell">What do you sell?</label><textarea class="field-textarea" id="ch-what-sell" rows="2"></textarea></div>
+            <div><label class="field-label" for="ch-who-sell">Who do you sell it to?</label><textarea class="field-textarea" id="ch-who-sell" rows="2"></textarea></div>
+          </div>
+          <div class="form-row-2">
+            <div><label class="field-label" for="ch-transform">Core Transformation / Promise</label><input class="field-input" id="ch-transform" type="text"></div>
+            <div><label class="field-label" for="ch-cta">Primary Content CTA / Conversion Mechanism</label><input class="field-input" id="ch-cta" type="text"></div>
+          </div>
         </div>
-        <div class="form-row-2">
-          <div><label class="field-label" for="ch-transform">Core Transformation / Promise</label><input class="field-input" id="ch-transform" type="text"></div>
-          <div><label class="field-label" for="ch-cta">Primary Content CTA / Conversion Mechanism</label><input class="field-input" id="ch-cta" type="text"></div>
-        </div>
-      </section>
+      </details>
 
       <!-- STEP 2: DAN KENNEDY ARCHETYPE & MIGHTY THEME -->
-      <section class="panel-card">
-        <span class="eyebrow-dot">Step 2 · Dan Kennedy Character Archetype &amp; Mighty Theme</span>
-        <h3 style="font-size:24px">Pick one primary archetype &amp; declare your polarity</h3>
-        <div class="archetype-grid" id="archetype-grid"></div>
-        <div class="form-row-2" style="margin-top:6px">
-          <div><label class="field-label" for="ch-superhero">Superhero Identity / Persona Name</label><input class="field-input" id="ch-superhero" type="text" placeholder="e.g. Iron Dan / The Systems Architect"></div>
-          <div><label class="field-label" for="ch-mighty">The Mighty Theme (Your Obsession)</label><input class="field-input" id="ch-mighty" type="text"></div>
+      <details class="calm-details" open>
+        <summary><span>2. Dan Kennedy Archetype, Superhero Identity &amp; Polarity</span><span class="status-chip muted">Character</span></summary>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div class="archetype-grid" id="archetype-grid"></div>
+          <div class="form-row-2" style="margin-top:4px">
+            <div><label class="field-label" for="ch-superhero">Superhero Identity / Persona Name</label><input class="field-input" id="ch-superhero" type="text" placeholder="e.g. Iron Dan / The Systems Architect"></div>
+            <div><label class="field-label" for="ch-mighty">The Mighty Theme (Your Obsession)</label><input class="field-input" id="ch-mighty" type="text"></div>
+          </div>
+          <div class="form-row-2">
+            <div><label class="field-label" for="ch-stand-for">What You Stand FOR (Values)</label><textarea class="field-textarea" id="ch-stand-for" rows="2"></textarea></div>
+            <div><label class="field-label" for="ch-stand-against">What You Stand AGAINST (Named Enemies &amp; Polarization)</label><textarea class="field-textarea" id="ch-stand-against" rows="2"></textarea></div>
+          </div>
         </div>
-        <div class="form-row-2">
-          <div><label class="field-label" for="ch-stand-for">What You Stand FOR (Values)</label><textarea class="field-textarea" id="ch-stand-for" rows="2"></textarea></div>
-          <div><label class="field-label" for="ch-stand-against">What You Stand AGAINST (Named Enemies &amp; Polarization)</label><textarea class="field-textarea" id="ch-stand-against" rows="2"></textarea></div>
-        </div>
-      </section>
+      </details>
 
       <!-- STEP 3: THE 7 MAGNETIC ELEMENTS -->
-      <section class="panel-card tone-lavender">
-        <span class="eyebrow-dot">Step 3 · The 7 Elements of a Character-Driven Business</span>
-        <h3 style="font-size:24px">Build all 7 elements so every video deposits character equity</h3>
-        <div class="card-grid-2">
-          <div><label class="field-label" for="k7-origin">1. Origin Story / Legend (The Before → Turning Point)</label><textarea class="field-textarea" id="k7-origin" rows="3"></textarea></div>
-          <div><label class="field-label" for="k7-parables">2. Signature Parables (Real Incident + Embellishment + Lesson)</label><textarea class="field-textarea" id="k7-parables" rows="3"></textarea></div>
-          <div><label class="field-label" for="k7-miracles">3. Miracles (Verifiable Astonishing Proof &amp; Receipts)</label><textarea class="field-textarea" id="k7-miracles" rows="3"></textarea></div>
-          <div><label class="field-label" for="k7-language">4. Insider Language (Proprietary Tribe Vocabulary)</label><textarea class="field-textarea" id="k7-language" rows="3"></textarea></div>
-          <div><label class="field-label" for="k7-dogma">5. Dogma (Your Non-Negotiable Commandments)</label><textarea class="field-textarea" id="k7-dogma" rows="3"></textarea></div>
-          <div><label class="field-label" for="k7-enemies">6. Named Enemies (Specific Antagonists, Myths &amp; Bad Practices)</label><textarea class="field-textarea" id="k7-enemies" rows="3"></textarea></div>
+      <details class="calm-details">
+        <summary><span>3. The 7 Magnetic Elements (Origin, Parables, Miracles, Language, Dogma, Enemies, Flaws)</span><span class="status-chip muted">Expand</span></summary>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div class="card-grid-2">
+            <div><label class="field-label" for="k7-origin">1. Origin Story / Legend</label><textarea class="field-textarea" id="k7-origin" rows="3"></textarea></div>
+            <div><label class="field-label" for="k7-parables">2. Signature Parables</label><textarea class="field-textarea" id="k7-parables" rows="3"></textarea></div>
+            <div><label class="field-label" for="k7-miracles">3. Miracles (Verifiable Proof)</label><textarea class="field-textarea" id="k7-miracles" rows="3"></textarea></div>
+            <div><label class="field-label" for="k7-language">4. Insider Language</label><textarea class="field-textarea" id="k7-language" rows="3"></textarea></div>
+            <div><label class="field-label" for="k7-dogma">5. Dogma (Commandments)</label><textarea class="field-textarea" id="k7-dogma" rows="3"></textarea></div>
+            <div><label class="field-label" for="k7-enemies">6. Named Enemies</label><textarea class="field-textarea" id="k7-enemies" rows="3"></textarea></div>
+          </div>
+          <div><label class="field-label" for="k7-flaws">7. Flaws &amp; Evolution</label><textarea class="field-textarea" id="k7-flaws" rows="2"></textarea></div>
         </div>
-        <div><label class="field-label" for="k7-flaws">7. Flaws &amp; Evolution (Humanizing Before-State Arc = Proof)</label><textarea class="field-textarea" id="k7-flaws" rows="2"></textarea></div>
-      </section>
+      </details>
 
       <!-- STEP 4: JAMES BOND TEST + PROFITS + WRITING STYLE -->
-      <div class="card-grid-2">
-        <section class="panel-card tone-sage">
-          <span class="eyebrow-dot">Step 4 · The James Bond Test</span>
-          <h3 style="font-size:22px">7 things people MUST know about you</h3>
-          <p style="font-size:13px;color:var(--ink-2)">"Why do you know Bond takes his drink shaken not stirred? Because they made sure you knew." One trait per line — repeated until it sticks.</p>
-          <textarea class="field-textarea" id="ch-bond" rows="7"></textarea>
-          <div>
-            <label class="field-label" for="ch-style">Writing Style &amp; Voice Cadence (Injected into Scripts)</label>
-            <textarea class="field-textarea" id="ch-style" rows="3"></textarea>
+      <details class="calm-details">
+        <summary><span>4. James Bond Test (7 Repeatable Traits), Writing Style &amp; PROFITS Bank</span><span class="status-chip muted">Expand</span></summary>
+        <div class="card-grid-2">
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <p style="font-size:13px;color:var(--ink-2)">One repeatable trait per line — repeated across content until your audience knows it cold.</p>
+            <textarea class="field-textarea" id="ch-bond" rows="7"></textarea>
+            <div>
+              <label class="field-label" for="ch-style">Writing Style &amp; Voice Cadence</label>
+              <textarea class="field-textarea" id="ch-style" rows="3"></textarea>
+            </div>
           </div>
-        </section>
-
-        <section class="panel-card tone-cream">
-          <span class="eyebrow-dot">Step 5 · PROFITS Customer Language Bank</span>
-          <h3 style="font-size:22px">Verbatim buyer psychology</h3>
-          <div class="form-row-2">
-            <div><label class="field-label" for="pr-pain">P — Pain (Current Hell)</label><textarea class="field-textarea" id="pr-pain" rows="2"></textarea></div>
-            <div><label class="field-label" for="pr-results">R — Results (Proof / Wins)</label><textarea class="field-textarea" id="pr-results" rows="2"></textarea></div>
-            <div><label class="field-label" for="pr-obstacles">O — Obstacles (Failed Attempts)</label><textarea class="field-textarea" id="pr-obstacles" rows="2"></textarea></div>
-            <div><label class="field-label" for="pr-fear">F — Fear (Skepticism / Myths)</label><textarea class="field-textarea" id="pr-fear" rows="2"></textarea></div>
-            <div><label class="field-label" for="pr-identity">I — Identity (Tribe Language)</label><textarea class="field-textarea" id="pr-identity" rows="2"></textarea></div>
-            <div><label class="field-label" for="pr-triggers">T — Triggers (Urgency Events)</label><textarea class="field-textarea" id="pr-triggers" rows="2"></textarea></div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div class="form-row-2">
+              <div><label class="field-label" for="pr-pain">P — Pain</label><textarea class="field-textarea" id="pr-pain" rows="2"></textarea></div>
+              <div><label class="field-label" for="pr-results">R — Results</label><textarea class="field-textarea" id="pr-results" rows="2"></textarea></div>
+              <div><label class="field-label" for="pr-obstacles">O — Obstacles</label><textarea class="field-textarea" id="pr-obstacles" rows="2"></textarea></div>
+              <div><label class="field-label" for="pr-fear">F — Fear</label><textarea class="field-textarea" id="pr-fear" rows="2"></textarea></div>
+              <div><label class="field-label" for="pr-identity">I — Identity</label><textarea class="field-textarea" id="pr-identity" rows="2"></textarea></div>
+              <div><label class="field-label" for="pr-triggers">T — Triggers</label><textarea class="field-textarea" id="pr-triggers" rows="2"></textarea></div>
+            </div>
+            <div><label class="field-label" for="pr-dreams">S — Dreams</label><input class="field-input" id="pr-dreams" type="text"></div>
           </div>
-          <div><label class="field-label" for="pr-dreams">S — Dreams (Desired Destination)</label><input class="field-input" id="pr-dreams" type="text"></div>
-        </section>
-      </div>
+        </div>
+      </details>
     </div>
   </section>
 
@@ -2016,6 +2251,8 @@ cd outlier-lab
     <a id="footer-admin-link" href="/admin">Local Admin ↗</a>
   </div>
 </footer>
+  </div>
+</div>
 
 <!-- ==================== FULL 6-TAB VIDEO BREAKDOWN DIALOG (SANDCASTLES + DAN KENNEDY) ==================== -->
 <dialog id="reel-dialog" closedby="any" aria-labelledby="bd-title">
@@ -2393,7 +2630,7 @@ const urlParams = new URLSearchParams(location.search);
 let activeWorkspaceId = urlParams.get("workspace") || localStorage.getItem(KEYS.workspace) || DEFAULT_WORKSPACES[0].id;
 if (!allWorkspaces().some(w => w.id === activeWorkspaceId)) activeWorkspaceId = DEFAULT_WORKSPACES[0].id;
 let activeTab = urlParams.get("tab") || localStorage.getItem(KEYS.tab) || "today";
-if (!["today", "feed", "ideas", "scripts", "character", "channels"].includes(activeTab)) activeTab = "today";
+if (!["today", "feed", "seo", "ideas", "scripts", "character", "channels"].includes(activeTab)) activeTab = "today";
 
 let activeScope = urlParams.get("scope") || localStorage.getItem(KEYS.scope) || "__workspace__";
 let activeFilter = localStorage.getItem(KEYS.filter) || "__all__";
@@ -2560,6 +2797,21 @@ window.addEventListener("scroll", () => {
   document.getElementById("app-header").classList.toggle("scrolled", window.scrollY > 20);
 }, { passive: true });
 
+const TAB_TITLES = {
+  today: "Today",
+  feed: "Outliers",
+  seo: "Keywords & SEO Lab",
+  ideas: "Ideas & Hooks",
+  scripts: "Scripts & Strategy",
+  character: "Character & Offer",
+  channels: "Accounts & Setup",
+};
+const sidebarEl = document.getElementById("app-sidebar");
+const sidebarBackdrop = document.getElementById("sidebar-backdrop");
+const closeMobileSidebar = () => { sidebarEl?.classList.remove("open"); sidebarBackdrop?.classList.remove("open"); };
+document.getElementById("mobile-menu-btn")?.addEventListener("click", () => { sidebarEl?.classList.toggle("open"); sidebarBackdrop?.classList.toggle("open"); });
+sidebarBackdrop?.addEventListener("click", closeMobileSidebar);
+
 const tabs = [...document.querySelectorAll('#primary-tablist [role="tab"]')];
 function setActiveTab(tabId, { focus = false } = {}) {
   activeTab = tabId;
@@ -2571,9 +2823,15 @@ function setActiveTab(tabId, { focus = false } = {}) {
     btn.tabIndex = sel ? 0 : -1;
     if (sel && focus) btn.focus();
   });
-  ["today", "feed", "ideas", "scripts", "character", "channels"].forEach(id => {
-    document.getElementById(`panel-${id}`).hidden = id !== tabId;
+  ["today", "feed", "seo", "ideas", "scripts", "character", "channels"].forEach(id => {
+    const el = document.getElementById(`panel-${id}`);
+    if (el) el.hidden = id !== tabId;
   });
+  const tt = document.getElementById("topbar-title");
+  if (tt) tt.textContent = TAB_TITLES[tabId] || "Outlier Lab";
+  const ts = document.getElementById("topbar-sub");
+  if (ts) ts.textContent = `${getActiveWorkspace().name} · __TODAY__`;
+  closeMobileSidebar();
   emitEvent("outlier:tab-change", { tab: tabId, workspace: activeWorkspaceId });
 }
 document.getElementById("primary-tablist").addEventListener("click", e => {
@@ -2799,17 +3057,47 @@ function renderToday() {
           </div>
           <div class="spotlight-hook">“${escapeHtml(r.hook || "No hook")}”</div>
           <div class="tag-row">
-            <span class="micro-tag">Hook: ${escapeHtml(bd.hook?.category || "—")}</span>
-            <span class="micro-tag">Format: ${escapeHtml(bd.format?.category || "—")}</span>
-            <span class="micro-tag">${escapeHtml(bd.kennedy?.characterVsPlot || "Balanced")}</span>
+            <span class="micro-tag">${escapeHtml(bd.hook?.category || "Hook")}</span>
+            ${r.vph ? `<span class="micro-tag">${fmtNum(r.vph)} VPH</span>` : ""}
+            ${bd.engine === "claude" || bd.engine === "codex" ? `<span class="status-chip live" style="font-size:10px;padding:2px 8px">✦ ${escapeHtml(bd.engine)}</span>` : ""}
           </div>
           <div class="spotlight-metrics">
-            <div class="metric-cluster"><span><strong>${fmtNum(r.plays)}</strong> plays</span><span>♥ ${fmtNum(r.likes)}</span><span>💬 ${fmtNum(r.comments)}</span></div>
-            <span style="font-size:12px;font-weight:800">Full Breakdown ↗</span>
+            <div class="metric-cluster"><span><strong>${fmtNum(r.plays)}</strong> plays</span><span>♥ ${fmtNum(r.likes)}</span></div>
+            <span style="font-size:12px;font-weight:800">Inspect ↗</span>
           </div>
         </div>
       </article>`;
   }).join("");
+
+  // vidIQ-style Daily View Predictions (Very High / High / Medium)
+  const predGrid = document.getElementById("daily-predictions-grid");
+  if (predGrid) {
+    const ch = ws.character || {}, off = ws.offer || {};
+    const enemyShort = (ch.standAgainst || "overcomplicated tactics").split(",")[0].trim().split(/\s+/).slice(0, 4).join(" ");
+    const insiderShort = (ch.sevenElements?.insiderLanguage || ws.name + " System").split(",")[0].trim().split(/\s+/).slice(0, 4).join(" ");
+    const topics = computeAuditGroups(rows, "topics");
+    const t1 = topics[0]?.name || "AI Workflows";
+    const t2 = topics[1]?.name || "Short-Form Hooks";
+    const t3 = topics[2]?.name || "Offer Psychology";
+    const preds = [
+      { tier: "Very High", badge: "live", icon: "🚀", kw: t1.toLowerCase(), title: `Stop Chasing ${enemyShort} — Use This 3-Step ${t1} Fix`, reason: `Top workspace topic (${(topics[0]?.median || 4.2).toFixed(1)}× median) paired with high-contrast Trap Mistake hook.` },
+      { tier: "High", badge: "", icon: "↑", kw: t2.toLowerCase(), title: `How ${insiderShort} Beats 99% of ${t2} Advice`, reason: `Injects your Dan Kennedy Insider Language into a proven A vs B Comparison format.` },
+      { tier: "Medium", badge: "muted", icon: "●", kw: t3.toLowerCase(), title: `The Real Reason Your ${t3} Isn't Converting (5-Min Audit)`, reason: `Direct buyer-pain search demand aligned with ${off.whatYouSell ? "your core offer CTA" : "inbound conversion"}.` },
+    ];
+    predGrid.innerHTML = preds.map(p => `
+      <article class="panel-card" style="padding:20px;gap:10px">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+          <span class="status-chip ${p.badge}">${p.icon} ${p.tier} Prediction</span>
+          <span style="font-size:11px;font-weight:700;color:var(--ink-3)">${escapeHtml(p.kw)}</span>
+        </div>
+        <strong style="font-family:var(--font-display);font-size:16.5px;line-height:1.35">${escapeHtml(p.title)}</strong>
+        <p style="font-size:12.5px;color:var(--ink-2)">${escapeHtml(p.reason)}</p>
+        <div style="display:flex;gap:7px;margin-top:auto;padding-top:6px">
+          <button type="button" class="btn btn-outline btn-xs" data-optimize-idea-title="${escapeHtml(p.title)}" data-optimize-idea-kw="${escapeHtml(p.kw)}">Score Title &amp; Tags</button>
+          <button type="button" class="btn btn-yellow btn-xs" data-script-idea="${escapeHtml(p.title)}">Write Script →</button>
+        </div>
+      </article>`).join("");
+  }
 }
 
 // ---- TAB 2: OUTLIER FEED ----
@@ -3942,6 +4230,12 @@ async function initAiEngineStatus() {
       chip.textContent = found.length ? found.join(" · ") : "Instant Local Mode";
       chip.className = `status-chip ${found.length ? "live" : "muted"}`;
     }
+    const sbPill = document.getElementById("sidebar-ai-pill");
+    const sbLbl = document.getElementById("sidebar-ai-label");
+    if (sbPill && sbLbl) {
+      sbPill.classList.toggle("ready", Boolean(aiCapabilities.claude || aiCapabilities.codex));
+      sbLbl.textContent = aiCapabilities.claude ? "✦ Claude & Codex Ready" : aiCapabilities.codex ? "✦ Codex CLI Ready" : "Instant Local Mode";
+    }
     document.querySelectorAll("#ai-provider-switch button").forEach(b => b.classList.toggle("active", b.dataset.aiProvider === activeAiProvider));
   } catch {}
 }
@@ -4246,6 +4540,8 @@ document.getElementById("open-quick-add").addEventListener("click", () => openQu
 document.getElementById("hero-add-btn").addEventListener("click", () => openQuickAdd("video"));
 document.getElementById("feed-quick-add").addEventListener("click", () => openQuickAdd("video"));
 document.getElementById("add-creator-chip").addEventListener("click", () => openQuickAdd("channel"));
+document.getElementById("hero-seo-btn")?.addEventListener("click", () => setActiveTab("seo"));
+document.getElementById("today-open-seo")?.addEventListener("click", () => setActiveTab("seo"));
 document.getElementById("hero-socials-btn").addEventListener("click", () => { setActiveTab("channels"); activateSubNav("channels-subnav", "ch-socials"); });
 document.getElementById("hero-script-btn").addEventListener("click", () => { setActiveTab("scripts"); activateSubNav("scripts-subnav", "script-builder"); renderScriptWizard(); });
 document.getElementById("hero-character-btn").addEventListener("click", () => setActiveTab("character"));
@@ -4479,9 +4775,307 @@ document.addEventListener("click", e => {
   const row = t.closest("tr[data-shortcode]"); if (row && !t.closest("td:first-child")) openReelModal(row.dataset.shortcode);
 });
 
+// ---- COMPLETE VIDIQ KEYWORDS, SERP, VPH, TITLE & TAG SEO LAB ----
+bindSubNav("seo-subnav");
+let kwBucket = "matching";
+let activeKeywordData = {
+  keyword: "AI automation",
+  overallScore: 66,
+  overallLabel: "High",
+  volumeScore: 84,
+  monthlySearches: 540000,
+  competitionScore: 64,
+  competitionLabel: "Medium",
+  viewsPerHour: 7087.1,
+  freshBreakouts: 4,
+  source: "starter_snapshot",
+  matching: [
+    { keyword: "ai automation for beginners", searchVolume: 182000, competitionLabel: "Low", overall: 70 },
+    { keyword: "ai automation agency", searchVolume: 215000, competitionLabel: "Medium", overall: 67 },
+    { keyword: "ai automation workflow with n8n", searchVolume: 148000, competitionLabel: "Very low", overall: 74 },
+    { keyword: "ai automation full course", searchVolume: 164000, competitionLabel: "Low", overall: 70 },
+    { keyword: "ai automation tools for business", searchVolume: 112000, competitionLabel: "Very low", overall: 72 },
+    { keyword: "claude code ai automation", searchVolume: 96000, competitionLabel: "Very low", overall: 78 },
+  ],
+  related: [
+    { keyword: "best ai agents for small business", searchVolume: 124000, competitionLabel: "Low", overall: 75 },
+    { keyword: "n8n vs make ai workflow", searchVolume: 84000, competitionLabel: "Very low", overall: 77 },
+    { keyword: "ai operating system for founders", searchVolume: 48000, competitionLabel: "Very low", overall: 79 },
+    { keyword: "automate content creation with ai", searchVolume: 138000, competitionLabel: "Medium", overall: 66 },
+  ],
+  questions: [
+    { keyword: "how to start ai automation agency", searchVolume: 142000, competitionLabel: "Very low", overall: 73 },
+    { keyword: "how to sell ai automation services", searchVolume: 91000, competitionLabel: "Very low", overall: 73 },
+    { keyword: "how to automate business workflows with ai", searchVolume: 86000, competitionLabel: "Very low", overall: 75 },
+    { keyword: "what is the best ai automation tool 2026", searchVolume: 74000, competitionLabel: "Low", overall: 72 },
+  ],
+  recommendedTags: [
+    { tag: "how to start ai automation agency", score: 73 },
+    { tag: "ai automation workflow with n8n", score: 74 },
+    { tag: "claude code ai automation", score: 78 },
+    { tag: "ai automation for beginners", score: 70 },
+    { tag: "ai automation tools", score: 69 },
+    { tag: "ai agents for business", score: 72 },
+    { tag: "business automation", score: 65 },
+    { tag: "ai workflow", score: 68 },
+  ],
+  topVideos: [
+    { title: "AI Agents, Clearly Explained", channel: "Jeff Su", views: 5836695, vph: 4053.3, outlierScore: 15.5, url: "https://www.youtube.com/watch?v=FwOTs4UxQS4" },
+    { title: "How I Build AI Workflows That Actually Save 15 Hrs/Week", channel: "Starter Benchmark", views: 412000, vph: 612.0, outlierScore: 6.4, url: "https://www.youtube.com/results?search_query=AI+automation" },
+  ],
+};
+
+function scoreBadgeCls(s) { return s >= 70 ? "hi" : s >= 48 ? "med" : "lo"; }
+
+function renderKeywordExplorer() {
+  const d = activeKeywordData;
+  if (!d) return;
+  const note = document.getElementById("kw-source-note");
+  if (note) note.textContent = d.source === "live_youtube_suggest_and_serp" ? "● Live YouTube Suggest + SERP data" : "Starter snapshot (search live on localhost:4747)";
+
+  const ovCls = d.overallScore >= 65 ? "live" : d.overallScore >= 45 ? "" : "warn";
+  const cmpCls = d.competitionScore <= 45 ? "live" : d.competitionScore <= 70 ? "" : "warn";
+  document.getElementById("kw-headline-metrics").innerHTML = `
+    <div class="kpi-card">
+      <div class="kpi-label">Overall Score</div>
+      <div style="display:flex;align-items:baseline;gap:8px"><div class="kpi-val">${d.overallScore}<span style="font-size:15px;color:var(--ink-3)">/100</span></div><span class="status-chip ${ovCls}">${escapeHtml(d.overallLabel)}</span></div>
+      <div class="progress-bar" style="margin-top:6px"><span style="width:${d.overallScore}%"></span></div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Est. Monthly Searches</div>
+      <div class="kpi-val">${fmtNum(d.monthlySearches)}</div>
+      <div class="kpi-delta">Demand index ${d.volumeScore || 65}/100</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Competition</div>
+      <div style="display:flex;align-items:baseline;gap:8px"><div class="kpi-val">${d.competitionScore}<span style="font-size:15px;color:var(--ink-3)">/100</span></div><span class="status-chip ${cmpCls}">${escapeHtml(d.competitionLabel)}</span></div>
+      <div class="kpi-delta">${d.freshBreakouts ?? 0} recent breakouts in top 12</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Views Per Hour (VPH)</div>
+      <div class="kpi-val">${fmtNum(d.viewsPerHour)}</div>
+      <div class="kpi-delta">Combined top-10 search velocity</div>
+    </div>
+  `;
+
+  const rows = d[kwBucket] || d.matching || [];
+  document.getElementById("kw-table-body").innerHTML = rows.slice(0, 18).map(r => `
+    <tr>
+      <td style="font-weight:700;padding:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${escapeHtml(r.keyword)}">${escapeHtml(r.keyword)}</td>
+      <td style="padding:8px 6px;font-variant-numeric:tabular-nums;white-space:nowrap">${fmtNum(r.searchVolume)}</td>
+      <td style="padding:8px 6px"><span class="status-chip ${r.competitionLabel?.includes("low") || r.competitionLabel?.includes("Low") ? "live" : "muted"}" style="font-size:10px;padding:3px 7px">${escapeHtml(r.competitionLabel || "Med")}</span></td>
+      <td style="padding:8px 6px"><span class="tag-score-num ${scoreBadgeCls(r.overall)}">${r.overall}</span></td>
+      <td style="padding:8px 4px;text-align:right"><button type="button" class="btn btn-outline btn-xs" style="padding:4px 7px" title="Send to Title & SEO Optimizer" data-optimize-kw="${escapeHtml(r.keyword)}">→</button></td>
+    </tr>`).join("") || `<tr><td colspan="5" style="text-align:center;color:var(--ink-3);padding:20px">No keywords in this bucket.</td></tr>`;
+
+  document.getElementById("kw-tags-wrap").innerHTML = (d.recommendedTags || []).map(t => `
+    <button type="button" class="tag-score-pill" data-add-opt-tag="${escapeHtml(t.tag)}" title="Click to add to Optimizer tags">
+      <span>${escapeHtml(t.tag)}</span>
+      <span class="tag-score-num ${scoreBadgeCls(t.score)}">${t.score}</span>
+    </button>`).join("");
+
+  document.getElementById("kw-top-videos").innerHTML = (d.topVideos || []).slice(0, 6).map(v => `
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;background:var(--paper);border:1px solid var(--border)">
+      <div style="min-width:0;flex:1">
+        <a href="${escapeHtml(v.url)}" target="_blank" rel="noopener noreferrer" style="font-weight:700;font-size:13px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${escapeHtml(v.title)}</a>
+        <div style="font-size:11.5px;color:var(--ink-3)">${escapeHtml(v.channel)} · <strong>${fmtNum(v.views)}</strong> views · <strong>${fmtNum(v.vph)} VPH</strong> · ${v.outlierScore || 1}×</div>
+      </div>
+      <button type="button" class="btn btn-outline btn-xs" style="flex-shrink:0" data-model-yt-title="${escapeHtml(v.title)}">Model Title</button>
+    </div>`).join("") || `<p style="font-size:13px;color:var(--ink-3)">Run a live keyword search on localhost:4747 to pull top ranking YouTube videos.</p>`;
+}
+
+async function runKeywordSearch(term) {
+  const q = (term || "").trim();
+  if (!q) return;
+  document.getElementById("kw-search-input").value = q;
+  if (!isLocalServer()) {
+    activeKeywordData = { ...activeKeywordData, keyword: q, source: "static_estimate" };
+    renderKeywordExplorer();
+    showToast("Open http://127.0.0.1:4747 for live YouTube Suggest + SERP lookup");
+    return;
+  }
+  const btn = document.getElementById("kw-search-btn");
+  if (btn) { btn.disabled = true; btn.textContent = "Searching YouTube…"; }
+  try {
+    const r = await fetch(`/api/seo/keyword?q=${encodeURIComponent(q)}`);
+    const d = await r.json();
+    if (!r.ok) throw new Error(d.message || "Search failed");
+    activeKeywordData = d;
+    renderKeywordExplorer();
+    showToast(`Live YouTube keyword & SERP scored for "${q}" ✓`);
+  } catch (err) {
+    showToast(`Keyword search error: ${err.message}`);
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = "Search Keyword →"; }
+  }
+}
+
+const SEO_POWER_WORDS = new Set(["stop","secret","nobody","mistake","wrong","never","exact","free","simple","fast","actually","truth","hidden","killed","replaced","insane","scientifically","proven","framework","system","hours","minutes","days","million","blueprint","trap","without","before","instead","tested","honest","brutal","weird","only"]);
+function runLiveSeoOptimizer() {
+  const titleEl = document.getElementById("opt-title");
+  if (!titleEl) return;
+  const title = titleEl.value.trim();
+  const kw = (document.getElementById("opt-keyword")?.value || "").trim().toLowerCase();
+  const thumb = (document.getElementById("opt-thumb")?.value || "").trim();
+  const desc = (document.getElementById("opt-desc")?.value || "").trim();
+  const tagsRaw = (document.getElementById("opt-tags")?.value || "").trim();
+  const tags = tagsRaw ? tagsRaw.split(",").map(s => s.trim()).filter(Boolean) : [];
+
+  const tl = title.toLowerCase(), dl = desc.toLowerCase();
+  const words = title.split(/\s+/).filter(Boolean);
+  const hasNum = /\b\d+[\d,.%kKmMxX]*\b/.test(title);
+  const powerHits = (tl.match(/[a-z]+/g) || []).filter(w => SEO_POWER_WORDS.has(w));
+  const hasContrast = /\b(vs\.?|instead of|without|stop|never|not|why most|actually|before you)\b/i.test(title);
+  const hasCuriosity = /(\?|here's|this one|the real reason|nobody|secret|what happened|i tested|i tried)/i.test(title);
+
+  const sparks = Boolean(powerHits.length || hasContrast || hasCuriosity || hasNum);
+  const clear = words.length >= 4 && (!kw || kw.split(/\s+/).some(tok => tok.length > 2 && tl.includes(tok)));
+  const readable = words.length >= 5 && words.length <= 14;
+  const mobile = title.length >= 22 && title.length <= 62;
+  const polarity = hasContrast || /\b(stop|lie|trap|wrong|guru|scam|truth|never|kill)\b/i.test(title);
+
+  let tScore = 38 + (sparks ? 18 : 0) + (hasNum ? 8 : 0) + (hasContrast ? 8 : 0) + (clear ? 12 : 0) + (readable ? 8 : 0) + (mobile ? 8 : 0);
+  if (title.length > 75) tScore -= 10;
+  if (title.length < 18) tScore -= 12;
+  tScore = Math.max(12, Math.min(99, tScore));
+
+  document.getElementById("opt-title-chars").textContent = `${title.length}/60`;
+  const tagsChars = tags.reduce((n, x) => n + x.length + 1, 0);
+  document.getElementById("opt-tags-chars").textContent = `${tagsChars}/500`;
+
+  const ring = document.getElementById("opt-title-ring");
+  ring.textContent = String(tScore);
+  ring.className = `score-ring ${tScore >= 75 ? "" : tScore >= 55 ? "med" : "low"}`;
+  document.getElementById("opt-title-verdict").textContent = tScore >= 82 ? "High-CTR Winner" : tScore >= 65 ? "Strong Title — Minor Polish" : "Needs Stronger Hook & Clarity";
+
+  const checks = [
+    { label: "Sparks intrigue", pass: sparks, detail: sparks ? `Triggers detected (${powerHits.slice(0, 3).join(", ") || "number/contrast"}).` : "Add a concrete number, curiosity gap, or power word." },
+    { label: "Clear topic", pass: clear, detail: clear ? "Topic & keyword signal are immediately clear." : "Include your target keyword or concrete outcome in the first 5 words." },
+    { label: "Easy to read", pass: readable, detail: `${words.length} words (sweet spot: 6–13 words).` },
+    { label: "Fits on phones", pass: mobile, detail: `${title.length}/60 chars — ${mobile ? "clean mobile display" : "trim under 60 chars so it won't truncate"}.` },
+    { label: "Dan Kennedy contrast / polarity", pass: polarity, detail: polarity ? "Strong Us-vs-Them or Old-Way-vs-New-Way tension." : "Add 'without X', 'stop doing Y', or name an enemy." },
+  ];
+  document.getElementById("opt-title-checks").innerHTML = checks.map(c => `
+    <div class="seo-check-row"><span class="seo-dot ${c.pass ? "pass" : "fail"}">${c.pass ? "✓" : "!"}</span><div><strong style="display:block;font-size:12.5px">${c.label}</strong><span style="font-size:12px;color:var(--ink-2)">${escapeHtml(c.detail)}</span></div></div>`).join("");
+
+  // Scored Tag Pills (0-100)
+  document.getElementById("opt-scored-tags").innerHTML = tags.map(tag => {
+    const tgl = tag.toLowerCase(), tw = tgl.split(/\s+/).length;
+    let s = 46 + (kw && (tgl.includes(kw) || kw.includes(tgl)) ? 22 : 0) + (tgl.split(/\s+/).some(w => w.length > 3 && tl.includes(w)) ? 12 : 0) + (tw >= 2 && tw <= 4 ? 10 : tw === 1 ? -10 : -12) + (dl && dl.includes(tgl) ? 6 : 0);
+    s = Math.max(14, Math.min(96, s));
+    return `<span class="tag-score-pill"><span>${escapeHtml(tag)}</span><span class="tag-score-num ${scoreBadgeCls(s)}">${s}</span></span>`;
+  }).join("");
+
+  // Actionable SEO Checklist
+  const kwTitle = Boolean(kw && tl.includes(kw));
+  const kwDesc = Boolean(kw && dl.slice(0, 180).includes(kw));
+  const kwTags = Boolean(kw && tags.some(x => x.toLowerCase().includes(kw)));
+  const tripled = kwTitle && kwDesc && kwTags;
+  const tagBudgetOk = tags.length >= 8 && tags.length <= 20 && tagsChars <= 500;
+  const descOk = desc.length >= 200;
+  const seoItems = [
+    { label: "Primary keyword in Title", pass: kw ? kwTitle : Boolean(title), w: 20 },
+    { label: "Primary keyword in first 180 chars of Description", pass: kw ? kwDesc : descOk, w: 20 },
+    { label: "Primary keyword in Tags", pass: kw ? kwTags : tags.length >= 5, w: 15 },
+    { label: "Tripled Keyword (Title + Description + Tags)", pass: tripled, w: 20 },
+    { label: `Tag count & budget (${tags.length} tags · ${tagsChars}/500 chars)`, pass: tagBudgetOk, w: 15 },
+    { label: `Description depth (${desc.length} chars · target 200+)`, pass: descOk, w: 10 },
+  ];
+  const seoTotal = seoItems.reduce((n, x) => n + (x.pass ? x.w : 0), 0);
+  const seoBdg = document.getElementById("opt-seo-badge");
+  seoBdg.textContent = `${seoTotal} / 100`;
+  seoBdg.className = `status-chip ${seoTotal >= 75 ? "live" : seoTotal >= 50 ? "" : "warn"}`;
+  document.getElementById("opt-seo-checklist").innerHTML = seoItems.map(c => `
+    <div class="seo-check-row" style="padding:7px 10px"><span class="seo-dot ${c.pass ? "pass" : "fail"}">${c.pass ? "✓" : "!"}</span><span>${escapeHtml(c.label)}</span></div>`).join("");
+
+  // Thumbnail Critique
+  const tw = thumb ? thumb.split(/\s+/).filter(Boolean).length : 0;
+  const repeat = Boolean(thumb && tl.includes(thumb.toLowerCase()));
+  let thScore = 72 + (thumb ? (tw <= 4 ? 14 : -16) + (repeat ? -12 : 8) : 0);
+  thScore = Math.max(15, Math.min(98, thScore));
+  document.getElementById("opt-thumb-badge").textContent = `${thScore} / 100`;
+  document.getElementById("opt-thumb-notes").textContent = !thumb
+    ? "Add 2–4 bold words that amplify (not repeat) your title alongside 1 clear visual focal point."
+    : `${tw <= 4 ? `Crisp mobile legibility (${tw} words).` : `Trim to 2–4 bold words (currently ${tw}).`} ${repeat ? "Avoid repeating your title verbatim — add contrast instead." : "Great complement to the title."}`;
+}
+
+document.getElementById("kw-search-form")?.addEventListener("submit", e => { e.preventDefault(); runKeywordSearch(document.getElementById("kw-search-input").value); });
+document.getElementById("kw-bucket-switch")?.addEventListener("click", e => {
+  const b = e.target.closest("[data-kwb]"); if (!b) return;
+  kwBucket = b.dataset.kwb;
+  document.querySelectorAll("#kw-bucket-switch button").forEach(x => x.classList.toggle("active", x === b));
+  renderKeywordExplorer();
+});
+document.getElementById("kw-copy-tags")?.addEventListener("click", () => {
+  const tags = (activeKeywordData?.recommendedTags || []).map(t => t.tag).join(", ");
+  if (tags) copyText(tags, "Scored YouTube tags copied ✓");
+});
+document.getElementById("kw-send-optimizer")?.addEventListener("click", () => {
+  document.getElementById("opt-keyword").value = activeKeywordData.keyword || "";
+  document.getElementById("opt-tags").value = (activeKeywordData.recommendedTags || []).map(t => t.tag).join(", ");
+  activateSubNav("seo-subnav", "seo-optimizer");
+  runLiveSeoOptimizer();
+  showToast("Loaded keyword & scored tags into Optimizer ✓");
+});
+document.getElementById("kw-export-csv")?.addEventListener("click", () => {
+  const rows = activeKeywordData[kwBucket] || [];
+  const csv = ["keyword,est_monthly_searches,competition,overall_score", ...rows.map(r => `"${r.keyword.replaceAll('"','""')}",${r.searchVolume},"${r.competitionLabel}",${r.overall}`)].join("\n");
+  const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv" })); a.download = `keywords-${(activeKeywordData.keyword || "search").replace(/\s+/g, "-")}.csv`; a.click();
+  showToast(`Exported ${rows.length} keywords as CSV ✓`);
+});
+["opt-keyword", "opt-title", "opt-thumb", "opt-desc", "opt-tags"].forEach(id => document.getElementById(id)?.addEventListener("input", runLiveSeoOptimizer));
+
+document.getElementById("seo-ai-package-btn")?.addEventListener("click", async () => {
+  const kw = document.getElementById("opt-keyword").value.trim() || "AI automation";
+  const topic = document.getElementById("opt-title").value.trim() || kw;
+  if (!isLocalServer()) { showToast("Open http://127.0.0.1:4747 to generate Claude/Codex AI Packaging"); return; }
+  const btn = document.getElementById("seo-ai-package-btn");
+  const prov = activeAiProvider === "local" ? (aiCapabilities.default || "claude") : activeAiProvider;
+  btn.disabled = true; btn.textContent = `Generating via ${prov}…`;
+  try {
+    const resp = await fetch("/api/seo/package", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ topic, keyword: kw, provider: prov, workspaceProfile: getActiveWorkspace() }),
+    });
+    const d = await resp.json();
+    if (!resp.ok || !d.ok) throw new Error(d.message || "Packaging failed");
+    if (d.titles?.[0]?.title) document.getElementById("opt-title").value = d.titles[0].title;
+    if (d.thumbnails?.[0]?.overlayText) document.getElementById("opt-thumb").value = d.thumbnails[0].overlayText;
+    if (d.description) document.getElementById("opt-desc").value = d.description;
+    if (d.tags?.length) document.getElementById("opt-tags").value = d.tags.map(x => x.tag).join(", ");
+    const card = document.getElementById("opt-ai-variants-card");
+    const box = document.getElementById("opt-ai-variants");
+    card.hidden = false;
+    box.innerHTML = [
+      ...(d.titles || []).map(t => `<button type="button" class="seo-check-row" style="text-align:left;width:100%;justify-content:space-between" data-apply-title="${escapeHtml(t.title)}"><div><strong style="display:block">${escapeHtml(t.title)}</strong><span style="font-size:11.5px;color:var(--ink-3)">${escapeHtml(t.angle)} · ${escapeHtml(t.whyItClicks)}</span></div><span class="tag-score-num ${scoreBadgeCls(t.score)}">${t.score}</span></button>`),
+      ...(d.thumbnails || []).map(th => `<div class="seo-check-row" style="background:var(--yellow-tint)"><div><strong style="display:block">Thumbnail Concept: “${escapeHtml(th.overlayText)}”</strong><span style="font-size:12px;color:var(--ink-2)">${escapeHtml(th.visualScene)} — ${escapeHtml(th.curiosityHook)}</span></div></div>`),
+    ].join("");
+    runLiveSeoOptimizer();
+    showToast(`✦ Generated AI titles, thumbnails, description & tags via ${d.engine} ✓`);
+  } catch (err) {
+    showToast(`AI packaging error: ${err.message}`);
+  } finally {
+    btn.disabled = false; btn.textContent = "✦ Generate AI Packaging";
+  }
+});
+
+// Delegated SEO & Prediction Clicks
+document.addEventListener("click", e => {
+  const t = e.target;
+  const qk = t.closest("[data-quick-kw]"); if (qk) { runKeywordSearch(qk.dataset.quickKw); return; }
+  const okw = t.closest("[data-optimize-kw]"); if (okw) { document.getElementById("opt-keyword").value = okw.dataset.optimizeKw; activateSubNav("seo-subnav", "seo-optimizer"); runLiveSeoOptimizer(); return; }
+  const at = t.closest("[data-add-opt-tag]"); if (at) { const el = document.getElementById("opt-tags"); const cur = el.value.trim(); if (!cur.toLowerCase().includes(at.dataset.addOptTag.toLowerCase())) el.value = cur ? `${cur}, ${at.dataset.addOptTag}` : at.dataset.addOptTag; runLiveSeoOptimizer(); showToast(`Added tag "${at.dataset.addOptTag}" ✓`); return; }
+  const mt = t.closest("[data-model-yt-title]"); if (mt) { document.getElementById("opt-title").value = mt.dataset.modelYtTitle; document.getElementById("opt-keyword").value = activeKeywordData.keyword || ""; activateSubNav("seo-subnav", "seo-optimizer"); runLiveSeoOptimizer(); return; }
+  const ap = t.closest("[data-apply-title]"); if (ap) { document.getElementById("opt-title").value = ap.dataset.applyTitle; runLiveSeoOptimizer(); showToast("Applied title variant ✓"); return; }
+  const optIdea = t.closest("[data-optimize-idea-title]"); if (optIdea) { document.getElementById("opt-title").value = optIdea.dataset.optimizeIdeaTitle; document.getElementById("opt-keyword").value = optIdea.dataset.optimizeIdeaKw; setActiveTab("seo"); activateSubNav("seo-subnav", "seo-optimizer"); runLiveSeoOptimizer(); return; }
+  const scIdea = t.closest("[data-script-idea]"); if (scIdea) { wizard.sourceShortCode = null; wizard.topic = scIdea.dataset.scriptIdea; wizard.research = null; wizard.hooks = []; wizard.scriptText = ""; wizard.step = 1; setActiveTab("scripts"); activateSubNav("scripts-subnav", "script-builder"); renderScriptWizard(); return; }
+});
+
 function renderAll() {
   renderWorkspaceControls();
   renderToday();
+  renderKeywordExplorer();
+  runLiveSeoOptimizer();
   renderScopeNav();
   renderFeed();
   renderIdeasAndHooks();
@@ -4600,6 +5194,7 @@ def main():
                 "duration": p.get("videoDuration") or 0,
                 "posted_human": posted_dt.strftime("%b %-d") if posted_dt else "—",
                 "posted_ts": int(posted_dt.timestamp()) if posted_dt else 0,
+                "vph": round(plays / max(1.0, (datetime.now().timestamp() - posted_dt.timestamp()) / 3600.0), 1) if (posted_dt and plays) else 0,
                 "ratio": ratio or 0,
                 "band_class": band[0],
                 "band_label": band[1],
@@ -4655,6 +5250,7 @@ def main():
                     "duration": int(it.get("duration") or 0),
                     "posted_human": pdt.strftime("%b %-d") if pdt else "—",
                     "posted_ts": int(pdt.timestamp()) if pdt else 0,
+                    "vph": round(int(it.get("plays") or 0) / max(1.0, (datetime.now().timestamp() - pdt.timestamp()) / 3600.0), 1) if (pdt and it.get("plays")) else 0,
                     "ratio": ratio,
                     "band_class": band[0],
                     "band_label": band[1],
