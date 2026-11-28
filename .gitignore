@@ -25,4 +25,6 @@ LOCAL-SETUP.md
 .env*
 .cache/
 data/.posts.lock
+data/brains/
+data/zerodrive_mirror/
 node_modules/

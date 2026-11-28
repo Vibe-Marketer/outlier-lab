@@ -35,6 +35,8 @@ from tokscript import load_key as load_tokscript_key
 import ai_engine
 import social_sync
 import vidiq_engine
+import zerodrive_bridge
+import composio_bridge
 
 ROOT = Path(__file__).resolve().parent
 ENV_FILE = ROOT / ".env"
@@ -232,6 +234,65 @@ class AdminHandler(BaseHTTPRequestHandler):
                 self._json(200, vidiq_engine.research_keyword(q))
             except Exception as exc:
                 self._json(500, {"message": str(exc)[:260]})
+            return
+
+        if path == "/api/creators/discover":
+            q = (query.get("q", [""])[0] or "").strip()
+            plat = (query.get("platform", ["youtube"])[0] or "youtube").strip().lower()
+            mode = (query.get("mode", ["search"])[0] or "search").strip().lower()
+            limit = max(1, min(20, int((query.get("limit", ["12"])[0] or "12"))))
+            try:
+                self._json(200, social_sync.discover_creators(query=q, platform=plat, mode=mode, limit=limit))
+            except Exception as exc:
+                self._json(500, {"ok": False, "message": str(exc)[:260]})
+            return
+
+        if path == "/api/brain":
+            ws_id = re.sub(r"[^a-z0-9_-]+", "-", (query.get("workspace", ["aisimple"])[0] or "aisimple").lower()).strip("-") or "aisimple"
+            bp = ROOT / "data" / "brains" / f"{ws_id}.json"
+            if bp.exists():
+                try:
+                    self._json(200, {"ok": True, "workspaceId": ws_id, "brain": json.loads(bp.read_text())})
+                    return
+                except json.JSONDecodeError:
+                    pass
+            self._json(200, {"ok": True, "workspaceId": ws_id, "brain": None})
+            return
+
+        if path == "/api/zerodrive/status":
+            self._json(200, zerodrive_bridge.status())
+            return
+
+        if path == "/api/zerodrive/files":
+            ws_id = (query.get("workspace", [""])[0] or "").strip()
+            self._json(200, zerodrive_bridge.list_files(ws_id))
+            return
+
+        if path == "/api/zerodrive/read":
+            rel = (query.get("path", [""])[0] or "").strip()
+            try:
+                self._json(200, zerodrive_bridge.read_document(rel))
+            except Exception as exc:
+                self._json(400, {"ok": False, "message": str(exc)[:240]})
+            return
+
+        if path == "/api/composio/status":
+            self._json(200, composio_bridge.status())
+            return
+
+        if path == "/api/composio/toolkits":
+            q = (query.get("q", [""])[0] or "").strip()
+            self._json(200, composio_bridge.list_toolkits(search=q, limit=30))
+            return
+
+        if path == "/api/composio/connections":
+            self._json(200, composio_bridge.list_connections())
+            return
+
+        if path == "/api/composio/tools":
+            tk = (query.get("toolkit", [""])[0] or "").strip()
+            q = (query.get("q", [""])[0] or "").strip()
+            self._json(200, composio_bridge.list_tools(toolkit_slug=tk, search=q, limit=25))
             return
 
         if path == "/api/schedule":
@@ -469,6 +530,122 @@ class AdminHandler(BaseHTTPRequestHandler):
                 self._json(500, {"ok": False, "message": str(exc)[:300]})
             return
 
+        if path == "/api/brain":
+            data = self._body()
+            ws_id = re.sub(r"[^a-z0-9_-]+", "-", (data.get("workspaceId") or "aisimple").lower()).strip("-") or "aisimple"
+            brain = data.get("brain")
+            if not isinstance(brain, dict):
+                self._json(400, {"message": "Provide a brain object."})
+                return
+            bdir = ROOT / "data" / "brains"
+            bdir.mkdir(parents=True, exist_ok=True)
+            write_json(bdir / f"{ws_id}.json", brain)
+            zd_res = None
+            if data.get("syncZeroDrive", True):
+                try:
+                    zd_res = zerodrive_bridge.sync_workspace_brain(ws_id, brain)
+                except Exception as exc:
+                    zd_res = {"ok": False, "warning": str(exc)[:200]}
+            self._json(200, {"ok": True, "workspaceId": ws_id, "zerodrive": zd_res})
+            return
+
+        if path == "/api/ai/chat":
+            data = self._body()
+            messages = data.get("messages")
+            if not isinstance(messages, list) or not messages:
+                self._json(400, {"message": "Provide a messages list."})
+                return
+            try:
+                res = ai_engine.chat_with_brain(
+                    messages=messages,
+                    brain_payload=data.get("brain") if isinstance(data.get("brain"), dict) else {},
+                    mode=(data.get("mode") or "chief_of_staff").strip().lower(),
+                    provider=(data.get("provider") or "auto").strip().lower(),
+                )
+                self._json(200, {"ok": True, **res})
+            except Exception as exc:
+                self._json(500, {"ok": False, "message": str(exc)[:300]})
+            return
+
+        if path == "/api/ai/arsenal":
+            data = self._body()
+            tool_type = (data.get("toolType") or "").strip().lower()
+            if not tool_type:
+                self._json(400, {"message": "Provide a toolType."})
+                return
+            try:
+                res = ai_engine.generate_arsenal_asset(
+                    tool_type=tool_type,
+                    params=data.get("params") if isinstance(data.get("params"), dict) else {},
+                    brain_payload=data.get("brain") if isinstance(data.get("brain"), dict) else {},
+                    provider=(data.get("provider") or "auto").strip().lower(),
+                )
+                self._json(200, {"ok": True, **res})
+            except Exception as exc:
+                self._json(500, {"ok": False, "message": str(exc)[:300]})
+            return
+
+        if path == "/api/zerodrive/connect":
+            data = self._body()
+            res = zerodrive_bridge.connect(
+                vault_root=(data.get("vaultRoot") or "OutlierLab").strip(),
+                api_url=(data.get("apiUrl") or "").strip(),
+                api_key=(data.get("apiKey") or "").strip(),
+            )
+            self._json(200, {"ok": True, **res})
+            return
+
+        if path == "/api/zerodrive/sync":
+            data = self._body()
+            ws_id = (data.get("workspaceId") or "aisimple").strip()
+            brain = data.get("brain") if isinstance(data.get("brain"), dict) else {}
+            res = zerodrive_bridge.sync_workspace_brain(ws_id, brain)
+            self._json(200, res)
+            return
+
+        if path == "/api/zerodrive/save":
+            data = self._body()
+            ws_id = (data.get("workspaceId") or "aisimple").strip()
+            category = (data.get("category") or "deliverables").strip()
+            filename = (data.get("filename") or f"doc-{int(time.time())}.md").strip()
+            content = str(data.get("content") or "")
+            res = zerodrive_bridge.save_document(ws_id, category, filename, content)
+            self._json(200, res)
+            return
+
+        if path == "/api/composio/configure":
+            data = self._body()
+            res = composio_bridge.configure(
+                api_key=(data.get("apiKey") or "").strip(),
+                user_id=(data.get("userId") or "").strip(),
+            )
+            self._json(200 if res.get("ok") else 400, res)
+            return
+
+        if path == "/api/composio/connect":
+            data = self._body()
+            tk = (data.get("toolkit") or "").strip()
+            if not tk:
+                self._json(400, {"ok": False, "message": "Provide a toolkit slug."})
+                return
+            res = composio_bridge.initiate_connection(tk, redirect_url=(data.get("redirectUrl") or "").strip())
+            self._json(200 if res.get("ok") else 400, res)
+            return
+
+        if path == "/api/composio/execute":
+            data = self._body()
+            slug = (data.get("toolSlug") or "").strip()
+            if not slug:
+                self._json(400, {"ok": False, "message": "Provide a toolSlug."})
+                return
+            res = composio_bridge.execute_tool(
+                tool_slug=slug,
+                arguments=data.get("arguments") if isinstance(data.get("arguments"), dict) else {},
+                connected_account_id=(data.get("connectedAccountId") or "").strip(),
+            )
+            self._json(200 if res.get("ok") else 400, res)
+            return
+
         if path == "/api/ai/batch":
             data = self._body()
             cur = getattr(self.server, "ai_batch_status", None)
@@ -523,10 +700,14 @@ class AdminHandler(BaseHTTPRequestHandler):
                 "role": role,
                 "platform": record["platform"],
                 "handle": record["handle"],
+                "creatorName": record.get("creatorName") or record["handle"],
+                "followerCount": record.get("followerCount") or 0,
+                "followers": record.get("followers") or "—",
                 "sourceUrl": record["sourceUrl"],
                 "syncedAt": record["syncedAt"],
                 "videoCount": record["videoCount"],
                 "medianViews": record["medianViews"],
+                "medianViewsFormatted": record.get("medianViewsFormatted") or "—",
                 "totalViews": record["totalViews"],
                 "outlierCount": record["outlierCount"],
                 "verifiedCode": (data.get("verifiedCode") or "")[:24],

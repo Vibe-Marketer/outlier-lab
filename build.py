@@ -5,12 +5,12 @@ AI Simple — Outlier Lab Studio renderer.
 Generates a self-contained static HTML application combining:
   - AI Simple brand design system (Sora + Manrope + Space Mono, #FFC71D yellow,
     #F5F4EF warm paper, #1F1F1F charcoal, lavender/sage/cream cards)
-  - Full Sandcastles-style per-video breakdown studio (6 tabs: Transcript w/
+  - Full per-video breakdown studio (6 tabs: Transcript w/
     Beat-by-Beat timestamps, Idea Analysis, Hook Formula, Storytelling Format,
-    Visual Layout, and Dan Kennedy Magnetic Audit)
+    Visual Layout, and Magnetic Story Audit)
   - Ideas Inbox, Viral Hook Vault + Pre-Flight Checker, Collections Taxonomy,
     Projects, Content Strategy Audit + Success Formula, 4-Step Script Builder,
-    Dan Kennedy Character & Offer Studio, My Socials, and Zero-Friction Setup.
+    Brand Brain, Founder Persona & Offer Studio, My Socials, and Zero-Friction Setup.
 """
 import json
 import re
@@ -40,10 +40,10 @@ DEFAULT_WORKSPACES = [
         "tagline": "AI workflows, automation & high-leverage founder systems",
         "scopes": ["ai", "ai-dtc", "marketing-sales", "notion-swipes"],
         "socials": [
-            {"platform": "instagram", "handle": "@aisimple.co", "followers": "42.8K", "medianViews": "14.2K", "connected": False},
-            {"platform": "youtube", "handle": "@aisimple", "followers": "28.4K", "medianViews": "9.6K", "connected": False},
-            {"platform": "tiktok", "handle": "@aisimple.co", "followers": "19.1K", "medianViews": "11.4K", "connected": False},
-            {"platform": "facebook", "handle": "aisimple", "followers": "12.4K", "medianViews": "5.8K", "connected": False},
+            {"platform": "instagram", "handle": "@aisimple.co", "followers": "—", "medianViews": "—", "connected": False},
+            {"platform": "youtube", "handle": "@aisimple", "followers": "—", "medianViews": "—", "connected": False},
+            {"platform": "tiktok", "handle": "@aisimple.co", "followers": "—", "medianViews": "—", "connected": False},
+            {"platform": "facebook", "handle": "aisimple", "followers": "—", "medianViews": "—", "connected": False},
         ],
         "offer": {
             "whatYouSell": "The SIMPLE Method — AI workflow audits, team implementation, and done-for-you AI operating systems",
@@ -96,10 +96,10 @@ DEFAULT_WORKSPACES = [
         "tagline": "DTC performance creative, paid social & ecommerce scale",
         "scopes": ["dtc-agencies", "dtc-ecommerce", "ai-dtc"],
         "socials": [
-            {"platform": "instagram", "handle": "@clickableimpact", "followers": "18.6K", "medianViews": "7.4K", "connected": False},
-            {"platform": "youtube", "handle": "@clickableimpact", "followers": "11.2K", "medianViews": "5.1K", "connected": False},
-            {"platform": "tiktok", "handle": "@clickableimpact", "followers": "9.8K", "medianViews": "6.3K", "connected": False},
-            {"platform": "facebook", "handle": "clickableimpact", "followers": "8.9K", "medianViews": "4.2K", "connected": False},
+            {"platform": "instagram", "handle": "@clickableimpact", "followers": "—", "medianViews": "—", "connected": False},
+            {"platform": "youtube", "handle": "@clickableimpact", "followers": "—", "medianViews": "—", "connected": False},
+            {"platform": "tiktok", "handle": "@clickableimpact", "followers": "—", "medianViews": "—", "connected": False},
+            {"platform": "facebook", "handle": "clickableimpact", "followers": "—", "medianViews": "—", "connected": False},
         ],
         "offer": {
             "whatYouSell": "High-converting paid social creative engines, ad testing frameworks, and DTC acquisition systems",
@@ -145,7 +145,7 @@ DEFAULT_WORKSPACES = [
     },
 ]
 
-SANDCASTLES_COLLECTIONS = [
+CREATIVE_COLLECTIONS = [
     {
         "group": "Visual Hooks",
         "tone": "butter",
@@ -171,7 +171,7 @@ SANDCASTLES_COLLECTIONS = [
             {"name": "A vs B Comparison", "sub": "Contrast", "desc": "Contrast the amateur approach against the pro mechanism to create an instant curiosity gap."},
             {"name": "Listicle", "sub": "High-Value Compression", "desc": "Pack 3–7 specific, concrete points with a named time cap ('5 prompts in 45 seconds')."},
             {"name": "Case Study", "sub": "Proof-Led", "desc": "Walk through a specific before → mechanism → after transformation with exact numbers."},
-            {"name": "Personal Learning / Epiphany", "sub": "Character & Parable", "desc": "Real incident + hard lesson + perspective shift (Dan Kennedy Parable format)."},
+            {"name": "Personal Learning / Epiphany", "sub": "Character & Parable", "desc": "Real incident + hard lesson + perspective shift (Parable story format)."},
             {"name": "Problem → Solution", "sub": "Direct Utility", "desc": "Name the live pain in line 1, deliver the first useful step by second 8."},
             {"name": "Yap / Hot Take", "sub": "Polarization", "desc": "Unfiltered contrarian stance against a named industry enemy that forces comments."},
         ],
@@ -303,7 +303,7 @@ def outlier_band(ratio):
     return ("normal", "Normal", "#e8e6dd")
 
 
-# ───────────── SANDCASTLES + DAN KENNEDY BREAKDOWN ENGINE ─────────────
+# ───────────── VIDEO BREAKDOWN & MAGNETIC STORY ENGINE ─────────────
 
 def _classify_topic(text_lower):
     rules = [
@@ -370,7 +370,7 @@ def _classify_format(text_lower, hook_cat, duration):
     if hook_cat == "Case Study" or re.search(r"\b(case study|from \$|went from|grew to|scaled to|revenue)\b", text_lower):
         return ("Case Study", "Anchors the teaching inside a real verifiable transformation with before-and-after receipts.")
     if hook_cat == "Personal Experience" or re.search(r"\b(story|happened to me|i learned|i realized|i failed|years ago)\b", text_lower):
-        return ("Personal Learning Epiphany", "Turns a lived incident into a portable principle (Dan Kennedy Parable structure).")
+        return ("Personal Learning Epiphany", "Turns a lived incident into a portable principle (Parable story structure).")
     if re.search(r"\b(step|how to|framework|system|here's how|breakdown|works)\b", text_lower):
         return ("Breakdown Explainer", "Opens a strong promise, then dissects the underlying mechanism step-by-step with concrete examples.")
     if hook_cat == "Problem":
@@ -944,7 +944,7 @@ HTML_TEMPLATE = r"""<!doctype html>
   .hero-mini-stat strong { display: block; font-family: var(--font-display); font-size: 20px; font-weight: 500; color: var(--ink); line-height: 1.1; font-variant-numeric: tabular-nums; }
   .hero-mini-stat span { font-size: 11px; color: var(--ink-3); }
 
-  /* vidIQ Score Dials, Tag Pills & SEO Checklist */
+  /* Keyword Score Dials, Tag Pills & SEO Checklist */
   .score-ring {
     width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center;
     font-family: var(--font-display); font-size: 22px; font-weight: 600; flex-shrink: 0;
@@ -983,6 +983,25 @@ HTML_TEMPLATE = r"""<!doctype html>
   .calm-details[open] > summary { padding-bottom: 14px; margin-bottom: 14px; border-bottom: 1px solid var(--border); }
   .sidebar-backdrop { display: none; position: fixed; inset: 0; background: rgba(15,12,20,0.4); z-index: 55; }
   .sidebar-backdrop.open { display: block; }
+
+  /* AI Chat, Modality Tiers (S/A/B/C) & Integration Cards */
+  .chat-shell { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 20px; align-items: start; }
+  .chat-log { display: flex; flex-direction: column; gap: 12px; min-height: 360px; max-height: 540px; overflow-y: auto; padding: 18px; border-radius: 18px; background: var(--paper); border: 1px solid var(--border); }
+  .chat-msg { max-width: 86%; padding: 13px 16px; border-radius: 16px; font-size: 14px; line-height: 1.6; white-space: pre-wrap; }
+  .chat-msg.user { align-self: flex-end; background: var(--charcoal); color: #ffffff; border-bottom-right-radius: 5px; }
+  .chat-msg.assistant { align-self: flex-start; background: var(--surface); color: var(--ink); border: 1px solid var(--border); border-bottom-left-radius: 5px; }
+  .tier-group { padding: 12px 14px; border-radius: 14px; background: var(--paper); border: 1px solid var(--border); display: flex; flex-direction: column; gap: 8px; }
+  .tier-badge { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 999px; font-size: 10.5px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; }
+  .tier-badge.tier-s { background: var(--charcoal); color: var(--yellow); }
+  .tier-badge.tier-a { background: var(--yellow); color: #151515; }
+  .tier-badge.tier-b { background: var(--lavender); color: var(--lavender-ink); }
+  .tier-badge.tier-c { background: var(--surface); color: var(--ink-3); border: 1px solid var(--border-strong); }
+  .mod-chip { display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px; border-radius: 999px; background: var(--surface); border: 1px solid var(--border-strong); font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.14s; }
+  .mod-chip:hover { border-color: var(--ink); }
+  .mod-chip.active { background: var(--charcoal); color: var(--yellow); border-color: var(--charcoal); }
+  .toolkit-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .toolkit-card { padding: 14px 16px; border-radius: 16px; background: var(--surface); border: 1px solid var(--border); display: flex; flex-direction: column; gap: 8px; }
+  @media (max-width: 1120px) { .chat-shell, .toolkit-grid { grid-template-columns: 1fr; } }
 
   /* Section Headings & Segmented */
   .section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
@@ -1034,7 +1053,7 @@ HTML_TEMPLATE = r"""<!doctype html>
   .metric-cluster { display: flex; align-items: center; gap: 11px; font-size: 12px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
   .metric-cluster strong { color: var(--ink); font-weight: 800; }
 
-  /* Success Formula Banner (Sandcastles signature) */
+  /* Success Formula Banner */
   .formula-card {
     background: var(--surface); border: 1px solid var(--border);
     border-radius: var(--radius-xl); padding: 26px 30px;
@@ -1281,7 +1300,7 @@ HTML_TEMPLATE = r"""<!doctype html>
     padding: 14px 16px; border-radius: 14px; overflow-x: auto; white-space: pre-wrap;
   }
 
-  /* ===== NATIVE <dialog> — FULL SANDCASTLES 6-TAB VIDEO BREAKDOWN STUDIO ===== */
+  /* ===== NATIVE <dialog> — FULL 6-TAB VIDEO BREAKDOWN STUDIO ===== */
   dialog { padding: 0; border: 0; background: transparent; max-width: min(1240px, 96vw); max-height: 94vh; overflow: visible; color: var(--ink); }
   dialog:modal { overscroll-behavior: contain; }
   dialog::backdrop { background: rgba(15, 13, 18, 0.74); backdrop-filter: blur(8px); overflow: hidden; overscroll-behavior: contain; }
@@ -1430,15 +1449,18 @@ HTML_TEMPLATE = r"""<!doctype html>
       <div class="nav-group-label">Discover</div>
       <button type="button" class="primary-tab" role="tab" id="tab-today" data-tab="today" aria-selected="true"><span class="primary-tab-left"><span class="nav-ico">◈</span><span>Today</span></span><span class="tab-count" id="tab-count-today">5</span></button>
       <button type="button" class="primary-tab" role="tab" id="tab-feed" data-tab="feed" aria-selected="false"><span class="primary-tab-left"><span class="nav-ico">▶</span><span>Outliers</span></span><span class="tab-count" id="tab-count-feed">__TOTAL_REELS__</span></button>
-      <button type="button" class="primary-tab" role="tab" id="tab-seo" data-tab="seo" aria-selected="false"><span class="primary-tab-left"><span class="nav-ico">⌕</span><span>Keywords &amp; SEO</span></span><span class="tab-count">vidIQ</span></button>
+      <button type="button" class="primary-tab" role="tab" id="tab-seo" data-tab="seo" aria-selected="false"><span class="primary-tab-left"><span class="nav-ico">⌕</span><span>Keywords &amp; SEO</span></span><span class="tab-count">SEO</span></button>
+
+      <div class="nav-group-label">Brain &amp; Strategy</div>
+      <button type="button" class="primary-tab" role="tab" id="tab-chat" data-tab="chat" aria-selected="false"><span class="primary-tab-left"><span class="nav-ico">⌘</span><span>AI Chat &amp; Coach</span></span></button>
+      <button type="button" class="primary-tab" role="tab" id="tab-character" data-tab="character" aria-selected="false"><span class="primary-tab-left"><span class="nav-ico">★</span><span>Brand Brain</span></span></button>
 
       <div class="nav-group-label">Create</div>
-      <button type="button" class="primary-tab" role="tab" id="tab-ideas" data-tab="ideas" aria-selected="false"><span class="primary-tab-left"><span class="nav-ico">✦</span><span>Ideas &amp; Hooks</span></span><span class="tab-count" id="tab-count-ideas">__TOTAL_OUTLIERS__</span></button>
-      <button type="button" class="primary-tab" role="tab" id="tab-scripts" data-tab="scripts" aria-selected="false"><span class="primary-tab-left"><span class="nav-ico">✎</span><span>Scripts &amp; Strategy</span></span></button>
+      <button type="button" class="primary-tab" role="tab" id="tab-ideas" data-tab="ideas" aria-selected="false"><span class="primary-tab-left"><span class="nav-ico">✦</span><span>Ideas &amp; Swipe Hooks</span></span><span class="tab-count" id="tab-count-ideas">__TOTAL_OUTLIERS__</span></button>
+      <button type="button" class="primary-tab" role="tab" id="tab-scripts" data-tab="scripts" aria-selected="false"><span class="primary-tab-left"><span class="nav-ico">✎</span><span>Arsenal &amp; Scripts</span></span></button>
 
       <div class="nav-group-label">Workspace</div>
-      <button type="button" class="primary-tab" role="tab" id="tab-character" data-tab="character" aria-selected="false"><span class="primary-tab-left"><span class="nav-ico">★</span><span>Character &amp; Offer</span></span></button>
-      <button type="button" class="primary-tab" role="tab" id="tab-channels" data-tab="channels" aria-selected="false"><span class="primary-tab-left"><span class="nav-ico">◎</span><span>Accounts &amp; Setup</span></span></button>
+      <button type="button" class="primary-tab" role="tab" id="tab-channels" data-tab="channels" aria-selected="false"><span class="primary-tab-left"><span class="nav-ico">◎</span><span>Accounts &amp; Tools</span></span></button>
     </nav>
 
     <div class="sidebar-footer">
@@ -1471,7 +1493,7 @@ HTML_TEMPLATE = r"""<!doctype html>
         <div class="hero-copy">
           <div class="hero-eyebrow"><span class="live-dot" aria-hidden="true"></span><span id="hero-eyebrow-text">AI SIMPLE WORKSPACE · __TODAY__</span></div>
           <h1 id="hero-heading">What's <span class="gradient-highlight">outperforming</span> for AI Simple today.</h1>
-          <p class="hero-sub" id="hero-sub">Click any outlier for its full 6-tab Sandcastles + Dan Kennedy breakdown, or jump straight into keyword &amp; title scoring.</p>
+          <p class="hero-sub" id="hero-sub">Click any outlier for its full 6-tab Video & Story Breakdown, or jump straight into keyword &amp; title scoring.</p>
           <div class="hero-actions">
             <button type="button" class="btn btn-yellow btn-sm" id="hero-seo-btn">⌕ Research Keywords &amp; Titles</button>
             <button type="button" class="btn btn-outline btn-sm" id="hero-socials-btn">Connect Socials (IG/YT/TT/FB)</button>
@@ -1511,11 +1533,11 @@ HTML_TEMPLATE = r"""<!doctype html>
         <div class="spotlight-grid" id="spotlight-grid"></div>
       </section>
 
-      <!-- DAILY VIEW PREDICTIONS (vidIQ Style) -->
+      <!-- DAILY VIEW PREDICTIONS -->
       <section aria-labelledby="daily-pred-heading">
         <div class="section-head" style="margin-bottom:14px">
           <div>
-            <span class="eyebrow-dot">vidIQ-Style Daily View Predictions</span>
+            <span class="eyebrow-dot">Daily View Predictions</span>
             <h2 id="daily-pred-heading" style="font-size:24px">High-probability videos to film next.</h2>
           </div>
           <button type="button" class="btn btn-outline btn-sm" id="today-open-seo">Open Keyword &amp; Title Lab →</button>
@@ -1551,14 +1573,14 @@ HTML_TEMPLATE = r"""<!doctype html>
     </div>
   </section>
 
-  <!-- ==================== TAB 2B: KEYWORDS, TAGS, TITLES & SEO (COMPLETE VIDIQ SUITE) ==================== -->
+  <!-- ==================== TAB 2B: KEYWORDS, TAGS, TITLES & SEO (KEYWORD, PACKAGING & SEO SUITE) ==================== -->
   <section class="tab-panel" id="panel-seo" role="tabpanel" aria-labelledby="tab-seo" hidden>
     <div class="panel-inner">
       <div class="section-head">
         <div>
           <span class="eyebrow-dot">Live YouTube Suggest · SERP Competition · VPH · Title &amp; Tag Scoring</span>
           <h2>Keywords, Titles &amp; <span class="highlight-mark">SEO</span> Lab</h2>
-          <p>Everything inside vidIQ — Overall Keyword Scores (0–100), Demand, Competition, Views Per Hour (VPH), Top Ranking Outliers, Title Scoring, Scored Tags, and Thumbnail Critique — with zero credit limits.</p>
+          <p>Overall Keyword Scores (0–100), Demand, Competition, Views Per Hour (VPH), Top Ranking Outliers, Title Scoring, Scored Tags, and Thumbnail Critique — with zero credit limits.</p>
         </div>
         <div class="sub-nav" id="seo-subnav" role="tablist">
           <button type="button" data-sub="seo-keywords" class="active">Keyword &amp; SERP Explorer</button>
@@ -1585,7 +1607,7 @@ HTML_TEMPLATE = r"""<!doctype html>
             </div>
           </form>
 
-          <!-- 4 VIDIQ HEADLINE METRICS -->
+          <!-- 4 KEYWORD HEADLINE METRICS -->
           <div class="kpi-grid" style="grid-template-columns:repeat(4,minmax(0,1fr))" id="kw-headline-metrics"></div>
 
           <!-- UNIFIED 2-COLUMN VIEW (KEYWORDS + TAGS & TOP RANKING VIDEOS) -->
@@ -1673,7 +1695,7 @@ HTML_TEMPLATE = r"""<!doctype html>
               <div style="display:flex;align-items:center;gap:16px">
                 <div class="score-ring" id="opt-title-ring">88</div>
                 <div>
-                  <span class="eyebrow-dot">vidIQ + Dan Kennedy Title Score</span>
+                  <span class="eyebrow-dot">Title & CTR Prediction Score</span>
                   <h3 style="font-size:21px;margin-top:2px" id="opt-title-verdict">Strong CTR Potential</h3>
                   <p style="font-size:12.5px;color:var(--ink-3)">Scored live across intrigue, clarity, readability, mobile fit, and contrast.</p>
                 </div>
@@ -1807,7 +1829,7 @@ HTML_TEMPLATE = r"""<!doctype html>
     <div class="panel-inner">
       <div class="section-head">
         <div>
-          <span class="eyebrow-slash">/ Sandcastles Research Vault · Ideas Inbox, Hook Genius, Collections &amp; Projects /</span>
+          <span class="eyebrow-slash">/ Research Vault · Ideas Inbox, Creator Swipe Hooks, Collections &amp; Projects /</span>
           <h2>Ideas, Hooks &amp; Frameworks</h2>
           <p>Auto-extracted content ideas personalized to your Character &amp; Offer, parameterized Mad-Lib hooks, Pre-Flight Checker, and visual taxonomy.</p>
         </div>
@@ -1841,7 +1863,7 @@ HTML_TEMPLATE = r"""<!doctype html>
             <div style="display:flex;flex-direction:column;gap:12px">
               <span class="eyebrow-dot" style="color:var(--yellow)">Hook Genius · Instant Pre-Flight Checker</span>
               <h3 id="checker-heading" style="font-size:25px">Test your hook before you hit record.</h3>
-              <p style="font-size:13.5px;color:#ccc">Checks your draft live against Sandcastles winning hook shapes, Content Principles specificity/curiosity rules, and losing traps (bare numbers, vague categories, yes/no openers, >26 words).</p>
+              <p style="font-size:13.5px;color:#ccc">Checks your draft live against winning hook shapes, specificity & curiosity rules, and common scroll-killing traps (bare numbers, vague categories, yes/no openers, >26 words).</p>
               <textarea class="checker-textarea" id="preflight-input" placeholder="Paste or type your spoken opening line...">Stop telling Claude to make your copy engaging — here's the 3-part prompt rule that doubled our reply rate in 14 days.</textarea>
               <div style="display:flex;gap:8px;flex-wrap:wrap">
                 <button type="button" class="btn btn-yellow btn-sm" id="preflight-to-script">Build Script From This Hook →</button>
@@ -1891,23 +1913,221 @@ HTML_TEMPLATE = r"""<!doctype html>
   </section>
 
   <!-- ==================== TAB 4: STRATEGY & SCRIPTS ==================== -->
+  <!-- ==================== TAB: AI CHAT & COACH (CLAUDE / CODEX + ZERODRIVE BRAIN) ==================== -->
+  <section class="tab-panel" id="panel-chat" role="tabpanel" aria-labelledby="tab-chat" hidden>
+    <div class="panel-inner">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow-dot">Local Claude &amp; Codex Subscription · Connected to Your Brand Brain &amp; ZeroDrive</span>
+          <h2>AI Studio <span class="highlight-mark">Chat</span> &amp; Coach</h2>
+          <p>Converse directly with your workspace's Memories, Founder Persona, Customer Avatars, Products &amp; Offers, and Asset Library — and save any output or extracted memory straight to ZeroDrive.</p>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          <div class="segmented" id="chat-mode-switch">
+            <button type="button" data-chatmode="chief_of_staff" class="active">Chief of Staff</button>
+            <button type="button" data-chatmode="persona_coach">Persona Coach</button>
+            <button type="button" data-chatmode="offer_architect">Offer Architect</button>
+          </div>
+          <select id="chat-provider-select" class="field-select" style="width:auto;padding:7px 12px;font-size:12.5px" aria-label="Chat AI Provider">
+            <option value="claude">Claude CLI</option>
+            <option value="codex">Codex CLI</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="chat-shell">
+        <div class="panel-card" style="gap:14px">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+            <span class="status-chip live" id="chat-context-pill">Brain Loaded</span>
+            <div style="display:flex;gap:6px;flex-wrap:wrap">
+              <button type="button" class="btn btn-outline btn-xs" id="chat-clear-btn">New Chat</button>
+              <button type="button" class="btn btn-outline btn-xs" id="chat-save-zd-btn">☁ Save Transcript to ZeroDrive</button>
+            </div>
+          </div>
+          <div id="chat-attached-bar" style="display:flex;flex-wrap:wrap;gap:6px"></div>
+          <div class="chat-log" id="chat-log"></div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px" id="chat-quick-prompts">
+            <button type="button" class="tag-score-pill" data-chat-prompt="Interview me to extract a powerful origin story and 5 original account hooks for my Founder Persona.">Extract Story &amp; Hooks</button>
+            <button type="button" class="tag-score-pill" data-chat-prompt="Audit my current Products & Offers using S/A/B/C Offer Modalities and show me 3 ways to double perceived value.">Audit Offer Modalities</button>
+            <button type="button" class="tag-score-pill" data-chat-prompt="Give me 3 high-leverage content angles this week combining our Customer Avatar's 3 false beliefs with our core offer.">Plan This Week's Content</button>
+            <button type="button" class="tag-score-pill" data-chat-prompt="Turn our primary offer into a 5-minute mini-webinar pitch script using our Founder Persona voice.">Draft 5-Min Pitch</button>
+          </div>
+          <form id="chat-form" style="display:flex;gap:10px;align-items:flex-end">
+            <textarea class="field-textarea" id="chat-input" rows="2" placeholder="Ask your Chief of Staff, run a Persona Coaching session, or draft with your Brand Brain..." style="flex:1"></textarea>
+            <button type="submit" class="btn btn-yellow" id="chat-send-btn">Send →</button>
+          </form>
+        </div>
+
+        <aside style="display:flex;flex-direction:column;gap:16px">
+          <div class="panel-card" style="padding:18px;gap:10px">
+            <span class="eyebrow-dot">Active Context</span>
+            <div id="chat-brain-summary" style="font-size:12.5px;color:var(--ink-2);display:flex;flex-direction:column;gap:6px"></div>
+            <button type="button" class="btn btn-outline btn-xs" id="chat-open-brain">Edit Brand Brain →</button>
+          </div>
+          <div class="panel-card" style="padding:18px;gap:10px">
+            <span class="eyebrow-dot">Attach From Asset Library</span>
+            <div id="chat-asset-picker" style="display:flex;flex-direction:column;gap:6px"></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== TAB 4: ARSENAL & SCRIPTS ==================== -->
   <section class="tab-panel" id="panel-scripts" role="tabpanel" aria-labelledby="tab-scripts" hidden>
     <div class="panel-inner">
       <div class="section-head">
         <div>
-          <span class="eyebrow-slash">/ Content Strategy Audit &amp; 4-Step AI Script Builder /</span>
-          <h2>Strategy Audit &amp; Script Builder</h2>
-          <p>See which Topics, Hooks, Formats, and Scriptwriting Tactics drive the biggest outlier multiples — then turn any winner into a ready-to-film script.</p>
+          <span class="eyebrow-slash">/ One-to-Many Presentations · Emails · Socials (36 Formats) · Script Builder · Strategy Audit /</span>
+          <h2>Creative Arsenal &amp; Scripts</h2>
+          <p>Turn your Brand Brain, Founder Persona, Customer Avatars, and Offer Stack into complete presentations, email sequences, social content, and scripts.</p>
         </div>
         <div class="sub-nav" id="scripts-subnav" role="tablist">
-          <button type="button" data-sub="strategy-audit" class="active">Content Strategy Audit</button>
+          <button type="button" data-sub="arsenal-presentations" class="active">Presentations</button>
+          <button type="button" data-sub="arsenal-emails">Emails</button>
+          <button type="button" data-sub="arsenal-socials">Socials (36 Formats)</button>
           <button type="button" data-sub="script-builder">4-Step Script Builder</button>
-          <button type="button" data-sub="saved-scripts">Saved Scripts (<span id="saved-scripts-count">0</span>)</button>
+          <button type="button" data-sub="strategy-audit">Strategy Audit</button>
+          <button type="button" data-sub="saved-scripts">Saved (<span id="saved-scripts-count">0</span>)</button>
+        </div>
+      </div>
+
+      <!-- ARSENAL 1: ONE-TO-MANY PRESENTATIONS -->
+      <div class="sub-panel" id="sub-arsenal-presentations">
+        <div class="card-grid-2" style="align-items:start">
+          <form id="ars-pres-form" class="panel-card">
+            <span class="eyebrow-dot">One-to-Many Presentations</span>
+            <h3 style="font-size:22px">Webinars, VSLs &amp; Stage Talks</h3>
+            <div class="form-row-2">
+              <div>
+                <label class="field-label" for="ap-format">Presentation Format</label>
+                <select class="field-select" id="ap-format">
+                  <option>Perfect Webinar</option>
+                  <option>Mini-Workshop / Masterclass</option>
+                  <option>Funny VSL Explainer</option>
+                  <option>Analogy VSL Explainer</option>
+                  <option>AGORA Style VSL</option>
+                  <option>Continuity VSL</option>
+                  <option>Keynote / Stage Talk</option>
+                </select>
+              </div>
+              <div>
+                <label class="field-label" for="ap-offer">Offer Stack to Pitch</label>
+                <select class="field-select" id="ap-offer"></select>
+              </div>
+            </div>
+            <div class="form-row-2">
+              <div><label class="field-label" for="ap-avatar">Target Customer Avatar</label><select class="field-select" id="ap-avatar"></select></div>
+              <div><label class="field-label" for="ap-story-fmt">Lead Story Arc</label><select class="field-select" id="ap-story-fmt"><option>Epiphany Bridge</option><option>Three-Act Structure</option><option>Before vs. After</option><option>Case Study Proof</option><option>Contrarian Myth-Buster</option></select></div>
+            </div>
+            <div><label class="field-label" for="ap-topic">Big Promise / Presentation Topic</label><textarea class="field-textarea" id="ap-topic" rows="2" required placeholder="e.g. How founders replace 15 hrs/week of manual ops with 3 simple AI workflows without writing code"></textarea></div>
+            <div><label class="field-label" for="ap-notes">Extra direction (optional)</label><input class="field-input" id="ap-notes" type="text" placeholder="e.g. Emphasize S-tier Done-For-You bonus and 30-day guarantee"></div>
+            <button type="submit" class="btn btn-yellow" id="ap-submit">✦ Generate Full Presentation →</button>
+          </form>
+          <section class="panel-card" style="min-height:360px">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+              <strong style="font-size:15px">Presentation Blueprint &amp; Script</strong>
+              <div style="display:flex;gap:6px">
+                <button type="button" class="btn btn-outline btn-xs" id="ap-copy">Copy</button>
+                <button type="button" class="btn btn-outline btn-xs" id="ap-save-lib">Save to Library</button>
+                <button type="button" class="btn btn-yellow btn-xs" id="ap-save-zd">☁ Save to ZeroDrive</button>
+              </div>
+            </div>
+            <textarea class="field-textarea" id="ap-output" rows="16" placeholder="Your generated presentation (Hook, Origin Story, 3 False-Belief Secrets, Transition, S/A/B/C Offer Stack & Close) will appear here..."></textarea>
+          </section>
+        </div>
+      </div>
+
+      <!-- ARSENAL 2: ONE-TO-MANY EMAILS -->
+      <div class="sub-panel" id="sub-arsenal-emails" hidden>
+        <div class="card-grid-2" style="align-items:start">
+          <form id="ars-email-form" class="panel-card">
+            <span class="eyebrow-dot">One-to-Many Emails</span>
+            <h3 style="font-size:22px">Broadcasts &amp; Automated Sequences</h3>
+            <div class="form-row-2">
+              <div>
+                <label class="field-label" for="ae-format">Email Framework</label>
+                <select class="field-select" id="ae-format">
+                  <option>Daily Seinfeld Story Email</option>
+                  <option>Soap Opera Sequence (3-Day)</option>
+                  <option>Problem → Agitate → Mechanism</option>
+                  <option>Contrarian Enemy Callout</option>
+                  <option>Case Study Proof Email</option>
+                  <option>Product Launch / Cart Close</option>
+                </select>
+              </div>
+              <div><label class="field-label" for="ae-offer">Offer / CTA Target</label><select class="field-select" id="ae-offer"></select></div>
+            </div>
+            <div class="form-row-2">
+              <div><label class="field-label" for="ae-avatar">Target Customer Avatar</label><select class="field-select" id="ae-avatar"></select></div>
+              <div><label class="field-label" for="ae-voice">Founder Voice</label><select class="field-select" id="ae-voice"></select></div>
+            </div>
+            <div><label class="field-label" for="ae-topic">Story Seed or Angle</label><textarea class="field-textarea" id="ae-topic" rows="2" required placeholder="e.g. A founder spent $14K on AI tools last quarter and still runs sales follow-ups manually"></textarea></div>
+            <div><label class="field-label" for="ae-notes">Extra notes (optional)</label><input class="field-input" id="ae-notes" type="text" placeholder="e.g. Include a punchy PS linking to the assessment"></div>
+            <button type="submit" class="btn btn-yellow" id="ae-submit">✦ Generate Email(s) →</button>
+          </form>
+          <section class="panel-card" style="min-height:360px">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+              <strong style="font-size:15px">Subject Lines &amp; Email Copy</strong>
+              <div style="display:flex;gap:6px">
+                <button type="button" class="btn btn-outline btn-xs" id="ae-copy">Copy</button>
+                <button type="button" class="btn btn-outline btn-xs" id="ae-save-lib">Save to Library</button>
+                <button type="button" class="btn btn-yellow btn-xs" id="ae-save-zd">☁ Save to ZeroDrive</button>
+              </div>
+            </div>
+            <textarea class="field-textarea" id="ae-output" rows="16" placeholder="Subject line options, preview text, story body, and PS CTA will appear here..."></textarea>
+          </section>
+        </div>
+      </div>
+
+      <!-- ARSENAL 3: ONE-TO-MANY SOCIALS (ALL 36 STORYTELLING FORMATS + SEPARATE ACCOUNT HOOKS) -->
+      <div class="sub-panel" id="sub-arsenal-socials" hidden>
+        <div class="card-grid-2" style="align-items:start">
+          <form id="ars-social-form" class="panel-card">
+            <span class="eyebrow-dot">One-to-Many Socials · 36 Storytelling Formats</span>
+            <h3 style="font-size:22px">Reels, Shorts, Carousels &amp; Posts</h3>
+            <div class="form-row-2">
+              <div>
+                <label class="field-label" for="as-platform">Platform &amp; Format</label>
+                <select class="field-select" id="as-platform">
+                  <option>Instagram Reel</option>
+                  <option>YouTube Short</option>
+                  <option>YouTube Long-Form</option>
+                  <option>TikTok</option>
+                  <option>Facebook Reel / Post</option>
+                  <option>Carousel / Swipe Post</option>
+                  <option>Text Post (IG/FB/LI/X/Threads)</option>
+                  <option>Broadcast Channel Message</option>
+                </select>
+              </div>
+              <div>
+                <label class="field-label" for="as-story-fmt">Storytelling Format (36 Frameworks)</label>
+                <select class="field-select" id="as-story-fmt"></select>
+              </div>
+            </div>
+            <div class="form-row-2">
+              <div><label class="field-label" for="as-avatar">Target Customer Avatar</label><select class="field-select" id="as-avatar"></select></div>
+              <div><label class="field-label" for="as-acct-hook">Your Brand Account Hook (Separate from Swipes)</label><select class="field-select" id="as-acct-hook"></select></div>
+            </div>
+            <div><label class="field-label" for="as-topic">Core Idea / Angle</label><textarea class="field-textarea" id="as-topic" rows="2" required placeholder="e.g. Why automating a broken workflow just creates chaos faster"></textarea></div>
+            <button type="submit" class="btn btn-yellow" id="as-submit">✦ Generate Social Asset →</button>
+          </form>
+          <section class="panel-card" style="min-height:360px">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+              <strong style="font-size:15px">Generated Script / Post</strong>
+              <div style="display:flex;gap:6px">
+                <button type="button" class="btn btn-outline btn-xs" id="as-copy">Copy</button>
+                <button type="button" class="btn btn-outline btn-xs" id="as-save-lib">Save to Library</button>
+                <button type="button" class="btn btn-yellow btn-xs" id="as-save-zd">☁ Save to ZeroDrive</button>
+              </div>
+            </div>
+            <textarea class="field-textarea" id="as-output" rows="16" placeholder="3 original hooks + beat-by-beat script/slides + visual & caption cues will appear here..."></textarea>
+          </section>
         </div>
       </div>
 
       <!-- SUB 1: CONTENT STRATEGY AUDIT -->
-      <div class="sub-panel" id="sub-strategy-audit">
+      <div class="sub-panel" id="sub-strategy-audit" hidden>
         <div class="panel-inner">
           <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
             <div class="segmented" id="audit-dim-switch" role="group" aria-label="Audit dimension">
@@ -1915,7 +2135,7 @@ HTML_TEMPLATE = r"""<!doctype html>
               <button type="button" data-dim="hooks">Performance by Hooks</button>
               <button type="button" data-dim="formats">Performance by Formats</button>
               <button type="button" data-dim="tactics">Scriptwriting Tactics</button>
-              <button type="button" data-dim="kennedy">Dan Kennedy 7 Elements</button>
+              <button type="button" data-dim="kennedy">7 Magnetism Elements</button>
             </div>
             <span class="status-chip live">Computed live · 0 credits</span>
           </div>
@@ -1951,7 +2171,7 @@ HTML_TEMPLATE = r"""<!doctype html>
             <button type="button" class="wizard-step active" data-wstep="1"><span class="wizard-num">1</span><div><strong style="display:block;font-size:13px">Topic &amp; Source</strong><small style="opacity:0.7;font-size:11px">Idea or fix draft</small></div></button>
             <button type="button" class="wizard-step" data-wstep="2"><span class="wizard-num">2</span><div><strong style="display:block;font-size:13px">Research Brief</strong><small style="opacity:0.7;font-size:11px">Facts &amp; contrast</small></div></button>
             <button type="button" class="wizard-step" data-wstep="3"><span class="wizard-num">3</span><div><strong style="display:block;font-size:13px">6 Hook Drafts</strong><small style="opacity:0.7;font-size:11px">Creator-inspired</small></div></button>
-            <button type="button" class="wizard-step" data-wstep="4"><span class="wizard-num">4</span><div><strong style="display:block;font-size:13px">Line-by-Line Script</strong><small style="opacity:0.7;font-size:11px">Kennedy + beats</small></div></button>
+            <button type="button" class="wizard-step" data-wstep="4"><span class="wizard-num">4</span><div><strong style="display:block;font-size:13px">Line-by-Line Script</strong><small style="opacity:0.7;font-size:11px">Persona + beats</small></div></button>
           </div>
 
           <div class="panel-card" id="script-wizard-body"></div>
@@ -1965,94 +2185,383 @@ HTML_TEMPLATE = r"""<!doctype html>
     </div>
   </section>
 
-  <!-- ==================== TAB 5: CHARACTER & OFFER (DAN KENNEDY + MARKETING SECRETS + PERSONA) ==================== -->
+  <!-- ==================== TAB 5: BRAND BRAIN (MEMORIES, FOUNDER PERSONA, AVATARS, OFFERS, ASSETS) ==================== -->
   <section class="tab-panel" id="panel-character" role="tabpanel" aria-labelledby="tab-character" hidden>
     <div class="panel-inner">
       <div class="section-head">
         <div>
-          <span class="eyebrow-slash">/ Dan Kennedy Magnetic Story Selling · Marketing Secrets · Brand Persona /</span>
-          <h2>Character &amp; <span class="highlight-mark">Offer</span> Architecture</h2>
-          <p>Information has a shelf life; character compounds for 20+ years. Define <strong id="char-ws-label">AI Simple</strong>'s offer, archetype, 7 Magnetic Elements, James Bond Test, and PROFITS language — injected automatically into Idea Remixes, Scripts, and LLM Exports.</p>
+          <span class="eyebrow-slash">/ Workspace Brain · ZeroDrive-Backed Context for <strong id="char-ws-label">AI Simple</strong> /</span>
+          <h2>Brand <span class="highlight-mark">Brain</span> &amp; Offer Architecture</h2>
+          <p>Everything your AI Studio, Arsenal, and Script Builder need to know — Memories, Founder Persona, Customer Avatars, Products &amp; Offers (with S/A/B/C Offer Modalities), and your Asset Library.</p>
         </div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <span class="status-chip live" id="char-completeness-badge">Completeness: 7/7</span>
-          <button type="button" class="btn btn-outline btn-sm" id="export-character-md">↓ Copy Character Bible</button>
-          <button type="button" class="btn btn-yellow btn-sm" id="save-character-btn">Save Character Profile ✓</button>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+          <span class="status-chip live" id="char-completeness-badge">Ready</span>
+          <button type="button" class="btn btn-outline btn-sm" id="brain-sync-zd-btn">☁ Sync Brain to ZeroDrive</button>
+          <button type="button" class="btn btn-outline btn-sm" id="export-character-md">↓ Copy Bible</button>
+          <button type="button" class="btn btn-yellow btn-sm" id="save-character-btn">Save Brain ✓</button>
         </div>
       </div>
 
-      <!-- STEP 1: 2-MINUTE OFFER CLARITY (OPEN BY DEFAULT) -->
-      <details class="calm-details" open>
-        <summary><span>1. Offer Clarity — What you sell &amp; who you sell it to</span><span class="status-chip">Core Offer</span></summary>
-        <div style="display:flex;flex-direction:column;gap:14px">
-          <div class="form-row-2">
-            <div><label class="field-label" for="ch-what-sell">What do you sell?</label><textarea class="field-textarea" id="ch-what-sell" rows="2"></textarea></div>
-            <div><label class="field-label" for="ch-who-sell">Who do you sell it to?</label><textarea class="field-textarea" id="ch-who-sell" rows="2"></textarea></div>
-          </div>
-          <div class="form-row-2">
-            <div><label class="field-label" for="ch-transform">Core Transformation / Promise</label><input class="field-input" id="ch-transform" type="text"></div>
-            <div><label class="field-label" for="ch-cta">Primary Content CTA / Conversion Mechanism</label><input class="field-input" id="ch-cta" type="text"></div>
-          </div>
-        </div>
-      </details>
+      <div class="sub-nav" id="brain-subnav" role="tablist">
+        <button type="button" data-sub="brain-persona" class="active">Founder Persona</button>
+        <button type="button" data-sub="brain-memories">Memories (<span id="mem-count-badge">0</span>)</button>
+        <button type="button" data-sub="brain-avatars">Customer Avatars (<span id="av-count-badge">0</span>)</button>
+        <button type="button" data-sub="brain-offers">Products &amp; Offers (<span id="off-count-badge">0</span>)</button>
+        <button type="button" data-sub="brain-assets">Asset Library (<span id="asset-count-badge">0</span>)</button>
+      </div>
 
-      <!-- STEP 2: DAN KENNEDY ARCHETYPE & MIGHTY THEME -->
-      <details class="calm-details" open>
-        <summary><span>2. Dan Kennedy Archetype, Superhero Identity &amp; Polarity</span><span class="status-chip muted">Character</span></summary>
-        <div style="display:flex;flex-direction:column;gap:14px">
-          <div class="archetype-grid" id="archetype-grid"></div>
-          <div class="form-row-2" style="margin-top:4px">
-            <div><label class="field-label" for="ch-superhero">Superhero Identity / Persona Name</label><input class="field-input" id="ch-superhero" type="text" placeholder="e.g. Iron Dan / The Systems Architect"></div>
-            <div><label class="field-label" for="ch-mighty">The Mighty Theme (Your Obsession)</label><input class="field-input" id="ch-mighty" type="text"></div>
+      <!-- BRAIN SUB 1: FOUNDER PERSONA (IDENTITY, VOICES, ACCOUNT STORIES & HOOKS, COACHING BOT) -->
+      <div class="sub-panel" id="sub-brain-persona">
+        <div class="panel-inner" style="gap:20px">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+            <div class="segmented" id="persona-inner-switch">
+              <button type="button" data-pview="identity" class="active">Identity &amp; Magnetism</button>
+              <button type="button" data-pview="voices">Voices (<span id="voices-count">0</span>)</button>
+              <button type="button" data-pview="account-hooks">Account Stories &amp; Hooks (<span id="acct-hooks-count">0</span>)</button>
+              <button type="button" data-pview="coach-bot">Coaching Bot</button>
+            </div>
+            <button type="button" class="btn btn-outline btn-sm" id="ai-gen-persona-btn">✦ Generate / Expand Persona with AI</button>
           </div>
-          <div class="form-row-2">
-            <div><label class="field-label" for="ch-stand-for">What You Stand FOR (Values)</label><textarea class="field-textarea" id="ch-stand-for" rows="2"></textarea></div>
-            <div><label class="field-label" for="ch-stand-against">What You Stand AGAINST (Named Enemies &amp; Polarization)</label><textarea class="field-textarea" id="ch-stand-against" rows="2"></textarea></div>
-          </div>
-        </div>
-      </details>
 
-      <!-- STEP 3: THE 7 MAGNETIC ELEMENTS -->
-      <details class="calm-details">
-        <summary><span>3. The 7 Magnetic Elements (Origin, Parables, Miracles, Language, Dogma, Enemies, Flaws)</span><span class="status-chip muted">Expand</span></summary>
-        <div style="display:flex;flex-direction:column;gap:14px">
-          <div class="card-grid-2">
-            <div><label class="field-label" for="k7-origin">1. Origin Story / Legend</label><textarea class="field-textarea" id="k7-origin" rows="3"></textarea></div>
-            <div><label class="field-label" for="k7-parables">2. Signature Parables</label><textarea class="field-textarea" id="k7-parables" rows="3"></textarea></div>
-            <div><label class="field-label" for="k7-miracles">3. Miracles (Verifiable Proof)</label><textarea class="field-textarea" id="k7-miracles" rows="3"></textarea></div>
-            <div><label class="field-label" for="k7-language">4. Insider Language</label><textarea class="field-textarea" id="k7-language" rows="3"></textarea></div>
-            <div><label class="field-label" for="k7-dogma">5. Dogma (Commandments)</label><textarea class="field-textarea" id="k7-dogma" rows="3"></textarea></div>
-            <div><label class="field-label" for="k7-enemies">6. Named Enemies</label><textarea class="field-textarea" id="k7-enemies" rows="3"></textarea></div>
-          </div>
-          <div><label class="field-label" for="k7-flaws">7. Flaws &amp; Evolution</label><textarea class="field-textarea" id="k7-flaws" rows="2"></textarea></div>
-        </div>
-      </details>
+          <div id="pview-identity" style="display:flex;flex-direction:column;gap:16px">
+            <!-- STEP 1: 2-MINUTE OFFER CLARITY (OPEN BY DEFAULT) -->
+            <details class="calm-details" open>
+              <summary><span>1. Core Positioning &amp; Offer Summary</span><span class="status-chip">Positioning</span></summary>
+              <div style="display:flex;flex-direction:column;gap:14px">
+                <div class="form-row-2">
+                  <div><label class="field-label" for="ch-what-sell">What do you sell?</label><textarea class="field-textarea" id="ch-what-sell" rows="2"></textarea></div>
+                  <div><label class="field-label" for="ch-who-sell">Who do you sell it to?</label><textarea class="field-textarea" id="ch-who-sell" rows="2"></textarea></div>
+                </div>
+                <div class="form-row-2">
+                  <div><label class="field-label" for="ch-transform">Core Transformation / Promise</label><input class="field-input" id="ch-transform" type="text"></div>
+                  <div><label class="field-label" for="ch-cta">Primary Content CTA / Conversion Mechanism</label><input class="field-input" id="ch-cta" type="text"></div>
+                </div>
+              </div>
+            </details>
 
-      <!-- STEP 4: JAMES BOND TEST + PROFITS + WRITING STYLE -->
-      <details class="calm-details">
-        <summary><span>4. James Bond Test (7 Repeatable Traits), Writing Style &amp; PROFITS Bank</span><span class="status-chip muted">Expand</span></summary>
-        <div class="card-grid-2">
-          <div style="display:flex;flex-direction:column;gap:12px">
-            <p style="font-size:13px;color:var(--ink-2)">One repeatable trait per line — repeated across content until your audience knows it cold.</p>
-            <textarea class="field-textarea" id="ch-bond" rows="7"></textarea>
-            <div>
-              <label class="field-label" for="ch-style">Writing Style &amp; Voice Cadence</label>
-              <textarea class="field-textarea" id="ch-style" rows="3"></textarea>
+            <!-- STEP 2: FOUNDER ARCHETYPE & POLARITY -->
+            <details class="calm-details" open>
+              <summary><span>2. Founder Persona Archetype, Identity &amp; Polarity</span><span class="status-chip muted">Identity</span></summary>
+              <div style="display:flex;flex-direction:column;gap:14px">
+                <div class="archetype-grid" id="archetype-grid"></div>
+                <div class="form-row-2" style="margin-top:4px">
+                  <div><label class="field-label" for="ch-superhero">Persona Name / Identity Title</label><input class="field-input" id="ch-superhero" type="text" placeholder="e.g. The Systems Architect"></div>
+                  <div><label class="field-label" for="ch-mighty">The Mighty Theme (Your Core Obsession)</label><input class="field-input" id="ch-mighty" type="text"></div>
+                </div>
+                <div class="form-row-2">
+                  <div><label class="field-label" for="ch-stand-for">What You Stand FOR (Values &amp; Pillars)</label><textarea class="field-textarea" id="ch-stand-for" rows="2"></textarea></div>
+                  <div><label class="field-label" for="ch-stand-against">What You Stand AGAINST (Named Enemies &amp; Polarity)</label><textarea class="field-textarea" id="ch-stand-against" rows="2"></textarea></div>
+                </div>
+              </div>
+            </details>
+
+            <!-- STEP 3: THE 7 MAGNETISM ELEMENTS -->
+            <details class="calm-details">
+              <summary><span>3. The 7 Magnetism Elements (Origin, Parables, Miracles, Language, Dogma, Enemies, Flaws)</span><span class="status-chip muted">Expand</span></summary>
+              <div style="display:flex;flex-direction:column;gap:14px">
+                <div class="card-grid-2">
+                  <div><label class="field-label" for="k7-origin">1. Origin Story / Backstory</label><textarea class="field-textarea" id="k7-origin" rows="3"></textarea></div>
+                  <div><label class="field-label" for="k7-parables">2. Signature Parables</label><textarea class="field-textarea" id="k7-parables" rows="3"></textarea></div>
+                  <div><label class="field-label" for="k7-miracles">3. Miracles (Verifiable Proof)</label><textarea class="field-textarea" id="k7-miracles" rows="3"></textarea></div>
+                  <div><label class="field-label" for="k7-language">4. Insider Language</label><textarea class="field-textarea" id="k7-language" rows="3"></textarea></div>
+                  <div><label class="field-label" for="k7-dogma">5. Dogma (Non-Negotiable Rules)</label><textarea class="field-textarea" id="k7-dogma" rows="3"></textarea></div>
+                  <div><label class="field-label" for="k7-enemies">6. Named Enemies</label><textarea class="field-textarea" id="k7-enemies" rows="3"></textarea></div>
+                </div>
+                <div><label class="field-label" for="k7-flaws">7. Core Flaw &amp; Evolution</label><textarea class="field-textarea" id="k7-flaws" rows="2"></textarea></div>
+              </div>
+            </details>
+
+            <!-- STEP 4: REPEATABLE SIGNATURE TRAITS + VOICE + PROFITS -->
+            <details class="calm-details">
+              <summary><span>4. Signature Traits (7 Repeatable Facts), Writing Cadence &amp; Buyer Language</span><span class="status-chip muted">Expand</span></summary>
+              <div class="card-grid-2">
+                <div style="display:flex;flex-direction:column;gap:12px">
+                  <p style="font-size:13px;color:var(--ink-2)">7 signature facts repeated across your content until your audience knows them cold.</p>
+                  <textarea class="field-textarea" id="ch-bond" rows="7"></textarea>
+                  <div><label class="field-label" for="ch-style">Default Writing Style &amp; Cadence</label><textarea class="field-textarea" id="ch-style" rows="3"></textarea></div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:10px">
+                  <div class="form-row-2">
+                    <div><label class="field-label" for="pr-pain">P — Pain</label><textarea class="field-textarea" id="pr-pain" rows="2"></textarea></div>
+                    <div><label class="field-label" for="pr-results">R — Results</label><textarea class="field-textarea" id="pr-results" rows="2"></textarea></div>
+                    <div><label class="field-label" for="pr-obstacles">O — Obstacles</label><textarea class="field-textarea" id="pr-obstacles" rows="2"></textarea></div>
+                    <div><label class="field-label" for="pr-fear">F — Fear</label><textarea class="field-textarea" id="pr-fear" rows="2"></textarea></div>
+                    <div><label class="field-label" for="pr-identity">I — Identity</label><textarea class="field-textarea" id="pr-identity" rows="2"></textarea></div>
+                    <div><label class="field-label" for="pr-triggers">T — Triggers</label><textarea class="field-textarea" id="pr-triggers" rows="2"></textarea></div>
+                  </div>
+                  <div><label class="field-label" for="pr-dreams">S — Dreams</label><input class="field-input" id="pr-dreams" type="text"></div>
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <!-- PERSONA INNER 2: VOICES -->
+          <div id="pview-voices" hidden style="display:flex;flex-direction:column;gap:16px">
+            <div class="card-grid-2" style="align-items:start">
+              <form id="voice-add-form" class="panel-card">
+                <span class="eyebrow-dot">Channel Voices</span>
+                <h3 style="font-size:20px">Add a Voice Style Sheet</h3>
+                <div class="form-row-2">
+                  <div><label class="field-label" for="v-name">Voice Name</label><input class="field-input" id="v-name" type="text" required placeholder="e.g. Direct Video Voice"></div>
+                  <div><label class="field-label" for="v-type">Channel Type</label><select class="field-select" id="v-type"><option>Video</option><option>Writing</option><option>Email</option><option>Social</option><option>Stage</option><option>Ads</option><option>Coaching</option></select></div>
+                </div>
+                <div><label class="field-label" for="v-notes">Style Rules &amp; Cadence</label><textarea class="field-textarea" id="v-notes" rows="3" required placeholder="Short punchy sentences, zero fluff, open with a concrete mistake..."></textarea></div>
+                <div><label class="field-label" for="v-sample">Sample Passage / Transcript (optional)</label><textarea class="field-textarea" id="v-sample" rows="3" placeholder="Paste a real sample in this voice..."></textarea></div>
+                <button type="submit" class="btn btn-yellow btn-sm" style="align-self:flex-start">＋ Save Voice</button>
+              </form>
+              <div id="voices-list" style="display:flex;flex-direction:column;gap:12px"></div>
             </div>
           </div>
-          <div style="display:flex;flex-direction:column;gap:10px">
+
+          <!-- PERSONA INNER 3: SEPARATE ACCOUNT STORY & HOOK INVENTORY -->
+          <div id="pview-account-hooks" hidden style="display:flex;flex-direction:column;gap:16px">
+            <div class="panel-card" style="background:var(--yellow-tint);border-color:rgba(255,199,29,0.55);padding:16px 20px;flex-direction:row;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+              <div><strong style="font-size:14px">Your Workspace's Private Story &amp; Hook Inventory</strong><p style="font-size:12.5px;color:var(--ink-2)">Kept 100% separate from other creators' swipe hooks and templates — these belong exclusively to this workspace's Founder Persona.</p></div>
+              <button type="button" class="btn btn-yellow btn-sm" id="ai-gen-acct-hooks-btn">✦ Generate 10 Account Hooks</button>
+            </div>
+            <div class="card-grid-2" style="align-items:start">
+              <form id="story-add-form" class="panel-card">
+                <span class="eyebrow-dot">Tell a Story &amp; Capture Hooks</span>
+                <h3 style="font-size:20px">Add Brand Story / Hook</h3>
+                <div><label class="field-label" for="st-title">Story Title</label><input class="field-input" id="st-title" type="text" required placeholder="e.g. The 2-Hour Launch Rescue"></div>
+                <div><label class="field-label" for="st-false-belief">False Belief Destroyed</label><input class="field-input" id="st-false-belief" type="text" placeholder="e.g. Thinking more AI tools equals more leverage"></div>
+                <div><label class="field-label" for="st-body">Story Narrative (Before → Struggle → Epiphany → Result)</label><textarea class="field-textarea" id="st-body" rows="3" required placeholder="Tell the concrete story..."></textarea></div>
+                <div><label class="field-label" for="st-hooks">Account Hooks From This Story (one per line)</label><textarea class="field-textarea" id="st-hooks" rows="3" placeholder="Last Tuesday an 8-figure founder called me 2 hours before launch..."></textarea></div>
+                <button type="submit" class="btn btn-yellow btn-sm" style="align-self:flex-start">＋ Save to Account Inventory</button>
+              </form>
+              <div style="display:flex;flex-direction:column;gap:14px">
+                <div class="panel-card">
+                  <strong style="font-size:15px">Saved Account Hooks (<span id="acct-hooks-list-count">0</span>)</strong>
+                  <div id="acct-hooks-list" style="display:flex;flex-direction:column;gap:8px;max-height:280px;overflow-y:auto"></div>
+                </div>
+                <div class="panel-card">
+                  <strong style="font-size:15px">Saved Brand Stories (<span id="acct-stories-count">0</span>)</strong>
+                  <div id="acct-stories-list" style="display:flex;flex-direction:column;gap:8px;max-height:260px;overflow-y:auto"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PERSONA INNER 4: COACHING BOT -->
+          <div id="pview-coach-bot" hidden>
+            <div class="card-grid-2" style="align-items:start">
+              <form id="coach-bot-form" class="panel-card">
+                <span class="eyebrow-dot">Founder Persona Coaching Bot</span>
+                <h3 style="font-size:20px">Configure Your Interactive Coach</h3>
+                <div><label class="field-label" for="cb-bio">Coach Bio (400 chars)</label><textarea class="field-textarea" id="cb-bio" rows="2" placeholder="Direct systems architect helping founders diagnose bottlenecks before adding AI tools."></textarea></div>
+                <div><label class="field-label" for="cb-rules">Answering Rules &amp; Guardrails</label><textarea class="field-textarea" id="cb-rules" rows="3" placeholder="Always diagnose before prescribing. Ask 1 sharp clarifying question before giving a 3-step plan."></textarea></div>
+                <div><label class="field-label" for="cb-starters">Starter Questions (one per line)</label><textarea class="field-textarea" id="cb-starters" rows="3" placeholder="Where is my biggest AI bottleneck right now?&#10;Help me extract 5 stories from my business.&#10;How should I structure my offer stack?"></textarea></div>
+                <div class="form-row-2">
+                  <div><label class="field-label" for="cb-cta-label">Offer CTA Button</label><input class="field-input" id="cb-cta-label" type="text" placeholder="Take the AI Bottleneck Assessment"></div>
+                  <div><label class="field-label" for="cb-cta-url">Offer CTA URL</label><input class="field-input" id="cb-cta-url" type="url" placeholder="https://aisimple.co"></div>
+                </div>
+                <div style="display:flex;gap:8px;flex-wrap:wrap">
+                  <button type="submit" class="btn btn-yellow btn-sm">Save Bot Config ✓</button>
+                  <button type="button" class="btn btn-dark btn-sm" id="launch-coach-chat-btn">Test Coaching Bot Live →</button>
+                </div>
+              </form>
+              <div class="panel-card tone-cream">
+                <span class="eyebrow-dot">Live Preview</span>
+                <h3 style="font-size:20px" id="cb-preview-title">AI Simple Coach</h3>
+                <p style="font-size:13.5px;color:var(--ink-2)" id="cb-preview-bio"></p>
+                <div id="cb-preview-starters" style="display:flex;flex-direction:column;gap:8px;margin-top:6px"></div>
+                <div id="cb-preview-cta" style="margin-top:8px"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BRAIN SUB 2: MEMORIES -->
+      <div class="sub-panel" id="sub-brain-memories" hidden>
+        <div class="card-grid-2" style="align-items:start;grid-template-columns:minmax(0,0.9fr) minmax(0,1.25fr)">
+          <form id="memory-add-form" class="panel-card">
+            <span class="eyebrow-dot">Feed Your Workspace Brain</span>
+            <h3 style="font-size:21px">Add a Memory</h3>
+            <div><label class="field-label" for="mem-title">Short Title</label><input class="field-input" id="mem-title" type="text" required placeholder="e.g. Core Pricing Rule / Client Proof"></div>
             <div class="form-row-2">
-              <div><label class="field-label" for="pr-pain">P — Pain</label><textarea class="field-textarea" id="pr-pain" rows="2"></textarea></div>
-              <div><label class="field-label" for="pr-results">R — Results</label><textarea class="field-textarea" id="pr-results" rows="2"></textarea></div>
-              <div><label class="field-label" for="pr-obstacles">O — Obstacles</label><textarea class="field-textarea" id="pr-obstacles" rows="2"></textarea></div>
-              <div><label class="field-label" for="pr-fear">F — Fear</label><textarea class="field-textarea" id="pr-fear" rows="2"></textarea></div>
-              <div><label class="field-label" for="pr-identity">I — Identity</label><textarea class="field-textarea" id="pr-identity" rows="2"></textarea></div>
-              <div><label class="field-label" for="pr-triggers">T — Triggers</label><textarea class="field-textarea" id="pr-triggers" rows="2"></textarea></div>
+              <div>
+                <label class="field-label" for="mem-cat">Category</label>
+                <select class="field-select" id="mem-cat">
+                  <option>About Your Business</option><option>Your Goals</option><option>People</option><option>Decisions Made</option>
+                  <option>From Conversations</option><option>Preferences</option><option>Audience</option><option>Projects</option>
+                  <option>Offers</option><option>Leads</option><option>Your Corrections</option><option>Other</option>
+                </select>
+              </div>
+              <div>
+                <label class="field-label" for="mem-scope">Scope</label>
+                <select class="field-select" id="mem-scope"><option value="workspace">Workspace Shared</option><option value="personal">Personal (User-Level)</option></select>
+              </div>
             </div>
-            <div><label class="field-label" for="pr-dreams">S — Dreams</label><input class="field-input" id="pr-dreams" type="text"></div>
-          </div>
+            <div><label class="field-label" for="mem-content">Memory Content (up to 2,000 chars)</label><textarea class="field-textarea" id="mem-content" rows="4" required placeholder="Facts about your business, rules to follow, client wins, or things AI should never forget..."></textarea></div>
+            <button type="submit" class="btn btn-yellow btn-sm" style="align-self:flex-start">Save to Memories ✓</button>
+          </form>
+
+          <section class="panel-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+              <strong style="font-size:16px">What Your Brain Knows (<span id="mem-list-count">0</span>)</strong>
+              <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <input class="filter-search" id="mem-search" type="search" placeholder="Search memories..." style="min-width:160px;padding:6px 10px;font-size:12.5px">
+                <select class="field-select" id="mem-filter-cat" style="width:auto;padding:6px 10px;font-size:12px"><option value="all">All Categories</option></select>
+              </div>
+            </div>
+            <div id="memories-list" style="display:flex;flex-direction:column;gap:10px;max-height:520px;overflow-y:auto"></div>
+          </section>
         </div>
-      </details>
+      </div>
+
+      <!-- BRAIN SUB 3: CUSTOMER AVATARS -->
+      <div class="sub-panel" id="sub-brain-avatars" hidden>
+        <div class="panel-inner" style="gap:18px">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+            <div id="avatar-selector-row" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <button type="button" class="btn btn-outline btn-sm" id="av-new-btn">＋ New Avatar</button>
+              <button type="button" class="btn btn-yellow btn-sm" id="av-ai-gen-btn">✦ Generate Avatar with AI</button>
+            </div>
+          </div>
+
+          <form id="avatar-edit-form" class="panel-card">
+            <div class="form-row-2">
+              <div><label class="field-label" for="av-name">Avatar Name *</label><input class="field-input" id="av-name" type="text" required></div>
+              <div><label class="field-label" for="av-occ">Occupation / Role</label><input class="field-input" id="av-occ" type="text" placeholder="e.g. Agency Founder / $50K-$300K/mo Operator"></div>
+            </div>
+            <div class="form-row-2">
+              <div><label class="field-label" for="av-age">Age / Stage</label><input class="field-input" id="av-age" type="text" placeholder="e.g. 30–48"></div>
+              <div>
+                <span class="field-label">Active Platforms</span>
+                <div id="av-platforms-row" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px"></div>
+              </div>
+            </div>
+            <div class="form-row-2">
+              <div><label class="field-label" for="av-fear">Biggest Fear</label><input class="field-input" id="av-fear" type="text"></div>
+              <div><label class="field-label" for="av-desire">Biggest Desire</label><input class="field-input" id="av-desire" type="text"></div>
+            </div>
+            <div class="form-row-2">
+              <div><label class="field-label" for="av-pains">Pains (one per line)</label><textarea class="field-textarea" id="av-pains" rows="3"></textarea></div>
+              <div><label class="field-label" for="av-dreams">Dreams (one per line)</label><textarea class="field-textarea" id="av-dreams" rows="3"></textarea></div>
+            </div>
+            <div style="padding:14px 16px;border-radius:14px;background:var(--paper);border:1px solid var(--border);display:flex;flex-direction:column;gap:10px">
+              <strong style="font-size:13px">The 3 False Beliefs</strong>
+              <div class="card-grid-3">
+                <div><label class="field-label" for="av-fb-method">About the Method</label><textarea class="field-textarea" id="av-fb-method" rows="2"></textarea></div>
+                <div><label class="field-label" for="av-fb-self">About Themselves</label><textarea class="field-textarea" id="av-fb-self" rows="2"></textarea></div>
+                <div><label class="field-label" for="av-fb-external">About Outside Forces</label><textarea class="field-textarea" id="av-fb-external" rows="2"></textarea></div>
+              </div>
+              <div><label class="field-label" for="av-fb-other">Other False Beliefs / Objections</label><textarea class="field-textarea" id="av-fb-other" rows="2"></textarea></div>
+            </div>
+            <div><label class="field-label" for="av-file-notes">Attached Research / Verbatim Quotes / Call Transcripts</label><textarea class="field-textarea" id="av-file-notes" rows="2" placeholder="Paste customer interviews, review language, or call notes..."></textarea></div>
+
+            <!-- CUSTOM NOTES / MORE DETAILS -->
+            <div style="padding:14px 16px;border-radius:14px;background:var(--cream);border:1px solid var(--border);display:flex;flex-direction:column;gap:10px">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <strong style="font-size:13px">More Details &amp; Custom Notes (Revenue Band, Trigger Moment, How They Talk, etc.)</strong>
+                <button type="button" class="btn btn-outline btn-xs" id="av-add-detail-btn">＋ Add Custom Detail</button>
+              </div>
+              <div id="av-custom-details-list" style="display:flex;flex-direction:column;gap:8px"></div>
+            </div>
+
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+              <button type="button" class="btn btn-outline btn-sm" id="av-delete-btn">Delete Avatar</button>
+              <button type="submit" class="btn btn-yellow btn-sm">Save Customer Avatar ✓</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- BRAIN SUB 4: PRODUCTS & OFFERS (WITH S/A/B/C OFFER MODALITIES + PERCEIVED VALUE) -->
+      <div class="sub-panel" id="sub-brain-offers" hidden>
+        <div class="panel-inner" style="gap:24px">
+          <div class="card-grid-2" style="align-items:start">
+            <!-- CREATE / EDIT PRODUCT WITH S/A/B/C MODALITIES -->
+            <form id="product-form" class="panel-card">
+              <span class="eyebrow-dot">Products &amp; Offer Modalities (S / A / B / C Tier)</span>
+              <h3 style="font-size:21px">Add a Product or Bonus Deliverable</h3>
+              <div class="form-row-2">
+                <div><label class="field-label" for="prod-name">Product Name *</label><input class="field-input" id="prod-name" type="text" required placeholder="e.g. Done-For-You AI Operating Stack"></div>
+                <div><label class="field-label" for="prod-status">Status</label><select class="field-select" id="prod-status"><option>Active</option><option>Retired</option></select></div>
+              </div>
+              <div><label class="field-label" for="prod-desc">What it is</label><textarea class="field-textarea" id="prod-desc" rows="2" placeholder="Describe the deliverable clearly..."></textarea></div>
+              <div><label class="field-label" for="prod-solves">What problem does it solve?</label><input class="field-input" id="prod-solves" type="text" placeholder="Eliminates 15 hrs/wk of manual follow-up and reporting"></div>
+              <div class="form-row-2">
+                <div><label class="field-label" for="prod-pvalue">Perceived Value ($)</label><input class="field-input" id="prod-pvalue" type="number" min="0" step="50" value="2500" placeholder="2500"></div>
+                <div><label class="field-label" for="prod-price">Standalone Price ($ optional)</label><input class="field-input" id="prod-price" type="number" min="0" step="10" value="997" placeholder="997"></div>
+              </div>
+              <div>
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                  <span class="field-label" style="margin:0">Select Offer Modalities (multi-select)</span>
+                  <span class="status-chip" id="prod-modality-score">Leverage Score: 0</span>
+                </div>
+                <div id="prod-modalities-picker" style="display:flex;flex-direction:column;gap:8px"></div>
+              </div>
+              <button type="submit" class="btn btn-yellow btn-sm" style="align-self:flex-start">＋ Save Product to Catalog</button>
+            </form>
+
+            <!-- CREATE OFFER + ATTACH PRODUCTS STACK -->
+            <form id="offer-form" class="panel-card">
+              <span class="eyebrow-dot">Offer Stack &amp; Value Ladder</span>
+              <h3 style="font-size:21px">Build an Offer Stack</h3>
+              <div class="form-row-2">
+                <div><label class="field-label" for="off-name">Offer Name *</label><input class="field-input" id="off-name" type="text" required placeholder="e.g. AI Simple Accelerator"></div>
+                <div><label class="field-label" for="off-tier">Value Ladder Tier</label><select class="field-select" id="off-tier"><option>Lead Gen</option><option>Core</option><option>Mid-Ticket</option><option>High-Ticket</option></select></div>
+              </div>
+              <div><label class="field-label" for="off-promise">The Core Promise</label><textarea class="field-textarea" id="off-promise" rows="2" placeholder="Install 3 reliable AI workflows that save 15+ hrs/week in 30 days."></textarea></div>
+              <div class="form-row-2">
+                <div><label class="field-label" for="off-price">Offer Price ($)</label><input class="field-input" id="off-price" type="number" min="0" step="10" value="2997"></div>
+                <div><label class="field-label" for="off-billing">Billing</label><select class="field-select" id="off-billing"><option>One-time</option><option>Recurring</option></select></div>
+              </div>
+              <div class="form-row-2">
+                <div><label class="field-label" for="off-pvalue">Override Perceived Value ($ optional)</label><input class="field-input" id="off-pvalue" type="number" min="0" step="100" placeholder="Auto-summed from attached products"></div>
+                <div><label class="field-label" for="off-guarantee">Guarantee / Risk Reversal</label><input class="field-input" id="off-guarantee" type="text" placeholder="30-day unconditional guarantee"></div>
+              </div>
+              <div>
+                <span class="field-label">Attach Products to This Offer Stack (Core or Bonus)</span>
+                <div id="offer-product-picker" style="display:flex;flex-direction:column;gap:6px;max-height:200px;overflow-y:auto"></div>
+              </div>
+              <button type="submit" class="btn btn-dark btn-sm" style="align-self:flex-start">＋ Save Offer Stack</button>
+            </form>
+          </div>
+
+          <section class="panel-card">
+            <strong style="font-size:16px">Your Offers &amp; Stacked Perceived Value</strong>
+            <div class="card-grid-2" id="offers-list-grid"></div>
+          </section>
+
+          <section class="panel-card">
+            <strong style="font-size:16px">Your Product Catalog (<span id="products-count">0</span>)</strong>
+            <div class="card-grid-3" id="products-list-grid"></div>
+          </section>
+        </div>
+      </div>
+
+      <!-- BRAIN SUB 5: ASSET LIBRARY -->
+      <div class="sub-panel" id="sub-brain-assets" hidden>
+        <div class="card-grid-2" style="align-items:start;grid-template-columns:minmax(0,0.9fr) minmax(0,1.3fr)">
+          <form id="asset-add-form" class="panel-card">
+            <span class="eyebrow-dot">Save &amp; Attach Resources</span>
+            <h3 style="font-size:21px">Add to Asset Library</h3>
+            <div><label class="field-label" for="al-title">Resource Title *</label><input class="field-input" id="al-title" type="text" required placeholder="e.g. Q4 Webinar Slide Deck / Offer SOP"></div>
+            <div class="form-row-2">
+              <div><label class="field-label" for="al-type">Type</label><select class="field-select" id="al-type"><option>Reference</option><option>Brief</option><option>Presentation</option><option>Email</option><option>Social</option><option>Document</option></select></div>
+              <div><label class="field-label" for="al-url">Link / ZeroDrive Path (optional)</label><input class="field-input" id="al-url" type="text" placeholder="https://... or OutlierLab/docs/..."></div>
+            </div>
+            <div><label class="field-label" for="al-content">Content / Key Takeaways (attachable to AI Chat)</label><textarea class="field-textarea" id="al-content" rows="5" required placeholder="Paste SOP, framework, training notes, or key bullet points..."></textarea></div>
+            <button type="submit" class="btn btn-yellow btn-sm" style="align-self:flex-start">＋ Save to Asset Library</button>
+          </form>
+
+          <section class="panel-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+              <strong style="font-size:16px">Workspace Asset Library</strong>
+              <div class="segmented" id="asset-origin-filter">
+                <button type="button" data-aorig="all" class="active">Everything</button>
+                <button type="button" data-aorig="ai">AI Generated</button>
+                <button type="button" data-aorig="user">My Resources</button>
+              </div>
+            </div>
+            <div id="asset-library-list" style="display:flex;flex-direction:column;gap:10px;max-height:540px;overflow-y:auto"></div>
+          </section>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -2066,9 +2575,10 @@ HTML_TEMPLATE = r"""<!doctype html>
           <p>Add any single video or channel, connect your owned socials, or use the zero-friction setup &amp; optional Go Live checklist.</p>
         </div>
         <div class="sub-nav" id="channels-subnav" role="tablist">
-          <button type="button" data-sub="ch-intake" class="active">Add Video &amp; Channels</button>
+          <button type="button" data-sub="ch-intake" class="active">Channels &amp; Free Discovery</button>
           <button type="button" data-sub="ch-socials">My Socials &amp; Trends</button>
-          <button type="button" data-sub="ch-setup">Easy Setup &amp; Go Live</button>
+          <button type="button" data-sub="ch-integrations">ZeroDrive &amp; Composio</button>
+          <button type="button" data-sub="ch-setup">AI Engine &amp; Setup</button>
         </div>
       </div>
 
@@ -2079,7 +2589,7 @@ HTML_TEMPLATE = r"""<!doctype html>
             <article class="panel-card tone-butter">
               <span class="eyebrow-dot">Instant 6-Tab Breakdown</span>
               <h3 style="font-size:24px">Add a single video</h3>
-              <p style="font-size:13.5px;color:var(--ink-2)">Paste any Instagram Reel, TikTok, or YouTube Short URL (plus optional spoken transcript/caption) to instantly generate its full Sandcastles + Dan Kennedy 6-tab breakdown and add it to your feed &amp; Ideas Inbox.</p>
+              <p style="font-size:13.5px;color:var(--ink-2)">Paste any Instagram Reel, TikTok, or YouTube Short URL (plus optional spoken transcript/caption) to instantly generate its full 6-tab video & story breakdown and add it to your feed &amp; Ideas Inbox.</p>
               <form id="inline-single-video-form" style="display:flex;flex-direction:column;gap:10px">
                 <div class="platform-pills" data-platform-group="single-video">
                   <button type="button" class="platform-pill active" data-platform="instagram">Instagram</button>
@@ -2109,7 +2619,7 @@ HTML_TEMPLATE = r"""<!doctype html>
                   <button type="button" class="platform-pill" data-platform="tiktok">TikTok</button>
                   <button type="button" class="platform-pill" data-platform="facebook">Facebook</button>
                 </div>
-                <div><label class="field-label" for="ch-handles">Handle(s) or Profile / Page URLs</label><textarea class="field-textarea" id="ch-handles" required placeholder="@kallaway, https://youtube.com/@handle, https://facebook.com/page"></textarea></div>
+                <div><label class="field-label" for="ch-handles">Handle(s) or Profile / Page URLs</label><textarea class="field-textarea" id="ch-handles" required placeholder="@creator, https://youtube.com/@handle, https://facebook.com/page"></textarea></div>
                 <div class="form-row-2">
                   <div><label class="field-label" for="ch-workspace">Workspace</label><select class="field-select" id="ch-workspace"></select></div>
                   <div><label class="field-label" for="ch-scope">Niche list</label><select class="field-select" id="ch-scope"></select></div>
@@ -2122,6 +2632,33 @@ HTML_TEMPLATE = r"""<!doctype html>
               <div id="channel-queue" style="display:flex;flex-direction:column;gap:8px"></div>
             </article>
           </div>
+
+          <!-- FREE LIVE CREATOR DISCOVERY & SEARCH ($0) -->
+          <section class="panel-card">
+            <div class="section-head">
+              <div>
+                <span class="eyebrow-dot">Free Live Creator Discovery · $0 Scraping</span>
+                <h3 style="font-size:22px">Find &amp; add new channels across YouTube, TikTok, Instagram &amp; Facebook</h3>
+              </div>
+              <div class="segmented" id="disc-mode-switch">
+                <button type="button" data-dmode="search" class="active">Search</button>
+                <button type="button" data-dmode="describe">Describe with AI</button>
+                <button type="button" data-dmode="suggested">Suggested</button>
+              </div>
+            </div>
+            <form id="creator-discover-form" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+              <select class="field-select" id="disc-platform" style="width:auto;padding:10px 14px">
+                <option value="youtube">YouTube</option>
+                <option value="tiktok">TikTok</option>
+                <option value="instagram">Instagram</option>
+                <option value="facebook">Facebook</option>
+                <option value="all">All Platforms</option>
+              </select>
+              <input class="filter-search" id="disc-query" type="text" placeholder="Search topic, handle, or describe the creators you want (e.g. 'founders teaching AI automation')..." style="flex:1;min-width:220px">
+              <button type="submit" class="btn btn-yellow btn-sm" id="disc-submit-btn">Find Creators Live →</button>
+            </form>
+            <div class="roster-grid" id="disc-results-grid"></div>
+          </section>
 
           <section>
             <div class="section-head" style="margin-bottom:14px">
@@ -2160,18 +2697,80 @@ HTML_TEMPLATE = r"""<!doctype html>
         </div>
       </div>
 
-      <!-- SUB 3: ZERO-FRICTION SETUP & OPTIONAL GO LIVE -->
+      <!-- SUB 3: ZERODRIVE & COMPOSIO INTEGRATIONS -->
+      <div class="sub-panel" id="sub-ch-integrations" hidden>
+        <div class="panel-inner" style="gap:24px">
+          <!-- ZERODRIVE AGENTIC STORAGE -->
+          <section class="panel-card tone-butter">
+            <div class="section-head">
+              <div>
+                <span class="eyebrow-dot">Agentic Cloud Brain Storage</span>
+                <h3 style="font-size:24px">ZeroDrive · 1-Click Connect &amp; Sync</h3>
+              </div>
+              <span class="status-chip muted" id="zd-status-chip">Checking ZeroDrive…</span>
+            </div>
+            <p style="font-size:13.5px;color:var(--ink-2)">Connect your ZeroDrive vault so every Memory, Founder Persona, Customer Avatar, Product/Offer Stack, Asset Library resource, and AI Chat deliverable saves directly to your personal cloud drive (and mirrors locally when offline).</p>
+            <form id="zd-connect-form" class="form-row-2" style="align-items:end">
+              <div><label class="field-label" for="zd-vault-root">ZeroDrive Vault Folder</label><input class="field-input" id="zd-vault-root" type="text" value="OutlierLab" placeholder="OutlierLab"></div>
+              <div><label class="field-label" for="zd-api-url">Hosted ZeroDrive API URL (optional)</label><input class="field-input" id="zd-api-url" type="url" placeholder="https://api.zerodrive.dev"></div>
+              <div><label class="field-label" for="zd-api-key">ZeroDrive API Key (optional — stored only in local .env)</label><input class="field-input" id="zd-api-key" type="password" placeholder="Leave blank to use local zd CLI"></div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <button type="submit" class="btn btn-yellow btn-sm" id="zd-connect-btn">⚡ 1-Click Connect ZeroDrive</button>
+                <button type="button" class="btn btn-dark btn-sm" id="zd-sync-now-btn">☁ Sync Active Brain Now</button>
+              </div>
+            </form>
+            <div id="zd-files-list" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px"></div>
+          </section>
+
+          <!-- COMPLETE COMPOSIO INTEGRATION -->
+          <section class="panel-card">
+            <div class="section-head">
+              <div>
+                <span class="eyebrow-dot">Complete Tool &amp; App Automation</span>
+                <h3 style="font-size:24px">Composio Integration · Connect 15+ Apps &amp; Execute Tools</h3>
+              </div>
+              <span class="status-chip muted" id="comp-status-chip">Checking Composio…</span>
+            </div>
+            <p style="font-size:13.5px;color:var(--ink-2)">Attach your Composio API key once (saved privately in local <code>.env</code>) to connect Gmail, Notion, Slack, Google Drive, YouTube, Instagram, Meta Ads, HubSpot, Calendar, Linear, GitHub, Stripe, and more — and run any Composio tool action directly from Outlier Lab.</p>
+            <form id="comp-config-form" style="display:flex;gap:10px;flex-wrap:wrap;align-items:end">
+              <div style="flex:1;min-width:220px"><label class="field-label" for="comp-api-key">Composio API Key</label><input class="field-input" id="comp-api-key" type="password" placeholder="Paste COMPOSIO_API_KEY..."></div>
+              <div style="width:200px"><label class="field-label" for="comp-user-id">Entity / User ID</label><input class="field-input" id="comp-user-id" type="text" value="aisimple-default"></div>
+              <button type="submit" class="btn btn-yellow btn-sm" id="comp-save-btn">Save &amp; Verify Composio ✓</button>
+            </form>
+
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap">
+                <strong style="font-size:14.5px">Available Toolkits &amp; 1-Click OAuth Connect</strong>
+                <input class="filter-search" id="comp-search" type="search" placeholder="Filter toolkits (gmail, notion, slack, youtube...)" style="max-width:280px;padding:7px 12px;font-size:12.5px">
+              </div>
+              <div class="toolkit-grid" id="comp-toolkits-grid"></div>
+            </div>
+
+            <div style="padding-top:16px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:10px">
+              <strong style="font-size:14.5px">Live Composio Tool Runner</strong>
+              <form id="comp-exec-form" class="form-row-2" style="align-items:end">
+                <div><label class="field-label" for="comp-tool-slug">Tool Slug (e.g. GMAIL_FETCH_EMAILS, NOTION_SEARCH_NOTION_PAGE)</label><input class="field-input" id="comp-tool-slug" type="text" placeholder="GMAIL_FETCH_EMAILS"></div>
+                <div><label class="field-label" for="comp-tool-args">Arguments JSON</label><input class="field-input" id="comp-tool-args" type="text" value="{}"></div>
+                <button type="submit" class="btn btn-dark btn-sm" style="align-self:start" id="comp-exec-btn">▶ Execute Tool Action</button>
+              </form>
+              <pre id="comp-exec-output" style="display:none;white-space:pre-wrap;font-family:var(--font-mono);font-size:11.5px;background:var(--paper);padding:12px;border-radius:12px;border:1px solid var(--border);max-height:240px;overflow:auto;margin:0"></pre>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <!-- SUB 4: ZERO-FRICTION SETUP & OPTIONAL GO LIVE -->
       <div class="sub-panel" id="sub-ch-setup" hidden>
         <div class="panel-inner">
           <section class="panel-card tone-lavender" id="ai-engine-panel">
             <div class="section-head">
               <div>
                 <span class="eyebrow-dot">Local AI Brain · Claude CLI &amp; Codex CLI</span>
-                <h3 style="font-size:24px">Sandcastles-grade + Dan Kennedy Deep AI Engine</h3>
+                <h3 style="font-size:24px">Local Deep AI Analysis & Brain Engine</h3>
               </div>
               <span class="status-chip muted" id="ai-engine-status-chip">Checking local CLIs…</span>
             </div>
-            <p style="font-size:13.5px;color:var(--ink-2)">When running locally on <code>http://127.0.0.1:4747</code>, Outlier Lab plugs directly into your installed <strong>Claude Code CLI</strong> or <strong>Codex CLI</strong> (using your existing login — zero extra API billing) to run true LLM beat-by-beat breakdowns, Dan Kennedy Character rewrites, and 4-step script generation. Upgraded breakdowns are cached into <code>data/</code> and publish live to <code>outlier.aisimple.co</code>.</p>
+            <p style="font-size:13.5px;color:var(--ink-2)">When running locally on <code>http://127.0.0.1:4747</code>, Outlier Lab plugs directly into your installed <strong>Claude Code CLI</strong> or <strong>Codex CLI</strong> (using your existing login — zero extra API billing) to run true LLM beat-by-beat breakdowns, Founder Persona rewrites, and 4-step script generation. Upgraded breakdowns are cached into <code>data/</code> and publish live to <code>outlier.aisimple.co</code>.</p>
             <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
               <div class="segmented" id="ai-provider-switch" role="group" aria-label="AI Engine">
                 <button type="button" data-ai-provider="claude">✦ Claude CLI</button>
@@ -2217,7 +2816,7 @@ cd outlier-lab
               </div>
               <div class="panel-card" style="padding:20px">
                 <div style="display:flex;justify-content:space-between;align-items:center"><strong>4. Portable Workspace Backup &amp; Share</strong><span class="status-chip live">Ready Now</span></div>
-                <p style="font-size:13px;color:var(--ink-2)">Export your Workspaces, Dan Kennedy Character Profiles, Shortlisted Ideas, Projects, Saved Hooks, and Scripts as one JSON file — or import someone else's setup in 2 seconds.</p>
+                <p style="font-size:13px;color:var(--ink-2)">Export your Workspaces, Founder Persona & Brain Profiles, Shortlisted Ideas, Projects, Saved Hooks, and Scripts as one JSON file — or import someone else's setup in 2 seconds.</p>
                 <div style="display:flex;gap:8px;flex-wrap:wrap">
                   <button type="button" class="btn btn-yellow btn-sm" id="export-backup-btn">↓ Export Full Backup JSON</button>
                   <label class="btn btn-outline btn-sm" style="cursor:pointer">↑ Import Backup JSON<input type="file" id="import-backup-input" accept="application/json" hidden></label>
@@ -2242,7 +2841,7 @@ cd outlier-lab
     </span>
     <div>
       <div style="font-weight:800;font-size:14px">AI SIMPLE · Outlier Lab Studio</div>
-      <div style="font-size:11.5px;color:#9e9e9e">Sandcastles-grade video breakdowns × Dan Kennedy Magnetic Character architecture.</div>
+      <div style="font-size:11.5px;color:#9e9e9e">AI Simple Outlier Lab · Video Intelligence, Brand Brain & Creative Arsenal.</div>
     </div>
   </div>
   <div class="footer-meta">
@@ -2254,7 +2853,7 @@ cd outlier-lab
   </div>
 </div>
 
-<!-- ==================== FULL 6-TAB VIDEO BREAKDOWN DIALOG (SANDCASTLES + DAN KENNEDY) ==================== -->
+<!-- ==================== FULL 6-TAB VIDEO BREAKDOWN DIALOG ==================== -->
 <dialog id="reel-dialog" closedby="any" aria-labelledby="bd-title">
   <div class="dialog-shell bd-shell">
     <div class="bd-topbar">
@@ -2320,7 +2919,7 @@ cd outlier-lab
           <button type="button" class="bd-tab" data-bdtab="hook">3. Hook</button>
           <button type="button" class="bd-tab" data-bdtab="format">4. Storytelling Format</button>
           <button type="button" class="bd-tab" data-bdtab="visual">5. Visual Layout</button>
-          <button type="button" class="bd-tab" data-bdtab="kennedy">6. Dan Kennedy Audit</button>
+          <button type="button" class="bd-tab" data-bdtab="kennedy">6. Magnetic Story Audit</button>
         </div>
 
         <!-- BD TAB 1: TRANSCRIPT (PARAGRAPH + BEAT-BY-BEAT) -->
@@ -2363,7 +2962,7 @@ cd outlier-lab
         <!-- BD TAB 5: VISUAL LAYOUT -->
         <div class="bd-tab-panel" id="bdpanel-visual" hidden></div>
 
-        <!-- BD TAB 6: DAN KENNEDY MAGNETIC AUDIT -->
+        <!-- BD TAB 6: MAGNETIC STORY AUDIT -->
         <div class="bd-tab-panel" id="bdpanel-kennedy" hidden></div>
       </div>
     </div>
@@ -2389,7 +2988,7 @@ cd outlier-lab
         <button type="button" class="platform-pill" data-platform="facebook">Facebook</button>
       </div>
       <div><label class="field-label" id="qa-input-label" for="qa-input">Video URL</label><input class="field-input" id="qa-input" type="text" required autofocus placeholder="https://www.instagram.com/reel/..."></div>
-      <div id="qa-transcript-wrap"><label class="field-label" for="qa-transcript">Paste spoken transcript or hook (optional — breaks down immediately)</label><textarea class="field-textarea" id="qa-transcript" rows="3" placeholder="Paste transcript or hook to generate beats, mad-lib hook, and Dan Kennedy audit right away..."></textarea></div>
+      <div id="qa-transcript-wrap"><label class="field-label" for="qa-transcript">Paste spoken transcript or hook (optional — breaks down immediately)</label><textarea class="field-textarea" id="qa-transcript" rows="3" placeholder="Paste transcript or hook to generate beats, mad-lib hook, and Magnetic Story Audit right away..."></textarea></div>
       <div class="form-row-2">
         <div><label class="field-label" for="qa-workspace">Workspace</label><select class="field-select" id="qa-workspace"></select></div>
         <div><label class="field-label" for="qa-extra" id="qa-extra-label">Creator handle or tag</label><input class="field-input" id="qa-extra" type="text" placeholder="@creator"></div>
@@ -2453,7 +3052,7 @@ cd outlier-lab
 <dialog id="connect-social-dialog" closedby="any" aria-labelledby="connect-social-title">
   <div class="dialog-shell form-dialog-shell">
     <div style="display:flex;justify-content:space-between;align-items:flex-start">
-      <div><span class="eyebrow-dot" id="cs-workspace-eyebrow">Connect Account · Sandcastles Style</span><h1 id="connect-social-title" style="margin-top:6px">Connect Instagram</h1></div>
+      <div><span class="eyebrow-dot" id="cs-workspace-eyebrow">Connect Account · Direct Sync</span><h1 id="connect-social-title" style="margin-top:6px">Connect Instagram</h1></div>
       <button type="button" class="dialog-close" data-close-dialog aria-label="Close">×</button>
     </div>
     <p style="font-size:13px;color:var(--ink-2)">Just paste your handle or profile/page URL — <strong>no OAuth developer app or API approval needed</strong>. Running locally on <code>:4747</code> syncs your recent videos, computes your real median views &amp; outlier multiples, and makes every video clickable for a full 6-tab breakdown.</p>
@@ -2461,7 +3060,7 @@ cd outlier-lab
       <input type="hidden" id="cs-platform" value="instagram">
       <div><label class="field-label" for="cs-handle">Account handle or channel/page URL</label><input class="field-input" id="cs-handle" type="text" required autofocus placeholder="@yourhandle or https://youtube.com/@yourchannel"></div>
       <div style="padding:12px 14px;border-radius:14px;background:var(--paper);border:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
-        <div><strong style="font-size:12px;display:block">Optional Bio Verification Code (Sandcastles Style)</strong><span style="font-size:11.5px;color:var(--ink-3)">Paste into your bio only if you want a Verified Owner badge — never required to sync.</span></div>
+        <div><strong style="font-size:12px;display:block">Optional Bio Verification Code</strong><span style="font-size:11.5px;color:var(--ink-3)">Paste into your bio only if you want a Verified Owner badge — never required to sync.</span></div>
         <code id="cs-verify-code" style="font-family:var(--font-mono);font-weight:700;padding:5px 10px;border-radius:8px;background:var(--yellow-soft);color:var(--ink)">AIS-4829</code>
       </div>
       <div style="display:flex;justify-content:flex-end;gap:8px"><button type="button" class="btn btn-outline" data-close-dialog>Cancel</button><button type="submit" class="btn btn-yellow" id="cs-submit-btn">Connect &amp; Sync Now →</button></div>
@@ -2483,7 +3082,7 @@ const SYNCED_OWN_SOCIALS = __OWN_SOCIALS_JSON__;
 const CREATOR_MAP = new Map(CREATORS.map(c => [c.handle, c]));
 
 const ARCHETYPES = [
-  { name: "The Stern but Loving Parent", desc: "Cares deeply, holds you accountable. Tough love & harsh truths (Dr. Phil, Dan Kennedy)." },
+  { name: "The Stern but Loving Parent", desc: "Cares deeply, holds you accountable. Tough love & harsh truths (Direct, high-accountability mentor)." },
   { name: "The Patient Teacher / Philosopher", desc: "Wisdom-centered, calm principles & clarity (Jim Rohn, Earl Nightingale)." },
   { name: "The Dysfunctional Eccentric Genius", desc: "Brilliant, unconventional, polarizing edge (Gary Halbert)." },
   { name: "The Everyman", desc: "\"If I can do it, you can do it\" — relatable transformation & grit." },
@@ -2571,13 +3170,13 @@ let previewConnectedMode = false;
       connected: true,
       syncedAt: acc.syncedAt,
       medianViews: fmtNum(acc.medianViews),
-      followers: acc.videoCount ? `${acc.videoCount} vids` : "Synced",
+      followers: acc.followers && acc.followers !== "—" ? acc.followers : (acc.followerCount ? fmtNum(acc.followerCount) : (acc.videoCount ? `${acc.videoCount} vids` : "Synced")),
       note: acc.note || "",
     };
   }
   const list = ownOutliersByWorkspace[wsId] || [];
   (acc.items || []).forEach(it => {
-    syncedOwnedReels.push(it);
+    syncedOwnedReels.push({ ...it, workspaceId: wsId });
     list.push({
       shortCode: it.shortCode,
       ratio: `${(it.ratio || 1).toFixed(1)}×`,
@@ -2630,7 +3229,7 @@ const urlParams = new URLSearchParams(location.search);
 let activeWorkspaceId = urlParams.get("workspace") || localStorage.getItem(KEYS.workspace) || DEFAULT_WORKSPACES[0].id;
 if (!allWorkspaces().some(w => w.id === activeWorkspaceId)) activeWorkspaceId = DEFAULT_WORKSPACES[0].id;
 let activeTab = urlParams.get("tab") || localStorage.getItem(KEYS.tab) || "today";
-if (!["today", "feed", "seo", "ideas", "scripts", "character", "channels"].includes(activeTab)) activeTab = "today";
+if (!["today", "feed", "seo", "chat", "ideas", "scripts", "character", "channels"].includes(activeTab)) activeTab = "today";
 
 let activeScope = urlParams.get("scope") || localStorage.getItem(KEYS.scope) || "__workspace__";
 let activeFilter = localStorage.getItem(KEYS.filter) || "__all__";
@@ -2672,20 +3271,25 @@ function getActiveWorkspace() { return allWorkspaces().find(w => w.id === active
 function workspaceScopes(ws = getActiveWorkspace()) {
   if (ws.id === "__all__") return SCOPES;
   const set = new Set(ws.scopes || []);
-  const m = SCOPES.filter(s => set.has(s.id));
-  return m.length ? m : SCOPES;
+  return SCOPES.filter(s => set.has(s.id));
 }
 function workspaceCreators(ws = getActiveWorkspace()) {
   if (ws.id === "__all__") return CREATORS;
   const scopeSet = new Set(ws.scopes || []);
-  const m = CREATORS.filter(c => (c.scopes || []).some(s => scopeSet.has(s)));
-  return m.length ? m : CREATORS;
+  const explicitHandles = new Set((ws.creatorHandles || []).map(h => h.toLowerCase()));
+  return CREATORS.filter(c => explicitHandles.has(c.handle.toLowerCase()) || (c.scopes || []).some(s => scopeSet.has(s)));
 }
 function workspaceRows(ws = getActiveWorkspace()) {
   const reels = allReels();
   if (ws.id === "__all__") return reels;
-  const allowed = new Set(workspaceCreators(ws).map(c => c.handle));
-  return reels.filter(r => r.customWorkspace === ws.id || allowed.has(r.creator_handle));
+  const allowed = new Set(workspaceCreators(ws).map(c => c.handle.toLowerCase()));
+  const wsOwnedHandles = new Set(Object.values(connectedSocialOverrides[ws.id] || {}).map(x => (x.handle || "").replace(/^@/, "").toLowerCase()).filter(Boolean));
+  return reels.filter(r => {
+    if (r.customWorkspace) return r.customWorkspace === ws.id;
+    if (r.workspaceId) return r.workspaceId === ws.id;
+    const ch = (r.creator_handle || r.creator_username || "").toLowerCase();
+    return allowed.has(ch) || wsOwnedHandles.has(ch);
+  });
 }
 function scopeRows() {
   const ws = getActiveWorkspace();
@@ -2801,10 +3405,11 @@ const TAB_TITLES = {
   today: "Today",
   feed: "Outliers",
   seo: "Keywords & SEO Lab",
-  ideas: "Ideas & Hooks",
-  scripts: "Scripts & Strategy",
-  character: "Character & Offer",
-  channels: "Accounts & Setup",
+  chat: "AI Chat & Coach",
+  ideas: "Ideas & Swipe Hooks",
+  scripts: "Arsenal & Scripts",
+  character: "Brand Brain",
+  channels: "Accounts & Tools",
 };
 const sidebarEl = document.getElementById("app-sidebar");
 const sidebarBackdrop = document.getElementById("sidebar-backdrop");
@@ -2823,7 +3428,7 @@ function setActiveTab(tabId, { focus = false } = {}) {
     btn.tabIndex = sel ? 0 : -1;
     if (sel && focus) btn.focus();
   });
-  ["today", "feed", "seo", "ideas", "scripts", "character", "channels"].forEach(id => {
+  ["today", "feed", "seo", "chat", "ideas", "scripts", "character", "channels"].forEach(id => {
     const el = document.getElementById(`panel-${id}`);
     if (el) el.hidden = id !== tabId;
   });
@@ -2993,7 +3598,7 @@ function renderToday() {
   document.getElementById("hero-heading").innerHTML = ws.id === "__all__"
     ? `Top <span class="gradient-highlight">viral outliers</span> across every workspace.`
     : `What's <span class="gradient-highlight">outperforming</span> for ${escapeHtml(ws.name)} today.`;
-  document.getElementById("hero-sub").textContent = `${ws.tagline}. Click any video for its full 6-tab Sandcastles + Dan Kennedy breakdown.`;
+  document.getElementById("hero-sub").textContent = `${ws.tagline}. Click any video for its full 6-tab Video & Story Breakdown.`;
   document.getElementById("hero-side-tagline").textContent = ws.tagline;
   document.getElementById("cta-ws-name").textContent = ws.name;
   document.getElementById("hero-stat-outliers").textContent = String(outliers.length);
@@ -3069,7 +3674,7 @@ function renderToday() {
       </article>`;
   }).join("");
 
-  // vidIQ-style Daily View Predictions (Very High / High / Medium)
+  // Daily View Predictions (Very High / High / Medium)
   const predGrid = document.getElementById("daily-predictions-grid");
   if (predGrid) {
     const ch = ws.character || {}, off = ws.offer || {};
@@ -3081,7 +3686,7 @@ function renderToday() {
     const t3 = topics[2]?.name || "Offer Psychology";
     const preds = [
       { tier: "Very High", badge: "live", icon: "🚀", kw: t1.toLowerCase(), title: `Stop Chasing ${enemyShort} — Use This 3-Step ${t1} Fix`, reason: `Top workspace topic (${(topics[0]?.median || 4.2).toFixed(1)}× median) paired with high-contrast Trap Mistake hook.` },
-      { tier: "High", badge: "", icon: "↑", kw: t2.toLowerCase(), title: `How ${insiderShort} Beats 99% of ${t2} Advice`, reason: `Injects your Dan Kennedy Insider Language into a proven A vs B Comparison format.` },
+      { tier: "High", badge: "", icon: "↑", kw: t2.toLowerCase(), title: `How ${insiderShort} Beats 99% of ${t2} Advice`, reason: `Injects your brand Insider Language into a proven A vs B Comparison format.` },
       { tier: "Medium", badge: "muted", icon: "●", kw: t3.toLowerCase(), title: `The Real Reason Your ${t3} Isn't Converting (5-Min Audit)`, reason: `Direct buyer-pain search demand aligned with ${off.whatYouSell ? "your core offer CTA" : "inbound conversion"}.` },
     ];
     predGrid.innerHTML = preds.map(p => `
@@ -3329,7 +3934,7 @@ function renderIdeasAndHooks() {
   document.getElementById("collections-body").innerHTML = COLLECTIONS.map(col => `
     <section class="panel-card tone-${escapeHtml(col.tone)}">
       <div class="section-head">
-        <div><span class="eyebrow-dot">Sandcastles Reference Library</span><h3 style="font-size:24px">${escapeHtml(col.group)}</h3><p style="font-size:13.5px;color:var(--ink-2)">${escapeHtml(col.description)}</p></div>
+        <div><span class="eyebrow-dot">Creative Format Library</span><h3 style="font-size:24px">${escapeHtml(col.group)}</h3><p style="font-size:13.5px;color:var(--ink-2)">${escapeHtml(col.description)}</p></div>
         <span class="status-chip muted">${col.items.length} patterns</span>
       </div>
       <div class="card-grid-3">
@@ -3426,7 +4031,7 @@ function renderStrategyAudit() {
     hooks: "Median Outlier Multiple by Hook Category",
     formats: "Median Outlier Multiple by Storytelling Format",
     tactics: "Median Outlier Multiple by Scriptwriting Tactic",
-    kennedy: "Median Outlier Multiple by Dan Kennedy Character Element",
+    kennedy: "Median Outlier Multiple by Magnetism Element",
   };
   document.getElementById("audit-list-title").textContent = titles[auditDim] || "Performance Breakdown";
   renderFormulaInto("audit-formula-slots", rows);
@@ -3461,7 +4066,7 @@ function renderStrategyAudit() {
     <ul style="margin:4px 0;padding-left:18px;font-size:13.5px;color:var(--ink-2);display:flex;flex-direction:column;gap:6px">
       <li>Top video in this bucket hit <strong>${sel.best.ratio.toFixed(1)}×</strong> (${fmtNum(sel.best.plays)} plays) by <strong>@${escapeHtml(sel.best.creator_username)}</strong>.</li>
       <li>Model the opening structure: “${escapeHtml((sel.best.hook || "").slice(0, 120))}”</li>
-      <li>Combine this with your workspace's Dan Kennedy Stand-Against enemy for maximum polarity.</li>
+      <li>Combine this with your workspace's Stand-Against enemy for maximum polarity.</li>
     </ul>
     <strong style="font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--ink-3);margin-top:6px">Supporting Videos</strong>
     <div style="display:flex;flex-direction:column;gap:8px;min-width:0">
@@ -3474,7 +4079,7 @@ function renderStrategyAudit() {
   `;
 }
 
-// ---- 4-Step Script Builder (Sandcastles + Dan Kennedy) ----
+// ---- 4-Step Script Builder ----
 function generateResearchBrief() {
   const ws = getActiveWorkspace();
   const ch = ws.character || {}, off = ws.offer || {};
@@ -3505,7 +4110,7 @@ function generateHookDrafts() {
   const enemy = (ch.standAgainst || "shiny object hype").split(",")[0].trim();
   const insider = (ch.sevenElements?.insiderLanguage || "the SIMPLE Method").split(",")[0].trim();
   const topRefs = workspaceRows(ws).filter(r => r.ratio >= 2).slice(0, 6);
-  const byRef = (i) => topRefs[i] ? `Inspired by @${topRefs[i].creator_username} · ${topRefs[i].ratio.toFixed(1)}× (${fmtNum(topRefs[i].plays)})` : "Sandcastles Proven Shape";
+  const byRef = (i) => topRefs[i] ? `Inspired by @${topRefs[i].creator_username} · ${topRefs[i].ratio.toFixed(1)}× (${fmtNum(topRefs[i].plays)})` : "Proven High-Retention Shape";
   wizard.hooks = [
     { style: "Trap Mistake", by: byRef(0), text: `Stop falling for ${enemy} — here's the exact 3-step fix for ${topic.slice(0, 68)}.` },
     { style: "Authority", by: byRef(1), text: `The only reason ${topic.slice(0, 58)} isn't working yet is you're automating before you diagnose.` },
@@ -3591,7 +4196,7 @@ function renderScriptWizard() {
       </div>
       <details style="background:var(--paper);padding:14px 16px;border-radius:14px;border:1px solid var(--border)">
         <summary style="cursor:pointer;font-weight:800;font-size:13px">Or fix an existing script draft (optional)</summary>
-        <textarea class="field-textarea" id="wiz-draft" style="margin-top:10px" rows="4" placeholder="Paste your rough draft here to tighten pacing, inject Dan Kennedy character elements, and upgrade the hook...">${escapeHtml(wizard.existingDraft)}</textarea>
+        <textarea class="field-textarea" id="wiz-draft" style="margin-top:10px" rows="4" placeholder="Paste your rough draft here to tighten pacing, inject your Founder Persona elements, and upgrade the hook...">${escapeHtml(wizard.existingDraft)}</textarea>
       </details>
       <div style="display:flex;justify-content:flex-end"><button type="button" class="btn btn-yellow" id="wiz-next-1">Generate Research Brief →</button></div>
     `;
@@ -3659,7 +4264,7 @@ function renderSavedScripts() {
   `).join("") : `<div class="empty-box" style="grid-column:1/-1">No saved scripts yet. Open any outlier and press <span class="kbd">C</span> or use the 4-Step Script Builder above.</div>`;
 }
 
-// ---- TAB 5: CHARACTER & OFFER STUDIO (DAN KENNEDY + MARKETING SECRETS) ----
+// ---- TAB 5: BRAND BRAIN STUDIO ----
 function renderCharacterStudio() {
   const ws = getActiveWorkspace();
   const off = ws.offer || {};
@@ -3866,11 +4471,11 @@ function renderChannelsAndSocials() {
   document.getElementById("trends-grid").innerHTML = `
     <article class="panel-card tone-butter"><span class="eyebrow-dot">Winning Topics</span><h3 style="font-size:20px">Top Topics in ${escapeHtml(ws.name)}</h3>${topTopics.map(t => `<div style="display:flex;justify-content:space-between;font-size:13px;padding:8px 10px;border-radius:10px;background:rgba(255,255,255,0.7)"><span>${escapeHtml(t.name)}</span><strong>${t.median.toFixed(1)}×</strong></div>`).join("")}</article>
     <article class="panel-card tone-lavender"><span class="eyebrow-dot">Winning Hooks</span><h3 style="font-size:20px">Highest-Lift Hook Shapes</h3>${topHooks.map(h => `<div style="display:flex;justify-content:space-between;font-size:13px;padding:8px 10px;border-radius:10px;background:rgba(255,255,255,0.7)"><span>${escapeHtml(h.name)}</span><strong>${h.median.toFixed(1)}×</strong></div>`).join("")}</article>
-    <article class="panel-card tone-sage"><span class="eyebrow-dot">Dan Kennedy Signal</span><h3 style="font-size:20px">Most Active Character Elements</h3>${topK7.map(k => `<div style="display:flex;justify-content:space-between;font-size:13px;padding:8px 10px;border-radius:10px;background:rgba(255,255,255,0.7)"><span>${escapeHtml(k.name)}</span><strong>${k.count} vids</strong></div>`).join("") || `<p style="font-size:13px;color:var(--ink-2)">${outliers.length} workspace outliers analyzed.</p>`}</article>
+    <article class="panel-card tone-sage"><span class="eyebrow-dot">Magnetism Signal</span><h3 style="font-size:20px">Most Active Character Elements</h3>${topK7.map(k => `<div style="display:flex;justify-content:space-between;font-size:13px;padding:8px 10px;border-radius:10px;background:rgba(255,255,255,0.7)"><span>${escapeHtml(k.name)}</span><strong>${k.count} vids</strong></div>`).join("") || `<p style="font-size:13px;color:var(--ink-2)">${outliers.length} workspace outliers analyzed.</p>`}</article>
   `;
 }
 
-// ---- FULL 6-TAB VIDEO BREAKDOWN DIALOG (SANDCASTLES + DAN KENNEDY) ----
+// ---- FULL 6-TAB VIDEO BREAKDOWN DIALOG ----
 const reelDialog = document.getElementById("reel-dialog");
 const modalVideo = document.getElementById("modal-video");
 const modalIframe = document.getElementById("modal-iframe");
@@ -3934,7 +4539,7 @@ Summary: ${bd.summary}
 - Scriptwriting Tactics: ${(bd.format?.tactics || []).join(", ")}
 - Visual Layout: ${bd.visual?.category} / ${bd.visual?.subCategory} (Visual Hook: ${bd.visual?.visualHook})
 
-## Dan Kennedy Magnetic Audit
+## Magnetic Story Audit
 - Character vs Plot: ${bd.kennedy?.characterVsPlot} | Polarization: ${bd.kennedy?.polarization} | Magnification: ${bd.kennedy?.magnification} | Context Anchor: ${bd.kennedy?.contextAnchor} | Deficit: ${bd.kennedy?.deficitScore}/12
 
 ## Transcript (${bd.wordCount} words)
@@ -4047,18 +4652,18 @@ function openReelModal(shortCode) {
         <div style="padding:14px;border-radius:14px;background:var(--surface);border:1px solid var(--border)"><strong class="field-label">Visual Layout Category</strong><div style="font-family:var(--font-display);font-size:18px">${escapeHtml(vis.category || "Studio Set")}</div></div>
         <div style="padding:14px;border-radius:14px;background:var(--surface);border:1px solid var(--border)"><strong class="field-label">Sub-Category</strong><div style="font-family:var(--font-display);font-size:18px">${escapeHtml(vis.subCategory || "Office Room Yap")}</div></div>
       </div>
-      <div style="padding:14px;border-radius:14px;background:var(--yellow-tint);border:1px solid rgba(255,199,29,0.55)"><strong class="field-label">Recommended Sandcastles Visual Hook</strong><div style="font-weight:800;font-size:15px">${escapeHtml(vis.visualHook || "Move In Frame")}</div><p style="font-size:13px;color:var(--ink-2);margin-top:4px">${escapeHtml(vis.pacingNote || "")}</p></div>
+      <div style="padding:14px;border-radius:14px;background:var(--yellow-tint);border:1px solid rgba(255,199,29,0.55)"><strong class="field-label">Recommended Visual Hook</strong><div style="font-weight:800;font-size:15px">${escapeHtml(vis.visualHook || "Move In Frame")}</div><p style="font-size:13px;color:var(--ink-2);margin-top:4px">${escapeHtml(vis.pacingNote || "")}</p></div>
       ${vis.textCues ? `<div style="padding:14px;border-radius:14px;background:var(--surface);border:1px solid var(--border)"><strong class="field-label">On-Screen Text &amp; B-Roll Recipe</strong><p style="font-size:13px;color:var(--ink-2);margin-top:4px">${escapeHtml(vis.textCues)}</p></div>` : ""}
     </div>`;
 
-  // Tab 6: Dan Kennedy Magnetic Audit
+  // Tab 6: Magnetic Story Audit
   const dk = bd.kennedy || {};
   const els = dk.elements || {};
   const elNames = [["origin", "1. Origin / Legend"], ["parables", "2. Parables"], ["miracles", "3. Miracles / Proof"], ["insiderLanguage", "4. Insider Language"], ["dogma", "5. Dogma"], ["enemies", "6. Named Enemies"], ["flaws", "7. Flaws & Evolution"]];
   document.getElementById("bdpanel-kennedy").innerHTML = `
     <div class="bd-card">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
-        <strong style="font-size:15px">Dan Kennedy 6-Dimension Magnetic Content Audit</strong>
+        <strong style="font-size:15px">6-Dimension Magnetic Story Audit</strong>
         <span class="status-chip ${(dk.deficitScore || 0) <= 5 ? "live" : "warn"}">Character Deficit: ${dk.deficitScore ?? 0}/12</span>
       </div>
       <div class="tag-row">
@@ -4156,7 +4761,7 @@ reelDialog.addEventListener("close", () => {
   reelDialog.returnValue = ""; modalVideo.pause(); modalVideo.src = ""; modalIframe.src = ""; modalShortCode = null;
 });
 
-// Sandcastles single-key shortcuts while Breakdown modal is open!
+// Single-key shortcuts while Breakdown modal is open
 document.addEventListener("keydown", e => {
   if (!reelDialog.open) return;
   if (["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement?.tagName)) return;
@@ -4281,7 +4886,7 @@ document.getElementById("bd-ai-upgrade")?.addEventListener("click", async () => 
   const r = allReels().find(x => x.shortCode === modalShortCode);
   if (!r) return;
   btn.disabled = true; btn.textContent = `Analyzing with ${prov}…`;
-  showToast(`Running deep Sandcastles + Dan Kennedy breakdown via ${prov}…`);
+  showToast(`Running deep 6-tab video breakdown via ${prov}…`);
   try {
     const resp = await fetch("/api/ai/breakdown", {
       method: "POST", headers: { "Content-Type": "application/json" },
@@ -4362,7 +4967,7 @@ async function handleAddChannel({ handles, platform, workspace, scope }) {
           live = true;
           (d.items || []).forEach(it => {
             const ro = buildClientBreakdown({ url: it.url, platform, workspace, tag: it.creator_username, transcript: it.transcript || it.caption || it.title });
-            ro.shortCode = it.shortCode; ro.plays = it.plays || 0; ro.likes = it.likes || 0; ro.duration = it.duration || 0; ro.ratio = it.ratio || 1;
+            const _wsId = typeof workspace !== "undefined" ? workspace : ws.id; ro.shortCode = it.shortCode; ro.workspaceId = _wsId; ro.customWorkspace = _wsId; ro.plays = it.plays || 0; ro.likes = it.likes || 0; ro.duration = it.duration || 0; ro.ratio = it.ratio || 1;
             ro.band_class = ro.ratio >= 15 ? "breakout" : ro.ratio >= 5 ? "strong" : ro.ratio >= 2 ? "good" : "normal";
             ro.band_label = ro.ratio >= 15 ? "Breakout" : ro.ratio >= 5 ? "Replicable" : ro.ratio >= 2 ? "Working" : "Normal";
             if (it.breakdown) ro.breakdown = it.breakdown;
@@ -4371,6 +4976,15 @@ async function handleAddChannel({ handles, platform, workspace, scope }) {
         }
       } catch {}
     }
+  }
+  // Attach tracked handles to custom workspace so switching workspaces isolates them cleanly
+  const targetWs = customWorkspaces.find(w => w.id === workspace);
+  if (targetWs) {
+    targetWs.creatorHandles = targetWs.creatorHandles || [];
+    handles.split(/[\n,]+/).map(h => h.trim().replace(/^@/, "").replace(/^https?:\/\/[^/]+\/@?/i, "").split("/")[0].toLowerCase()).filter(Boolean).forEach(h => {
+      if (!targetWs.creatorHandles.includes(h)) targetWs.creatorHandles.push(h);
+    });
+    saveJSON(KEYS.customWorkspaces, customWorkspaces);
   }
   const entry = { id: "ch_" + Date.now(), handles, platform, workspace, scope, status, live, createdAt: new Date().toISOString() };
   queuedChannels.unshift(entry);
@@ -4421,7 +5035,7 @@ const wsDialog = document.getElementById("workspace-dialog");
 let newWsAccent = "#ffc71d", newWsInk = "#1f1f1f";
 document.getElementById("open-create-ws").addEventListener("click", () => {
   closeWsMenu();
-  document.getElementById("new-ws-scopes").innerHTML = SCOPES.map(s => `<label style="display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:999px;background:var(--paper);border:1px solid var(--border);font-size:12px;font-weight:700"><input type="checkbox" value="${escapeHtml(s.id)}" checked> ${escapeHtml(s.name)}</label>`).join("");
+  document.getElementById("new-ws-scopes").innerHTML = SCOPES.map(s => `<label style="display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:999px;background:var(--paper);border:1px solid var(--border);font-size:12px;font-weight:700"><input type="checkbox" value="${escapeHtml(s.id)}"> ${escapeHtml(s.name)}</label>`).join("") + `<p style="width:100%;font-size:11.5px;color:var(--ink-3);margin-top:4px">Leave unchecked to start this workspace 100% clean with its own channels, socials &amp; brand brain.</p>`;
   wsDialog.showModal();
 });
 document.getElementById("ws-color-swatches").addEventListener("click", e => {
@@ -4436,8 +5050,22 @@ document.getElementById("create-ws-form").addEventListener("submit", e => {
   const tagline = document.getElementById("new-ws-tagline").value.trim() || `${name} outlier intelligence & content studio`;
   const scopes = [...document.querySelectorAll("#new-ws-scopes input:checked")].map(i => i.value);
   const id = name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || ("ws-" + Date.now());
-  const ws = { id, name, initials, accent: newWsAccent, accentInk: newWsInk, tagline, scopes: scopes.length ? scopes : SCOPES.map(s => s.id), socials: [], offer: { whatYouSell: tagline }, character: { archetype: ARCHETYPES[0].name, sevenElements: {}, profits: {}, jamesBondTest: [] } };
+  const ws = {
+    id, name, initials, accent: newWsAccent, accentInk: newWsInk, tagline,
+    scopes, creatorHandles: [], isCustom: true,
+    socials: [
+      { platform: "instagram", handle: "@" + id, followers: "—", medianViews: "—", connected: false },
+      { platform: "youtube", handle: "@" + id, followers: "—", medianViews: "—", connected: false },
+      { platform: "tiktok", handle: "@" + id, followers: "—", medianViews: "—", connected: false },
+      { platform: "facebook", handle: id, followers: "—", medianViews: "—", connected: false },
+    ],
+    offer: { whatYouSell: tagline },
+    character: { archetype: ARCHETYPES[0].name, sevenElements: {}, profits: {}, jamesBondTest: [] }
+  };
   customWorkspaces.push(ws); saveJSON(KEYS.customWorkspaces, customWorkspaces);
+  if (isLocalServer()) {
+    fetch("/api/workspaces", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ workspaces: allWorkspaces().filter(w => w.id !== "__all__") }) }).catch(() => {});
+  }
   e.target.reset(); wsDialog.close(); selectWorkspace(ws.id);
 });
 
@@ -4465,14 +5093,15 @@ document.getElementById("connect-social-form").addEventListener("submit", async 
           handle: acc.handle || handle,
           connected: true,
           syncedAt: acc.syncedAt || new Date().toISOString(),
-          followers: acc.videoCount ? `${acc.videoCount} vids synced` : "Connected",
+          followers: acc.followers && acc.followers !== "—" ? acc.followers : (acc.followerCount ? fmtNum(acc.followerCount) : (acc.videoCount ? `${acc.videoCount} vids` : "Connected")),
           medianViews: acc.medianViews ? fmtNum(acc.medianViews) : "—",
+          videoCount: acc.videoCount || 0,
           note: acc.note || "",
         };
         if (data.items?.length) {
           const cards = data.items.slice(0, 9).map(it => {
             const ro = buildClientBreakdown({ url: it.url, platform, workspace: ws.id, tag: it.creator_username || handle, transcript: it.transcript || it.caption || it.title });
-            ro.shortCode = it.shortCode; ro.plays = it.plays || 0; ro.likes = it.likes || 0; ro.duration = it.duration || 0; ro.ratio = it.ratio || 1;
+            const _wsId = typeof workspace !== "undefined" ? workspace : ws.id; ro.shortCode = it.shortCode; ro.workspaceId = _wsId; ro.customWorkspace = _wsId; ro.plays = it.plays || 0; ro.likes = it.likes || 0; ro.duration = it.duration || 0; ro.ratio = it.ratio || 1;
             ro.band_class = ro.ratio >= 15 ? "breakout" : ro.ratio >= 5 ? "strong" : ro.ratio >= 2 ? "good" : "normal";
             ro.band_label = ro.ratio >= 15 ? "Breakout" : ro.ratio >= 5 ? "Replicable" : ro.ratio >= 2 ? "Working" : "Normal";
             if (it.breakdown) ro.breakdown = it.breakdown;
@@ -4603,14 +5232,49 @@ document.getElementById("script-wizard-steps").addEventListener("click", e => {
 document.getElementById("save-character-btn").addEventListener("click", saveCharacterProfile);
 document.getElementById("export-character-md").addEventListener("click", () => {
   const ws = getActiveWorkspace(), ch = ws.character || {}, k7 = ch.sevenElements || {}, off = ws.offer || {};
-  copyText(`# ${ws.name} — Dan Kennedy Character & Offer Bible\n\n**Offer:** ${off.whatYouSell}\n**Audience:** ${off.whoYouSellTo}\n**Archetype:** ${ch.archetype} (${ch.superheroIdentity})\n**Mighty Theme:** ${ch.mightyTheme}\n**Stand FOR:** ${ch.standFor}\n**Stand AGAINST:** ${ch.standAgainst}\n\n## 7 Elements\n1. Origin: ${k7.origin}\n2. Parables: ${k7.parables}\n3. Miracles: ${k7.miracles}\n4. Insider Language: ${k7.insiderLanguage}\n5. Dogma: ${k7.dogma}\n6. Enemies: ${k7.enemies}\n7. Flaws: ${k7.flaws}\n\n## James Bond Test\n${(ch.jamesBondTest || []).map((x, i) => `${i + 1}. ${x}`).join("\n")}`, "Character Bible copied ✓");
+  copyText(`# ${ws.name} — Founder Persona & Offer Bible\n\n**Offer:** ${off.whatYouSell}\n**Audience:** ${off.whoYouSellTo}\n**Archetype:** ${ch.archetype} (${ch.superheroIdentity})\n**Mighty Theme:** ${ch.mightyTheme}\n**Stand FOR:** ${ch.standFor}\n**Stand AGAINST:** ${ch.standAgainst}\n\n## 7 Elements\n1. Origin: ${k7.origin}\n2. Parables: ${k7.parables}\n3. Miracles: ${k7.miracles}\n4. Insider Language: ${k7.insiderLanguage}\n5. Dogma: ${k7.dogma}\n6. Enemies: ${k7.enemies}\n7. Flaws: ${k7.flaws}\n\n## James Bond Test\n${(ch.jamesBondTest || []).map((x, i) => `${i + 1}. ${x}`).join("\n")}`, "Character Bible copied ✓");
 });
 document.getElementById("preview-connected-toggle").addEventListener("click", e => {
   previewConnectedMode = !previewConnectedMode; e.target.classList.toggle("on", previewConnectedMode);
   e.target.textContent = previewConnectedMode ? "✓ Previewing connected state" : "Preview connected layout";
   renderChannelsAndSocials();
 });
-document.getElementById("sync-all-socials").addEventListener("click", () => { showToast(`Sync requested for ${getActiveWorkspace().name}`); emitEvent("outlier:sync-social", { workspaceId: activeWorkspaceId }); });
+document.getElementById("sync-all-socials").addEventListener("click", async () => {
+  const ws = getActiveWorkspace();
+  if (!isLocalServer()) { showToast("Open http://127.0.0.1:4747 to run live social sync"); return; }
+  const ov = connectedSocialOverrides[ws.id] || {};
+  const targets = (ws.socials || []).map(s => ({ platform: s.platform, handle: ov[s.platform]?.handle || s.handle, connected: Boolean(ov[s.platform]?.connected ?? s.connected) })).filter(x => x.connected && x.handle);
+  if (!targets.length) { showToast("Connect at least one social account below first"); return; }
+  showToast(`Live-syncing ${targets.length} account(s) for ${ws.name}…`);
+  for (const t of targets) {
+    try {
+      const resp = await fetch("/api/socials/sync", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ workspaceId: ws.id, platform: t.platform, handle: t.handle, role: "owned", limit: 15 }) });
+      const data = await resp.json();
+      if (resp.ok && data.ok) {
+        const acc = data.account || {};
+        connectedSocialOverrides[ws.id][t.platform] = {
+          handle: acc.handle || t.handle, connected: true, syncedAt: acc.syncedAt,
+          followers: acc.followers && acc.followers !== "—" ? acc.followers : (acc.followerCount ? fmtNum(acc.followerCount) : "Synced"),
+          medianViews: acc.medianViews ? fmtNum(acc.medianViews) : "—", note: acc.note || "",
+        };
+        if (data.items?.length) {
+          const cards = data.items.slice(0, 9).map(it => {
+            const ro = buildClientBreakdown({ url: it.url, platform: t.platform, workspace: ws.id, tag: it.creator_username || t.handle, transcript: it.transcript || it.caption || it.title });
+            const _wsId = typeof workspace !== "undefined" ? workspace : ws.id; ro.shortCode = it.shortCode; ro.workspaceId = _wsId; ro.customWorkspace = _wsId; ro.plays = it.plays || 0; ro.likes = it.likes || 0; ro.duration = it.duration || 0; ro.ratio = it.ratio || 1;
+            ro.band_class = ro.ratio >= 15 ? "breakout" : ro.ratio >= 5 ? "strong" : ro.ratio >= 2 ? "good" : "normal";
+            ro.band_label = ro.ratio >= 15 ? "Breakout" : ro.ratio >= 5 ? "Replicable" : ro.ratio >= 2 ? "Working" : "Normal";
+            syncedOwnedReels = [ro, ...syncedOwnedReels.filter(x => x.shortCode !== ro.shortCode)];
+            return { shortCode: it.shortCode, ratio: `${(it.ratio || 1).toFixed(1)}×`, band: ro.band_class, platform: `${t.platform.toUpperCase()} · ${acc.handle || t.handle}`, hook: it.title || it.caption || "Synced Video", plays: fmtNum(it.plays || 0), likes: fmtNum(it.likes || 0) };
+          });
+          ownOutliersByWorkspace[ws.id] = [...cards, ...(ownOutliersByWorkspace[ws.id] || []).filter(x => !cards.some(c => c.shortCode === x.shortCode))].slice(0, 12);
+        }
+      }
+    } catch {}
+  }
+  saveJSON(KEYS.connectedSocials, connectedSocialOverrides);
+  renderAll();
+  showToast(`Synced ${targets.length} live account(s) with real views ✓`);
+});
 
 // Feed filter & sort listeners
 const searchInput = document.getElementById("search-input");
@@ -4761,7 +5425,7 @@ document.addEventListener("click", e => {
   }
   if (t.id === "wiz-back-4") { wizard.step = 3; renderScriptWizard(); return; }
   if (t.id === "wiz-copy-script") { copyText(document.getElementById("wiz-final-script").value, "Script copied ✓"); return; }
-  if (t.id === "wiz-export-llm") { const ws = getActiveWorkspace(); copyText(`Polish this short-form script using ${ws.name}'s voice (${ws.character?.writingStyle || ""}) and Dan Kennedy's 7 Magnetic Elements:\n\n` + document.getElementById("wiz-final-script").value, "LLM Polish Prompt copied ✓"); return; }
+  if (t.id === "wiz-export-llm") { const ws = getActiveWorkspace(); copyText(`Polish this short-form script using ${ws.name}'s voice (${ws.character?.writingStyle || ""}) and the 7 Magnetism Elements:\n\n` + document.getElementById("wiz-final-script").value, "LLM Polish Prompt copied ✓"); return; }
   if (t.id === "wiz-save-script") {
     const text = document.getElementById("wiz-final-script").value;
     savedScripts.unshift({ id: "sc_" + Date.now(), title: wizard.topic.slice(0, 80) || "Untitled Script", format: wizard.format, workspace: getActiveWorkspace().name, script: text, createdAt: new Date().toISOString() });
@@ -4775,7 +5439,7 @@ document.addEventListener("click", e => {
   const row = t.closest("tr[data-shortcode]"); if (row && !t.closest("td:first-child")) openReelModal(row.dataset.shortcode);
 });
 
-// ---- COMPLETE VIDIQ KEYWORDS, SERP, VPH, TITLE & TAG SEO LAB ----
+// ---- KEYWORDS, SERP, VPH, TITLE & TAG SEO LAB ----
 bindSubNav("seo-subnav");
 let kwBucket = "matching";
 let activeKeywordData = {
@@ -4953,7 +5617,7 @@ function runLiveSeoOptimizer() {
     { label: "Clear topic", pass: clear, detail: clear ? "Topic & keyword signal are immediately clear." : "Include your target keyword or concrete outcome in the first 5 words." },
     { label: "Easy to read", pass: readable, detail: `${words.length} words (sweet spot: 6–13 words).` },
     { label: "Fits on phones", pass: mobile, detail: `${title.length}/60 chars — ${mobile ? "clean mobile display" : "trim under 60 chars so it won't truncate"}.` },
-    { label: "Dan Kennedy contrast / polarity", pass: polarity, detail: polarity ? "Strong Us-vs-Them or Old-Way-vs-New-Way tension." : "Add 'without X', 'stop doing Y', or name an enemy." },
+    { label: "Contrast / polarity edge", pass: polarity, detail: polarity ? "Strong Us-vs-Them or Old-Way-vs-New-Way tension." : "Add 'without X', 'stop doing Y', or name an enemy." },
   ];
   document.getElementById("opt-title-checks").innerHTML = checks.map(c => `
     <div class="seo-check-row"><span class="seo-dot ${c.pass ? "pass" : "fail"}">${c.pass ? "✓" : "!"}</span><div><strong style="display:block;font-size:12.5px">${c.label}</strong><span style="font-size:12px;color:var(--ink-2)">${escapeHtml(c.detail)}</span></div></div>`).join("");
@@ -5071,6 +5735,756 @@ document.addEventListener("click", e => {
   const scIdea = t.closest("[data-script-idea]"); if (scIdea) { wizard.sourceShortCode = null; wizard.topic = scIdea.dataset.scriptIdea; wizard.research = null; wizard.hooks = []; wizard.scriptText = ""; wizard.step = 1; setActiveTab("scripts"); activateSubNav("scripts-subnav", "script-builder"); renderScriptWizard(); return; }
 });
 
+// ==================== BRAND BRAIN, OFFER MODALITIES, AI CHAT, ARSENAL, FREE DISCOVERY, ZERODRIVE & COMPOSIO ====================
+bindSubNav("brain-subnav");
+
+const OFFER_MODALITIES = {
+  S: { label: "S-Tier", weight: 40, cls: "tier-s", items: ["Done For You", "Software", "1-on-1 Coaching", "Reseller License", "Live Event"] },
+  A: { label: "A-Tier", weight: 25, cls: "tier-a", items: ["Community", "Group Coaching", "Critique", "Templates", "Certification"] },
+  B: { label: "B-Tier", weight: 15, cls: "tier-b", items: ["Swipe Files", "Training", "Case Studies", "Support", "Physical Products", "AI Prompts"] },
+  C: { label: "C-Tier", weight: 8, cls: "tier-c", items: ["Graphics", "Resources", "Over The Shoulder", "Updates", "Agreements / Contracts", "Spreadsheets"] },
+};
+const MODALITY_TIER_MAP = {};
+Object.entries(OFFER_MODALITIES).forEach(([t, cfg]) => cfg.items.forEach(m => { MODALITY_TIER_MAP[m] = { tier: t, weight: cfg.weight, cls: cfg.cls }; }));
+
+const SOCIAL_STORY_FORMATS = [
+  "Walking Listicle", "Visual Metaphor", "Is It Worth It?", "Deconstruction", "Three-Act Structure", "Narrative",
+  "Before vs. After", "Untold Stories", "Do This", "30-Day Challenge", "Impossible Challenge", "Experiment",
+  "Myth-Busting", "Contrarian Take", "List / Countdown", "Reaction / Breakdown", "Expert Interview",
+  "Education with Dramatization", "Case Study", "Story-Driven", "Watch Me Work", "Tutorial Teaser",
+  "Side-by-Side", "A/B Breakdown", "What Not To Do", "Common Mistakes", "Tips on the Move",
+  "Man on the Street", "Two Characters", "Expert vs. Novice", "Trial Reels", "Day in the Life",
+  "I Did This", "Wrong Way / Right Way", "Resultable Video", "Problem Path",
+];
+
+const SEEDED_LIBRARY_ASSETS = [
+  {
+    id: "asset-offer-modalities",
+    title: "Offer Modalities Playbook (S / A / B / C Tier Perceived Value Guide)",
+    type: "Reference",
+    origin: "user",
+    url: "OutlierLab/reference/offer-modalities-playbook.md",
+    createdAt: "Pre-seeded",
+    content: `# Offer Modalities & Perceived Value Hierarchy\n\nHigher-tier modalities carry exponentially higher perceived value because they collapse effort, time, and execution risk for the buyer.\n\n## S-Tier (Highest Perceived Value — Execution & Access)\n- Done For You, Software, 1-on-1 Coaching, Reseller License, Live Event\n\n## A-Tier (High Leverage — Feedback & Speed)\n- Community, Group Coaching, Critique, Templates, Certification\n\n## B-Tier (Structured Proof & Enablement)\n- Swipe Files, Training, Case Studies, Support, Physical Products, AI Prompts\n\n## C-Tier (Supporting Enhancers & Stack Fillers)\n- Graphics, Resources, Over The Shoulder, Updates, Agreements / Contracts, Spreadsheets\n\n## Offer Stack Rule\nPair at least one S-Tier or A-Tier anchor with targeted B/C-Tier bonuses that remove every objection (time, skill, confidence). Spend 2-3x more pitch time presenting the Bonuses than the Core Offer.`,
+  },
+  {
+    id: "asset-close-sequence",
+    title: "High-Converting Offer Close & Bonus Stack Sequence",
+    type: "Reference",
+    origin: "user",
+    url: "OutlierLab/reference/offer-close-sequence.md",
+    createdAt: "Pre-seeded",
+    content: `# 6-Part Offer Close Sequence\n1. OFFER (3-5 min): Name/Tagline -> One-Sentence Transformation -> Core Components (keep simple).\n2. PRICE ANCHOR CASCADE (3-5 min): Anchor astronomically high -> Industry alternative -> Reveal actual price early.\n3. BONUSES (20-30 min — Longest section): Reveal Bonus 1 -> Review Stack -> Reveal Bonus 2 -> Review Differently -> Save strongest S/A-Tier bonus for last.\n4. GUARANTEE (2-3 min): Remove all downside risk.\n5. OBJECTION REFRAMES: Reframe Time & Money objections as informed decision questions.\n6. SCARCITY & HAND-HOLD CLOSE: Clear deadline + walk through exact next step.`,
+  },
+];
+
+let brainsByWorkspace = loadJSON("outlier-brains-v1", {});
+let activeAvatarId = null;
+let selectedProductModalities = new Set(["Done For You", "Templates"]);
+let attachedAssetIds = new Set(["asset-offer-modalities"]);
+let chatMode = "chief_of_staff";
+let chatHistories = loadJSON("outlier-chats-v1", {});
+let discoverMode = "search";
+let composioToolkitsCache = [];
+
+function getWorkspaceBrain(ws = getActiveWorkspace()) {
+  const id = ws.id;
+  if (!brainsByWorkspace[id]) {
+    const isAIS = id === "aisimple";
+    const isCI = id === "clickable-impact";
+    brainsByWorkspace[id] = {
+      memories: isAIS ? [
+        { id: "m1", title: "Core Philosophy: Diagnose Before Prescribing", category: "About Your Business", scope: "workspace", content: "Never automate chaos. Always fix the single real bottleneck before introducing another AI tool.", createdAt: "2026-11-26" },
+        { id: "m2", title: "Flagship Proof Point", category: "Offers", scope: "workspace", content: "Helped scale LeadGenJay $39K -> $300K+/mo and retained 49 of 50 customers with our Refund Save Funnel.", createdAt: "2026-11-26" },
+      ] : [],
+      voices: [
+        { id: "v1", name: `${ws.name} Video Voice`, type: "Video", notes: ws.character?.writingStyle || "Direct, punchy, short sentences (<12 words), concrete examples, zero corporate buzzwords.", sample: "" },
+        { id: "v2", name: `${ws.name} Story Email Voice`, type: "Email", notes: "Conversational 1-to-1 story opening, sharp bridge to core lesson, clean single CTA in PS.", sample: "" },
+      ],
+      stories: isAIS ? [
+        { id: "st1", title: "The 2-Hour Launch Rescue", falseBelief: "More AI tools equals more output", body: "Two hours before a major launch, an 8-figure founder's 20-step prompt chain broke. We stripped it down to 3 calm steps and saved the entire launch.", createdAt: "2026-11-26" },
+      ] : [],
+      accountHooks: isAIS ? [
+        { id: "ah1", text: "Stop building 47-node AI automations that break by Friday — fix this 1 bottleneck first.", angle: "Contrarian", storyTitle: "The 2-Hour Launch Rescue" },
+        { id: "ah2", text: "Two hours before an 8-figure launch, their entire AI stack collapsed. Here is the 3-step fix we installed.", angle: "Origin", storyTitle: "The 2-Hour Launch Rescue" },
+        { id: "ah3", text: "If an AI workflow takes longer to maintain than to run, kill it today.", angle: "Dogma", storyTitle: "Core Rule" },
+      ] : [],
+      coachBot: {
+        bio: `Interactive Founder Persona Coach for ${ws.name}. Helps diagnose bottlenecks, extract stories, and architect high-converting offers.`,
+        rules: "Diagnose before prescribing. Be direct, practical, and specific. Keep answers actionable.",
+        starters: "Where is our highest-leverage bottleneck right now?\nInterview me to extract a story + 5 account hooks.\nAudit my offer stack using S/A/B/C modalities.",
+        ctaLabel: ws.offer?.ctaMechanism || `Work with ${ws.name}`,
+        ctaUrl: isAIS ? "https://aisimple.co" : "",
+      },
+      avatars: [
+        {
+          id: "av1",
+          name: isAIS ? "Overwhelmed 7-Figure Founder" : isCI ? "DTC Growth CMO / Founder" : `${ws.name} Dream Customer`,
+          occupation: isAIS ? "Founder / Agency Operator ($500K–$15M)" : isCI ? "DTC Brand Founder ($1M–$25M)" : "Primary Buyer",
+          age: "30–48",
+          platforms: ["Instagram", "YouTube", "LinkedIn"],
+          biggestFear: ws.character?.profits?.fear || "Falling behind while wasting time and money on complex tools that don't convert.",
+          biggestDesire: ws.character?.profits?.dreams || "A calm, predictable growth engine that scales without burning out the founder.",
+          pains: (ws.character?.profits?.pain || "Drowning in manual work\nTool sprawl with zero ROI").replace(/,\s*/g, "\n"),
+          dreams: (ws.character?.profits?.results || "15+ hours/week back\nPredictable inbound leads").replace(/,\s*/g, "\n"),
+          fbMethod: "AI systems require coding and 47-step automations to work.",
+          fbSelf: "I'm not technical enough and don't have time to learn another tool.",
+          fbExternal: "My team won't adopt new workflows anyway.",
+          fbOther: "Every course or agency just sells hype without implementation.",
+          fileNotes: "",
+          customDetails: [
+            { key: "Revenue Band", value: isAIS ? "$500K – $10M/yr" : "$1M – $20M/yr" },
+            { key: "Trigger Moment", value: ws.character?.profits?.triggers || "Hitting a growth ceiling where working harder stops working" },
+            { key: "How They Talk", value: "Cut the fluff — just show me what actually works Monday morning." },
+          ],
+        },
+      ],
+      products: isAIS ? [
+        { id: "p1", name: "Done-For-You AI Operating Stack", desc: "3 production AI workflows installed into your business in 30 days.", solves: "Eliminates 15+ hrs/wk of repetitive manual ops", modalities: ["Done For You", "Software", "1-on-1 Coaching"], perceivedValue: 7500, price: 3500, status: "Active" },
+        { id: "p2", name: "Weekly Live Implementation & Critique Lab", desc: "Direct workflow audits, prompt teardown, and peer founder room.", solves: "Stops teams from stalling after week 1", modalities: ["Group Coaching", "Critique", "Community", "Templates"], perceivedValue: 3000, price: 997, status: "Active" },
+        { id: "p3", name: "The SIMPLE Prompt & SOP Vault", desc: "Plug-and-play prompt packs, SOPs, and team onboarding contracts.", solves: "Gives your team instant execution playbooks", modalities: ["Swipe Files", "AI Prompts", "Case Studies", "Spreadsheets"], perceivedValue: 1500, price: 297, status: "Active" },
+      ] : [],
+      offers: isAIS ? [
+        { id: "o1", name: "AI Simple Accelerator", tier: "Core", promise: "Replace 15+ hours/week of manual founder bottlenecks with 3 calm, reliable AI systems in 30 days.", price: 2997, billing: "One-time", overridePerceivedValue: 0, guarantee: "30-day implementation guarantee — if it doesn't save you 10+ hrs/wk, we keep working free.", stack: [{ productId: "p1", role: "Core" }, { productId: "p2", role: "Bonus" }, { productId: "p3", role: "Bonus" }] },
+      ] : [],
+      assets: SEEDED_LIBRARY_ASSETS.map(a => ({ ...a })),
+    };
+    saveJSON("outlier-brains-v1", brainsByWorkspace);
+  }
+  return brainsByWorkspace[id];
+}
+
+function persistWorkspaceBrain(syncCloud = false) {
+  saveJSON("outlier-brains-v1", brainsByWorkspace);
+  const ws = getActiveWorkspace();
+  if (isLocalServer() && ws.id !== "__all__") {
+    fetch("/api/brain", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ workspaceId: ws.id, brain: buildFullBrainPayload(), syncZeroDrive: syncCloud }),
+    }).catch(() => {});
+  }
+}
+
+function calcModalityScore(modalities) {
+  return (modalities || []).reduce((sum, m) => sum + (MODALITY_TIER_MAP[m]?.weight || 5), 0);
+}
+
+function buildFullBrainPayload() {
+  const ws = getActiveWorkspace();
+  const b = getWorkspaceBrain(ws);
+  const attachedAssets = (b.assets || []).filter(a => attachedAssetIds.has(a.id));
+  return {
+    workspace: { id: ws.id, name: ws.name, tagline: ws.tagline },
+    persona: { ...(ws.character || {}), offer: ws.offer || {}, voices: b.voices || [], stories: b.stories || [], accountHooks: b.accountHooks || [], coachBot: b.coachBot || {} },
+    avatars: b.avatars || [],
+    products: b.products || [],
+    offers: b.offers || [],
+    memories: b.memories || [],
+    attachedAssets,
+  };
+}
+
+// ---- Render Brand Brain (All 5 Sub-Tabs) ----
+function renderBrandBrain() {
+  const ws = getActiveWorkspace();
+  const b = getWorkspaceBrain(ws);
+  document.getElementById("mem-count-badge").textContent = String((b.memories || []).length);
+  document.getElementById("av-count-badge").textContent = String((b.avatars || []).length);
+  document.getElementById("off-count-badge").textContent = String((b.offers || []).length);
+  document.getElementById("asset-count-badge").textContent = String((b.assets || []).length);
+  document.getElementById("voices-count").textContent = String((b.voices || []).length);
+  document.getElementById("acct-hooks-count").textContent = String((b.accountHooks || []).length);
+
+  // 1. Voices
+  const vList = document.getElementById("voices-list");
+  if (vList) {
+    vList.innerHTML = (b.voices || []).map(v => `
+      <article class="panel-card" style="padding:16px;gap:8px">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+          <div><strong style="font-size:15px">${escapeHtml(v.name)}</strong> <span class="status-chip muted">${escapeHtml(v.type)}</span></div>
+          <button type="button" class="btn btn-outline btn-xs" data-del-voice="${escapeHtml(v.id)}">Remove</button>
+        </div>
+        <p style="font-size:13px;color:var(--ink-2)">${escapeHtml(v.notes)}</p>
+        ${v.sample ? `<div style="font-size:12px;color:var(--ink-3);background:var(--paper);padding:8px 10px;border-radius:10px;white-space:pre-wrap">${escapeHtml(v.sample.slice(0, 220))}</div>` : ""}
+      </article>`).join("") || `<div class="empty-box">No custom voices yet.</div>`;
+  }
+
+  // 2. Separate Account Stories & Hooks
+  const ahList = document.getElementById("acct-hooks-list");
+  document.getElementById("acct-hooks-list-count").textContent = String((b.accountHooks || []).length);
+  if (ahList) {
+    ahList.innerHTML = (b.accountHooks || []).map(h => `
+      <div style="padding:10px 12px;border-radius:12px;background:var(--paper);border:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-start;gap:10px">
+        <div style="min-width:0;flex:1">
+          <div style="font-weight:700;font-size:13.5px">“${escapeHtml(h.text)}”</div>
+          <div style="font-size:11px;color:var(--ink-3);margin-top:3px">${escapeHtml(h.angle || "Brand Hook")}${h.storyTitle ? ` · From: ${escapeHtml(h.storyTitle)}` : ""}</div>
+        </div>
+        <div style="display:flex;gap:5px;flex-shrink:0">
+          <button type="button" class="btn btn-outline btn-xs" data-copy-hook="${escapeHtml(h.text)}">Copy</button>
+          <button type="button" class="btn btn-outline btn-xs" data-del-acct-hook="${escapeHtml(h.id)}">×</button>
+        </div>
+      </div>`).join("") || `<p style="font-size:13px;color:var(--ink-3)">No brand account hooks yet — add a story or click Generate 10 Account Hooks.</p>`;
+  }
+  const stList = document.getElementById("acct-stories-list");
+  document.getElementById("acct-stories-count").textContent = String((b.stories || []).length);
+  if (stList) {
+    stList.innerHTML = (b.stories || []).map(s => `
+      <div style="padding:10px 12px;border-radius:12px;background:var(--paper);border:1px solid var(--border)">
+        <div style="display:flex;justify-content:space-between;gap:8px"><strong style="font-size:13.5px">${escapeHtml(s.title)}</strong><button type="button" class="btn btn-outline btn-xs" data-del-story="${escapeHtml(s.id)}">×</button></div>
+        ${s.falseBelief ? `<div style="font-size:11.5px;color:var(--yellow-ink);font-weight:700;margin-top:2px">Destroys: ${escapeHtml(s.falseBelief)}</div>` : ""}
+        <p style="font-size:12.5px;color:var(--ink-2);margin-top:4px">${escapeHtml(s.body)}</p>
+      </div>`).join("") || `<p style="font-size:13px;color:var(--ink-3)">No brand stories captured yet.</p>`;
+  }
+
+  // 3. Coaching Bot
+  const cb = b.coachBot || {};
+  const setVal = (id, v) => { const el = document.getElementById(id); if (el) el.value = v || ""; };
+  setVal("cb-bio", cb.bio); setVal("cb-rules", cb.rules); setVal("cb-starters", cb.starters); setVal("cb-cta-label", cb.ctaLabel); setVal("cb-cta-url", cb.ctaUrl);
+  document.getElementById("cb-preview-title").textContent = `${ws.character?.superheroIdentity || ws.name} · Coaching Bot`;
+  document.getElementById("cb-preview-bio").textContent = cb.bio || "";
+  document.getElementById("cb-preview-starters").innerHTML = (cb.starters || "").split("\n").filter(Boolean).slice(0, 4).map(q =>
+    `<button type="button" class="tag-score-pill" style="justify-content:flex-start" data-launch-coach-q="${escapeHtml(q)}">💬 ${escapeHtml(q)}</button>`
+  ).join("");
+  document.getElementById("cb-preview-cta").innerHTML = cb.ctaLabel ? `<span class="btn btn-yellow btn-xs">${escapeHtml(cb.ctaLabel)} →</span>` : "";
+
+  // 4. Memories
+  const memSearch = (document.getElementById("mem-search")?.value || "").toLowerCase();
+  const memCat = document.getElementById("mem-filter-cat")?.value || "all";
+  const allMems = b.memories || [];
+  const cats = [...new Set(allMems.map(m => m.category))];
+  const catSel = document.getElementById("mem-filter-cat");
+  if (catSel) {
+    const cur = catSel.value;
+    catSel.innerHTML = `<option value="all">All Categories (${allMems.length})</option>` + cats.map(c => `<option value="${escapeHtml(c)}" ${c === cur ? "selected" : ""}>${escapeHtml(c)}</option>`).join("");
+  }
+  const filteredMems = allMems.filter(m => (memCat === "all" || m.category === memCat) && (!memSearch || `${m.title} ${m.content} ${m.category}`.toLowerCase().includes(memSearch)));
+  document.getElementById("mem-list-count").textContent = String(filteredMems.length);
+  document.getElementById("memories-list").innerHTML = filteredMems.map(m => `
+    <div style="padding:12px 14px;border-radius:14px;background:var(--paper);border:1px solid var(--border);display:flex;flex-direction:column;gap:5px">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+        <div style="display:flex;gap:6px;align-items:center"><strong style="font-size:14px">${escapeHtml(m.title)}</strong><span class="status-chip muted">${escapeHtml(m.category)}</span><span class="micro-tag">${m.scope === "personal" ? "Personal" : "Workspace"}</span></div>
+        <button type="button" class="btn btn-outline btn-xs" data-del-mem="${escapeHtml(m.id)}">Forget</button>
+      </div>
+      <p style="font-size:13px;color:var(--ink-2)">${escapeHtml(m.content)}</p>
+    </div>`).join("") || `<div class="empty-box">No memories saved for ${escapeHtml(ws.name)} yet.</div>`;
+
+  // 5. Customer Avatars
+  const avs = b.avatars || [];
+  if (!activeAvatarId || !avs.some(a => a.id === activeAvatarId)) activeAvatarId = avs[0]?.id || null;
+  document.getElementById("avatar-selector-row").innerHTML = avs.map(a =>
+    `<button type="button" class="btn ${a.id === activeAvatarId ? "btn-dark" : "btn-outline"} btn-sm" data-pick-avatar="${escapeHtml(a.id)}">${escapeHtml(a.name)}</button>`
+  ).join("");
+  const av = avs.find(a => a.id === activeAvatarId);
+  if (av) {
+    setVal("av-name", av.name); setVal("av-occ", av.occupation); setVal("av-age", av.age);
+    setVal("av-fear", av.biggestFear); setVal("av-desire", av.biggestDesire);
+    setVal("av-pains", av.pains); setVal("av-dreams", av.dreams);
+    setVal("av-fb-method", av.fbMethod); setVal("av-fb-self", av.fbSelf); setVal("av-fb-external", av.fbExternal); setVal("av-fb-other", av.fbOther);
+    setVal("av-file-notes", av.fileNotes);
+    const platSet = new Set(av.platforms || []);
+    document.getElementById("av-platforms-row").innerHTML = ["Instagram", "YouTube", "TikTok", "Facebook", "LinkedIn", "X/Twitter"].map(pl =>
+      `<button type="button" class="mod-chip ${platSet.has(pl) ? "active" : ""}" data-toggle-av-plat="${pl}">${pl}</button>`
+    ).join("");
+    document.getElementById("av-custom-details-list").innerHTML = (av.customDetails || []).map((cd, i) => `
+      <div style="display:grid;grid-template-columns:180px 1fr auto;gap:8px;align-items:center">
+        <input class="field-input" style="padding:7px 10px;font-size:12.5px" data-cd-key="${i}" value="${escapeHtml(cd.key)}" placeholder="Label (e.g. Trigger Moment)">
+        <input class="field-input" style="padding:7px 10px;font-size:12.5px" data-cd-val="${i}" value="${escapeHtml(cd.value)}" placeholder="Detail...">
+        <button type="button" class="btn btn-outline btn-xs" data-del-cd="${i}">×</button>
+      </div>`).join("") || `<p style="font-size:12px;color:var(--ink-3)">No custom notes yet — click + Add Custom Detail.</p>`;
+  }
+
+  // 6. Products & Offers (S/A/B/C Offer Modalities + Perceived Value Stack)
+  const mpBox = document.getElementById("prod-modalities-picker");
+  if (mpBox) {
+    mpBox.innerHTML = Object.entries(OFFER_MODALITIES).map(([tier, cfg]) => `
+      <div class="tier-group">
+        <div style="display:flex;align-items:center;gap:8px"><span class="tier-badge ${cfg.cls}">${cfg.label}</span><span style="font-size:11px;color:var(--ink-3)">+${cfg.weight} leverage pts each</span></div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px">
+          ${cfg.items.map(m => `<button type="button" class="mod-chip ${selectedProductModalities.has(m) ? "active" : ""}" data-toggle-mod="${escapeHtml(m)}">${escapeHtml(m)}</button>`).join("")}
+        </div>
+      </div>`).join("");
+    document.getElementById("prod-modality-score").textContent = `Leverage Score: ${calcModalityScore([...selectedProductModalities])}`;
+  }
+
+  const prods = b.products || [];
+  document.getElementById("products-count").textContent = String(prods.length);
+  const opBox = document.getElementById("offer-product-picker");
+  if (opBox) {
+    opBox.innerHTML = prods.map(p => `
+      <label style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 10px;border-radius:10px;background:var(--paper);border:1px solid var(--border);font-size:12.5px">
+        <span style="display:flex;align-items:center;gap:7px"><input type="checkbox" data-stack-prod="${escapeHtml(p.id)}"><strong>${escapeHtml(p.name)}</strong> <span style="color:var(--ink-3)">($${Number(p.perceivedValue || 0).toLocaleString()} val)</span></span>
+        <select data-stack-role="${escapeHtml(p.id)}" class="field-select" style="width:auto;padding:3px 8px;font-size:11.5px"><option value="Core">Core</option><option value="Bonus">Bonus</option></select>
+      </label>`).join("") || `<p style="font-size:12px;color:var(--ink-3)">Add a product on the left first to stack it into offers.</p>`;
+  }
+
+  document.getElementById("products-list-grid").innerHTML = prods.map(p => {
+    const score = calcModalityScore(p.modalities);
+    return `
+      <article class="panel-card" style="padding:16px;gap:8px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:6px">
+          <strong style="font-size:15px">${escapeHtml(p.name)}</strong>
+          <button type="button" class="btn btn-outline btn-xs" data-del-prod="${escapeHtml(p.id)}">×</button>
+        </div>
+        <p style="font-size:12.5px;color:var(--ink-2)">${escapeHtml(p.desc || p.solves || "")}</p>
+        <div style="display:flex;flex-wrap:wrap;gap:5px">${(p.modalities || []).map(m => `<span class="tier-badge ${MODALITY_TIER_MAP[m]?.cls || "tier-c"}">${escapeHtml(MODALITY_TIER_MAP[m]?.tier || "?")}: ${escapeHtml(m)}</span>`).join("")}</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding-top:8px;border-top:1px solid var(--border);font-size:12px">
+          <span>Perceived: <strong>$${Number(p.perceivedValue || 0).toLocaleString()}</strong></span>
+          <span class="status-chip live">Score ${score}</span>
+        </div>
+      </article>`;
+  }).join("") || `<div class="empty-box" style="grid-column:1/-1">No products created for ${escapeHtml(ws.name)} yet.</div>`;
+
+  const prodMap = new Map(prods.map(p => [p.id, p]));
+  document.getElementById("offers-list-grid").innerHTML = (b.offers || []).map(o => {
+    const stackedItems = (o.stack || []).map(s => ({ ...s, prod: prodMap.get(s.productId) })).filter(x => x.prod);
+    const stackedVal = o.overridePerceivedValue || stackedItems.reduce((n, x) => n + Number(x.prod.perceivedValue || 0), 0);
+    const mult = o.price > 0 && stackedVal > 0 ? (stackedVal / o.price).toFixed(1) : "—";
+    return `
+      <article class="panel-card tone-butter" style="padding:18px;gap:10px">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+          <span class="tier-badge tier-s">${escapeHtml(o.tier || "Core")}</span>
+          <div style="display:flex;gap:6px;align-items:center"><span class="status-chip live">${mult}× Value Stack</span><button type="button" class="btn btn-outline btn-xs" data-del-offer="${escapeHtml(o.id)}">×</button></div>
+        </div>
+        <h3 style="font-size:20px">${escapeHtml(o.name)}</h3>
+        <p style="font-size:13px;color:var(--ink-2)">${escapeHtml(o.promise)}</p>
+        <div style="display:flex;gap:16px;font-size:13px;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,0.75)">
+          <span>Price: <strong>$${Number(o.price || 0).toLocaleString()}</strong> (${escapeHtml(o.billing || "One-time")})</span>
+          <span>Stacked Value: <strong>$${Number(stackedVal || 0).toLocaleString()}</strong></span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          ${stackedItems.map(x => `<div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 10px;border-radius:9px;background:rgba(255,255,255,0.65)"><span><strong>${x.role}:</strong> ${escapeHtml(x.prod.name)}</span><span>$${Number(x.prod.perceivedValue || 0).toLocaleString()}</span></div>`).join("")}
+        </div>
+      </article>`;
+  }).join("") || `<div class="empty-box" style="grid-column:1/-1">No offers built for ${escapeHtml(ws.name)} yet.</div>`;
+
+  // 7. Asset Library
+  const origFilter = document.querySelector("#asset-origin-filter button.active")?.dataset.aorig || "all";
+  const assets = (b.assets || []).filter(a => origFilter === "all" || a.origin === origFilter);
+  document.getElementById("asset-library-list").innerHTML = assets.map(a => {
+    const attached = attachedAssetIds.has(a.id);
+    return `
+      <div style="padding:12px 14px;border-radius:14px;background:var(--paper);border:1px solid ${attached ? "var(--yellow-ink)" : "var(--border)"};display:flex;flex-direction:column;gap:6px">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+          <div><strong style="font-size:14px">${escapeHtml(a.title)}</strong> <span class="status-chip muted">${escapeHtml(a.type)}</span></div>
+          <div style="display:flex;gap:5px;flex-wrap:wrap">
+            <button type="button" class="btn ${attached ? "btn-dark" : "btn-outline"} btn-xs" data-attach-asset="${escapeHtml(a.id)}">${attached ? "✓ Attached in Chat" : "Attach in Chat"}</button>
+            <button type="button" class="btn btn-outline btn-xs" data-zd-asset="${escapeHtml(a.id)}">☁ ZeroDrive</button>
+            <button type="button" class="btn btn-outline btn-xs" data-del-asset="${escapeHtml(a.id)}">×</button>
+          </div>
+        </div>
+        <p style="font-size:12.5px;color:var(--ink-2);white-space:pre-wrap;max-height:90px;overflow:hidden">${escapeHtml((a.content || "").slice(0, 260))}</p>
+      </div>`;
+  }).join("") || `<div class="empty-box">No assets in this filter.</div>`;
+
+  // Populate Arsenal dropdowns
+  const avOpts = (b.avatars || []).map(a => `<option value="${escapeHtml(a.name)}">${escapeHtml(a.name)}</option>`).join("") || `<option value="">Default Audience</option>`;
+  const offOpts = (b.offers || []).map(o => `<option value="${escapeHtml(o.name)}">${escapeHtml(o.name)} ($${Number(o.price || 0).toLocaleString()})</option>`).join("") || `<option value="">Primary Offer</option>`;
+  const vOpts = (b.voices || []).map(v => `<option value="${escapeHtml(v.name)}">${escapeHtml(v.name)} (${escapeHtml(v.type)})</option>`).join("") || `<option value="">Default Voice</option>`;
+  const ahOpts = `<option value="">Auto-pick from Account Hooks</option>` + (b.accountHooks || []).map(h => `<option value="${escapeHtml(h.text)}">${escapeHtml(h.text.slice(0, 75))}</option>`).join("");
+  ["ap-avatar", "ae-avatar", "as-avatar"].forEach(id => { const el = document.getElementById(id); if (el) el.innerHTML = avOpts; });
+  ["ap-offer", "ae-offer"].forEach(id => { const el = document.getElementById(id); if (el) el.innerHTML = offOpts; });
+  const aeV = document.getElementById("ae-voice"); if (aeV) aeV.innerHTML = vOpts;
+  const asH = document.getElementById("as-acct-hook"); if (asH) asH.innerHTML = ahOpts;
+  const asF = document.getElementById("as-story-fmt");
+  if (asF && !asF.options.length) asF.innerHTML = SOCIAL_STORY_FORMATS.map(f => `<option>${escapeHtml(f)}</option>`).join("");
+
+  renderChatView();
+}
+
+// ---- Render AI Chat & Coach ----
+function renderChatView() {
+  const ws = getActiveWorkspace();
+  const b = getWorkspaceBrain(ws);
+  const hist = chatHistories[ws.id] || [];
+  const pill = document.getElementById("chat-context-pill");
+  if (pill) pill.textContent = `${ws.name} Brain · ${(b.memories || []).length} Memories · ${(b.avatars || []).length} Avatars · ${(b.offers || []).length} Offers · ${attachedAssetIds.size} Attached`;
+  const sum = document.getElementById("chat-brain-summary");
+  if (sum) sum.innerHTML = `<div><strong>Persona:</strong> ${escapeHtml(ws.character?.superheroIdentity || ws.name)}</div><div><strong>Offers:</strong> ${(b.offers || []).map(o => escapeHtml(o.name)).join(", ") || "None yet"}</div><div><strong>Account Hooks:</strong> ${(b.accountHooks || []).length} saved</div>`;
+  const picker = document.getElementById("chat-asset-picker");
+  if (picker) picker.innerHTML = (b.assets || []).map(a => `<button type="button" class="tag-score-pill" style="justify-content:space-between;width:100%" data-attach-asset="${escapeHtml(a.id)}"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escapeHtml(a.title)}</span><span class="tag-score-num ${attachedAssetIds.has(a.id) ? "hi" : "med"}">${attachedAssetIds.has(a.id) ? "ON" : "+"}</span></button>`).join("");
+  const attBar = document.getElementById("chat-attached-bar");
+  if (attBar) attBar.innerHTML = (b.assets || []).filter(a => attachedAssetIds.has(a.id)).map(a => `<span class="status-chip">📎 ${escapeHtml(a.title)}</span>`).join("");
+
+  const log = document.getElementById("chat-log");
+  if (!log) return;
+  if (!hist.length) {
+    log.innerHTML = `<div class="chat-msg assistant"><strong>${escapeHtml(ws.name)} ${chatMode === "persona_coach" ? "Persona Coach" : chatMode === "offer_architect" ? "Offer Architect" : "Chief of Staff"}</strong>\nYour workspace Brain is loaded (${(b.memories || []).length} memories, ${(b.offers || []).length} offers, ${attachedAssetIds.size} attached assets). Ask anything or click a quick prompt below — powered directly by your local Claude or Codex CLI.</div>`;
+    return;
+  }
+  log.innerHTML = hist.map((m, idx) => `
+    <div class="chat-msg ${m.role}">
+      ${escapeHtml(m.content)}
+      ${m.role === "assistant" && (m.suggestedMemories?.length || m.saveableMarkdown) ? `<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;padding-top:8px;border-top:1px solid var(--border)">
+        ${(m.suggestedMemories || []).map((sm, si) => `<button type="button" class="btn btn-outline btn-xs" data-save-chat-mem="${idx}:${si}">＋ Save Memory: ${escapeHtml((sm.title || "").slice(0, 28))}</button>`).join("")}
+        <button type="button" class="btn btn-yellow btn-xs" data-save-chat-doc="${idx}">☁ Save Doc to ZeroDrive</button>
+      </div>` : ""}
+    </div>`).join("");
+  log.scrollTop = log.scrollHeight;
+}
+
+async function sendChatPrompt(text) {
+  const q = (text || "").trim(); if (!q) return;
+  const ws = getActiveWorkspace();
+  if (!chatHistories[ws.id]) chatHistories[ws.id] = [];
+  chatHistories[ws.id].push({ role: "user", content: q });
+  renderChatView();
+  const btn = document.getElementById("chat-send-btn");
+  if (btn) { btn.disabled = true; btn.textContent = "Thinking…"; }
+  const prov = document.getElementById("chat-provider-select")?.value || "claude";
+  try {
+    if (!isLocalServer()) throw new Error("Open http://127.0.0.1:4747 to chat live with your local Claude/Codex CLI.");
+    const resp = await fetch("/api/ai/chat", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ messages: chatHistories[ws.id].slice(-12), brain: buildFullBrainPayload(), mode: chatMode, provider: prov }),
+    });
+    const d = await resp.json();
+    if (!resp.ok || !d.ok) throw new Error(d.message || "Chat failed");
+    chatHistories[ws.id].push({ role: "assistant", content: d.reply || "(no reply)", suggestedMemories: d.suggestedMemories || [], suggestedTitle: d.suggestedTitle || "AI Chat Output", saveableMarkdown: d.saveableMarkdown || d.reply || "" });
+  } catch (err) {
+    chatHistories[ws.id].push({ role: "assistant", content: `⚠️ ${err.message}` });
+  } finally {
+    saveJSON("outlier-chats-v1", chatHistories);
+    if (btn) { btn.disabled = false; btn.textContent = "Send →"; }
+    renderChatView();
+  }
+}
+
+// ---- Creative Arsenal Runner (Presentations, Emails, Socials) ----
+async function runArsenal(toolType, params, outElId, btnEl) {
+  const outEl = document.getElementById(outElId);
+  if (btnEl) { btnEl.disabled = true; btnEl.dataset.orig = btnEl.textContent; btnEl.textContent = "Generating via AI…"; }
+  const prov = activeAiProvider === "local" ? (aiCapabilities.default || "claude") : activeAiProvider;
+  try {
+    if (!isLocalServer()) throw new Error("Connect to local http://127.0.0.1:4747 to run Claude/Codex generation.");
+    const resp = await fetch("/api/ai/arsenal", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ toolType, params, brain: buildFullBrainPayload(), provider: prov }),
+    });
+    const d = await resp.json();
+    if (!resp.ok || !d.ok) throw new Error(d.message || "Generation failed");
+    if (outEl) outEl.value = d.fullMarkdown || JSON.stringify(d, null, 2);
+    showToast(`✦ Generated via ${d.engine || prov} ✓`);
+    return d;
+  } catch (err) {
+    if (outEl) outEl.value = `# ${params.format || toolType} Blueprint — ${params.topic || ""}\n\n(Offline fallback — open http://127.0.0.1:4747 for live Claude/Codex generation)\n\n${err.message}`;
+    showToast(err.message);
+    return null;
+  } finally {
+    if (btnEl) { btnEl.disabled = false; btnEl.textContent = btnEl.dataset.orig || "Generate →"; }
+  }
+}
+
+// ---- ZeroDrive & Composio Loaders ----
+async function refreshIntegrationsUI() {
+  if (!isLocalServer()) return;
+  try {
+    const zr = await fetch("/api/zerodrive/status");
+    if (zr.ok) {
+      const z = await zr.json();
+      const chip = document.getElementById("zd-status-chip");
+      if (chip) { chip.textContent = z.connected ? `● Connected (${z.vaultRoot})` : (z.cliAvailable ? "CLI Detected · Local Mirror Active" : "Local Mirror Ready"); chip.className = `status-chip ${z.connected ? "live" : ""}`; }
+      const fr = await fetch(`/api/zerodrive/files?workspace=${encodeURIComponent(activeWorkspaceId)}`);
+      if (fr.ok) {
+        const fd = await fr.json();
+        const fl = document.getElementById("zd-files-list");
+        if (fl) fl.innerHTML = (fd.files || []).slice(0, 12).map(f => `<span class="status-chip muted">📄 ${escapeHtml(f.name || f.path || f)}</span>`).join("") || `<span style="font-size:12px;color:var(--ink-3)">Click Sync Active Brain Now to push your workspace Brain to ZeroDrive.</span>`;
+      }
+    }
+  } catch {}
+  try {
+    const cr = await fetch("/api/composio/status");
+    if (cr.ok) {
+      const c = await cr.json();
+      const chip = document.getElementById("comp-status-chip");
+      if (chip) { chip.textContent = c.configured ? `● Connected (${c.userId})` : "Paste API Key to Activate"; chip.className = `status-chip ${c.configured ? "live" : "muted"}`; }
+      const uid = document.getElementById("comp-user-id"); if (uid && c.userId) uid.value = c.userId;
+    }
+    const tr = await fetch("/api/composio/toolkits");
+    if (tr.ok) {
+      const td = await tr.json();
+      composioToolkitsCache = td.toolkits || [];
+      renderComposioToolkits();
+    }
+  } catch {}
+}
+
+function renderComposioToolkits() {
+  const q = (document.getElementById("comp-search")?.value || "").toLowerCase();
+  const grid = document.getElementById("comp-toolkits-grid");
+  if (!grid) return;
+  const list = composioToolkitsCache.filter(t => !q || `${t.name} ${t.slug} ${t.category || ""}`.toLowerCase().includes(q));
+  grid.innerHTML = list.slice(0, 15).map(t => `
+    <div class="toolkit-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:6px"><strong style="font-size:14px">${escapeHtml(t.name)}</strong><span class="micro-tag">${escapeHtml(t.category || "App")}</span></div>
+      <p style="font-size:12px;color:var(--ink-3)">${escapeHtml((t.description || t.slug).slice(0, 72))}</p>
+      <button type="button" class="btn btn-outline btn-xs" style="align-self:flex-start" data-comp-connect="${escapeHtml(t.slug)}">1-Click OAuth Connect →</button>
+    </div>`).join("") || `<p style="font-size:13px;color:var(--ink-3)">No matching toolkits.</p>`;
+}
+
+// ---- Free Live Creator Discovery ----
+async function runCreatorDiscovery() {
+  const q = document.getElementById("disc-query")?.value.trim() || "";
+  const plat = document.getElementById("disc-platform")?.value || "youtube";
+  const grid = document.getElementById("disc-results-grid");
+  const btn = document.getElementById("disc-submit-btn");
+  if (!isLocalServer()) { showToast("Open http://127.0.0.1:4747 for live $0 creator discovery"); return; }
+  if (btn) { btn.disabled = true; btn.textContent = "Discovering…"; }
+  try {
+    const resp = await fetch(`/api/creators/discover?q=${encodeURIComponent(q)}&platform=${encodeURIComponent(plat)}&mode=${encodeURIComponent(discoverMode)}&limit=9`);
+    const d = await resp.json();
+    const list = d.creators || [];
+    grid.innerHTML = list.map(c => `
+      <article class="roster-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+          <div style="min-width:0"><strong style="display:block;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${escapeHtml(c.name || c.handle)}</strong><span style="font-size:11.5px;color:var(--ink-3)">${escapeHtml(c.handle || "")} · ${(c.platform || plat).toUpperCase()}</span></div>
+          <span class="status-chip live">${c.medianViews ? fmtNum(c.medianViews) + " med" : "Live"}</span>
+        </div>
+        ${c.topVideoTitle ? `<p style="font-size:12px;color:var(--ink-2)">Top: ${escapeHtml(c.topVideoTitle.slice(0, 88))}</p>` : ""}
+        <button type="button" class="btn btn-yellow btn-xs" style="align-self:flex-start" data-track-discovered-handle="${escapeHtml(c.url || c.handle)}" data-track-discovered-plat="${escapeHtml(c.platform || plat)}">＋ Track in ${escapeHtml(getActiveWorkspace().name)}</button>
+      </article>`).join("") || `<div class="empty-box" style="grid-column:1/-1">No matching creators found — try another topic or switch to Suggested.</div>`;
+  } catch { showToast("Discovery lookup failed"); }
+  finally { if (btn) { btn.disabled = false; btn.textContent = "Find Creators Live →"; } }
+}
+
+// ---- Event Wiring for Brain, Chat, Arsenal, Discovery, ZeroDrive & Composio ----
+document.getElementById("persona-inner-switch")?.addEventListener("click", e => {
+  const b = e.target.closest("[data-pview]"); if (!b) return;
+  document.querySelectorAll("#persona-inner-switch button").forEach(x => x.classList.toggle("active", x === b));
+  ["identity", "voices", "account-hooks", "coach-bot"].forEach(id => { const el = document.getElementById(`pview-${id}`); if (el) el.hidden = id !== b.dataset.pview; });
+});
+document.getElementById("chat-mode-switch")?.addEventListener("click", e => {
+  const b = e.target.closest("[data-chatmode]"); if (!b) return;
+  chatMode = b.dataset.chatmode;
+  document.querySelectorAll("#chat-mode-switch button").forEach(x => x.classList.toggle("active", x === b));
+  renderChatView();
+});
+document.getElementById("chat-form")?.addEventListener("submit", e => { e.preventDefault(); const inp = document.getElementById("chat-input"); const v = inp.value; inp.value = ""; sendChatPrompt(v); });
+document.getElementById("chat-clear-btn")?.addEventListener("click", () => { chatHistories[getActiveWorkspace().id] = []; saveJSON("outlier-chats-v1", chatHistories); renderChatView(); });
+document.getElementById("chat-open-brain")?.addEventListener("click", () => setActiveTab("character"));
+document.getElementById("chat-save-zd-btn")?.addEventListener("click", async () => {
+  const hist = chatHistories[getActiveWorkspace().id] || [];
+  if (!hist.length) { showToast("Nothing in chat yet"); return; }
+  const md = hist.map(m => `## ${m.role.toUpperCase()}\n${m.content}`).join("\n\n");
+  if (isLocalServer()) {
+    await fetch("/api/zerodrive/save", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ workspaceId: activeWorkspaceId, category: "chats", filename: `chat-${Date.now()}.md`, content: md }) });
+    showToast("☁ Saved chat transcript to ZeroDrive ✓");
+    refreshIntegrationsUI();
+  } else copyText(md, "Chat transcript copied ✓");
+});
+
+document.getElementById("voice-add-form")?.addEventListener("submit", e => {
+  e.preventDefault();
+  const b = getWorkspaceBrain();
+  b.voices.unshift({ id: "v_" + Date.now(), name: document.getElementById("v-name").value.trim(), type: document.getElementById("v-type").value, notes: document.getElementById("v-notes").value.trim(), sample: document.getElementById("v-sample").value.trim() });
+  persistWorkspaceBrain(); e.target.reset(); renderBrandBrain(); showToast("Voice saved ✓");
+});
+document.getElementById("story-add-form")?.addEventListener("submit", e => {
+  e.preventDefault();
+  const b = getWorkspaceBrain();
+  const title = document.getElementById("st-title").value.trim();
+  b.stories.unshift({ id: "st_" + Date.now(), title, falseBelief: document.getElementById("st-false-belief").value.trim(), body: document.getElementById("st-body").value.trim(), createdAt: new Date().toISOString().slice(0, 10) });
+  const hooks = document.getElementById("st-hooks").value.split("\n").map(x => x.trim()).filter(Boolean);
+  hooks.forEach(h => b.accountHooks.unshift({ id: "ah_" + Date.now() + Math.random().toString(36).slice(2, 5), text: h, angle: "Story", storyTitle: title }));
+  persistWorkspaceBrain(); e.target.reset(); renderBrandBrain(); showToast(`Saved story & ${hooks.length} account hook(s) ✓`);
+});
+document.getElementById("coach-bot-form")?.addEventListener("submit", e => {
+  e.preventDefault();
+  const b = getWorkspaceBrain();
+  b.coachBot = { bio: document.getElementById("cb-bio").value.trim(), rules: document.getElementById("cb-rules").value.trim(), starters: document.getElementById("cb-starters").value.trim(), ctaLabel: document.getElementById("cb-cta-label").value.trim(), ctaUrl: document.getElementById("cb-cta-url").value.trim() };
+  persistWorkspaceBrain(); renderBrandBrain(); showToast("Coaching Bot saved ✓");
+});
+document.getElementById("launch-coach-chat-btn")?.addEventListener("click", () => {
+  chatMode = "persona_coach";
+  document.querySelectorAll("#chat-mode-switch button").forEach(x => x.classList.toggle("active", x.dataset.chatmode === "persona_coach"));
+  setActiveTab("chat"); renderChatView();
+});
+document.getElementById("memory-add-form")?.addEventListener("submit", e => {
+  e.preventDefault();
+  const b = getWorkspaceBrain();
+  b.memories.unshift({ id: "m_" + Date.now(), title: document.getElementById("mem-title").value.trim(), category: document.getElementById("mem-cat").value, scope: document.getElementById("mem-scope").value, content: document.getElementById("mem-content").value.trim(), createdAt: new Date().toISOString().slice(0, 10) });
+  persistWorkspaceBrain(); e.target.reset(); renderBrandBrain(); showToast("Memory saved to Brain ✓");
+});
+document.getElementById("mem-search")?.addEventListener("input", renderBrandBrain);
+document.getElementById("mem-filter-cat")?.addEventListener("change", renderBrandBrain);
+
+document.getElementById("av-new-btn")?.addEventListener("click", () => {
+  const b = getWorkspaceBrain();
+  const id = "av_" + Date.now();
+  b.avatars.push({ id, name: "New Customer Avatar", occupation: "", age: "", platforms: ["Instagram", "YouTube"], biggestFear: "", biggestDesire: "", pains: "", dreams: "", fbMethod: "", fbSelf: "", fbExternal: "", fbOther: "", fileNotes: "", customDetails: [{ key: "Trigger Moment", value: "" }] });
+  activeAvatarId = id; persistWorkspaceBrain(); renderBrandBrain();
+});
+document.getElementById("av-add-detail-btn")?.addEventListener("click", () => {
+  const b = getWorkspaceBrain(); const av = b.avatars.find(a => a.id === activeAvatarId); if (!av) return;
+  av.customDetails = av.customDetails || []; av.customDetails.push({ key: "", value: "" });
+  persistWorkspaceBrain(); renderBrandBrain();
+});
+document.getElementById("av-delete-btn")?.addEventListener("click", () => {
+  const b = getWorkspaceBrain(); if (b.avatars.length <= 1) { showToast("Keep at least 1 avatar"); return; }
+  b.avatars = b.avatars.filter(a => a.id !== activeAvatarId); activeAvatarId = b.avatars[0]?.id;
+  persistWorkspaceBrain(); renderBrandBrain(); showToast("Avatar deleted");
+});
+document.getElementById("avatar-edit-form")?.addEventListener("submit", e => {
+  e.preventDefault();
+  const b = getWorkspaceBrain(); const av = b.avatars.find(a => a.id === activeAvatarId); if (!av) return;
+  av.name = document.getElementById("av-name").value.trim() || "Customer Avatar";
+  av.occupation = document.getElementById("av-occ").value.trim(); av.age = document.getElementById("av-age").value.trim();
+  av.biggestFear = document.getElementById("av-fear").value.trim(); av.biggestDesire = document.getElementById("av-desire").value.trim();
+  av.pains = document.getElementById("av-pains").value.trim(); av.dreams = document.getElementById("av-dreams").value.trim();
+  av.fbMethod = document.getElementById("av-fb-method").value.trim(); av.fbSelf = document.getElementById("av-fb-self").value.trim();
+  av.fbExternal = document.getElementById("av-fb-external").value.trim(); av.fbOther = document.getElementById("av-fb-other").value.trim();
+  av.fileNotes = document.getElementById("av-file-notes").value.trim();
+  av.customDetails = [...document.querySelectorAll("[data-cd-key]")].map((kEl, i) => ({ key: kEl.value.trim(), value: document.querySelector(`[data-cd-val="${i}"]`)?.value.trim() || "" })).filter(x => x.key || x.value);
+  persistWorkspaceBrain(); renderBrandBrain(); showToast(`Saved avatar "${av.name}" ✓`);
+});
+
+document.getElementById("product-form")?.addEventListener("submit", e => {
+  e.preventDefault();
+  const b = getWorkspaceBrain();
+  b.products.unshift({
+    id: "p_" + Date.now(), name: document.getElementById("prod-name").value.trim(), status: document.getElementById("prod-status").value,
+    desc: document.getElementById("prod-desc").value.trim(), solves: document.getElementById("prod-solves").value.trim(),
+    perceivedValue: Number(document.getElementById("prod-pvalue").value || 0), price: Number(document.getElementById("prod-price").value || 0),
+    modalities: [...selectedProductModalities],
+  });
+  persistWorkspaceBrain(); e.target.reset(); renderBrandBrain(); showToast("Product saved with Offer Modalities ✓");
+});
+document.getElementById("offer-form")?.addEventListener("submit", e => {
+  e.preventDefault();
+  const b = getWorkspaceBrain();
+  const stack = [...document.querySelectorAll("[data-stack-prod]:checked")].map(cb => ({ productId: cb.dataset.stackProd, role: document.querySelector(`[data-stack-role="${cb.dataset.stackProd}"]`)?.value || "Core" }));
+  b.offers.unshift({
+    id: "o_" + Date.now(), name: document.getElementById("off-name").value.trim(), tier: document.getElementById("off-tier").value,
+    promise: document.getElementById("off-promise").value.trim(), price: Number(document.getElementById("off-price").value || 0),
+    billing: document.getElementById("off-billing").value, overridePerceivedValue: Number(document.getElementById("off-pvalue").value || 0),
+    guarantee: document.getElementById("off-guarantee").value.trim(), stack,
+  });
+  persistWorkspaceBrain(); e.target.reset(); renderBrandBrain(); showToast("Offer stack saved ✓");
+});
+document.getElementById("asset-add-form")?.addEventListener("submit", e => {
+  e.preventDefault();
+  const b = getWorkspaceBrain();
+  b.assets.unshift({ id: "al_" + Date.now(), title: document.getElementById("al-title").value.trim(), type: document.getElementById("al-type").value, origin: "user", url: document.getElementById("al-url").value.trim(), content: document.getElementById("al-content").value.trim(), createdAt: new Date().toISOString().slice(0, 10) });
+  persistWorkspaceBrain(); e.target.reset(); renderBrandBrain(); showToast("Resource saved to Asset Library ✓");
+});
+document.getElementById("asset-origin-filter")?.addEventListener("click", e => {
+  const btn = e.target.closest("[data-aorig]"); if (!btn) return;
+  document.querySelectorAll("#asset-origin-filter button").forEach(x => x.classList.toggle("active", x === btn));
+  renderBrandBrain();
+});
+document.getElementById("brain-sync-zd-btn")?.addEventListener("click", async () => {
+  persistWorkspaceBrain(true);
+  if (!isLocalServer()) { showToast("Saved locally (connect on localhost:4747 to push to ZeroDrive)"); return; }
+  const r = await fetch("/api/zerodrive/sync", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ workspaceId: activeWorkspaceId, brain: buildFullBrainPayload() }) });
+  const d = await r.json();
+  showToast(d.syncedToCloud ? "☁ Synced Brand Brain to ZeroDrive Cloud ✓" : "✓ Synced Brain to local ZeroDrive mirror");
+  refreshIntegrationsUI();
+});
+
+// AI Generators for Persona, Avatar & Account Hooks
+document.getElementById("ai-gen-acct-hooks-btn")?.addEventListener("click", async () => {
+  const btn = document.getElementById("ai-gen-acct-hooks-btn");
+  const res = await runArsenal("generate_hooks", { count: 10 }, null, btn);
+  if (res?.hooks?.length) {
+    const b = getWorkspaceBrain();
+    res.hooks.forEach(h => b.accountHooks.unshift({ id: "ah_" + Date.now() + Math.random().toString(36).slice(2, 5), text: typeof h === "string" ? h : (h.text || h.hook || ""), angle: h.angle || "AI Generated", storyTitle: "AI Hook Lab" }));
+    persistWorkspaceBrain(); renderBrandBrain(); showToast(`✦ Added ${res.hooks.length} Account Hooks ✓`);
+  }
+});
+document.getElementById("av-ai-gen-btn")?.addEventListener("click", async () => {
+  const btn = document.getElementById("av-ai-gen-btn");
+  const res = await runArsenal("generate_avatar", { brief: getActiveWorkspace().tagline }, null, btn);
+  if (res?.avatar) {
+    const b = getWorkspaceBrain(); const av = { id: "av_" + Date.now(), platforms: ["Instagram", "YouTube"], customDetails: [], ...res.avatar };
+    b.avatars.push(av); activeAvatarId = av.id; persistWorkspaceBrain(); renderBrandBrain(); showToast(`✦ Generated Avatar "${av.name}" ✓`);
+  }
+});
+document.getElementById("ai-gen-persona-btn")?.addEventListener("click", async () => {
+  const btn = document.getElementById("ai-gen-persona-btn");
+  const res = await runArsenal("generate_persona", { brief: getActiveWorkspace().tagline }, null, btn);
+  if (res?.hooks?.length) {
+    const b = getWorkspaceBrain();
+    res.hooks.forEach(h => b.accountHooks.unshift({ id: "ah_" + Date.now() + Math.random().toString(36).slice(2, 5), text: typeof h === "string" ? h : (h.text || ""), angle: "Persona", storyTitle: "Generated Persona" }));
+    (res.stories || []).forEach(s => b.stories.unshift({ id: "st_" + Date.now() + Math.random().toString(36).slice(2, 5), title: s.title || "Origin Story", body: s.body || s.narrative || "", falseBelief: s.falseBelief || "" }));
+    persistWorkspaceBrain(); renderBrandBrain(); showToast("✦ Expanded Founder Persona stories & hooks ✓");
+  }
+});
+
+// Arsenal Forms
+document.getElementById("ars-pres-form")?.addEventListener("submit", e => { e.preventDefault(); runArsenal("presentation", { format: document.getElementById("ap-format").value, offerName: document.getElementById("ap-offer").value, avatarName: document.getElementById("ap-avatar").value, storytellingFormat: document.getElementById("ap-story-fmt").value, topic: document.getElementById("ap-topic").value.trim(), customInstructions: document.getElementById("ap-notes").value.trim() }, "ap-output", document.getElementById("ap-submit")); });
+document.getElementById("ars-email-form")?.addEventListener("submit", e => { e.preventDefault(); runArsenal("email", { format: document.getElementById("ae-format").value, offerName: document.getElementById("ae-offer").value, avatarName: document.getElementById("ae-avatar").value, voice: document.getElementById("ae-voice").value, topic: document.getElementById("ae-topic").value.trim(), customInstructions: document.getElementById("ae-notes").value.trim() }, "ae-output", document.getElementById("ae-submit")); });
+document.getElementById("ars-social-form")?.addEventListener("submit", e => { e.preventDefault(); runArsenal("social", { platform: document.getElementById("as-platform").value, storytellingFormat: document.getElementById("as-story-fmt").value, avatarName: document.getElementById("as-avatar").value, accountHook: document.getElementById("as-acct-hook").value, topic: document.getElementById("as-topic").value.trim() }, "as-output", document.getElementById("as-submit")); });
+
+[["ap", "Presentation"], ["ae", "Email"], ["as", "Social"]].forEach(([pfx, kind]) => {
+  document.getElementById(`${pfx}-copy`)?.addEventListener("click", () => copyText(document.getElementById(`${pfx}-output`).value, `${kind} copied ✓`));
+  document.getElementById(`${pfx}-save-lib`)?.addEventListener("click", () => {
+    const content = document.getElementById(`${pfx}-output`).value.trim(); if (!content) return;
+    const b = getWorkspaceBrain();
+    b.assets.unshift({ id: "al_" + Date.now(), title: `${kind} · ${new Date().toLocaleDateString()}`, type: kind, origin: "ai", url: "", content, createdAt: new Date().toISOString().slice(0, 10) });
+    persistWorkspaceBrain(); renderBrandBrain(); showToast(`Saved ${kind} to Asset Library ✓`);
+  });
+  document.getElementById(`${pfx}-save-zd`)?.addEventListener("click", async () => {
+    const content = document.getElementById(`${pfx}-output`).value.trim(); if (!content) return;
+    if (!isLocalServer()) { copyText(content, "Copied (connect on :4747 to save to ZeroDrive)"); return; }
+    await fetch("/api/zerodrive/save", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ workspaceId: activeWorkspaceId, category: kind.toLowerCase() + "s", filename: `${kind.toLowerCase()}-${Date.now()}.md`, content }) });
+    showToast(`☁ Saved ${kind} to ZeroDrive ✓`); refreshIntegrationsUI();
+  });
+});
+
+// Discovery, ZeroDrive & Composio Forms
+document.getElementById("disc-mode-switch")?.addEventListener("click", e => {
+  const b = e.target.closest("[data-dmode]"); if (!b) return;
+  discoverMode = b.dataset.dmode;
+  document.querySelectorAll("#disc-mode-switch button").forEach(x => x.classList.toggle("active", x === b));
+  if (discoverMode === "suggested") runCreatorDiscovery();
+});
+document.getElementById("creator-discover-form")?.addEventListener("submit", e => { e.preventDefault(); runCreatorDiscovery(); });
+document.getElementById("zd-connect-form")?.addEventListener("submit", async e => {
+  e.preventDefault();
+  if (!isLocalServer()) { showToast("Open http://127.0.0.1:4747 to connect ZeroDrive"); return; }
+  const r = await fetch("/api/zerodrive/connect", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ vaultRoot: document.getElementById("zd-vault-root").value.trim(), apiUrl: document.getElementById("zd-api-url").value.trim(), apiKey: document.getElementById("zd-api-key").value.trim() }) });
+  const d = await r.json(); showToast(d.message || "ZeroDrive connected ✓"); refreshIntegrationsUI();
+});
+document.getElementById("zd-sync-now-btn")?.addEventListener("click", () => document.getElementById("brain-sync-zd-btn")?.click());
+document.getElementById("comp-config-form")?.addEventListener("submit", async e => {
+  e.preventDefault();
+  if (!isLocalServer()) { showToast("Open http://127.0.0.1:4747 to configure Composio"); return; }
+  const r = await fetch("/api/composio/configure", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ apiKey: document.getElementById("comp-api-key").value.trim(), userId: document.getElementById("comp-user-id").value.trim() }) });
+  const d = await r.json(); showToast(d.message || (d.ok ? "Composio saved ✓" : "Composio error")); refreshIntegrationsUI();
+});
+document.getElementById("comp-search")?.addEventListener("input", renderComposioToolkits);
+document.getElementById("comp-exec-form")?.addEventListener("submit", async e => {
+  e.preventDefault();
+  if (!isLocalServer()) { showToast("Open http://127.0.0.1:4747 to run Composio tools"); return; }
+  let args = {}; try { args = JSON.parse(document.getElementById("comp-tool-args").value || "{}"); } catch { showToast("Invalid JSON arguments"); return; }
+  const r = await fetch("/api/composio/execute", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ toolSlug: document.getElementById("comp-tool-slug").value.trim(), arguments: args }) });
+  const d = await r.json();
+  const out = document.getElementById("comp-exec-output"); out.style.display = "block"; out.textContent = JSON.stringify(d, null, 2);
+});
+
+// Delegated clicks for Brain, Chat, Modalities, Discovery & Composio
+document.addEventListener("click", async e => {
+  const t = e.target;
+  const mod = t.closest("[data-toggle-mod]"); if (mod) { const m = mod.dataset.toggleMod; selectedProductModalities.has(m) ? selectedProductModalities.delete(m) : selectedProductModalities.add(m); renderBrandBrain(); return; }
+  const avP = t.closest("[data-pick-avatar]"); if (avP) { activeAvatarId = avP.dataset.pickAvatar; renderBrandBrain(); return; }
+  const avPl = t.closest("[data-toggle-av-plat]"); if (avPl) { const b = getWorkspaceBrain(); const av = b.avatars.find(a => a.id === activeAvatarId); if (av) { const s = new Set(av.platforms || []); s.has(avPl.dataset.toggleAvPlat) ? s.delete(avPl.dataset.toggleAvPlat) : s.add(avPl.dataset.toggleAvPlat); av.platforms = [...s]; persistWorkspaceBrain(); renderBrandBrain(); } return; }
+  const dCd = t.closest("[data-del-cd]"); if (dCd) { const b = getWorkspaceBrain(); const av = b.avatars.find(a => a.id === activeAvatarId); if (av) { av.customDetails.splice(Number(dCd.dataset.delCd), 1); persistWorkspaceBrain(); renderBrandBrain(); } return; }
+  const dMem = t.closest("[data-del-mem]"); if (dMem) { const b = getWorkspaceBrain(); b.memories = b.memories.filter(x => x.id !== dMem.dataset.delMem); persistWorkspaceBrain(); renderBrandBrain(); return; }
+  const dV = t.closest("[data-del-voice]"); if (dV) { const b = getWorkspaceBrain(); b.voices = b.voices.filter(x => x.id !== dV.dataset.delVoice); persistWorkspaceBrain(); renderBrandBrain(); return; }
+  const dAh = t.closest("[data-del-acct-hook]"); if (dAh) { const b = getWorkspaceBrain(); b.accountHooks = b.accountHooks.filter(x => x.id !== dAh.dataset.delAcctHook); persistWorkspaceBrain(); renderBrandBrain(); return; }
+  const dSt = t.closest("[data-del-story]"); if (dSt) { const b = getWorkspaceBrain(); b.stories = b.stories.filter(x => x.id !== dSt.dataset.delStory); persistWorkspaceBrain(); renderBrandBrain(); return; }
+  const dPr = t.closest("[data-del-prod]"); if (dPr) { const b = getWorkspaceBrain(); b.products = b.products.filter(x => x.id !== dPr.dataset.delProd); persistWorkspaceBrain(); renderBrandBrain(); return; }
+  const dOf = t.closest("[data-del-offer]"); if (dOf) { const b = getWorkspaceBrain(); b.offers = b.offers.filter(x => x.id !== dOf.dataset.delOffer); persistWorkspaceBrain(); renderBrandBrain(); return; }
+  const dAs = t.closest("[data-del-asset]"); if (dAs) { const b = getWorkspaceBrain(); b.assets = b.assets.filter(x => x.id !== dAs.dataset.delAsset); attachedAssetIds.delete(dAs.dataset.delAsset); persistWorkspaceBrain(); renderBrandBrain(); return; }
+  const attAs = t.closest("[data-attach-asset]"); if (attAs) { const id = attAs.dataset.attachAsset; attachedAssetIds.has(id) ? attachedAssetIds.delete(id) : attachedAssetIds.add(id); renderBrandBrain(); showToast(attachedAssetIds.has(id) ? "Attached resource to AI Chat ✓" : "Detached resource"); return; }
+  const zdAs = t.closest("[data-zd-asset]"); if (zdAs) { const a = (getWorkspaceBrain().assets || []).find(x => x.id === zdAs.dataset.zdAsset); if (a && isLocalServer()) { await fetch("/api/zerodrive/save", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ workspaceId: activeWorkspaceId, category: "assets", filename: a.title.toLowerCase().replace(/[^a-z0-9]+/g, "-") + ".md", content: a.content }) }); showToast(`☁ Saved "${a.title}" to ZeroDrive ✓`); refreshIntegrationsUI(); } return; }
+  const cp = t.closest("[data-chat-prompt]"); if (cp) { sendChatPrompt(cp.dataset.chatPrompt); return; }
+  const lcq = t.closest("[data-launch-coach-q]"); if (lcq) { chatMode = "persona_coach"; setActiveTab("chat"); sendChatPrompt(lcq.dataset.launchCoachQ); return; }
+  const scm = t.closest("[data-save-chat-mem]"); if (scm) { const [mi, si] = scm.dataset.saveChatMem.split(":").map(Number); const sm = (chatHistories[activeWorkspaceId]?.[mi]?.suggestedMemories || [])[si]; if (sm) { getWorkspaceBrain().memories.unshift({ id: "m_" + Date.now(), title: sm.title || "From Chat", category: sm.category || "From Conversations", scope: "workspace", content: sm.content || "", createdAt: new Date().toISOString().slice(0, 10) }); persistWorkspaceBrain(); renderBrandBrain(); showToast("Saved memory to Brand Brain ✓"); } return; }
+  const scd = t.closest("[data-save-chat-doc]"); if (scd) { const msg = chatHistories[activeWorkspaceId]?.[Number(scd.dataset.saveChatDoc)]; if (msg && isLocalServer()) { await fetch("/api/zerodrive/save", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ workspaceId: activeWorkspaceId, category: "deliverables", filename: `${(msg.suggestedTitle || "output").toLowerCase().replace(/[^a-z0-9]+/g, "-")}.md`, content: msg.saveableMarkdown || msg.content }) }); showToast("☁ Saved document to ZeroDrive ✓"); refreshIntegrationsUI(); } return; }
+  const td = t.closest("[data-track-discovered-handle]"); if (td) { await handleAddChannel({ handles: td.dataset.trackDiscoveredHandle, platform: td.dataset.trackDiscoveredPlat, workspace: activeWorkspaceId, scope: workspaceScopes()[0]?.id || SCOPES[0]?.id }); return; }
+  const cc = t.closest("[data-comp-connect]"); if (cc) { if (!isLocalServer()) { showToast("Open http://127.0.0.1:4747 to connect Composio apps"); return; } const r = await fetch("/api/composio/connect", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ toolkit: cc.dataset.compConnect, redirectUrl: location.href }) }); const d = await r.json(); if (d.redirectUrl) { window.open(d.redirectUrl, "_blank", "noopener"); showToast(`Opened ${cc.dataset.compConnect} OAuth window ✓`); } else showToast(d.message || "Configure Composio API key above first"); return; }
+});
+
 function renderAll() {
   renderWorkspaceControls();
   renderToday();
@@ -5084,6 +6498,7 @@ function renderAll() {
   renderScriptWizard();
   renderSavedScripts();
   renderCharacterStudio();
+  renderBrandBrain();
   renderChannelsAndSocials();
 }
 
@@ -5097,6 +6512,7 @@ window.OUTLIER_APP = {
 renderAll();
 setActiveTab(activeTab);
 initAiEngineStatus();
+refreshIntegrationsUI();
 </script>
 </body>
 </html>
@@ -5270,7 +6686,7 @@ def main():
                     "platform": plat,
                     "handle": doc.get("handle") or f"@{handle}",
                     "syncedAt": doc.get("syncedAt") or "",
-                    "videoCount": len(norm_items),
+                    "videoCount": len(norm_items), "followerCount": doc.get("followerCount") or 0, "followers": doc.get("followers") or "—",
                     "medianViews": doc.get("medianViews") or 0,
                     "totalViews": doc.get("totalViews") or 0,
                     "note": doc.get("note") or "",
@@ -5340,7 +6756,7 @@ def main():
         "__RESEARCH_JSON__": safe_json({**research, "candidates": roster}),
         "__ADMIN_URL_JSON__": safe_json(CONFIG.get("adminUrl", "/admin")),
         "__WORKSPACES_JSON__": safe_json(workspaces),
-        "__COLLECTIONS_JSON__": safe_json(SANDCASTLES_COLLECTIONS),
+        "__COLLECTIONS_JSON__": safe_json(CREATIVE_COLLECTIONS),
         "__OWN_SOCIALS_JSON__": safe_json(synced_own_socials),
     }
 
